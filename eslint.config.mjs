@@ -86,6 +86,23 @@ export default withNuxt({
       },
     ],
 
+    // === Vue Formatting ===
+    'vue/block-tag-newline': [
+      'warn',
+      {
+        singleline: 'always',
+        multiline: 'always',
+        maxEmptyLines: 0,
+      },
+    ],
+    'vue/multiline-html-element-content-newline': [
+      'warn',
+      {
+        ignoreWhenEmpty: true,
+        allowEmptyLines: false,
+      },
+    ],
+
     // === Nuxt Specific ===
     'nuxt/nuxt-config-keys-order': 'off',
   },
