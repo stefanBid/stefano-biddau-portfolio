@@ -10,6 +10,8 @@ const currentRoute = useRoute()
 const routes = [
   { name: 'Home', path: '/' },
   { name: 'About', path: '/about' },
+  { name: 'Skills', path: '/skills' },
+  { name: 'Projects', path: '/projects' },
 ]
 
 // Events
