@@ -18,7 +18,7 @@ const routes = [
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
-    close()
+    onClose()
   }
 }
 
