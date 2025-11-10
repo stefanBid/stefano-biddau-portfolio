@@ -22,8 +22,8 @@ const onKeydown = (e: KeyboardEvent) => {
   }
 }
 
-const onToggle = () => {
-  open.value = !open.value
+const onToggle = (newOpenValue: boolean) => {
+  open.value = newOpenValue
   _lockScroll(open.value)
 }
 
@@ -96,22 +96,10 @@ const _lockScroll = (locked: boolean) => {
           -->
         </div>
         <!-- Mobile: hamburger -->
-        <button
-          aria-controls="mobile-drawer"
-          :aria-expanded="open ? 'true' : 'false'"
-          aria-label="Open menu"
-          class="md:hidden ty-btn-label inline-flex items-center  rounded-xl p-1  text-sb-contrast/90 hover:text-sb-contrast sb-focus"
-          @click="onToggle()"
-        >
-          <svg
-            aria-hidden="true"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-          >
-            <path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z" fill="currentColor" />
-          </svg>
-        </button>
+        <TheHeaderMenuToggle
+          :open="open"
+          @toggle="newOpenValue => onToggle(newOpenValue)"
+        />
       </div>
     </header>
 
@@ -134,15 +122,15 @@ const _lockScroll = (locked: boolean) => {
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
-        <div class="flex items-center justify-between px-4 py-3 border-b border-sb-border">
+        <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
           <span class="ty-label text-sb-muted font-semibold">Menu</span>
         </div>
 
-        <nav class="flex flex-col gap-2 p-4">
+        <nav class="flex flex-col gap-2 p-6">
           <NuxtLink
             v-for="r in routes"
             :key="r.path"
-            class="rounded-lg px-3 py-3 ty-btn-label cursor-pointer"
+            class="rounded-lg p-3 ty-btn-label cursor-pointer"
             :class="{
               'hover:bg-sb-surface-2': currentRoute.path !== r.path,
               'bg-sb-accent font-bold!': currentRoute.path === r.path,
@@ -153,7 +141,7 @@ const _lockScroll = (locked: boolean) => {
             {{ r.name }}
           </NuxtLink>
         </nav>
-        <div class="flex items-center justify-between px-4 py-3 border-y border-sb-border">
+        <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
           <span class="ty-label text-sb-muted font-semibold">Settings</span>
         </div>
       </aside>

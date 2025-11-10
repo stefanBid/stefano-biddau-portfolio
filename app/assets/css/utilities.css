@@ -3,5 +3,5 @@
 }
 
 .sb-focus {
-  @apply outline-none focus-visible:ring-1 ring-sb-contrast ;
+  @apply focus-visible:outline-sb-contrast;
 }

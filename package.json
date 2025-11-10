@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@iconify-json/solar": "^1.2.5",
     "@nuxt/eslint": "^1.10.0",
     "@nuxt/icon": "^2.1.0",
     "@nuxt/image": "^2.0.0",
