@@ -27,7 +27,6 @@ export default withNuxt({
   ],
 
   files: [
-    // Only lint source and config files
     '**/*.js',
     '**/*.ts',
     '**/*.vue',
@@ -54,6 +53,7 @@ export default withNuxt({
     'space-before-blocks': ['warn', 'always'],
     'keyword-spacing': ['warn', { before: true, after: true }],
     'space-infix-ops': 'warn',
+    'eol-last': ['error', 'always'],
 
     // === Logical Spacing ===
     'padding-line-between-statements': [
@@ -85,5 +85,8 @@ export default withNuxt({
         math: 'always',
       },
     ],
+
+    // === Nuxt Specific ===
+    'nuxt/nuxt-config-keys-order': 'off',
   },
 })

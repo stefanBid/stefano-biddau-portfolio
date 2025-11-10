@@ -30,16 +30,16 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Lint (if script exists)
+      - name: Lint
         run: npm run lint --if-present
 
-      - name: Typecheck (if script exists)
+      - name: Typecheck
         run: npm run typecheck --if-present
 
       - name: Build Nuxt app
         run: npm run build
 
-      - name: Upload dist artifact (optional)
+      - name: Upload dist artifact
         if: success()
         uses: actions/upload-artifact@v4
         with:
