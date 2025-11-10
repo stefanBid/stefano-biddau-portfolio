@@ -1,0 +1,7 @@
+.sb-soft-transition {
+  @apply transition-all duration-200 ease-in-out;
+}
+
+.sb-focus {
+  @apply outline-none focus-visible:ring-1 ring-sb-contrast ;
+}

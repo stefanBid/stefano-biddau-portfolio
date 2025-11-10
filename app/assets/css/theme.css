@@ -1,0 +1,25 @@
+@theme {
+  /* =======================================
+     FONT FAMILIES
+     ======================================= */
+  --font-bebas-neue: 'Bebas Neue', system-ui, sans-serif;
+  --font-space-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* =======================================
+     BASE COLORS
+     ======================================= */
+  --color-sb-main: #0f0f20;          /* main background: deep blue-black */
+  --color-sb-surface: #1a1a2e;       /* elevated surface: cards, sections */
+  --color-sb-surface-2: #232342;     /* nested surface: elements inside cards */
+  --color-sb-shadow: rgba(0, 0, 0, 0.45); /* soft shadow for depth */
+  --color-sb-border: #2a2a44;        /* borders, outlines, dividers */
+
+  /* =======================================
+     ACCENTS & CONTRAST
+     ======================================= */
+  --color-sb-accent: #e95905;        /* new accent: vivid orange */
+  --color-sb-accent-hover: #d24f05;  /* slightly darker hover tone */
+  --color-sb-contrast: #f1f1f1;      /* main text on dark backgrounds */
+  --color-sb-muted: #9ca3af;         /* secondary or subdued text */
+  --color-sb-error: #ef4444;         /* alert or error */
+}
