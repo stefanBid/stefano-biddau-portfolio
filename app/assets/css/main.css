@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap');
+
+@import "tailwindcss";
+
+
+@import "./theme.css";
+@import "./typography.css";
+@import './utilities.css';
+
+
+/* Global Styles */
+
+/* Ensure consistent box-sizing across the app */
+html {
+  box-sizing: border-box;
+  scroll-behavior: smooth;
+  scrollbar-gutter: stable;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Include padding + border in width/height calculations */
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+/* Full height for layout consistency */
+html, body {
+  min-height: 100%;
+}
+
+/* Body base styles */
+body {
+  margin: 0; /* remove default browser margin */
+  background-color: var(--color-sb-main);
+  color: var(--color-sb-contrast);
+  font-family: var(--font-space-mono);
+  font-weight: 400;
+  line-height: 1.5;
+  text-rendering: optimizeLegibility;
+}
+
+/* Media elements default */
+img, picture, video, canvas, svg {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+
+/* Text selection */
+::selection {
+  background: color-mix(in oklab, var(--color-sb-accent) 50%, #000 70%);
+  color: var(--color-sb-contrast);
+}
+
+/* Scrollbar (webkit only, subtle) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-thumb {
+  background: color-mix(in oklab, var(--color-sb-accent) 70%, #000 65%);
+  border: 2px solid var(--color-sb-main);
+  border-radius: 999px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--color-sb-main);
+}
+
+/* Remove text inflation on mobile Safari */
+html {
+  -webkit-text-size-adjust: 100%;
+}

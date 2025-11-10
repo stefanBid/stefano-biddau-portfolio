@@ -1,0 +1,3 @@
+# ignore development pages
+
+app/pages/dev/**
