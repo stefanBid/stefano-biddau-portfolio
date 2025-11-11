@@ -61,8 +61,8 @@ const _lockScroll = (locked: boolean) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header class="fixed inset-x-0 top-0 h-16 border-b border-sb-border bg-sb-main/80 backdrop-blur supports-backdrop-filter:bg-sb-main/60">
-      <div class=" h-full flex items-center justify-between px-6 md:px-10">
-        <NuxtLink class=" font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 sb-focus" to="/">
+      <div class=" h-full flex items-center justify-between px-6 md:px-10 u-sb-soft-transition">
+        <NuxtLink class=" font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl" to="/">
           Stefano Biddau
         </NuxtLink>
 
@@ -72,7 +72,7 @@ const _lockScroll = (locked: boolean) => {
             <NuxtLink
               v-for="r in routes"
               :key="r.path"
-              class="ty-sb-btn-label normal-case! cursor-pointer transition-all duration-200 ease-in-out sb-focus"
+              class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus"
               :class="{
                 'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path,
                 'text-sb-accent font-bold!': currentRoute.path === r.path,
@@ -97,6 +97,7 @@ const _lockScroll = (locked: boolean) => {
         </div>
         <!-- Mobile: hamburger -->
         <TheHeaderMenuToggle
+          class="md:hidden"
           :open="open"
           @toggle="newOpenValue => onToggle(newOpenValue)"
         />
@@ -123,14 +124,14 @@ const _lockScroll = (locked: boolean) => {
         :role="open ? 'dialog' : undefined"
       >
         <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span class="ty-label text-sb-muted font-semibold">Menu</span>
+          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">Menu</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
           <NuxtLink
             v-for="r in routes"
             :key="r.path"
-            class="rounded-lg p-3 ty-btn-label cursor-pointer"
+            class="rounded-lg p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
             :class="{
               'hover:bg-sb-surface-2': currentRoute.path !== r.path,
               'bg-sb-accent font-bold!': currentRoute.path === r.path,
@@ -142,7 +143,7 @@ const _lockScroll = (locked: boolean) => {
           </NuxtLink>
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
-          <span class="ty-label text-sb-muted font-semibold">Settings</span>
+          <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">Settings</span>
         </div>
       </aside>
     </div>

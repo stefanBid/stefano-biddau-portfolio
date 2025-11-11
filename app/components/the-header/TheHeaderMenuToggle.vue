@@ -18,7 +18,7 @@ const onToggle = () => emit('toggle', !props.open)
     aria-controls="mobile-drawer"
     :aria-expanded="open ? 'true' : 'false'"
     :aria-label="open ? 'Close menu' : 'Open menu'"
-    class="md:hidden inline-flex group items-center rounded-xl p-1 sb-focus cursor-pointer"
+    class="inline-flex group items-center rounded-xl p-1 u-sb-focus cursor-pointer"
     @click="onToggle()"
   >
     <svg

@@ -1,7 +1,7 @@
-.sb-soft-transition {
+@utility u-sb-soft-transition {
   @apply transition-all duration-200 ease-in-out;
 }
 
-.sb-focus {
-  @apply focus-visible:outline-sb-contrast;
+@utility u-sb-focus {
+  @apply outline-none ring-sb-contrast focus-visible:ring-2;
 }
