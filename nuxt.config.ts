@@ -19,4 +19,19 @@ export default defineNuxtConfig({
     mode: 'css',
     cssLayer: 'base',
   },
+  image: {
+    providers: {
+      cloudinary: {
+        provider: 'cloudinary',
+        options: {
+          baseURL: 'https://res.cloudinary.com/dsmtyu2iw/image/upload/',
+        },
+      },
+    },
+    quality: 80,
+    format: ['webp', 'avif', 'png'],
+    screens: {
+      'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536,
+    },
+  },
 })
