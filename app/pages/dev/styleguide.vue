@@ -8,8 +8,8 @@
         TITOLONE D’IMPATTO
       </h1>
       <p class="ty-sb-paragraph max-w-2xl mx-auto text-sb-muted">
-        Questa è la tipografia principale per i titoli di pagina o sezioni hero.
-        Usa <code>.ty-sb-impact</code> con font Bebas Neue e dimensioni fluide per grande impatto visivo.
+        Tipografia principale per le sezioni hero. Per titoli secondari molto grandi usa <code>.ty-sb-title-xl</code>
+        oppure <code>.ty-sb-impact</code> per un look più “bold”.
       </p>
     </div>
 
@@ -19,11 +19,12 @@
     <!-- CARD TITLES -->
     <!-- ======================= -->
     <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Card 1: Title LG + Subtitle LG -->
       <div class="bg-sb-surface p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)]">
-        <h2 class="ty-sb-title">
+        <h2 class="ty-sb-title-lg">
           Titolo Card
         </h2>
-        <p class="ty-sb-subtitle text-sb-muted mt-1">
+        <p class="ty-sb-subtitle-lg text-sb-muted mt-1">
           Sottotitolo card
         </p>
         <p class="ty-sb-paragraph mt-4">
@@ -31,11 +32,12 @@
         </p>
       </div>
 
+      <!-- Card 2: Title XL + Subtitle XL -->
       <div class="bg-sb-surface-2 p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)]">
-        <h2 class="ty-sb-title">
+        <h2 class="ty-sb-title-xl">
           Card Alternativa
         </h2>
-        <p class="ty-sb-subtitle text-sb-muted mt-1">
+        <p class="ty-sb-subtitle-xl text-sb-muted mt-1">
           Subtitle elegante
         </p>
         <p class="ty-sb-paragraph mt-4">
@@ -43,6 +45,7 @@
         </p>
       </div>
 
+      <!-- Card 3: Title base + Subtitle base (di riferimento) -->
       <div class="bg-sb-surface-2 p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)]">
         <h2 class="ty-sb-title">
           Titolo Terza Card
@@ -62,12 +65,11 @@
     <!-- PARAGRAPHS & LABELS -->
     <!-- ======================= -->
     <div class="max-w-3xl mx-auto space-y-6">
-      <h3 class="ty-sb-title text-center">
+      <h3 class="ty-sb-title-lg text-center">
         Testi e Label
       </h3>
       <p class="ty-sb-paragraph">
-        Questo è un esempio di paragrafo in <strong>Space Mono</strong>.
-        Line-height rilassata, leggibile, adatta per testi descrittivi o body content.
+        Esempio di paragrafo in <strong>Space Mono</strong>. Line-height rilassata, adatta per body text.
       </p>
 
       <div class="space-y-3">

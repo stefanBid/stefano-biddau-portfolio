@@ -17,9 +17,31 @@
   @apply text-2xl sm:text-3xl md:text-4xl;
 }
 
+/* === Title variants === */
+@utility ty-sb-title-lg {
+  @apply font-bebas-neue leading-tight;
+  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
+}
+
+@utility ty-sb-title-xl {
+  @apply font-bebas-neue leading-tight;
+  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+}
+
 @utility ty-sb-subtitle {
   @apply font-space-mono font-semibold leading-snug;
   @apply text-base sm:text-lg md:text-xl;
+}
+
+/* === Subtitle variants === */
+@utility ty-sb-subtitle-lg {
+  @apply font-space-mono font-semibold leading-snug;
+  @apply text-lg sm:text-xl md:text-2xl;
+}
+
+@utility ty-sb-subtitle-xl {
+  @apply font-space-mono font-semibold leading-snug;
+  @apply text-xl sm:text-2xl md:text-3xl;
 }
 
 @utility ty-sb-paragraph {

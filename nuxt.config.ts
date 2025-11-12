@@ -2,13 +2,13 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  compatibilityDate: '2025-07-15',
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt'],
   devtools: { enabled: true },
   css: ['./app/assets/css/main.css'],
+  compatibilityDate: '2025-07-15',
   vite: {
     plugins: [tailwindcss()],
   },
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt'],
   eslint: {
     config: {
       stylistic: true,
@@ -26,6 +26,10 @@ export default defineNuxtConfig({
         options: {
           baseURL: 'https://res.cloudinary.com/dsmtyu2iw/image/upload/',
         },
+      },
+      ipx: {
+        provider: 'ipx',
+        options: {},
       },
     },
     quality: 80,

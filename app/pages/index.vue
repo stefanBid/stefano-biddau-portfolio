@@ -1,12 +1,69 @@
 <script setup lang="ts">
+// Feature 1: Show other content after hero section aninimation endeds
+const ready = ref(false)
+const heroDoneCount = ref(0)
+const HERO_TARGET = 2 // Number of animations to wait for
+
+const heroImgWrap = ref<HTMLElement | null>(null)
+const heroTitleWrap = ref<HTMLElement | null>(null)
+
+const onAnimateEnd = () => {
+  heroDoneCount.value += 1
+  if (heroDoneCount.value >= HERO_TARGET) {
+    ready.value = true
+    // Clean up event listeners
+    detach()
+  }
+}
+
+const attach = () => {
+  if (heroImgWrap.value) {
+    heroImgWrap.value.addEventListener('animationend', onAnimateEnd)
+  }
+  if (heroTitleWrap.value) {
+    heroTitleWrap.value.addEventListener('animationend', onAnimateEnd)
+  }
+}
+
+const detach = () => {
+  if (heroImgWrap.value) {
+    heroImgWrap.value.removeEventListener('animationend', onAnimateEnd)
+  }
+  if (heroTitleWrap.value) {
+    heroTitleWrap.value.removeEventListener('animationend', onAnimateEnd)
+  }
+}
+
+onMounted(() => {
+  const prefersReduced
+    = typeof window !== 'undefined'
+      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+  if (prefersReduced) {
+    ready.value = true
+    return
+  }
+  attach()
+})
+
+onBeforeUnmount(() => {
+  detach()
+})
+
+// Feature 2: Typed.js integration for dynamic text effect
 const { el, elStyle } = useTypedText(
   [
-    'Frontend Developer.',
-    'Backend Developer.',
-    'Web Designer.',
-    'UI/UX Enthusiast.',
+    'Frontend Developer',
+    'Backend Developer',
+    'Web Designer',
+    'UI/UX Enthusiast',
   ],
+  {
+    backDelay: 500,
+  },
 )
+
+// Manage
 </script>
 
 <template>
@@ -14,15 +71,23 @@ const { el, elStyle } = useTypedText(
     <!-- Welcome Hero Section -->
     <section class="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center overflow-hidden">
       <!-- Hero image -->
-      <NuxtImg
-        alt="Hero"
-        class="absolute w-60 sm:w-72 md:w-80 lg:w-96 xl:w-96 h-auto left-1/2 transform -translate-x-1/2 pointer-events-none animate-scale-fade u-sb-soft-transition z-0"
-        provider="cloudinary"
-        src="v1762793798/my-avatar_dmchkt.webp"
-      />
+      <div
+        ref="heroImgWrap"
+        class="absolute w-60 sm:w-72 md:w-80 lg:w-96 h-auto left-1/2 -translate-x-1/2 transform pointer-events-none animate-scale-fade u-sb-soft-transition z-0"
+      >
+        <NuxtImg
+          alt="Hero"
+          class="w-full h-auto"
+          provider="ipx"
+          src="/images/my-avatar.webp"
+        />
+      </div>
 
       <!-- Title with local overlay -->
-      <div class="relative z-10 inline-block  animate-fade-in opacity-0">
+      <div
+        ref="heroTitleWrap"
+        class="relative z-10 inline-block  animate-fade-in opacity-0"
+      >
         <!-- overlay only behind the text -->
         <div
           class="absolute inset-0 -z-10 rounded-2xl bg-linear-to-r from-sb-main/80 via-sb-main/50 to-sb-main/80 blur-sm"
@@ -34,18 +99,33 @@ const { el, elStyle } = useTypedText(
           Welcome Back
         </h1>
       </div>
+      <transition name="fade">
+        <Icon
+          v-if="ready"
+          class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-sb-accent z-10 pointer-events-none u-sb-soft-transition"
+          name="solar:double-alt-arrow-down-bold-duotone"
+        />
+      </transition>
     </section>
-    <div class="w-full border">
-      <h1 class=" ty-sb-impact text-center">
+    <section
+      v-show="ready"
+      :aria-hidden="!ready"
+      class="py-16 min-h-[60vh] flex flex-col items-center justify-center space-y-2"
+      :inert="!ready"
+    >
+      <h1 class="ty-sb-title-xl text-center">
         Hello, I'm Stefano Biddau
       </h1>
-      <p
-        ref="el"
-        aria-live="polite"
-        class=" ty-sb-subtitle mt-4 "
-        :style="elStyle"
-      ></p>
-    </div>
+      <p class="ty-sb-subtitle-lg font-space-mono text-center">
+        And I'm a
+        <span
+          ref="el"
+          aria-live="polite"
+          class="text-sb-accent"
+          :style="elStyle"
+        ></span>
+      </p>
+    </section>
   </div>
 </template>
 
