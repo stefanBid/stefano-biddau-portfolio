@@ -1,3 +1,14 @@
+<script setup lang="ts">
+const { el, elStyle } = useTypedText(
+  [
+    'Frontend Developer.',
+    'Backend Developer.',
+    'Web Designer.',
+    'UI/UX Enthusiast.',
+  ],
+)
+</script>
+
 <template>
   <div>
     <!-- Welcome Hero Section -->
@@ -24,6 +35,17 @@
         </h1>
       </div>
     </section>
+    <div class="w-full border">
+      <h1 class=" ty-sb-impact text-center">
+        Hello, I'm Stefano Biddau
+      </h1>
+      <p
+        ref="el"
+        aria-live="polite"
+        class=" ty-sb-subtitle mt-4 "
+        :style="elStyle"
+      ></p>
+    </div>
   </div>
 </template>
 
