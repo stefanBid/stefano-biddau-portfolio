@@ -1,34 +1,38 @@
-.ty-sb-hero {
+/* app/styles/utilities.css */
+
+/* ======================= TYPOGRAPHY UTILITIES ======================= */
+
+@utility ty-sb-hero {
   @apply font-bebas-neue uppercase tracking-tight leading-none text-center;
   @apply text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem];
 }
 
-.ty-sb-impact {
+@utility ty-sb-impact {
   @apply font-bebas-neue tracking-tight leading-none uppercase;
   @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl;
 }
 
-.ty-sb-title {
+@utility ty-sb-title {
   @apply font-bebas-neue leading-tight;
   @apply text-2xl sm:text-3xl md:text-4xl;
 }
 
-.ty-sb-subtitle {
+@utility ty-sb-subtitle {
   @apply font-space-mono font-semibold leading-snug;
   @apply text-base sm:text-lg md:text-xl;
 }
 
-.ty-sb-paragraph {
+@utility ty-sb-paragraph {
   @apply font-space-mono leading-relaxed;
   @apply text-sm sm:text-base md:text-lg;
 }
 
-.ty-sb-label {
+@utility ty-sb-label {
   @apply font-space-mono uppercase tracking-wide;
   @apply text-xs sm:text-sm;
 }
 
-.ty-sb-btn-label {
+@utility ty-sb-btn-label {
   @apply font-space-mono font-bold uppercase tracking-wide;
   @apply text-sm sm:text-base;
 }
