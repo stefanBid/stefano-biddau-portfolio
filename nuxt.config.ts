@@ -20,22 +20,20 @@ export default defineNuxtConfig({
     cssLayer: 'base',
   },
   image: {
+    provider: 'netlify',
     providers: {
       cloudinary: {
-        provider: 'cloudinary',
+        name: 'cloudinary',
         options: {
-          baseURL: 'https://res.cloudinary.com/dsmtyu2iw/image/upload/',
+          baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE,
         },
       },
-      ipx: {
-        provider: 'ipx',
-        options: {},
-      },
     },
+    domains: [
+      process.env.NUXT_PUBLIC_STRAPI_MEDIA_BASE || '',
+    ],
     quality: 80,
     format: ['webp', 'avif', 'png'],
-    screens: {
-      'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536,
-    },
+    screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
   },
 })

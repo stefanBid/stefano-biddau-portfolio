@@ -78,7 +78,6 @@ const { el, elStyle } = useTypedText(
         <NuxtImg
           alt="Hero"
           class="w-full h-auto"
-          provider="ipx"
           src="/images/my-avatar.webp"
         />
       </div>
