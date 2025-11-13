@@ -3,6 +3,7 @@
 const ready = ref(false)
 const heroDoneCount = ref(0)
 const HERO_TARGET = 2 // Number of animations to wait for
+const atTop = ref(true) // Track if user is at top of the page (to show or hide scroll indicator)
 
 const heroImgWrap = ref<HTMLElement | null>(null)
 const heroTitleWrap = ref<HTMLElement | null>(null)
@@ -14,6 +15,13 @@ const onAnimateEnd = () => {
     // Clean up event listeners
     detach()
   }
+}
+
+const onScroll = () => {
+  if (typeof window === 'undefined') {
+    return
+  }
+  atTop.value = window.scrollY <= 64
 }
 
 const attach = () => {
@@ -41,13 +49,22 @@ onMounted(() => {
 
   if (prefersReduced) {
     ready.value = true
-    return
   }
-  attach()
+  else {
+    attach()
+  }
+
+  if (typeof window !== 'undefined') {
+    atTop.value = window.scrollY <= 64
+    window.addEventListener('scroll', onScroll)
+  }
 })
 
 onBeforeUnmount(() => {
   detach()
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', onScroll)
+  }
 })
 
 // Feature 2: Typed.js integration for dynamic text effect
@@ -100,7 +117,7 @@ const { el, elStyle } = useTypedText(
       </div>
       <transition name="fade">
         <Icon
-          v-if="ready"
+          v-if="ready && atTop"
           class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-sb-accent z-10 pointer-events-none u-sb-soft-transition"
           name="solar:double-alt-arrow-down-bold-duotone"
         />
