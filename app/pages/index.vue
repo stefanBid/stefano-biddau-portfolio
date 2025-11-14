@@ -143,8 +143,8 @@ const { el, elStyle } = useTypedText(
       </p>
       <div class="w-full mt-20 grid gap-10 md:gap-12 lg:gap-16 sm:grid-cols-1 lg:grid-cols-2 justify-items-center u-sb-soft-transition">
         <div class="w-full max-w-xl bg-sb-surface hover:bg-sb-surface-2 p-4 md:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition">
-          <div class="flex justify-center mb-4">
-            <Icon class="size-15 text-sb-contrast" name="solar:file-download-bold-duotone" />
+          <div class="flex justify-center mb-3 md:mb-4 u-sb-soft-transition">
+            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:file-download-bold-duotone" />
           </div>
           <h2 class="ty-sb-title text-center u-sb-soft-transition">
             Scarica il mio CV
@@ -152,11 +152,11 @@ const { el, elStyle } = useTypedText(
           <p class="ty-sb-subtitle text-center text-sb-muted mt-1 u-sb-soft-transition">
             Scopri il mio percorso professionale
           </p>
-          <p class="ty-sb-paragraph text-justify mt-4 u-sb-soft-transition">
+          <p class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition">
             Una panoramica completa delle mie competenze, esperienze lavorative e progetti principali.
             Il documento è aggiornato e ottimizzato per una consultazione rapida.
           </p>
-          <div class="flex items-center justify-center mt-8">
+          <div class="flex items-center justify-center mt-6 md:mt-8">
             <button class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover px-6 py-3 rounded-xl text-sb-contrast transition">
               Scarica
             </button>
