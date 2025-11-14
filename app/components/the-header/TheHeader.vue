@@ -61,7 +61,7 @@ const _lockScroll = (locked: boolean) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header class="fixed inset-x-0 top-0 h-16 border-b border-sb-border bg-sb-main/80 backdrop-blur supports-backdrop-filter:bg-sb-main/60">
-      <div class=" h-full flex items-center justify-between px-6 md:px-10 u-sb-soft-transition">
+      <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
         <NuxtLink class=" font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl" to="/">
           Stefano Biddau
         </NuxtLink>

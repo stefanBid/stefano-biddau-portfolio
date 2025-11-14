@@ -86,7 +86,7 @@ const { el, elStyle } = useTypedText(
 <template>
   <div>
     <!-- Welcome Hero Section -->
-    <section class="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center overflow-hidden">
+    <section class="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
       <!-- Hero image -->
       <div
         ref="heroImgWrap"
@@ -124,15 +124,15 @@ const { el, elStyle } = useTypedText(
       </transition>
     </section>
     <section
-      v-show="ready"
+      v-show="true"
       :aria-hidden="!ready"
-      class="py-16 min-h-[60vh] flex flex-col items-center justify-center space-y-2"
+      class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
       :inert="!ready"
     >
-      <h1 class="ty-sb-title-xl text-center">
+      <h2 class="ty-sb-title-xl text-center">
         Hello, I'm Stefano Biddau
-      </h1>
-      <p class="ty-sb-subtitle-lg font-space-mono text-center">
+      </h2>
+      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2">
         And I'm a
         <span
           ref="el"
@@ -141,6 +141,48 @@ const { el, elStyle } = useTypedText(
           :style="elStyle"
         ></span>
       </p>
+      <div class="w-full mt-20 grid gap-10 md:gap-12 lg:gap-16 sm:grid-cols-1 lg:grid-cols-2 justify-items-center u-sb-soft-transition">
+        <div class="w-full max-w-xl bg-sb-surface hover:bg-sb-surface-2 p-4 md:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition">
+          <div class="flex justify-center mb-4">
+            <Icon class="size-15 text-sb-contrast" name="solar:file-download-bold-duotone" />
+          </div>
+          <h2 class="ty-sb-title text-center u-sb-soft-transition">
+            Scarica il mio CV
+          </h2>
+          <p class="ty-sb-subtitle text-center text-sb-muted mt-1 u-sb-soft-transition">
+            Scopri il mio percorso professionale
+          </p>
+          <p class="ty-sb-paragraph text-justify mt-4 u-sb-soft-transition">
+            Una panoramica completa delle mie competenze, esperienze lavorative e progetti principali.
+            Il documento è aggiornato e ottimizzato per una consultazione rapida.
+          </p>
+          <div class="flex items-center justify-center mt-8">
+            <button class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover px-6 py-3 rounded-xl text-sb-contrast transition">
+              Scarica
+            </button>
+          </div>
+        </div>
+        <div class="w-full max-w-xl bg-sb-surface hover:bg-sb-surface-2 p-4 md:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition">
+          <div class="flex justify-center mb-4">
+            <Icon class="size-15 text-sb-contrast" name="solar:mailbox-bold-duotone" />
+          </div>
+          <h2 class="ty-sb-title text-center u-sb-soft-transition">
+            Contattami
+          </h2>
+          <p class="ty-sb-subtitle text-center text-sb-muted mt-1 u-sb-soft-transition">
+            Parliamo del tuo progetto
+          </p>
+          <p class="ty-sb-paragraph text-justify mt-4 u-sb-soft-transition">
+            Se hai bisogno di un supporto tecnico o desideri discutere una collaborazione,
+            sarò felice di ascoltare le tue idee e trovare la soluzione migliore insieme.
+          </p>
+          <div class="flex items-center justify-center mt-8">
+            <button class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover px-6 py-3 rounded-xl text-sb-contrast transition">
+              Scrivimi
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   </div>
 </template>
