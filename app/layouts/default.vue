@@ -1,4 +1,7 @@
 <script setup lang="ts">
+useHead({
+  titleTemplate: '%s Full-Stack Developer & Web Designer',
+})
 </script>
 
 <template>
