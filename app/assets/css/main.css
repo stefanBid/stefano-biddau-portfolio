@@ -71,3 +71,8 @@ img, picture, video, canvas, svg {
 html {
   -webkit-text-size-adjust: 100%;
 }
+
+html.sb-scroll-locked,
+html.sb-scroll-locked body {
+  overflow: hidden !important;
+}

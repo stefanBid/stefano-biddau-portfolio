@@ -24,12 +24,12 @@ const onKeydown = (e: KeyboardEvent) => {
 
 const onToggle = (newOpenValue: boolean) => {
   open.value = newOpenValue
-  _lockScroll(open.value)
+  lockScroll(open.value)
 }
 
 const onClose = () => {
   open.value = false
-  _lockScroll(false)
+  lockScroll(false)
 }
 
 onMounted(() => {
@@ -38,7 +38,7 @@ onMounted(() => {
 
 onBeforeUnmount(() => {
   window.removeEventListener('keydown', onKeydown)
-  _lockScroll(false)
+  lockScroll(false)
 })
 
 watch(isMdUp, (newVal) => {
@@ -46,15 +46,6 @@ watch(isMdUp, (newVal) => {
     onClose()
   }
 })
-
-// Private methods
-
-/** Only client: lock scroll */
-const _lockScroll = (locked: boolean) => {
-  if (import.meta.client) {
-    document.documentElement.style.overflow = locked ? 'hidden' : ''
-  }
-}
 </script>
 
 <template>

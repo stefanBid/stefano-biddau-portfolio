@@ -12,5 +12,8 @@ useHead({
         <slot></slot>
       </div>
     </main>
+    <footer class="mt-20 mb-10 text-center text-sb-muted ty-sb-small u-sb-soft-transition">
+      © {{ new Date().getFullYear() }} Stefano Biddau. All rights reserved.
+    </footer>
   </div>
 </template>

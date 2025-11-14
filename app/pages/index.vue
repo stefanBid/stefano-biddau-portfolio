@@ -12,6 +12,7 @@ const onAnimateEnd = () => {
   heroDoneCount.value += 1
   if (heroDoneCount.value >= HERO_TARGET) {
     ready.value = true
+    lockScroll(false)
     // Clean up event listeners
     detach()
   }
@@ -51,6 +52,7 @@ onMounted(() => {
     ready.value = true
   }
   else {
+    lockScroll(true)
     attach()
   }
 
