@@ -17,12 +17,12 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
 <template>
   <div
-    class="flex flex-col p-4 md:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition"
+    class="flex flex-col p-4 sm:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition"
     :class="{
       'bg-sb-surface': props.variant === 'dark',
-      'bg-sb-surface hover:bg-sb-surface-2': props.variant === 'dark-hover',
+      'bg-sb-surface hover:bg-sb-surface-2 focus-within:bg-sb-surface-2': props.variant === 'dark-hover',
       'bg-sb-surface-2': props.variant === 'light',
-      'bg-sb-surface-2 hover:bg-sb-surface': props.variant === 'light-hover',
+      'bg-sb-surface-2 hover:bg-sb-surface focus-within:bg-sb-surface   ': props.variant === 'light-hover',
     }"
   >
     <template v-if="props.fullCustomContent">
