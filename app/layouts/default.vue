@@ -25,20 +25,10 @@ const langs = [
       :show-announcement="showAnnouncement"
     >
       <template #announcement>
-        <div
-          class="flex items-center justify-center max-w-[1400px] mx-auto u-sb-soft-transition px-6 md:px-10 py-1.5"
-        >
-          <!-- eslint-disable-next-line vue/no-v-html -->
-          <p class="text-sb-accent ty-sb-label text-center" v-html="announcement">
-          </p>
-
-          <button class="inline-flex group items-center rounded-xl p-1 u-sb-focus ml-4 cursor-pointer text-sb-muted hover:text-sb-contrast u-sb-soft-transition" @click="() => (showAnnouncement = false)">
-            <Icon
-              class="size-6"
-              name="solar:close-circle-bold-duotone"
-            />
-          </button>
-        </div>
+        <TheHeaderAnnouncementBar
+          :announcement-rich="announcement"
+          @close="falsyValue => showAnnouncement = falsyValue"
+        />
       </template>
     </TheHeader>
     <main class="pt-16 px-6 md:px-10">
