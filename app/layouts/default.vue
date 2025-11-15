@@ -15,6 +15,11 @@ const langs = [
   { code: 'en', label: 'English', icon: 'us' },
   { code: 'it', label: 'Italiano', icon: 'it' },
 ]
+onMounted(() => {
+  if (import.meta.client) {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+  }
+})
 </script>
 
 <template>
