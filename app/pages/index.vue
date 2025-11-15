@@ -145,10 +145,10 @@ useSeoMeta({
       class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
       :inert="!ready"
     >
-      <h2 class="ty-sb-title-xl text-center">
+      <h2 class="ty-sb-title-xl text-center u-sb-soft-transition">
         Hello, I'm Stefano Biddau
       </h2>
-      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2">
+      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition">
         And I'm a
         <span
           ref="el"
@@ -170,9 +170,9 @@ useSeoMeta({
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:file-download-bold-duotone" />
           </template>
           <template #card-footer>
-            <button class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover px-6 py-3 rounded-xl text-sb-contrast transition">
-              Download
-            </button>
+            <BaseButton variant="primary">
+              Download CV
+            </BaseButton>
           </template>
         </BaseCard>
         <BaseCard
@@ -187,9 +187,9 @@ useSeoMeta({
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:mailbox-bold-duotone" />
           </template>
           <template #card-footer>
-            <button class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover px-6 py-3 rounded-xl text-sb-contrast transition">
+            <BaseButton variant="primary">
               Write to me
-            </button>
+            </BaseButton>
           </template>
         </BaseCard>
       </div>

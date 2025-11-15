@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
 <template>
   <div
-    class="flex flex-col p-4 md:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition"
+    class="flex flex-col p-4 sm:p-6 rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition"
     :class="{
       'bg-sb-surface': props.variant === 'dark',
       'bg-sb-surface hover:bg-sb-surface-2': props.variant === 'dark-hover',

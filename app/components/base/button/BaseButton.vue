@@ -11,7 +11,7 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
 
 <template>
   <button
-    class="ty-sb-btn-label border px-4 py-2 sm:px-6 sm:py-3 rounded-xl u-sb-soft-transition"
+    class="ty-sb-btn-label border px-4 py-2 sm:px-6 sm:py-3 rounded-xl u-sb-soft-transition cursor-pointer"
     :class="{
       'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast': props.variant === 'primary',
       'bg-sb-surface-2 hover:bg-sb-surface border-sb-border  text-sb-contrast': props.variant === 'secondary',
