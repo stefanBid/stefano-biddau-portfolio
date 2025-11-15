@@ -28,6 +28,7 @@ const langs = [
         <div
           class="flex items-center justify-center max-w-[1400px] mx-auto u-sb-soft-transition px-6 md:px-10 py-1.5"
         >
+          <!-- eslint-disable-next-line vue/no-v-html -->
           <p class="text-sb-accent ty-sb-label text-center" v-html="announcement">
           </p>
 
