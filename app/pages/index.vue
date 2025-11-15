@@ -63,6 +63,7 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
+  lockScroll(false)
   detach()
   if (typeof window !== 'undefined') {
     window.removeEventListener('scroll', onScroll)

@@ -16,3 +16,20 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+
+/* ===================== Slide up transition (for <transition name="slide-down">) ===================== */
+.slide-down-enter-active,
+.slide-down-leave-active {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(-1rem); /* leggera salita in ingresso */
+}
+.slide-down-enter-to,
+.slide-down-leave-from {
+  opacity: 1;
+  transform: translateY(0);
+}

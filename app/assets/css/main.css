@@ -11,6 +11,7 @@
 
 /* Ensure consistent box-sizing across the app */
 html {
+  overflow-x: hidden;
   box-sizing: border-box;
   scroll-behavior: smooth;
   scrollbar-gutter: stable;

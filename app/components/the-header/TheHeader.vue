@@ -1,18 +1,24 @@
 <!-- app/components/the-header/TheHeader.vue -->
 
 <script setup lang="ts">
+interface TheHeaderProps {
+  showAnnouncement?: boolean
+  routes: Array<{ name: string, path: string }>
+  langs: Array<{ code: string, label: string, icon: string }>
+}
+// Input / Output
+const props = withDefaults(defineProps<TheHeaderProps>(), {
+  showAnnouncement: false,
+})
+
+// eslint-disable-next-line no-unused-vars
+defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
 const currentRoute = useRoute()
 
 // Data
-const routes = [
-  { name: 'Home', path: '/' },
-  { name: 'About', path: '/about' },
-  { name: 'Skills', path: '/skills' },
-  { name: 'Projects', path: '/projects' },
-]
 
 // Events
 /** Only client: attach/detach listeners */
@@ -51,7 +57,10 @@ watch(isMdUp, (newVal) => {
 <template>
   <div class="relative z-50">
     <!-- HEADER FIXED -->
-    <header class="fixed inset-x-0 top-0 h-16 border-b border-sb-border bg-sb-main/80 backdrop-blur supports-backdrop-filter:bg-sb-main/60">
+    <header
+      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border  u-sb-soft-transition"
+      :class="props.showAnnouncement && $slots['announcement'] ? 'bg-sb-main' : 'backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80'"
+    >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
         <NuxtLink class=" font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl" to="/">
           Stefano Biddau
@@ -94,14 +103,22 @@ watch(isMdUp, (newVal) => {
         />
       </div>
     </header>
-
+    <!-- ANNOUNCEMENT SLOT -->
+    <transition name="slide-down">
+      <div
+        v-if="showAnnouncement && $slots['announcement']"
+        class="fixed inset-x-0 top-16 bg-sb-surface-2 "
+      >
+        <slot name="announcement"></slot>
+      </div>
+    </transition>
     <!-- OVERLAY + DRAWER -->
     <div class="md:hidden">
       <!-- overlay -->
       <div
         aria-hidden="true"
         class="fixed inset-0 top-16 bg-black/50 transition-opacity duration-200"
-        :class="open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'"
+        :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
         @click.stop="onClose()"
       ></div>
 
@@ -109,8 +126,8 @@ watch(isMdUp, (newVal) => {
       <aside
         id="mobile-drawer"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed top-16 left-0 h-[calc(100%-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] transition-transform duration-300 will-change-transform"
-        :class="open ? 'translate-x-0 ' : '-translate-x-full'"
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] transition-transform duration-300 will-change-transform"
+        :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
