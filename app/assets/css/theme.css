@@ -19,6 +19,7 @@
      ======================================= */
   --color-sb-accent: #e95905;        /* new accent: vivid orange */
   --color-sb-accent-hover: #d24f05;  /* slightly darker hover tone */
+  --color-sb-accent-border: #b34704; /* deeper accent for borders */
   --color-sb-contrast: #f1f1f1;      /* main text on dark backgrounds */
   --color-sb-muted: #9ca3af;         /* secondary or subdued text */
   --color-sb-error: #ef4444;         /* alert or error */

@@ -1,4 +1,3 @@
-<!-- app/components/the-header/TheHeaderMenuToggle.vue -->
 <script setup lang="ts">
 interface TheHeaderMenuToggleProps {
   open: boolean
