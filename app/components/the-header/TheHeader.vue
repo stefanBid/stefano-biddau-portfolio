@@ -62,7 +62,12 @@ watch(isMdUp, (newVal) => {
       :class="props.showAnnouncement && $slots['announcement'] ? 'bg-sb-main' : 'backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80'"
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
-        <NuxtLink class=" font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl" to="/">
+        <NuxtLink class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer" to="/">
+          <NuxtImg
+            alt="Logo"
+            class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"
+            src="/images/logo.webp"
+          />
           Stefano Biddau
         </NuxtLink>
 
@@ -72,7 +77,7 @@ watch(isMdUp, (newVal) => {
             <NuxtLink
               v-for="r in routes"
               :key="r.path"
-              class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus"
+              class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded-md"
               :class="{
                 'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path,
                 'text-sb-accent font-bold!': currentRoute.path === r.path,
