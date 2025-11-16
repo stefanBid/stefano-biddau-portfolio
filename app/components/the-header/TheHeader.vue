@@ -3,7 +3,7 @@
 <script setup lang="ts">
 interface TheHeaderProps {
   showAnnouncement?: boolean
-  routes: Array<{ name: string, path: string }>
+  routes: Array<{ name: string, path: string, disabled?: true }>
   langs: Array<{ code: string, label: string, icon: string }>
 }
 // Input / Output
@@ -78,18 +78,26 @@ watch(isMdUp, (newVal) => {
         <!-- Desktop nav -->
         <div class="flex items-center">
           <nav class="hidden md:flex items-center gap-6 bg-sb-surface rounded-xl px-4 py-2">
-            <NuxtLink
-              v-for="r in routes"
-              :key="r.path"
-              class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded-md"
-              :class="{
-                'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path,
-                'text-sb-accent font-bold!': currentRoute.path === r.path,
-              }"
-              :to="r.path"
-            >
-              {{ r.name }}
-            </NuxtLink>
+            <template v-for="r in routes" :key="r.path">
+              <NuxtLink
+                v-if="!r.disabled"
+                class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded-md"
+                :class="{
+                  'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path && !r.disabled,
+                  'text-sb-accent font-bold!': currentRoute.path === r.path && !r.disabled,
+                  'opacity-50 cursor-not-allowed text-sb-contrast/80': r.disabled,
+                }"
+                :to="r.path"
+              >
+                {{ r.name }}
+              </NuxtLink>
+              <span
+                v-else
+                class="ty-sb-btn-label normal-case! cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition rounded-md"
+              >
+                {{ r.name }}
+              </span>
+            </template>
           </nav>
           <!--
             <BaseDropdownMenu
@@ -145,19 +153,26 @@ watch(isMdUp, (newVal) => {
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
-          <NuxtLink
-            v-for="r in routes"
-            :key="r.path"
-            class="rounded-lg p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
-            :class="{
-              'hover:bg-sb-surface-2': currentRoute.path !== r.path,
-              'bg-sb-accent font-bold!': currentRoute.path === r.path,
-            }"
-            :to="r.path"
-            @click="onClose()"
-          >
-            {{ r.name }}
-          </NuxtLink>
+          <template v-for="r in routes" :key="r.path">
+            <NuxtLink
+              v-if="!r.disabled"
+              class="rounded-lg p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
+              :class="{
+                'hover:bg-sb-surface-2': currentRoute.path !== r.path,
+                'bg-sb-accent font-bold!': currentRoute.path === r.path,
+              }"
+              :to="r.path"
+              @click="onClose()"
+            >
+              {{ r.name }}
+            </NuxtLink>
+            <span
+              v-else
+              class="rounded-lg p-3 ty-btn-label cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition"
+            >
+              {{ r.name }}
+            </span>
+          </template>
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
           <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">Settings</span>

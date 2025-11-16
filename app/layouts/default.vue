@@ -6,10 +6,15 @@ useHead({
 const announcement = `🚀 <b>The portfolio is getting a fresh new look!</b> <br> I'm currently updating the design and polishing the user experience. Thanks for your patience!`
 const showAnnouncement = ref(true)
 
-const routes = [
+const routes = computed(() => [
   { name: 'Home', path: '/' },
-  { name: 'Dev', path: '/dev/styleguide' },
-]
+  import.meta.env.DEV
+    ? { name: 'StyleGuide', path: '/dev/styleguide' }
+    : undefined,
+  { name: 'About me', path: '/about', disabled: true },
+  { name: 'Skills', path: '/skills', disabled: true },
+  { name: 'Projects', path: '/projects', disabled: true },
+].filter(Boolean) as Array<{ name: string, path: string, disabled?: true }>)
 
 const langs = [
   { code: 'en', label: 'English', icon: 'us' },
