@@ -197,41 +197,8 @@ const isDialogOpen = ref(false)
         </BaseCard>
       </div>
     </section>
-    <BaseDialog
-      :is-open="isDialogOpen"
-      size="lg"
-      subtitle="Lorem ipsum dolor sit amet "
-      title="Test di prova"
-      @close="falsyValue => isDialogOpen = falsyValue"
-    >
-      <form>
-        <div class="flex flex-col md:flex-row gap-6">
-          <div class="w-full md:w-[45%] space-y-6 ">
-            <BaseInput
-              id="name"
-              autocomplete="name"
-              label="Your Name"
-              placeholder="Enter your name"
-              type="text"
-            />
-            <BaseInput
-              id="email"
-              autocomplete="email"
-              label="Your Email"
-              placeholder="Enter your email"
-              type="email"
-            />
-          </div>
-          <div class="w-full md:w-[55%] border-l-none md:border-l border-sb-border pl-0 md:pl-6">
-            <BaseTextarea
-              id="message"
-              label="Your Message"
-              placeholder="Write your message here..."
-            />
-          </div>
-        </div>
-      </form>
-    </BaseDialog>
+    <!-- Contact Form -->
+    <CustomContactForm :open-form="isDialogOpen" @close-form="value => isDialogOpen = value" />
   </div>
 </template>
 
