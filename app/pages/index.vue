@@ -199,12 +199,39 @@ const isDialogOpen = ref(false)
     </section>
     <BaseDialog
       :is-open="isDialogOpen"
+      size="lg"
       subtitle="Lorem ipsum dolor sit amet "
       title="Test di prova"
       @close="falsyValue => isDialogOpen = falsyValue"
     >
-      <div class="h-[5000px] border">
-      </div>
+      <form>
+        <div class="flex flex-col md:flex-row gap-6">
+          <div class="w-[45%]">
+            <BaseInput
+              id="name"
+              autocomplete="name"
+              label="Your Name"
+              placeholder="Enter your name"
+              type="text"
+            />
+            <BaseInput
+              id="email"
+              autocomplete="email"
+              label="Your Email"
+              placeholder="Enter your email"
+              type="email"
+            />
+          </div>
+          <div class="w-[55%] border-l border-sb-border pl-6">
+            <BaseInput
+              id="message"
+              label="Your Message"
+              placeholder="Enter your message"
+              type="text"
+            />
+          </div>
+        </div>
+      </form>
     </BaseDialog>
   </div>
 </template>
