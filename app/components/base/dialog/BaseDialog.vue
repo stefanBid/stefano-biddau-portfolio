@@ -76,7 +76,7 @@ watch(
         <!-- Dialog Panel -->
         <div
           ref="dialogRef"
-          class="relative z-10 w-full border rounded-xl border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] bg-sb-surface u-sb-soft-transition outline-none flex flex-col max-h-[90dvh]"
+          class="relative z-10 w-full border rounded-xl border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] bg-sb-main u-sb-soft-transition outline-none flex flex-col max-h-[90dvh]"
           :class="{
             'max-w-lg': size === 'sm',
             'max-w-4xl': size === 'md',
@@ -112,7 +112,7 @@ watch(
 
           <!-- BODY -->
           <section
-            class="flex-1 my-4 sm:my-6 p-4 sm:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition border"
+            class="flex-1 my-4 sm:my-6 p-4 sm:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition"
           >
             <slot></slot>
           </section>
