@@ -59,7 +59,7 @@ watch(
 
 <template>
   <Teleport to="body">
-    <Transition name="dialog-fade">
+    <Transition name="scale-fade">
       <div
         v-if="isOpen"
         aria-labelledby="sb-dialog-title"
@@ -78,9 +78,9 @@ watch(
           ref="dialogRef"
           class="relative z-10 w-full border rounded-xl border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] bg-sb-surface u-sb-soft-transition outline-none flex flex-col max-h-[90dvh]"
           :class="{
-            'max-w-md': size === 'sm',
-            'max-w-lg': size === 'md',
-            'max-w-xl': size === 'lg',
+            'max-w-lg': size === 'sm',
+            'max-w-4xl': size === 'md',
+            'max-w-6xl': size === 'lg',
             'max-w-none w-full': size === 'full',
           }"
           tabindex="-1"

@@ -203,7 +203,7 @@ const isDialogOpen = ref(false)
       title="Test di prova"
       @close="falsyValue => isDialogOpen = falsyValue"
     >
-      <div class="h-[5000px] border w-full">
+      <div class="h-[5000px] border">
       </div>
     </BaseDialog>
   </div>
