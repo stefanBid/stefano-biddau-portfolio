@@ -206,7 +206,7 @@ const isDialogOpen = ref(false)
     >
       <form>
         <div class="flex flex-col md:flex-row gap-6">
-          <div class="w-[45%]">
+          <div class="w-full md:w-[45%] space-y-6 ">
             <BaseInput
               id="name"
               autocomplete="name"
@@ -222,12 +222,11 @@ const isDialogOpen = ref(false)
               type="email"
             />
           </div>
-          <div class="w-[55%] border-l border-sb-border pl-6">
-            <BaseInput
+          <div class="w-full md:w-[55%] border-l-none md:border-l border-sb-border pl-0 md:pl-6">
+            <BaseTextarea
               id="message"
               label="Your Message"
-              placeholder="Enter your message"
-              type="text"
+              placeholder="Write your message here..."
             />
           </div>
         </div>
