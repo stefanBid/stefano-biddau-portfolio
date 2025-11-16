@@ -33,3 +33,20 @@
   opacity: 1;
   transform: translateY(0);
 }
+
+
+/* ===================== Scale and Fade transition (for <transition name="scale-fade">) ===================== */
+.scale-fade-enter-active,
+.scale-fade-leave-active {
+  transition: opacity 0.2s ease-out, transform 0.2s ease-out;
+}
+.scale-fade-enter-from,
+.scale-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95); /* leggero ridimensionamento in ingresso */
+}
+.scale-fade-enter-to,
+.scale-fade-leave-from {
+  opacity: 1;
+  transform: scale(1);
+}

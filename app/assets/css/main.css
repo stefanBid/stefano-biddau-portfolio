@@ -56,16 +56,16 @@ img, picture, video, canvas, svg {
 
 /* Scrollbar (webkit only, subtle) */
 *::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
+  width: 5px;
+  height: 5px;
 }
 *::-webkit-scrollbar-thumb {
   background: color-mix(in oklab, var(--color-sb-accent) 70%, #000 65%);
-  border: 2px solid var(--color-sb-main);
+  border: 1px solid color-mix(in oklab, var(--color-sb-accent) 70%, #000 65%);
   border-radius: 999px;
 }
 *::-webkit-scrollbar-track {
-  background: var(--color-sb-main);
+  background: tra
 }
 
 /* Remove text inflation on mobile Safari */

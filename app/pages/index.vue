@@ -19,7 +19,7 @@ const onAnimateEnd = () => {
 }
 
 const onScroll = () => {
-  if (typeof window === 'undefined') {
+  if (!import.meta.client) {
     return
   }
   atTop.value = window.scrollY <= 64
@@ -45,7 +45,7 @@ const detach = () => {
 
 onMounted(() => {
   const prefersReduced
-    = typeof window !== 'undefined'
+    = import.meta.client
       && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
 
   if (prefersReduced) {
@@ -56,7 +56,7 @@ onMounted(() => {
     attach()
   }
 
-  if (typeof window !== 'undefined') {
+  if (import.meta.client) {
     atTop.value = window.scrollY <= 64
     window.addEventListener('scroll', onScroll)
   }
@@ -65,7 +65,7 @@ onMounted(() => {
 onBeforeUnmount(() => {
   lockScroll(false)
   detach()
-  if (typeof window !== 'undefined') {
+  if (import.meta.client) {
     window.removeEventListener('scroll', onScroll)
   }
 })
@@ -97,6 +97,9 @@ useSeoMeta({
   twitterImage: '[twitter:image]',
   twitterCard: 'summary',
 })
+
+// Test BaseDialog
+const isDialogOpen = ref(false)
 </script>
 
 <template>
@@ -187,13 +190,22 @@ useSeoMeta({
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:mailbox-bold-duotone" />
           </template>
           <template #card-footer>
-            <BaseButton variant="primary">
+            <BaseButton variant="primary" @click.stop="isDialogOpen = true">
               Write to me
             </BaseButton>
           </template>
         </BaseCard>
       </div>
     </section>
+    <BaseDialog
+      :is-open="isDialogOpen"
+      subtitle="Lorem ipsum dolor sit amet "
+      title="Test di prova"
+      @close="falsyValue => isDialogOpen = falsyValue"
+    >
+      <div class="h-[5000px] border">
+      </div>
+    </BaseDialog>
   </div>
 </template>
 

@@ -39,16 +39,20 @@ const onClose = () => {
 }
 
 onMounted(() => {
-  window.addEventListener('keydown', onKeydown)
+  if (import.meta.client) {
+    window.addEventListener('keydown', onKeydown)
+  }
 })
 
 onBeforeUnmount(() => {
-  window.removeEventListener('keydown', onKeydown)
+  if (import.meta.client) {
+    window.removeEventListener('keydown', onKeydown)
+  }
   lockScroll(false)
 })
 
 watch(isMdUp, (newVal) => {
-  if (newVal) {
+  if (newVal && open.value) {
     onClose()
   }
 })
