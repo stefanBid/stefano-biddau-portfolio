@@ -17,6 +17,7 @@ const contactObject = ref({
   name: '',
   email: '',
   message: '',
+  consentGiven: false,
 })
 
 // events
@@ -63,6 +64,12 @@ const closeForm = () => {
             placeholder="Write your message here..."
           />
         </div>
+        <BaseCheckbox
+          id="consent"
+          v-model:input="contactObject.consentGiven"
+          :invalid="false"
+          label="I agree to the processing of my data in accordance with the privacy policy."
+        />
       </div>
     </form>
   </BaseDialog>
