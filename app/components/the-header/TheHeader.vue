@@ -93,7 +93,7 @@ watch(isMdUp, (newVal) => {
               </NuxtLink>
               <span
                 v-else
-                class="ty-sb-btn-label normal-case! cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition rounded-md"
+                class="ty-sb-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition rounded-md"
               >
                 {{ r.name }}
               </span>
