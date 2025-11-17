@@ -43,8 +43,14 @@ onMounted(() => {
         <slot></slot>
       </div>
     </main>
-    <footer class="mt-20 mb-10 text-center text-sb-muted ty-sb-small u-sb-soft-transition">
-      © {{ new Date().getFullYear() }} Stefano Biddau. All rights reserved.
-    </footer>
+    <TheFooter
+      email="sxhjkhdkjhsdkjh"
+      github-url="https://github.com/stefanobiddau"
+      instagram-url="https://www.instagram.com/stefanobiddau/"
+      linkedin-url="https://www.linkedin.com/in/stefanobiddau/"
+      :quick-links="routes"
+      site-name="Stefano Biddau"
+      tagline="Full Stack Developer crafting performant and elegant web experiences."
+    />
   </div>
 </template>
