@@ -12,6 +12,7 @@
     "lint:fix": "eslint . --fix"
   },
   "dependencies": {
+    "@emailjs/browser": "^4.4.1",
     "@iconify-json/solar": "^1.2.5",
     "@nuxt/eslint": "^1.10.0",
     "@nuxt/icon": "^2.1.0",
