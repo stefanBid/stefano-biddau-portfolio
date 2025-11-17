@@ -3,6 +3,9 @@ interface CustomContactFormProps {
   openForm: boolean
 }
 
+// Dependencies
+const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
+
 // Input / Output
 const props = defineProps<CustomContactFormProps>()
 
@@ -17,14 +20,21 @@ const emailController = ref<string>('')
 const messageController = ref<string>('')
 const consentGivenController = ref<boolean>(false)
 
+const formIsChanged = computed(() => {
+  return (
+    nameController.value !== ''
+    || emailController.value !== ''
+    || messageController.value !== ''
+    || consentGivenController.value !== false
+  )
+})
+
 // events
 const closeForm = () => {
   if (props.openForm) {
     emits('closeForm', false)
   }
 }
-
-const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
 
 const onSendMessage = async () => {
   // Prepare Message Data
@@ -44,6 +54,13 @@ const onSendMessage = async () => {
     year: new Date().getFullYear().toString(),
   })
 }
+
+const onResetForm = () => {
+  nameController.value = ''
+  emailController.value = ''
+  messageController.value = ''
+  consentGivenController.value = false
+}
 </script>
 
 <template>
@@ -54,8 +71,9 @@ const onSendMessage = async () => {
     title="Contact Me"
     @close="closeForm"
   >
-    <form @submit.prevent="onSendMessage">
+    <form class="flex flex-col gap-6" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
       <div class="flex flex-col md:flex-row gap-6">
+        {{ consentGivenController }}
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput
             id="name"
@@ -82,12 +100,22 @@ const onSendMessage = async () => {
             placeholder="Write your message here..."
           />
         </div>
-        <BaseCheckbox
-          id="consent"
-          v-model:input="consentGivenController"
-          :invalid="false"
-          label="I agree to the processing of my data in accordance with the privacy policy."
-        />
+      </div>
+      <BaseCheckbox
+        id="consent"
+        v-model:input="consentGivenController"
+        :invalid="false"
+        label="I agree to the processing of my data in accordance with the privacy policy."
+      />
+      <div class="w-full flex justify-end items-center mt-4 gap-4">
+        <BaseButton
+
+          :is-disabled="!formIsChanged"
+          type="reset"
+          variant="secondary"
+        >
+          Cancel
+        </BaseButton>
         <BaseButton type="submit" variant="primary">
           Send Message
         </BaseButton>
