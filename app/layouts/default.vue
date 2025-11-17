@@ -8,9 +8,6 @@ const showAnnouncement = ref(true)
 
 const routes = computed(() => [
   { name: 'Home', path: '/' },
-  import.meta.env.DEV
-    ? { name: 'StyleGuide', path: '/dev/styleguide' }
-    : undefined,
   { name: 'About me', path: '/about', disabled: true },
   { name: 'Skills', path: '/skills', disabled: true },
   { name: 'Projects', path: '/projects', disabled: true },

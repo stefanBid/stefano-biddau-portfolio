@@ -173,7 +173,7 @@ const isDialogOpen = ref(false)
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:file-download-bold-duotone" />
           </template>
           <template #card-footer>
-            <BaseButton variant="primary">
+            <BaseButton variant="primary" @click.stop="downloadFile('/files/Stefano_Biddau_CV.pdf', 'Stefano_Biddau_CV.pdf')">
               Download CV
             </BaseButton>
           </template>
