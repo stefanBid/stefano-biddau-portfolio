@@ -12,13 +12,10 @@ const emits = defineEmits<{
 }>()
 
 // State
-
-const contactObject = ref({
-  name: '',
-  email: '',
-  message: '',
-  consentGiven: false,
-})
+const nameController = ref<string>('')
+const emailController = ref<string>('')
+const messageController = ref<string>('')
+const consentGivenController = ref<boolean>(false)
 
 // events
 const closeForm = () => {
@@ -27,14 +24,24 @@ const closeForm = () => {
   }
 }
 
-const { sendContactEmail } = useEmailJs()
+const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
 
 const onSendMessage = async () => {
-  console.log('Sending contact email...')
-  await sendContactEmail({
-    from_name: contactObject.value.name,
-    from_email: contactObject.value.email,
-    message: contactObject.value.message,
+  // Prepare Message Data
+  const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
+  await sendContactEmailAdmin({
+    from_name: nameController.value,
+    from_email: emailController.value,
+    message: completeMessage,
+    agree_time: new Date().toLocaleTimeString(),
+    year: new Date().getFullYear().toString(),
+  })
+
+  await sendReplyToUser({
+    user_name: nameController.value,
+    to_email: emailController.value,
+    message: messageController.value,
+    year: new Date().getFullYear().toString(),
   })
 }
 </script>
@@ -52,7 +59,7 @@ const onSendMessage = async () => {
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput
             id="name"
-            v-model:input="contactObject.name"
+            v-model:input="nameController"
             autocomplete="name"
             label="Your Name"
             placeholder="Enter your name"
@@ -60,7 +67,7 @@ const onSendMessage = async () => {
           />
           <BaseInput
             id="email"
-            v-model:input="contactObject.email"
+            v-model:input="emailController"
             autocomplete="email"
             label="Your Email"
             placeholder="Enter your email"
@@ -70,14 +77,14 @@ const onSendMessage = async () => {
         <div class="w-full md:w-[55%] border-l-none md:border-l border-sb-border pl-0 md:pl-6">
           <BaseTextarea
             id="message"
-            v-model:input="contactObject.message"
+            v-model:input="messageController"
             label="Your Message"
             placeholder="Write your message here..."
           />
         </div>
         <BaseCheckbox
           id="consent"
-          v-model:input="contactObject.consentGiven"
+          v-model:input="consentGivenController"
           :invalid="false"
           label="I agree to the processing of my data in accordance with the privacy policy."
         />
