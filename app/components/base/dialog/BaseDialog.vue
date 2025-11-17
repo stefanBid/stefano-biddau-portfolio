@@ -25,6 +25,7 @@ const onClose = () => {
 
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape' && props.isOpen) {
+    e.preventDefault()
     onClose()
   }
 }

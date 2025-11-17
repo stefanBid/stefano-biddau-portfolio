@@ -3,16 +3,18 @@
 <script setup lang="ts">
 interface TheHeaderProps {
   showAnnouncement?: boolean
-  routes: Array<{ name: string, path: string, disabled?: true }>
-  langs: Array<{ code: string, label: string, icon: string }>
+  routes: Array<RouteItem>
+  langs: Array<LangItem>
+  selectedLangId?: string | null
 }
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
   showAnnouncement: false,
+  selectedLangId: null,
 })
 
 // eslint-disable-next-line no-unused-vars
-defineEmits<{ (e: 'change-lang', langCode: string): void }>()
+const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
@@ -24,6 +26,7 @@ const currentRoute = useRoute()
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
+    e.preventDefault()
     onClose()
   }
 }
@@ -36,6 +39,11 @@ const onToggle = (newOpenValue: boolean) => {
 const onClose = () => {
   open.value = false
   lockScroll(false)
+}
+
+const onSelectLang = (langCode: string) => {
+  // Emit lang change
+  emit('change-lang', langCode)
 }
 
 onMounted(() => {
@@ -99,18 +107,13 @@ watch(isMdUp, (newVal) => {
               </span>
             </template>
           </nav>
-          <!--
-            <BaseDropdownMenu
-              class="ml-4"
-              :items="[
-                { id: 'profile', label: 'Profile' },
-                { id: 'account', label: 'Account' },
-                { id: 'logout', label: 'Logout' },
-              ]"
-              label="Settings"
-              @select="item => console.log(item)"
+          <div class="ml-0 md:ml-4 hidden! md:inline-block!">
+            <BaseIconMenu
+              :items="props.langs"
+              :selected-item-id="props.selectedLangId"
+              @select="itemId => onSelectLang(itemId)"
             />
-          -->
+          </div>
         </div>
         <!-- Mobile: hamburger -->
         <TheHeaderMenuToggle
@@ -176,6 +179,13 @@ watch(isMdUp, (newVal) => {
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
           <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">Settings</span>
+        </div>
+        <div class="p-6">
+          <BaseIconMenu
+            :items="props.langs"
+            :selected-item-id="props.selectedLangId"
+            @select="itemId => onSelectLang(itemId)"
+          />
         </div>
       </aside>
     </div>
