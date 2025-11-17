@@ -4,7 +4,7 @@ interface BaseCheckboxProps {
   name?: string
   label: string
   isRich?: boolean
-  invalid?: boolean
+  error?: string | null
 }
 
 // Input / Output
@@ -12,6 +12,7 @@ const props = withDefaults(defineProps<BaseCheckboxProps>(), {
   name: undefined,
   invalid: false,
   isRich: false,
+  error: null,
 })
 
 const model = defineModel<boolean>('input')
@@ -22,7 +23,7 @@ const model = defineModel<boolean>('input')
     <input
       :id="props.id"
       v-model="model"
-      :aria-invalid="props.invalid ? 'true' : 'false'"
+      :aria-invalid="props.error ? 'true' : 'false'"
       autocomplete="on"
       class="
       relative
@@ -31,7 +32,6 @@ const model = defineModel<boolean>('input')
       appearance-none
       outline-none
       bg-sb-surface-2
-      border-sb-border
       checked:bg-sb-accent-hover
       checked:border-sb-contrast
       focus-visible:ring-2
@@ -44,7 +44,7 @@ const model = defineModel<boolean>('input')
       before:content-['✓'] before:opacity-0
       checked:before:opacity-100
     "
-      :class="props.invalid ? 'border-sb-danger' : 'border-sb-border'"
+      :class="props.error ? 'border-red-500' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       type="checkbox"
     />

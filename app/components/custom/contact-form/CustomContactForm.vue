@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { z } from 'zod'
+
 interface CustomContactFormProps {
   openForm: boolean
 }
@@ -20,6 +22,26 @@ const emailController = ref<string>('')
 const messageController = ref<string>('')
 const consentGivenController = ref<boolean>(false)
 
+// Form validation Schema using Zod
+
+const MESSAGE_MIN_LENGTH = 10
+const MESSAGE_MAX_LENGTH = 800
+const contactValidationSchema = z.object({
+  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
+  email: z.email('Invalid email address'),
+  message: z.string().min(MESSAGE_MIN_LENGTH, 'Message is too short').max(MESSAGE_MAX_LENGTH, 'Message is too long'),
+  consentGiven: z.boolean().refine(val => val === true, {
+    message: 'You must agree to the processing of your data',
+  }),
+})
+
+const errors = ref<Record<string, string | null>>({
+  name: null,
+  email: null,
+  message: null,
+  consentGiven: null,
+})
+
 const emailIsSending = ref<boolean>(false)
 
 const formIsChanged = computed(() => {
@@ -39,6 +61,31 @@ const closeForm = () => {
 }
 
 const onSendMessage = async () => {
+  // Validate Form Data
+  const validationResult = contactValidationSchema.safeParse({
+    name: nameController.value,
+    email: emailController.value,
+    message: messageController.value,
+    consentGiven: consentGivenController.value,
+  })
+
+  if (!validationResult.success) {
+    // Reset errors
+    errors.value = {
+      name: null,
+      email: null,
+      message: null,
+      consentGiven: null,
+    }
+    // Map errors
+    validationResult.error.issues.forEach((issue) => {
+      if (issue.path.length > 0) {
+        const field = issue.path[0] as keyof typeof errors.value
+        errors.value[field] = issue.message
+      }
+    })
+    return
+  }
   // Prepare Message Data
   const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
   emailIsSending.value = true
@@ -82,6 +129,7 @@ const onResetForm = () => {
             id="name"
             v-model:input="nameController"
             autocomplete="name"
+            :error="errors.name"
             label="Your Name"
             placeholder="Enter your name"
             type="text"
@@ -90,6 +138,7 @@ const onResetForm = () => {
             id="email"
             v-model:input="emailController"
             autocomplete="email"
+            :error="errors.email"
             label="Your Email"
             placeholder="Enter your email"
             type="email"
@@ -99,7 +148,9 @@ const onResetForm = () => {
           <BaseTextarea
             id="message"
             v-model:input="messageController"
+            :error="errors.message"
             label="Your Message"
+            :max-length="MESSAGE_MAX_LENGTH"
             placeholder="Write your message here..."
           />
         </div>
@@ -107,7 +158,7 @@ const onResetForm = () => {
       <BaseCheckbox
         id="consent"
         v-model:input="consentGivenController"
-        :invalid="false"
+        :error="errors.consentGiven"
         label="I agree to the processing of my data in accordance with the privacy policy."
       />
       <div class="w-full flex justify-end items-center mt-4 gap-4">
