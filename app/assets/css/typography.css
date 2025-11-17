@@ -58,3 +58,8 @@
   @apply font-space-mono font-bold uppercase tracking-wide;
   @apply text-sm sm:text-base;
 }
+
+@utility ty-sb-caption {
+  @apply font-space-mono italic;
+  @apply text-xs sm:text-sm;
+}
