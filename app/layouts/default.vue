@@ -14,9 +14,12 @@ const routes = computed(() => [
 ] as Array<{ name: string, path: string, disabled?: true }>)
 
 const langs = [
-  { code: 'en', label: 'English', icon: 'us' },
-  { code: 'it', label: 'Italiano', icon: 'it' },
-]
+  { code: 'en', label: 'English', icon: 'circle-flags:en' },
+  { code: 'it', label: 'Italiano', icon: 'circle-flags:it' },
+] as Array<LangItem>
+
+const selectedLang = ref<string | null>('en')
+
 onMounted(() => {
   if (import.meta.client) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
@@ -29,7 +32,9 @@ onMounted(() => {
     <TheHeader
       :langs="langs"
       :routes="routes"
+      :selected-lang-id="selectedLang"
       :show-announcement="showAnnouncement"
+      @change-lang="langCode => selectedLang = langCode"
     >
       <template #announcement>
         <TheHeaderAnnouncementBar

@@ -4,15 +4,17 @@
 interface TheHeaderProps {
   showAnnouncement?: boolean
   routes: Array<{ name: string, path: string, disabled?: true }>
-  langs: Array<{ code: string, label: string, icon: string }>
+  langs: Array<LangItem>
+  selectedLangId?: string | null
 }
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
   showAnnouncement: false,
+  selectedLangId: null,
 })
 
 // eslint-disable-next-line no-unused-vars
-defineEmits<{ (e: 'change-lang', langCode: string): void }>()
+const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
@@ -37,6 +39,11 @@ const onToggle = (newOpenValue: boolean) => {
 const onClose = () => {
   open.value = false
   lockScroll(false)
+}
+
+const onSelectLang = (langCode: string) => {
+  // Emit lang change
+  emit('change-lang', langCode)
 }
 
 onMounted(() => {
@@ -100,18 +107,12 @@ watch(isMdUp, (newVal) => {
               </span>
             </template>
           </nav>
-          <!--
-            <BaseDropdownMenu
-              class="ml-4"
-              :items="[
-                { id: 'profile', label: 'Profile' },
-                { id: 'account', label: 'Account' },
-                { id: 'logout', label: 'Logout' },
-              ]"
-              label="Settings"
-              @select="item => console.log(item)"
-            />
-          -->
+          <BaseIconMenu
+            class="ml-4"
+            :items="props.langs"
+            :selected-item-id="props.selectedLangId"
+            @select="itemId => onSelectLang(itemId)"
+          />
         </div>
         <!-- Mobile: hamburger -->
         <TheHeaderMenuToggle
