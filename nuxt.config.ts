@@ -9,7 +9,8 @@ export default defineNuxtConfig({
     public: {
       emailjsPublicKey: process.env.NUXT_EMAILJS_PUBLIC_KEY,
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
-      emailjsTemplateId: process.env.NUXT_EMAILJS_TEMPLATE_ID,
+      emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
+      emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
     },
   },
   compatibilityDate: '2025-07-15',

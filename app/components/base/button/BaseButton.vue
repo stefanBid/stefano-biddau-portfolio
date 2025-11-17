@@ -13,18 +13,38 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   isDisabled: false,
   isLoading: false,
 })
+
+const isInteractive = computed(() => {
+  return !props.isDisabled && !props.isLoading
+})
 </script>
 
 <template>
   <button
     class="ty-sb-btn-label border px-4 py-2 sm:px-6 sm:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
-    :class="{
-      'cursor-pointer': !props.isDisabled && !props.isLoading,
-      'opacity-45 cursor-not-allowed': props.isDisabled || props.isLoading,
-      'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast': props.variant === 'primary',
-      'bg-sb-surface-2 hover:bg-sb-surface border-sb-border  text-sb-contrast': props.variant === 'secondary',
-      'bg-transparent border-sb-accent text-sb-accent hover:bg-sb-accent hover:text-sb-main': props.variant=== 'outline',
-    }"
+    :class="[
+      // General state
+      isInteractive ? 'cursor-pointer' : 'opacity-45 cursor-not-allowed',
+
+      // Variants
+      props.variant === 'primary'
+        ? isInteractive
+          ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
+          : 'bg-sb-accent border-sb-accent-border text-sb-contrast'
+        : '',
+
+      props.variant === 'secondary'
+        ? isInteractive
+          ? 'bg-sb-surface-2 hover:bg-sb-surface border-sb-border text-sb-contrast'
+          : 'bg-sb-surface-2 border-sb-border text-sb-contrast'
+        : '',
+
+      props.variant === 'outline'
+        ? isInteractive
+          ? 'bg-transparent border-sb-accent text-sb-accent hover:bg-sb-accent hover:text-sb-main'
+          : 'bg-transparent border-sb-accent text-sb-accent'
+        : '',
+    ]"
 
     :disabled="props.isDisabled || props.isLoading"
     :type="props.type"

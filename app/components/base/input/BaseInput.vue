@@ -6,7 +6,7 @@ interface BaseInputProps {
   placeholder?: string
   type?: 'text' | 'password' | 'email' | 'number'
   hint?: string
-  error?: string
+  error?: string | null
   autocomplete?: string
 }
 // Input / Output
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   name: undefined,
   autocomplete: 'off',
   hint: undefined,
-  error: undefined,
+  error: null,
 })
 
 const model = defineModel<string>('input')
@@ -46,7 +46,8 @@ const describedBy = computed(() => {
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
       :autocomplete="props.autocomplete"
-      class="w-full rounded-lg bg-sb-surface-2 border border-sb-border px-3 py-1.5 sm:px-4 sm:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent"
+      class="w-full rounded-lg bg-sb-surface-2 border  px-3 py-1.5 sm:px-4 sm:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent"
+      :class="props.error ? 'border-red-500' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
       :type="props.type"

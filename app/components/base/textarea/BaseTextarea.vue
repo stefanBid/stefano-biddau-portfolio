@@ -5,7 +5,8 @@ interface BaseTextareaProps {
   label?: string
   placeholder?: string
   hint?: string
-  error?: string
+  error?: string | null
+  maxLength?: number
 }
 
 // Input / Output
@@ -14,7 +15,8 @@ const props = withDefaults(defineProps<BaseTextareaProps>(), {
   placeholder: 'Insert a value...',
   name: undefined,
   hint: undefined,
-  error: undefined,
+  error: null,
+  maxLength: undefined,
 })
 
 const model = defineModel<string>('input')
@@ -29,6 +31,12 @@ const describedBy = computed(() => {
   }
   return ids.length ? ids.join(' ') : undefined
 })
+
+const lengths = computed(() => ({
+  current: model.value?.length || 0,
+  max: props.maxLength || 0,
+}),
+)
 </script>
 
 <template>
@@ -42,10 +50,18 @@ const describedBy = computed(() => {
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-lg bg-sb-surface-2 border border-sb-border px-3 py-1.5 sm:px-4 sm:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
+      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-1.5 sm:px-4 sm:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
+      :class="props.error ? 'border-red-500' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
     ></textarea>
+    <!-- Max Counter -->
+    <p
+      v-if="props.maxLength"
+      class="ty-sb-caption text-sb-muted u-sb-soft-transition text-right mt-1 sm:mt-1.5"
+    >
+      <span :class="lengths.current > lengths.max ? 'text-red-500!' : 'text-sb-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
+    </p>
     <!-- Hint -->
     <p
       v-if="props.hint"
@@ -58,7 +74,8 @@ const describedBy = computed(() => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-sb-danger mt-1 sm:mt-1.5 u-sb-soft-transition"
+      class="ty-sb-label normal-case! text-red-500 mt-1 sm:mt-1.5 u-sb-soft-transition"
+      role="alert"
     >
       {{ props.error }}
     </p>
