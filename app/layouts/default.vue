@@ -48,6 +48,7 @@ onMounted(() => {
       github-url="https://github.com/stefanobiddau"
       instagram-url="https://www.instagram.com/stefanobiddau/"
       linkedin-url="https://www.linkedin.com/in/stefanobiddau/"
+      phone="+39 3297247711"
       :quick-links="routes"
       site-name="Stefano Biddau"
       tagline="Full Stack Developer crafting performant and elegant web experiences."
