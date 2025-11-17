@@ -3,7 +3,7 @@
 <script setup lang="ts">
 interface TheHeaderProps {
   showAnnouncement?: boolean
-  routes: Array<{ name: string, path: string, disabled?: true }>
+  routes: Array<RouteItem>
   langs: Array<LangItem>
   selectedLangId?: string | null
 }

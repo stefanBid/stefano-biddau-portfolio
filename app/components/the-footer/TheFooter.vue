@@ -2,7 +2,7 @@
 interface TheFooterProps {
   siteName?: string
   tagline?: string
-  quickLinks?: Array<{ name: string, path: string, disabled?: true }>
+  quickLinks?: Array<RouteItem>
   phone?: string
   email?: string
   githubUrl?: string

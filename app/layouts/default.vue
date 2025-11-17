@@ -11,7 +11,7 @@ const routes = computed(() => [
   { name: 'About me', path: '/about', disabled: true },
   { name: 'Skills', path: '/skills', disabled: true },
   { name: 'Projects', path: '/projects', disabled: true },
-] as Array<{ name: string, path: string, disabled?: true }>)
+] as Array<RouteItem>)
 
 const langs = [
   { code: 'en', label: 'English', icon: 'circle-flags:en' },
