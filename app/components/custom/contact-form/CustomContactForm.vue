@@ -99,6 +99,7 @@ const onSendMessage = async () => {
     year: new Date().getFullYear().toString(),
   })
   emailIsSending.value = false
+  closeForm()
 }
 
 const onResetForm = () => {
