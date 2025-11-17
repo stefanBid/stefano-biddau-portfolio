@@ -107,12 +107,13 @@ watch(isMdUp, (newVal) => {
               </span>
             </template>
           </nav>
-          <BaseIconMenu
-            class="ml-4"
-            :items="props.langs"
-            :selected-item-id="props.selectedLangId"
-            @select="itemId => onSelectLang(itemId)"
-          />
+          <div class="ml-0 md:ml-4 hidden! md:inline-block!">
+            <BaseIconMenu
+              :items="props.langs"
+              :selected-item-id="props.selectedLangId"
+              @select="itemId => onSelectLang(itemId)"
+            />
+          </div>
         </div>
         <!-- Mobile: hamburger -->
         <TheHeaderMenuToggle
@@ -178,6 +179,13 @@ watch(isMdUp, (newVal) => {
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
           <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">Settings</span>
+        </div>
+        <div class="p-6">
+          <BaseIconMenu
+            :items="props.langs"
+            :selected-item-id="props.selectedLangId"
+            @select="itemId => onSelectLang(itemId)"
+          />
         </div>
       </aside>
     </div>

@@ -82,7 +82,7 @@ watch(open, (newVal) => {
       @click="toggleFloating(!open)"
     >
       <Icon
-        class="size-5 md:size-6 u-sb-soft-transition"
+        class="size-6 u-sb-soft-transition"
         name="solar:globus-bold-duotone"
       />
     </button>
