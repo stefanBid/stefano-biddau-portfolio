@@ -20,6 +20,8 @@ const emailController = ref<string>('')
 const messageController = ref<string>('')
 const consentGivenController = ref<boolean>(false)
 
+const emailIsSending = ref<boolean>(false)
+
 const formIsChanged = computed(() => {
   return (
     nameController.value !== ''
@@ -39,6 +41,7 @@ const closeForm = () => {
 const onSendMessage = async () => {
   // Prepare Message Data
   const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
+  emailIsSending.value = true
   await sendContactEmailAdmin({
     from_name: nameController.value,
     from_email: emailController.value,
@@ -53,6 +56,7 @@ const onSendMessage = async () => {
     message: messageController.value,
     year: new Date().getFullYear().toString(),
   })
+  emailIsSending.value = false
 }
 
 const onResetForm = () => {
@@ -116,7 +120,7 @@ const onResetForm = () => {
         >
           Cancel
         </BaseButton>
-        <BaseButton type="submit" variant="primary">
+        <BaseButton :is-loading="emailIsSending" type="submit" variant="primary">
           Send Message
         </BaseButton>
       </div>
