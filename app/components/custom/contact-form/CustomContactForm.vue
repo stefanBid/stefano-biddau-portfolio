@@ -22,7 +22,7 @@ const contactObject = ref({
 
 // events
 const closeForm = () => {
-  if (!props.openForm) {
+  if (props.openForm) {
     emits('closeForm', false)
   }
 }
