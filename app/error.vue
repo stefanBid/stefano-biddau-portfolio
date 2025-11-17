@@ -24,7 +24,7 @@ const handleBackHome = () => {
       >
         <!-- Badge status -->
         <p
-          class="ty-sb-caption uppercase tracking-[0.2em] text-sb-muted bg-sb-surface/60 border border-sb-border rounded-full px-4 py-1 u-sb-soft-transition"
+          class="ty-sb-caption uppercase tracking-[0.2em] text-sb-muted bg-sb-surface/60 border border-sb-border rounded-xl px-4 py-1 u-sb-soft-transition"
         >
           {{ is404 ? 'Page not found' : 'Something went wrong' }}
         </p>
