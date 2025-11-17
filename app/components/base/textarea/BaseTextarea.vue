@@ -58,7 +58,7 @@ const lengths = computed(() => ({
     <!-- Max Counter -->
     <p
       v-if="props.maxLength"
-      class="ty-sb-caption text-sb-muted u-sb-soft-transition text-right mt-1 sm:mt-1.5"
+      class="ty-sb-caption text-sb-muted u-sb-soft-transition text-right mt-1"
     >
       <span :class="lengths.current > lengths.max ? 'text-red-500!' : 'text-sb-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
     </p>
