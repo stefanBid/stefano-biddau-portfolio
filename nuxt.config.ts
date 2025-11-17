@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt'],
   devtools: { enabled: true },
   css: ['./app/assets/css/main.css'],
+  runtimeConfig: {
+    public: {
+      emailjsPublicKey: process.env.NUXT_EMAILJS_PUBLIC_KEY,
+      emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
+      emailjsTemplateId: process.env.NUXT_EMAILJS_TEMPLATE_ID,
+    },
+  },
   compatibilityDate: '2025-07-15',
   vite: {
     plugins: [tailwindcss()],

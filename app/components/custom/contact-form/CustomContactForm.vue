@@ -26,6 +26,17 @@ const closeForm = () => {
     emits('closeForm', false)
   }
 }
+
+const { sendContactEmail } = useEmailJs()
+
+const onSendMessage = async () => {
+  console.log('Sending contact email...')
+  await sendContactEmail({
+    from_name: contactObject.value.name,
+    from_email: contactObject.value.email,
+    message: contactObject.value.message,
+  })
+}
 </script>
 
 <template>
@@ -36,7 +47,7 @@ const closeForm = () => {
     title="Contact Me"
     @close="closeForm"
   >
-    <form>
+    <form @submit.prevent="onSendMessage">
       <div class="flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput
@@ -70,6 +81,9 @@ const closeForm = () => {
           :invalid="false"
           label="I agree to the processing of my data in accordance with the privacy policy."
         />
+        <BaseButton type="submit" variant="primary">
+          Send Message
+        </BaseButton>
       </div>
     </form>
   </BaseDialog>
