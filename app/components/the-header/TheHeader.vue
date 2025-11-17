@@ -24,6 +24,7 @@ const currentRoute = useRoute()
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
   if (e.key === 'Escape') {
+    e.preventDefault()
     onClose()
   }
 }
