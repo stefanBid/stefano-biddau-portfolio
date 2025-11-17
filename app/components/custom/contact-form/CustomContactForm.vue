@@ -71,12 +71,7 @@ const onSendMessage = async () => {
 
   if (!validationResult.success) {
     // Reset errors
-    errors.value = {
-      name: null,
-      email: null,
-      message: null,
-      consentGiven: null,
-    }
+    onResetErrors()
     // Map errors
     validationResult.error.issues.forEach((issue) => {
       if (issue.path.length > 0) {
@@ -112,6 +107,25 @@ const onResetForm = () => {
   messageController.value = ''
   consentGivenController.value = false
 }
+
+const onResetErrors = () => {
+  errors.value = {
+    name: null,
+    email: null,
+    message: null,
+    consentGiven: null,
+  }
+}
+
+watch(
+  () => props.openForm,
+  (newVal) => {
+    if (!newVal) {
+      onResetForm()
+      onResetErrors()
+    }
+  },
+)
 </script>
 
 <template>
