@@ -9,7 +9,9 @@
     "home": "Home",
     "about-me": "About Me",
     "my-skills": "Skills",
-    "my-projects": "Projects"
+    "my-projects": "Projects",
+    "terms-and-conditions": "Terms and Conditions",
+    "privacy-policy": "Privacy Policy"
   },
   "meta": {
     "home": {
@@ -45,6 +47,41 @@
         "subtitle": "Let's talk about your projects",
         "paragraph": "If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together.",
         "buttonText": "Get in Touch"
+      },
+      "contactForm": {
+        "title": "Contact Me",
+        "subtitle": "Fill out the form to send me a message. I’ll get back to you as soon as possible.",
+        "fields": {
+          "name": {
+            "label": "Name",
+            "placeholder": "Enter your name",
+            "error-required": "Name is required",
+            "error-maxlength": "Name is too long"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Enter your email",
+            "error-invalid": "Invalid email address"
+          },
+          "message": {
+            "label": "Message",
+            "placeholder": "Write your message here...",
+            "error-required": "Message is required",
+            "error-minlength": "Message is too short",
+            "error-maxlength": "Message is too long"
+          },
+          "consentGiven": {
+            "label": "I agree to the processing of the data provided exclusively for contact purposes. The data will not be stored or shared with third parties.",
+            "error-required": "You must agree to the processing of your data"
+          },
+          "submitButton": {
+            "text": "Send Message",
+            "loadingText": "Sending..."
+          },
+          "resetButton": {
+            "text": "Reset"
+          }
+        }
       }
     }
   },

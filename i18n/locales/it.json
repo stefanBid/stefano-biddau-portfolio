@@ -9,7 +9,9 @@
     "home": "Home",
     "about-me": "Chi Sono",
     "my-skills": "Competenze",
-    "my-projects": "Progetti"
+    "my-projects": "Progetti",
+    "terms-and-conditions": "Termini e Condizioni",
+    "privacy-policy": "Informativa sulla Privacy"
   },
   "meta": {
     "home": {
@@ -45,6 +47,41 @@
         "subtitle": "Parliamo dei tuoi progetti",
         "paragraph": "Se hai bisogno di supporto tecnico o vuoi discutere una possibile collaborazione, sarò felice di ascoltare le tue idee e trovare insieme la soluzione migliore.",
         "buttonText": "Mettiti in contatto"
+      },
+      "contactForm": {
+        "title": "Contattami",
+        "subtitle": "Compila il form per inviarmi un messaggio. Ti risponderò il prima possibile.",
+        "fields": {
+          "name": {
+            "label": "Nome",
+            "placeholder": "Inserisci il tuo nome",
+            "error-required": "Il nome è obbligatorio",
+            "error-maxlength": "Il nome è troppo lungo"
+          },
+          "email": {
+            "label": "Email",
+            "placeholder": "Inserisci la tua email",
+            "error-invalid": "Indirizzo email non valido"
+          },
+          "message": {
+            "label": "Messaggio",
+            "placeholder": "Scrivi qui il tuo messaggio...",
+            "error-required": "Il messaggio è obbligatorio",
+            "error-minlength": "Il messaggio è troppo corto",
+            "error-maxlength": "Il messaggio è troppo lungo"
+          },
+          "consentGiven": {
+            "label": "Acconsento al trattamento dei dati forniti esclusivamente per finalità di contatto. I dati non verranno memorizzati né condivisi con terzi.",
+            "error-required": "Devi acconsentire al trattamento dei tuoi dati"
+          },
+          "submitButton": {
+            "text": "Invia Messaggio",
+            "loadingText": "Invio in corso..."
+          },
+          "resetButton": {
+            "text": "Resetta"
+          }
+        }
       }
     }
   },
