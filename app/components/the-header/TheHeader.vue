@@ -83,7 +83,10 @@ watch(isMdUp, (newVal) => {
       :class="props.showAnnouncement && $slots['announcement'] ? 'bg-sb-main' : 'backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80'"
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
-        <NuxtLink class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer" to="/">
+        <NuxtLink
+          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer"
+          :to="props.routes[0]?.path || '/'"
+        >
           <NuxtImg
             alt="Logo"
             class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"

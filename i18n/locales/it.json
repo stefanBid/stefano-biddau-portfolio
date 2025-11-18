@@ -47,5 +47,12 @@
         "buttonText": "Mettiti in contatto"
       }
     }
+  },
+  "footer": {
+    "tagline": "Trasformo le tue idee in esperienze digitali, una linea di codice alla volta.",
+    "route-section": "Link veloci",
+    "contact-section": "Contatti & Social",
+    "credit-section": "© { year } Stefano Biddau - Tutti i diritti riservati.",
+    "made-with": "Progettato e sviluppato con ❤ da Stefano Biddau"
   }
 }

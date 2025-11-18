@@ -1,7 +1,5 @@
 <script setup lang="ts">
 interface TheFooterProps {
-  siteName?: string
-  tagline?: string
   quickLinks?: Array<RouteItem>
   phone?: string
   email?: string
@@ -10,9 +8,11 @@ interface TheFooterProps {
   instagramUrl?: string
 }
 
+// Dependencies
+const { t } = useI18n()
+
+// Input / Output
 const props = withDefaults(defineProps<TheFooterProps>(), {
-  siteName: 'Stefano Biddau',
-  tagline: 'Full Stack Developer crafting performant and elegant web experiences.',
   quickLinks: () => [],
   phone: undefined,
   email: undefined,
@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <section class="space-y-4">
         <NuxtLink
           class="inline-flex items-center gap-2 u-sb-soft-transition u-sb-focus rounded-xl hover:opacity-90"
-          to="/"
+          :to="props.quickLinks[0]?.path || '/'"
         >
           <NuxtImg
             alt="Logo"
@@ -40,19 +40,19 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             src="/images/logo.webp"
           />
           <span class="ty-sb-title">
-            {{ props.siteName }}
+            Stefano Biddau
           </span>
         </NuxtLink>
 
         <p class="ty-sb-label normal-case! text-sb-muted max-w-md u-sb-soft-transition">
-          {{ props.tagline }}
+          {{ t('footer.tagline') }}
         </p>
       </section>
 
       <!-- 2) Link veloci -->
       <section class="space-y-3">
         <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
-          Quick links
+          {{ t('footer.route-section') }}
         </h2>
 
         <nav class="flex flex-col gap-2">
@@ -85,35 +85,35 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
         <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
-          Contact & Social
+          {{ t('footer.contact-section') }}
         </h2>
 
         <div class="space-y-2">
-          <p
+          <span
             v-if="props.email"
-            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition"
+            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition flex items-center"
           >
-            <span class=" text-sb-muted mr-1.5">Email:</span>
+            <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:letter-opened-bold-duotone" />
             <a
               class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus"
               :href="`mailto:${props.email}`"
             >
               {{ props.email }}
             </a>
-          </p>
+          </span>
 
-          <p
+          <span
             v-if="props.phone"
-            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition"
+            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition flex items-center"
           >
-            <span class=" text-sb-muted mr-1.5">Tel:</span>
+            <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:smartphone-2-bold-duotone" />
             <a
               class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus"
               :href="`tel:${props.phone}`"
             >
               {{ props.phone }}
             </a>
-          </p>
+          </span>
         </div>
 
         <!-- Social badges -->
@@ -169,10 +169,10 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         class="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex flex-col sm:flex-row items-center justify-between gap-2"
       >
         <p class="ty-sb-caption text-sb-muted text-center sm:text-left">
-          © {{ new Date().getFullYear() }} {{ props.siteName }} - All rights reserved.
+          {{ t('footer.credit-section', { year: new Date().getFullYear() }) }}
         </p>
         <p class="ty-sb-caption text-sb-muted/80 text-center sm:text-right">
-          Designed & built by {{ props.siteName }}
+          {{ t('footer.made-with') }}
         </p>
       </div>
     </div>
