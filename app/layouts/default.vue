@@ -13,6 +13,7 @@ useHead(() => ({
 
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
+const { notifications, removeNotification } = useNotification()
 
 const announcement = computed(() => {
   const title = t('announcement.ui-refactor.title')
@@ -42,6 +43,10 @@ const onChangeLang = (langCode: string) => {
 
 const onCloseAnnouncement = () => {
   showAnnouncement.value = false
+}
+
+const onCloseNotification = (id: number) => {
+  removeNotification(id)
 }
 
 onMounted(() => {
@@ -80,5 +85,21 @@ onMounted(() => {
       phone="+39 3297247711"
       :quick-links="routes"
     />
+    <TheNotificationBox>
+      <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">
+        <TheNotificationBanner
+          v-for="notification in notifications"
+          :key="notification.id"
+          :auto-close="notification.autoClose"
+          :dismissible="notification.dismissible"
+          :duration="notification.duration"
+          :icon="notification.icon"
+          :message="notification.message"
+          :title="notification.title"
+          :type="notification.type"
+          @close="onCloseNotification(notification.id)"
+        />
+      </transition-group>
+    </TheNotificationBox>
   </div>
 </template>
