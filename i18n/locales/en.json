@@ -89,6 +89,16 @@
           },
           "resetButton": {
             "text": "Reset"
+          },
+          "notifications": {
+            "success": {
+              "title": "Message Sent",
+              "message": "Thank you for reaching out! I will get back to you as soon as possible."
+            },
+            "error": {
+              "title": "Sending Error",
+              "message": "An error occurred while sending your message. Please try again later."
+            }
           }
         }
       }

@@ -9,6 +9,7 @@ interface CustomContactFormProps {
 const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
 const { t } = useI18n()
 const localePath = useLocalePath()
+const { success, error } = useNotification()
 
 // Input / Output
 const props = defineProps<CustomContactFormProps>()
@@ -86,20 +87,40 @@ const onSendMessage = async () => {
   // Prepare Message Data
   const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
   emailIsSending.value = true
-  await sendContactEmailAdmin({
+  const resultFirst = await sendContactEmailAdmin({
     from_name: nameController.value,
     from_email: emailController.value,
     message: completeMessage,
     agree_time: new Date().toLocaleTimeString(),
     year: new Date().getFullYear().toString(),
   })
-
-  await sendReplyToUser({
+  const resultSecond = await sendReplyToUser({
     user_name: nameController.value,
     to_email: emailController.value,
     message: messageController.value,
     year: new Date().getFullYear().toString(),
   })
+  console.log(resultFirst, resultSecond)
+  if (resultFirst.status === 200 && resultSecond.status === 200) {
+    success({
+      title: t('pages.home.contactForm.notifications.success.title'),
+      message: t('pages.home.contactForm.notifications.success.message'),
+      icon: '',
+      autoClose: true,
+      dismissible: true,
+      duration: 7000,
+    })
+  }
+  else {
+    error({
+      title: t('pages.home.contactForm.notifications.error.title'),
+      message: t('pages.home.contactForm.notifications.error.message'),
+      icon: '',
+      autoClose: true,
+      dismissible: true,
+      duration: 7000,
+    })
+  }
   emailIsSending.value = false
   closeForm()
 }
@@ -127,6 +148,14 @@ watch(
       onResetForm()
       onResetErrors()
     }
+    error({
+      title: t('pages.home.contactForm.notifications.error.title'),
+      message: t('pages.home.contactForm.notifications.error.message'),
+      icon: '',
+      autoClose: true,
+      dismissible: true,
+      duration: 7000,
+    })
   },
 )
 </script>
