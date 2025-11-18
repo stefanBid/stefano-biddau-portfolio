@@ -67,9 +67,9 @@ onMounted(() => {
     </main>
     <TheFooter
       email="biddau.stefano99@gmail.com"
-      github-url="https://github.com/stefanobiddau"
-      instagram-url="https://www.instagram.com/stefanobiddau/"
-      linkedin-url="https://www.linkedin.com/in/stefanobiddau/"
+      github-url="https://github.com/stefanBid"
+      instagram-url="https://www.instagram.com/stefano_bid/"
+      linkedin-url="https://www.linkedin.com/in/stefano-biddau/"
       phone="+39 3297247711"
       :quick-links="routes"
     />
