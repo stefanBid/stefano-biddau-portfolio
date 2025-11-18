@@ -85,7 +85,7 @@
           },
           "submitButton": {
             "text": "Invia Messaggio",
-            "loadingText": "Invio in corso..."
+            "loadingText": "Invio in corso"
           },
           "resetButton": {
             "text": "Resetta"

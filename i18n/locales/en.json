@@ -85,7 +85,7 @@
           },
           "submitButton": {
             "text": "Send Message",
-            "loadingText": "Sending..."
+            "loadingText": "Sending"
           },
           "resetButton": {
             "text": "Reset"
