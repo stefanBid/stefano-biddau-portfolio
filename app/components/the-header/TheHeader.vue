@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 interface TheHeaderProps {
-  showAnnouncement?: boolean
   routes: Array<RouteItem>
   langs: Array<LangItem>
   selectedLangId?: string | null
@@ -11,9 +10,9 @@ interface TheHeaderProps {
 // Dependencies
 const { lock, unlock } = useLockScroll()
 const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
-  showAnnouncement: false,
   selectedLangId: null,
 })
 
@@ -79,8 +78,7 @@ watch(isMdUp, (newVal) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border  u-sb-soft-transition"
-      :class="props.showAnnouncement && $slots['announcement'] ? 'bg-sb-main' : 'backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80'"
+      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border  u-sb-soft-transition backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80"
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
         <NuxtLink
@@ -135,15 +133,6 @@ watch(isMdUp, (newVal) => {
         />
       </div>
     </header>
-    <!-- ANNOUNCEMENT SLOT -->
-    <transition name="slide-down">
-      <div
-        v-if="showAnnouncement && $slots['announcement']"
-        class="fixed inset-x-0 top-16 bg-sb-surface-2 "
-      >
-        <slot name="announcement"></slot>
-      </div>
-    </transition>
     <!-- OVERLAY + DRAWER -->
     <div class="md:hidden">
       <!-- overlay -->

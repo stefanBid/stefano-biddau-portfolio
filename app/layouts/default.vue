@@ -13,16 +13,9 @@ useHead(() => ({
 
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
-const { notifications, removeNotification } = useNotification()
-
-const announcement = computed(() => {
-  const title = t('announcement.ui-refactor.title')
-  const body = t('announcement.ui-refactor.body')
-  return `🚀 - <strong>${title}</strong>- 🚀<br/>${body}`
-})
+const { notifications, removeNotification, info } = useNotification()
 
 // State
-const showAnnouncement = ref(true)
 
 const routes = computed(() => [
   { name: t('nav.home'), path: localePath('index') },
@@ -41,10 +34,6 @@ const onChangeLang = (langCode: string) => {
   setLocale(langCode as 'en' | 'it')
 }
 
-const onCloseAnnouncement = () => {
-  showAnnouncement.value = false
-}
-
 const onCloseNotification = (id: string) => {
   removeNotification(id)
 }
@@ -53,6 +42,13 @@ onMounted(() => {
   if (import.meta.client) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
   }
+  info({
+    title: `🚀 ${t('announcement.ui-refactor.title')}`,
+    message: t('announcement.ui-refactor.body'),
+    autoClose: true,
+    dismissible: true,
+    duration: 10000,
+  })
 })
 </script>
 
@@ -62,16 +58,8 @@ onMounted(() => {
       :langs="langs"
       :routes="routes"
       :selected-lang-id="locale"
-      :show-announcement="showAnnouncement"
       @change-lang="langCode => onChangeLang(langCode)"
-    >
-      <template #announcement>
-        <TheHeaderAnnouncementBar
-          :announcement-rich="announcement"
-          @close="onCloseAnnouncement()"
-        />
-      </template>
-    </TheHeader>
+    />
     <main class="pt-16 px-6 md:px-10">
       <div class="w-full max-w-[1400px] mx-auto u-sb-soft-transition">
         <slot></slot>
