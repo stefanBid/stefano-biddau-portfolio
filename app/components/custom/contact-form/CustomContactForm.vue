@@ -100,7 +100,7 @@ const onSendMessage = async () => {
     message: messageController.value,
     year: new Date().getFullYear().toString(),
   })
-  console.log(resultFirst, resultSecond)
+
   if (resultFirst.status === 200 && resultSecond.status === 200) {
     success({
       title: t('pages.home.contactForm.notifications.success.title'),
@@ -148,14 +148,6 @@ watch(
       onResetForm()
       onResetErrors()
     }
-    error({
-      title: t('pages.home.contactForm.notifications.error.title'),
-      message: t('pages.home.contactForm.notifications.error.message'),
-      icon: '',
-      autoClose: true,
-      dismissible: true,
-      duration: 7000,
-    })
   },
 )
 </script>
