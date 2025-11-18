@@ -73,7 +73,7 @@ onMounted(() => {
       </div>
     </main>
     <TheFooter
-      email="sxhjkhdkjhsdkjh"
+      email="biddau.stefano99@gmail.com"
       github-url="https://github.com/stefanobiddau"
       instagram-url="https://www.instagram.com/stefanobiddau/"
       linkedin-url="https://www.linkedin.com/in/stefanobiddau/"

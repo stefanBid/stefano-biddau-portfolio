@@ -191,9 +191,9 @@ const lastUpdate = computed(() => {
           {{ t('pages.terms.contact.content') }}:
           <a
             class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
-            href="mailto:stefanobiddau@gmail.com"
+            href="mailto:biddau.stefano99@gmail.com"
           >
-            stefanobiddau@gmail.com
+            biddau.stefano99@gmail.com
           </a>
         </p>
       </section>
