@@ -6,6 +6,7 @@ import type Typed from 'typed.js'
 
 type InputStrings = string | string[]
 type InputOptions = Partial<TypedOptions>
+type InputSource = InputStrings | Ref<InputStrings> | ComputedRef<InputStrings>
 
 // Default Configuraton
 
@@ -29,7 +30,7 @@ const GROUP_STRING_OPTIONS: InputOptions = {
   cursorChar: '\u00A0_',
 }
 
-export default function (input: InputStrings, options?: InputOptions) {
+export default function (input: InputSource, options?: InputOptions) {
   /* --- Target DOM element reference --- */
   const el = ref<HTMLElement | null>(null)
   const elStyle = {
@@ -39,7 +40,10 @@ export default function (input: InputStrings, options?: InputOptions) {
   } as CSSProperties
 
   /* --- Reactive state --- */
-  const strings = shallowRef<string[]>(_normalizeStrings(input))
+  const rawInput = computed<InputStrings>(() =>
+    isRef(input) ? input.value : input,
+  )
+  const strings = shallowRef<string[]>(_normalizeStrings(rawInput.value))
   const typedOptions = shallowRef<InputOptions>(_normalizeOptions(options))
   const isRunning = ref(false)
 
@@ -105,6 +109,12 @@ export default function (input: InputStrings, options?: InputOptions) {
       return
     }
 
+    // Snapshot the target element
+    const target = el.value
+    if (!target) {
+      return
+    }
+
     const { default: Typed } = await import('typed.js') // Lazy load for SSR safety
 
     const finalTypedOptions: TypedOptions = {
@@ -113,7 +123,7 @@ export default function (input: InputStrings, options?: InputOptions) {
       strings: strings.value,
     }
 
-    _instance = new Typed(el.value, finalTypedOptions)
+    _instance = new Typed(target, finalTypedOptions)
     isRunning.value = true
   }
 
@@ -152,11 +162,28 @@ export default function (input: InputStrings, options?: InputOptions) {
   }
 
   onMounted(() => {
-    _mountTyped()
+    if (el.value) {
+      _mountTyped()
+    }
+    else {
+      const stop = watch(
+        el,
+        (next) => {
+          if (next) {
+            stop()
+            _mountTyped()
+          }
+        },
+      )
+    }
   })
 
   onBeforeUnmount(() => {
     _destroy()
+  })
+
+  watch(rawInput, (next) => {
+    setStrings(next)
   })
 
   return {

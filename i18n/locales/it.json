@@ -17,7 +17,7 @@
       "title": "Ciao, sono Stefano Biddau",
       "subtitle": {
         "costant": "E sono un",
-        "variable": [
+        "typed": [
           "Front End Developer",
           "Back End Developer",
           "Web Designer",

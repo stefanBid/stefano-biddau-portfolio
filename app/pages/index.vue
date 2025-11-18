@@ -24,12 +24,12 @@ useSeoMeta({
 const { lock, unlock } = useLockScroll()
 
 const { el, elStyle } = useTypedText(
-  [
-    'Frontend Developer',
-    'Backend Developer',
-    'Web Designer',
-    'UI/UX Enthusiast',
-  ],
+  computed(() => [
+    t('pages.home.subtitle.typed[0]'),
+    t('pages.home.subtitle.typed[1]'),
+    t('pages.home.subtitle.typed[2]'),
+    t('pages.home.subtitle.typed[3]'),
+  ]),
   {
     backDelay: 500,
   },
@@ -172,10 +172,10 @@ onBeforeUnmount(() => {
       :inert="!ready"
     >
       <h2 class="ty-sb-title-xl text-center u-sb-soft-transition">
-        Hello, I'm Stefano Biddau
+        {{ t('pages.home.title') }}
       </h2>
       <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition">
-        And I'm a
+        {{ t('pages.home.subtitle.costant') }}
         <span
           ref="el"
           aria-live="polite"
