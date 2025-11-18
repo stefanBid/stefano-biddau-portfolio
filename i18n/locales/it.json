@@ -8,7 +8,34 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau - ",
-      "description": "Portfolio di Stefano Biddau, full-stack developer e web designer. Scopri una selezione di progetti, competenze ed esperienza nella realizzazione di applicazioni web veloci, accessibili ed eleganti."
+      "description": "Sono Stefano Biddau, web designer e sviluppatore front-end. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
+    }
+  },
+  "pages": {
+    "home": {
+      "hero": "Bentornato",
+      "title": "Ciao, sono Stefano Biddau",
+      "subtitle": {
+        "costant": "E sono un",
+        "variable": [
+          "Front End Developer",
+          "Back End Developer",
+          "Web Designer",
+          "UI/UX Enthusiast"
+        ]
+      },
+      "firstCard": {
+        "title": "Scarica il mio CV",
+        "subtitle": "Scopri il mio percorso professionale",
+        "paragraph": "Una panoramica completa delle mie competenze, esperienze lavorative e principali progetti. Il documento è aggiornato e ottimizzato per una consultazione rapida.",
+        "button": "Scarica CV"
+      },
+      "secondCard": {
+        "tittle": "Contattami",
+        "subtitle": "Parliamo dei tuoi progetti",
+        "paragraph": "Se hai bisogno di supporto tecnico o vuoi discutere una possibile collaborazione, sarò felice di ascoltare le tue idee e trovare insieme la soluzione migliore.",
+        "button": "Contattami"
+      }
     }
   }
 }
