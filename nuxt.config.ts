@@ -24,7 +24,6 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    // Modalità consigliata in Nuxt 4
     baseUrl: 'https://www.stefanobiddau.com',
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
