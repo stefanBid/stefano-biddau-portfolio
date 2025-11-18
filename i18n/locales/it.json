@@ -89,16 +89,16 @@
           },
           "resetButton": {
             "text": "Resetta"
+          }
+        },
+        "notifications": {
+          "success": {
+            "title": "Messaggio Inviato",
+            "message": "Grazie per avermi contattato! Ti risponderò il prima possibile."
           },
-          "notifications": {
-            "success": {
-              "title": "Messaggio Inviato",
-              "message": "Grazie per avermi contattato! Ti risponderò il prima possibile."
-            },
-            "error": {
-              "title": "Errore di Invio",
-              "message": "Si è verificato un errore durante l'invio del messaggio. Riprova più tardi."
-            }
+          "error": {
+            "title": "Errore di Invio",
+            "message": "Si è verificato un errore durante l'invio del tuo messaggio. Per favore, riprova più tardi."
           }
         }
       }
