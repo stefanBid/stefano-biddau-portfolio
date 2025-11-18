@@ -45,7 +45,7 @@ const onCloseAnnouncement = () => {
   showAnnouncement.value = false
 }
 
-const onCloseNotification = (id: number) => {
+const onCloseNotification = (id: string) => {
   removeNotification(id)
 }
 
