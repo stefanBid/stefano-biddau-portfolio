@@ -13,8 +13,8 @@ useSeoMeta({
   twitterDescription: () => t('meta.home.description'),
 
   // GLOBALS
-  ogImage: '/images/og-image-default.jpg',
-  twitterImage: '/images/og-image-default.jpg',
+  ogImage: '/images/card-logo.jpg',
+  twitterImage: '/images/card-logo.jpg',
   twitterCard: 'summary',
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
