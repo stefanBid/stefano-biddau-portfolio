@@ -80,7 +80,7 @@ watch(isMdUp, (newVal) => {
             class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"
             src="/images/logo.webp"
           />
-          Stefano Biddau
+          Stefano Biddau {{ currentRoute.path }}
         </NuxtLink>
 
         <!-- Desktop nav -->

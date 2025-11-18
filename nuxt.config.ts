@@ -25,17 +25,17 @@ export default defineNuxtConfig({
   },
   i18n: {
     // Modalità consigliata in Nuxt 4
-    strategy: 'prefix_except_default', // / -> en, /it -> italiano
+    strategy: 'prefix_except_default',
     defaultLocale: 'en',
     locales: [
       { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
       { code: 'it', iso: 'it-IT', name: 'Italiano', file: 'it.json' },
     ],
-    langDir: 'locales/', // cartella con i file di traduzione
+    langDir: 'locales/',
     detectBrowserLanguage: {
       useCookie: true,
       cookieKey: 'i18n_redirected',
-      redirectOn: 'root', // solo sulla root
+      redirectOn: 'root',
     },
   },
   icon: {

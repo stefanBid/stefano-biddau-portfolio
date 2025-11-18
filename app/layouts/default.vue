@@ -3,14 +3,19 @@ useHead({
   titleTemplate: '%s Full-Stack Developer & Web Designer',
 })
 
+const { setLocale, locale } = useI18n()
+const localePath = useLocalePath()
+
 const announcement = `🚀 <b>The portfolio is getting a fresh new look!</b> <br> I'm currently updating the design and polishing the user experience. Thanks for your patience!`
 const showAnnouncement = ref(true)
 
+// State
+
 const routes = computed(() => [
-  { name: 'Home', path: '/' },
-  { name: 'About me', path: '/about', disabled: true },
-  { name: 'Skills', path: '/skills', disabled: true },
-  { name: 'Projects', path: '/projects', disabled: true },
+  { name: 'Home', path: localePath('') },
+  { name: 'About me', path: localePath('about'), disabled: true },
+  { name: 'Skills', path: localePath('skills'), disabled: true },
+  { name: 'Projects', path: localePath('projects'), disabled: true },
 ] as Array<RouteItem>)
 
 const langs = [
@@ -18,7 +23,14 @@ const langs = [
   { code: 'it', label: 'Italiano', icon: 'circle-flags:it' },
 ] as Array<LangItem>
 
-const selectedLang = ref<string | null>('en')
+// Events
+const onChangeLang = (langCode: string) => {
+  setLocale(langCode as 'en' | 'it')
+}
+
+const onCloseAnnouncement = () => {
+  showAnnouncement.value = false
+}
 
 onMounted(() => {
   if (import.meta.client) {
@@ -32,14 +44,14 @@ onMounted(() => {
     <TheHeader
       :langs="langs"
       :routes="routes"
-      :selected-lang-id="selectedLang"
+      :selected-lang-id="locale"
       :show-announcement="showAnnouncement"
-      @change-lang="langCode => selectedLang = langCode"
+      @change-lang="langCode => onChangeLang(langCode)"
     >
       <template #announcement>
         <TheHeaderAnnouncementBar
           :announcement-rich="announcement"
-          @close="falsyValue => showAnnouncement = falsyValue"
+          @close="onCloseAnnouncement()"
         />
       </template>
     </TheHeader>
