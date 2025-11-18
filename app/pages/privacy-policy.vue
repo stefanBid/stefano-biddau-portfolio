@@ -144,7 +144,7 @@ const lastUpdate = computed(() => {
           <p class="ty-sb-label text-sb-muted/70 u-sb-soft-transition">
             {{ t('pages.privacy.thirdParties.privacyPolicy') }}:
             <a
-              class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+              class="text-sb-accent hover:text-sb-accent-hover wrap-break-word underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
               href="https://www.emailjs.com/legal/privacy-policy/"
               rel="noopener noreferrer"
               target="_blank"
