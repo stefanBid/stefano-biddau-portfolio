@@ -12,10 +12,10 @@ const showAnnouncement = ref(true)
 // State
 
 const routes = computed(() => [
-  { name: 'Home', path: localePath('') },
-  { name: 'About me', path: localePath('about'), disabled: true },
-  { name: 'Skills', path: localePath('skills'), disabled: true },
-  { name: 'Projects', path: localePath('projects'), disabled: true },
+  { name: 'Home', path: localePath('index') },
+  { name: 'About me', path: localePath('about-me'), disabled: true },
+  { name: 'Skills', path: localePath('my-skills'), disabled: true },
+  { name: 'Projects', path: localePath('my-projects'), disabled: true },
 ] as Array<RouteItem>)
 
 const langs = [

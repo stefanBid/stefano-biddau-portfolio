@@ -1,76 +1,7 @@
 <script setup lang="ts">
-// Feature 1: Show other content after hero section aninimation endeds
-const ready = ref(false)
-const heroDoneCount = ref(0)
-const HERO_TARGET = 2 // Number of animations to wait for
-const atTop = ref(true) // Track if user is at top of the page (to show or hide scroll indicator)
+// Dependencies
+const { lock, unlock } = useLockScroll()
 
-const heroImgWrap = ref<HTMLElement | null>(null)
-const heroTitleWrap = ref<HTMLElement | null>(null)
-
-const onAnimateEnd = () => {
-  heroDoneCount.value += 1
-  if (heroDoneCount.value >= HERO_TARGET) {
-    ready.value = true
-    lockScroll(false)
-    // Clean up event listeners
-    detach()
-  }
-}
-
-const onScroll = () => {
-  if (!import.meta.client) {
-    return
-  }
-  atTop.value = window.scrollY <= 64
-}
-
-const attach = () => {
-  if (heroImgWrap.value) {
-    heroImgWrap.value.addEventListener('animationend', onAnimateEnd)
-  }
-  if (heroTitleWrap.value) {
-    heroTitleWrap.value.addEventListener('animationend', onAnimateEnd)
-  }
-}
-
-const detach = () => {
-  if (heroImgWrap.value) {
-    heroImgWrap.value.removeEventListener('animationend', onAnimateEnd)
-  }
-  if (heroTitleWrap.value) {
-    heroTitleWrap.value.removeEventListener('animationend', onAnimateEnd)
-  }
-}
-
-onMounted(() => {
-  const prefersReduced
-    = import.meta.client
-      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
-  if (prefersReduced) {
-    ready.value = true
-  }
-  else {
-    lockScroll(true)
-    attach()
-  }
-
-  if (import.meta.client) {
-    atTop.value = window.scrollY <= 64
-    window.addEventListener('scroll', onScroll)
-  }
-})
-
-onBeforeUnmount(() => {
-  lockScroll(false)
-  detach()
-  if (import.meta.client) {
-    window.removeEventListener('scroll', onScroll)
-  }
-})
-
-// Feature 2: Typed.js integration for dynamic text effect
 const { el, elStyle } = useTypedText(
   [
     'Frontend Developer',
@@ -82,8 +13,6 @@ const { el, elStyle } = useTypedText(
     backDelay: 500,
   },
 )
-
-// Feature 3: Manage SEO meta tags
 
 useSeoMeta({
   title: 'Stefano Biddau |',
@@ -98,8 +27,80 @@ useSeoMeta({
   twitterCard: 'summary',
 })
 
-// Test BaseDialog
-const isDialogOpen = ref(false)
+// State
+const ready = ref(false)
+const heroDoneCount = ref(0)
+const HERO_TARGET = 2 // Number of animations to wait for
+const atTop = ref(true) // Track if user is at top of the page (to show or hide scroll indicator)
+
+const contactFormIsOpen = ref(false)
+
+const heroImgWrap = ref<HTMLElement | null>(null)
+const heroTitleWrap = ref<HTMLElement | null>(null)
+
+// Events
+
+const onAnimateEnd = () => {
+  heroDoneCount.value += 1
+  if (heroDoneCount.value >= HERO_TARGET) {
+    ready.value = true
+    unlock()
+    // Clean up event listeners
+    detach()
+  }
+}
+
+const onScroll = () => {
+  if (!import.meta.client) {
+    return
+  }
+  atTop.value = window.scrollY <= 64
+}
+
+const attach = () => {
+  if (heroImgWrap.value && import.meta.client) {
+    heroImgWrap.value.addEventListener('animationend', onAnimateEnd)
+  }
+  if (heroTitleWrap.value && import.meta.client) {
+    heroTitleWrap.value.addEventListener('animationend', onAnimateEnd)
+  }
+}
+
+const detach = () => {
+  if (heroImgWrap.value && import.meta.client) {
+    heroImgWrap.value.removeEventListener('animationend', onAnimateEnd)
+  }
+  if (heroTitleWrap.value && import.meta.client) {
+    heroTitleWrap.value.removeEventListener('animationend', onAnimateEnd)
+  }
+}
+
+onMounted(() => {
+  const prefersReduced
+    = import.meta.client
+      && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+  if (prefersReduced) {
+    ready.value = true
+  }
+  else {
+    lock()
+    attach()
+  }
+
+  if (import.meta.client) {
+    atTop.value = window.scrollY <= 64
+    window.addEventListener('scroll', onScroll)
+  }
+})
+
+onBeforeUnmount(() => {
+  unlock()
+  detach()
+  if (import.meta.client) {
+    window.removeEventListener('scroll', onScroll)
+  }
+})
 </script>
 
 <template>
@@ -190,7 +191,7 @@ const isDialogOpen = ref(false)
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:mailbox-bold-duotone" />
           </template>
           <template #card-footer>
-            <BaseButton variant="primary" @click.stop="isDialogOpen = true">
+            <BaseButton variant="primary" @click.stop="contactFormIsOpen = true">
               Write to me
             </BaseButton>
           </template>
@@ -198,7 +199,7 @@ const isDialogOpen = ref(false)
       </div>
     </section>
     <!-- Contact Form -->
-    <CustomContactForm :open-form="isDialogOpen" @close-form="value => isDialogOpen = value" />
+    <CustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>
 

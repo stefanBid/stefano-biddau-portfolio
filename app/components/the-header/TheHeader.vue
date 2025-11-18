@@ -7,6 +7,9 @@ interface TheHeaderProps {
   langs: Array<LangItem>
   selectedLangId?: string | null
 }
+
+// Dependencies
+const { lock, unlock } = useLockScroll()
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
   showAnnouncement: false,
@@ -33,12 +36,17 @@ const onKeydown = (e: KeyboardEvent) => {
 
 const onToggle = (newOpenValue: boolean) => {
   open.value = newOpenValue
-  lockScroll(open.value)
+  if (open.value) {
+    lock()
+  }
+  else {
+    unlock()
+  }
 }
 
 const onClose = () => {
   open.value = false
-  lockScroll(false)
+  unlock()
 }
 
 const onSelectLang = (langCode: string) => {
@@ -56,7 +64,7 @@ onBeforeUnmount(() => {
   if (import.meta.client) {
     window.removeEventListener('keydown', onKeydown)
   }
-  lockScroll(false)
+  unlock()
 })
 
 watch(isMdUp, (newVal) => {
@@ -80,7 +88,7 @@ watch(isMdUp, (newVal) => {
             class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"
             src="/images/logo.webp"
           />
-          Stefano Biddau {{ currentRoute.path }}
+          Stefano Biddau
         </NuxtLink>
 
         <!-- Desktop nav -->

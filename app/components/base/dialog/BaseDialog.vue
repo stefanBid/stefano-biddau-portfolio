@@ -5,6 +5,9 @@ interface BaseDialogProps {
   subtitle?: string
   size?: 'sm' | 'md' | 'lg' | 'full'
 }
+
+// Dependencies
+const { lock, unlock } = useLockScroll()
 // Input / Output
 const props = withDefaults(defineProps<BaseDialogProps>(), {
   size: 'sm',
@@ -40,18 +43,18 @@ onUnmounted(() => {
   if (import.meta.client) {
     window.removeEventListener('keydown', onKeydown)
   }
-  lockScroll(false)
+  unlock()
 })
 
 watch(
   () => props.isOpen,
   (value) => {
     if (value) {
-      lockScroll(true)
+      lock()
       nextTick(() => dialogRef.value?.focus())
     }
     else {
-      lockScroll(false)
+      unlock()
     }
   },
   { immediate: true },
