@@ -25,11 +25,13 @@ export default defineNuxtConfig({
   },
   i18n: {
     // Modalità consigliata in Nuxt 4
+    baseUrl: 'https://www.stefanobiddau.com',
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
+
     locales: [
-      { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
-      { code: 'it', iso: 'it-IT', name: 'Italiano', file: 'it.json' },
+      { code: 'en', iso: 'en-US', language: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'it', iso: 'it-IT', language: 'it-IT', name: 'Italiano', file: 'it.json' },
     ],
     langDir: 'locales/',
     detectBrowserLanguage: {

@@ -1,21 +1,29 @@
 <script setup lang="ts">
-useHead({
-  titleTemplate: '%s Full-Stack Developer & Web Designer',
+const i18nHead = useLocaleHead({
+  dir: true,
+  seo: true,
 })
 
-const { setLocale, locale } = useI18n()
+useHead(() => ({
+  htmlAttrs: i18nHead.value.htmlAttrs,
+  meta: i18nHead.value.meta,
+  link: i18nHead.value.link,
+  titleTemplate: '%s Full-Stack Developer & Web Designer',
+}))
+
+const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
 
 const announcement = `🚀 <b>The portfolio is getting a fresh new look!</b> <br> I'm currently updating the design and polishing the user experience. Thanks for your patience!`
-const showAnnouncement = ref(true)
 
 // State
+const showAnnouncement = ref(true)
 
 const routes = computed(() => [
-  { name: 'Home', path: localePath('index') },
-  { name: 'About me', path: localePath('about-me'), disabled: true },
-  { name: 'Skills', path: localePath('my-skills'), disabled: true },
-  { name: 'Projects', path: localePath('my-projects'), disabled: true },
+  { name: t('nav.home'), path: localePath('index') },
+  { name: t('nav.about-me'), path: localePath('about-me'), disabled: true },
+  { name: t('nav.my-skills'), path: localePath('my-skills'), disabled: true },
+  { name: t('nav.my-projects'), path: localePath('my-projects'), disabled: true },
 ] as Array<RouteItem>)
 
 const langs = [

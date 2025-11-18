@@ -1,1 +1,14 @@
-{}
+{
+  "nav": {
+    "home": "Home",
+    "about-me": "About Me",
+    "my-skills": "Skills",
+    "my-projects": "Projects"
+  },
+  "meta": {
+    "home": {
+      "title": "Stefano Biddau - ",
+      "description": "Portfolio of Stefano Biddau, full-stack developer and web designer. Explore selected projects, skills and experience building fast, accessible and elegant web applications."
+    }
+  }
+}

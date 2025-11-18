@@ -1,5 +1,26 @@
 <script setup lang="ts">
 // Dependencies
+const { t } = useI18n()
+const route = useRoute()
+
+useSeoMeta({
+  // LOCALIZED
+  title: () => t('meta.home.title'),
+  description: () => t('meta.home.description'),
+  ogTitle: () => t('meta.home.title'),
+  ogDescription: () => t('meta.home.description'),
+  twitterTitle: () => t('meta.home.title'),
+  twitterDescription: () => t('meta.home.description'),
+
+  // GLOBALS
+  ogImage: '/images/og-image-default.jpg',
+  twitterImage: '/images/og-image-default.jpg',
+  twitterCard: 'summary',
+
+  // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
+  ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
+})
+
 const { lock, unlock } = useLockScroll()
 
 const { el, elStyle } = useTypedText(
@@ -13,19 +34,6 @@ const { el, elStyle } = useTypedText(
     backDelay: 500,
   },
 )
-
-useSeoMeta({
-  title: 'Stefano Biddau |',
-  description: '[description]',
-  ogTitle: '[og:title]',
-  ogDescription: '[og:description]',
-  ogImage: '[og:image]',
-  ogUrl: '[og:url]',
-  twitterTitle: '[twitter:title]',
-  twitterDescription: '[twitter:description]',
-  twitterImage: '[twitter:image]',
-  twitterCard: 'summary',
-})
 
 // State
 const ready = ref(false)
