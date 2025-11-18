@@ -33,7 +33,7 @@ const lastUpdate = computed(() => {
 </script>
 
 <template>
-  <article class="space-y-8 sm:space-y-10 md:space-y-12">
+  <article class="space-y-8 sm:space-y-10 md:space-y-12 pt-16">
     <!-- Header -->
     <header class="space-y-4 sm:space-y-5 md:space-y-6 text-center">
       <h1 class="ty-sb-hero u-sb-soft-transition">
