@@ -1,14 +1,17 @@
 <script setup lang="ts">
 interface BaseCardProps {
-  title: string
-  subtitle?: string
-  paragraph?: string
+  title?: string | null
+  subtitle?: string | null
+  paragraph?: string | null
   variant?: 'dark' | 'dark-hover' | 'light' | 'light-hover'
   align?: 'left' | 'center' | 'right'
   fullCustomContent?: boolean
 }
 
 const props = withDefaults(defineProps<BaseCardProps>(), {
+  title: null,
+  subtitle: null,
+  paragraph: null,
   variant: 'light',
   align: 'left',
   fullCustomContent: false,
@@ -41,6 +44,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
         <slot name="card-header"></slot>
       </div>
       <h2
+        v-if="props.title"
         class="ty-sb-title u-sb-soft-transition"
         :class="{
           'text-center md:text-left': props.align === 'left',

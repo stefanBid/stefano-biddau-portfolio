@@ -13,8 +13,8 @@ useSeoMeta({
   twitterDescription: () => t('meta.home.description'),
 
   // GLOBALS
-  ogImage: '/images/og-image-default.jpg',
-  twitterImage: '/images/og-image-default.jpg',
+  ogImage: '/images/card-logo.jpg',
+  twitterImage: '/images/card-logo.jpg',
   twitterCard: 'summary',
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
@@ -24,18 +24,20 @@ useSeoMeta({
 const { lock, unlock } = useLockScroll()
 
 const { el, elStyle } = useTypedText(
-  [
-    'Frontend Developer',
-    'Backend Developer',
-    'Web Designer',
-    'UI/UX Enthusiast',
-  ],
+  computed(() => [
+    t('pages.home.subtitle.typed.0'),
+    t('pages.home.subtitle.typed.1'),
+    t('pages.home.subtitle.typed.2'),
+    t('pages.home.subtitle.typed.3'),
+  ]),
   {
     backDelay: 500,
   },
 )
 
 // State
+const heroHasPlayed = useState('hero-has-played', () => false)
+
 const ready = ref(false)
 const heroDoneCount = ref(0)
 const HERO_TARGET = 2 // Number of animations to wait for
@@ -53,6 +55,7 @@ const onAnimateEnd = () => {
   if (heroDoneCount.value >= HERO_TARGET) {
     ready.value = true
     unlock()
+    heroHasPlayed.value = true
     // Clean up event listeners
     detach()
   }
@@ -90,8 +93,13 @@ onMounted(() => {
 
   if (prefersReduced) {
     ready.value = true
+    heroHasPlayed.value = true
+  }
+  else if (heroHasPlayed.value) {
+    ready.value = true
   }
   else {
+    heroDoneCount.value = 0
     lock()
     attach()
   }
@@ -118,7 +126,10 @@ onBeforeUnmount(() => {
       <!-- Hero image -->
       <div
         ref="heroImgWrap"
-        class="absolute w-60 sm:w-72 md:w-80 lg:w-96 h-auto left-1/2 -translate-x-1/2 transform pointer-events-none animate-scale-fade u-sb-soft-transition z-0"
+        class="absolute w-60 sm:w-72 md:w-80 lg:w-96 h-auto left-1/2 -translate-x-1/2 transform pointer-events-none u-sb-soft-transition z-0"
+        :class="{
+          'animate-scale-fade': !heroHasPlayed,
+        }"
       >
         <NuxtImg
           alt="Hero"
@@ -130,7 +141,10 @@ onBeforeUnmount(() => {
       <!-- Title with local overlay -->
       <div
         ref="heroTitleWrap"
-        class="relative z-10 inline-block  animate-fade-in opacity-0"
+        class="relative z-10 inline-block "
+        :class="{
+          'animate-fade-in opacity-0': !heroHasPlayed,
+        }"
       >
         <!-- overlay only behind the text -->
         <div
@@ -140,7 +154,7 @@ onBeforeUnmount(() => {
         <h1
           class="ty-sb-hero bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] u-sb-soft-transition px-6 py-2"
         >
-          Welcome Back
+          {{ t('pages.home.hero') }}
         </h1>
       </div>
       <transition name="fade">
@@ -158,10 +172,10 @@ onBeforeUnmount(() => {
       :inert="!ready"
     >
       <h2 class="ty-sb-title-xl text-center u-sb-soft-transition">
-        Hello, I'm Stefano Biddau
+        {{ t('pages.home.title') }}
       </h2>
       <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition">
-        And I'm a
+        {{ t('pages.home.subtitle.costant') }}
         <span
           ref="el"
           aria-live="polite"
@@ -173,34 +187,34 @@ onBeforeUnmount(() => {
         <BaseCard
           align="center"
           class="max-w-xl"
-          paragraph="A comprehensive overview of my skills, work experiences, and key projects. The document is updated and optimized for quick consultation."
-          subtitle="Discover my professional journey"
-          title="Download My CV"
+          :paragraph="t('pages.home.cvCard.paragraph')"
+          :subtitle="t('pages.home.cvCard.subtitle')"
+          :title="t('pages.home.cvCard.title')"
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:file-download-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:folder-with-files-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="downloadFile('/files/Stefano_Biddau_CV.pdf', 'Stefano_Biddau_CV.pdf')">
-              Download CV
+              {{ t('pages.home.cvCard.buttonText') }}
             </BaseButton>
           </template>
         </BaseCard>
         <BaseCard
           align="center"
           class="max-w-xl"
-          paragraph="If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together."
-          subtitle="Let's talk about your project"
-          title="Contact Me"
+          :paragraph="t('pages.home.contactCard.paragraph')"
+          :subtitle="t('pages.home.contactCard.subtitle')"
+          :title="t('pages.home.contactCard.title')"
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:mailbox-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:letter-opened-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="contactFormIsOpen = true">
-              Write to me
+              {{ t('pages.home.contactCard.buttonText') }}
             </BaseButton>
           </template>
         </BaseCard>

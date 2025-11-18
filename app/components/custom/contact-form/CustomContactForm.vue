@@ -7,6 +7,8 @@ interface CustomContactFormProps {
 
 // Dependencies
 const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
+const { t } = useI18n()
+const localePath = useLocalePath()
 
 // Input / Output
 const props = defineProps<CustomContactFormProps>()
@@ -27,11 +29,11 @@ const consentGivenController = ref<boolean>(false)
 const MESSAGE_MIN_LENGTH = 10
 const MESSAGE_MAX_LENGTH = 800
 const contactValidationSchema = z.object({
-  name: z.string().min(1, 'Name is required').max(100, 'Name is too long'),
-  email: z.email('Invalid email address'),
-  message: z.string().min(MESSAGE_MIN_LENGTH, 'Message is too short').max(MESSAGE_MAX_LENGTH, 'Message is too long'),
+  name: z.string().min(1, t('pages.home.contactForm.fields.name.error-required')).max(100, t('pages.home.contactForm.fields.name.error-maxlength')),
+  email: z.email(t('pages.home.contactForm.fields.email.error-invalid')),
+  message: z.string().min(MESSAGE_MIN_LENGTH, t('pages.home.contactForm.fields.message.error-minlength')).max(MESSAGE_MAX_LENGTH, t('pages.home.contactForm.fields.message.error-maxlength')),
   consentGiven: z.boolean().refine(val => val === true, {
-    message: 'You must agree to the processing of your data',
+    message: t('pages.home.contactForm.fields.consentGiven.error-required'),
   }),
 })
 
@@ -133,8 +135,8 @@ watch(
   <BaseDialog
     :is-open="openForm"
     size="lg"
-    subtitle="Get in Touch! Let's Work Together"
-    title="Contact Me"
+    :subtitle="t('pages.home.contactForm.subtitle')"
+    :title="t('pages.home.contactForm.title')"
     @close="closeForm"
   >
     <form class="flex flex-col gap-6" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
@@ -145,8 +147,8 @@ watch(
             v-model:input="nameController"
             autocomplete="name"
             :error="errors.name"
-            label="Your Name"
-            placeholder="Enter your name"
+            :label="t('pages.home.contactForm.fields.name.label')"
+            :placeholder="t('pages.home.contactForm.fields.name.placeholder')"
             type="text"
           />
           <BaseInput
@@ -154,8 +156,8 @@ watch(
             v-model:input="emailController"
             autocomplete="email"
             :error="errors.email"
-            label="Your Email"
-            placeholder="Enter your email"
+            :label="t('pages.home.contactForm.fields.email.label')"
+            :placeholder="t('pages.home.contactForm.fields.email.placeholder')"
             type="email"
           />
         </div>
@@ -164,9 +166,9 @@ watch(
             id="message"
             v-model:input="messageController"
             :error="errors.message"
-            label="Your Message"
+            :label="t('pages.home.contactForm.fields.message.label')"
             :max-length="MESSAGE_MAX_LENGTH"
-            placeholder="Write your message here..."
+            :placeholder="t('pages.home.contactForm.fields.message.placeholder')"
           />
         </div>
       </div>
@@ -174,8 +176,27 @@ watch(
         id="consent"
         v-model:input="consentGivenController"
         :error="errors.consentGiven"
-        label="I agree to the processing of my data in accordance with the privacy policy."
-      />
+      >
+        {{ t('pages.home.contactForm.fields.consentGiven.label') }}
+        {{ t('pages.home.contactForm.fields.consentGiven.extra') }}
+        <NuxtLink
+          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          rel="noopener noreferrer"
+          target="_blank"
+          :to="localePath('privacy-policy')"
+        >
+          {{ t('nav.privacy-policy') }}
+        </NuxtLink>
+        ,
+        <NuxtLink
+          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          rel="noopener noreferrer"
+          target="_blank"
+          :to="localePath('terms-and-conditions')"
+        >
+          {{ t('nav.terms-and-conditions') }}
+        </NuxtLink>
+      </BaseCheckbox>
       <div class="w-full flex justify-end items-center mt-4 gap-4">
         <BaseButton
 
@@ -183,10 +204,10 @@ watch(
           type="reset"
           variant="secondary"
         >
-          Cancel
+          {{ t('pages.home.contactForm.fields.resetButton.text') }}
         </BaseButton>
         <BaseButton :is-loading="emailIsSending" type="submit" variant="primary">
-          Send Message
+          {{ emailIsSending ? t('pages.home.contactForm.fields.submitButton.loadingText') : t('pages.home.contactForm.fields.submitButton.text') }}
         </BaseButton>
       </div>
     </form>

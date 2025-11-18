@@ -13,8 +13,13 @@ useHead(() => ({
 
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
+const { notifications, removeNotification } = useNotification()
 
-const announcement = `🚀 <b>The portfolio is getting a fresh new look!</b> <br> I'm currently updating the design and polishing the user experience. Thanks for your patience!`
+const announcement = computed(() => {
+  const title = t('announcement.ui-refactor.title')
+  const body = t('announcement.ui-refactor.body')
+  return `🚀 - <strong>${title}</strong>- 🚀<br/>${body}`
+})
 
 // State
 const showAnnouncement = ref(true)
@@ -38,6 +43,10 @@ const onChangeLang = (langCode: string) => {
 
 const onCloseAnnouncement = () => {
   showAnnouncement.value = false
+}
+
+const onCloseNotification = (id: number) => {
+  removeNotification(id)
 }
 
 onMounted(() => {
@@ -69,14 +78,28 @@ onMounted(() => {
       </div>
     </main>
     <TheFooter
-      email="sxhjkhdkjhsdkjh"
+      email="biddau.stefano99@gmail.com"
       github-url="https://github.com/stefanobiddau"
       instagram-url="https://www.instagram.com/stefanobiddau/"
       linkedin-url="https://www.linkedin.com/in/stefanobiddau/"
       phone="+39 3297247711"
       :quick-links="routes"
-      site-name="Stefano Biddau"
-      tagline="Full Stack Developer crafting performant and elegant web experiences."
     />
+    <TheNotificationBox>
+      <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">
+        <TheNotificationBanner
+          v-for="notification in notifications"
+          :key="notification.id"
+          :auto-close="notification.autoClose"
+          :dismissible="notification.dismissible"
+          :duration="notification.duration"
+          :icon="notification.icon"
+          :message="notification.message"
+          :title="notification.title"
+          :type="notification.type"
+          @close="onCloseNotification(notification.id)"
+        />
+      </transition-group>
+    </TheNotificationBox>
   </div>
 </template>

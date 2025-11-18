@@ -10,6 +10,7 @@ interface TheHeaderProps {
 
 // Dependencies
 const { lock, unlock } = useLockScroll()
+const { t } = useI18n()
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
   showAnnouncement: false,
@@ -82,7 +83,10 @@ watch(isMdUp, (newVal) => {
       :class="props.showAnnouncement && $slots['announcement'] ? 'bg-sb-main' : 'backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80'"
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
-        <NuxtLink class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer" to="/">
+        <NuxtLink
+          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer"
+          :to="props.routes[0]?.path || '/'"
+        >
           <NuxtImg
             alt="Logo"
             class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"
@@ -160,7 +164,7 @@ watch(isMdUp, (newVal) => {
         :role="open ? 'dialog' : undefined"
       >
         <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">Menu</span>
+          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">{{ t('header.route-section') }}</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
@@ -186,7 +190,7 @@ watch(isMdUp, (newVal) => {
           </template>
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
-          <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">Settings</span>
+          <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">{{ t('header.settings-section') }}</span>
         </div>
         <div class="p-6">
           <BaseIconMenu
