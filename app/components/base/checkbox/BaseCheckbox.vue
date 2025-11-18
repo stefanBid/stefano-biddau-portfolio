@@ -2,16 +2,14 @@
 interface BaseCheckboxProps {
   id: string
   name?: string
-  label: string
-  isRich?: boolean
+  label?: string | null
   error?: string | null
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseCheckboxProps>(), {
   name: undefined,
-  invalid: false,
-  isRich: false,
+  label: null,
   error: null,
 })
 
@@ -50,17 +48,16 @@ const model = defineModel<boolean>('input')
     />
 
     <span
-      v-if="props.isRich"
+      v-if="!$slots.default"
       class="ty-sb-caption text-sb-contrast u-sb-soft-transition"
     >
       {{ props.label }}
     </span>
-    <!-- eslint-disable-next-line vue/no-v-html -->
     <span
       v-else
       class="ty-sb-caption text-sb-contrast u-sb-soft-transition"
-      v-html="props.label"
     >
+      <slot></slot>
     </span>
   </div>
 </template>

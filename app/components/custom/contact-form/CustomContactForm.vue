@@ -8,6 +8,7 @@ interface CustomContactFormProps {
 // Dependencies
 const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 // Input / Output
 const props = defineProps<CustomContactFormProps>()
@@ -175,8 +176,27 @@ watch(
         id="consent"
         v-model:input="consentGivenController"
         :error="errors.consentGiven"
-        :label="t('pages.home.contactForm.fields.consentGiven.label')"
-      />
+      >
+        {{ t('pages.home.contactForm.fields.consentGiven.label') }}
+        {{ t('pages.home.contactForm.fields.consentGiven.extra') }}
+        <NuxtLink
+          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          rel="noopener noreferrer"
+          target="_blank"
+          :to="localePath('privacy-policy')"
+        >
+          {{ t('nav.privacy-policy') }}
+        </NuxtLink>
+        ,
+        <NuxtLink
+          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          rel="noopener noreferrer"
+          target="_blank"
+          :to="localePath('terms-and-conditions')"
+        >
+          {{ t('nav.terms-and-conditions') }}
+        </NuxtLink>
+      </BaseCheckbox>
       <div class="w-full flex justify-end items-center mt-4 gap-4">
         <BaseButton
 

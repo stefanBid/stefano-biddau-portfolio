@@ -95,7 +95,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:letter-opened-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus"
+              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus rounded"
               :href="`mailto:${props.email}`"
             >
               {{ props.email }}
@@ -108,7 +108,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:smartphone-2-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus"
+              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus rounded"
               :href="`tel:${props.phone}`"
             >
               {{ props.phone }}
