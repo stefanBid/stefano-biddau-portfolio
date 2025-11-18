@@ -1,56 +1,28 @@
-export interface Notification {
-  id: number
-  type: 'success' | 'warning' | 'error' | 'info'
-  icon?: string | null
-  title?: string | null
-  message: string
-  dismissible?: boolean
-  autoClose?: boolean
-  duration?: number
+interface NotificationState {
+  notifications: NotificationItem[]
+  notificationId: string
 }
 
-export interface NotificationOptions {
-  type?: 'success' | 'warning' | 'error' | 'info'
-  icon?: string | null
-  title?: string | null
-  dismissible?: boolean
-  autoClose?: boolean
-  duration?: number
-}
+export default function useNotification() {
+  const state = useState<NotificationState>('notifications', () => ({
+    notifications: [],
+    notificationId: crypto.randomUUID(),
+  }))
 
-export interface NotificationState {
-  notifications: Notification[]
-  notificationId: number
-}
-
-// Global state
-const state = useState<NotificationState>('notifications', () => ({
-  notifications: [],
-  notificationId: 0,
-}))
-
-export const useNotification = () => {
+  const notifications = computed(() => state.value.notifications)
   // Add notification
-  const addNotification = (message: string, options: NotificationOptions = {}) => {
-    const id = state.value.notificationId++
+  const addNotification = (newNotification: Omit<NotificationItem, 'id'>) => {
+    const id = crypto.randomUUID()
 
-    const notification: Notification = {
+    state.value.notifications.push({
+      ...newNotification,
       id,
-      type: options.type || 'info',
-      icon: options.icon || null,
-      title: options.title || null,
-      message,
-      dismissible: options.dismissible !== undefined ? options.dismissible : true,
-      autoClose: options.autoClose !== undefined ? options.autoClose : true,
-      duration: options.duration || 5000,
-    }
-
-    state.value.notifications.push(notification)
+    })
     return id
   }
 
   // Remove notification by id
-  const removeNotification = (id: number) => {
+  const removeNotification = (id: string) => {
     const index = state.value.notifications.findIndex(n => n.id === id)
     if (index > -1) {
       state.value.notifications.splice(index, 1)
@@ -63,24 +35,26 @@ export const useNotification = () => {
   }
 
   // Helper methods for specific types
-  const success = (message: string, options: Omit<NotificationOptions, 'type'> = {}) => {
-    return addNotification(message, { ...options, type: 'success' })
+  const success = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
+    return addNotification({ ...newNotification, type: 'success' })
   }
 
-  const warning = (message: string, options: Omit<NotificationOptions, 'type'> = {}) => {
-    return addNotification(message, { ...options, type: 'warning' })
+  const warning = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
+    return addNotification({ ...newNotification, type: 'warning' })
   }
 
-  const error = (message: string, options: Omit<NotificationOptions, 'type'> = {}) => {
-    return addNotification(message, { ...options, type: 'error' })
+  const error = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
+    return addNotification({ ...newNotification, type: 'error' })
   }
 
-  const info = (message: string, options: Omit<NotificationOptions, 'type'> = {}) => {
-    return addNotification(message, { ...options, type: 'info' })
+  const info = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
+    return addNotification({
+      ...newNotification, type: 'info',
+    })
   }
 
   return {
-    notifications: computed(() => state.value.notifications),
+    notifications,
     addNotification,
     removeNotification,
     clearNotifications,

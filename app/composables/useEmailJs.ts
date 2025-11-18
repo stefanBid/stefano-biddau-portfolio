@@ -15,7 +15,7 @@ type ReplyEmailForm = {
   year?: string
 }
 
-export default function () {
+export default function useEmailJs() {
   const config = useRuntimeConfig()
 
   const sendContactEmailAdmin = async (payload: AdminEmailForm) => {

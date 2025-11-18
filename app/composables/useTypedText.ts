@@ -30,7 +30,7 @@ const GROUP_STRING_OPTIONS: InputOptions = {
   cursorChar: '\u00A0_',
 }
 
-export default function (input: InputSource, options?: InputOptions) {
+export default function useTypedText(input: InputSource, options?: InputOptions) {
   /* --- Target DOM element reference --- */
   const el = ref<HTMLElement | null>(null)
   const elStyle = {

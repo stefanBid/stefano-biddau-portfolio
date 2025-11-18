@@ -13,7 +13,7 @@ const DEFAULT_CONFIG: FloatingConfig = {
   strategy: 'absolute',
 }
 
-export default function (conf: FloatingConfig = {}) {
+export default function useFloatingUi(conf: FloatingConfig = {}) {
   const mergedConf: FloatingConfig = {
     ...DEFAULT_CONFIG,
     ...conf,
