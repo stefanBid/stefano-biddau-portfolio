@@ -20,7 +20,7 @@
     },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
-      "description": "Privacy policy for stefanobiddau.com - Learn how we collect, use, and protect your personal data."
+      "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
     },
     "terms": {
       "title": "Terms and Conditions - Stefano Biddau",
@@ -80,6 +80,7 @@
           },
           "consentGiven": {
             "label": "I agree to the processing of the data provided exclusively for contact purposes. The data will not be stored or shared with third parties.",
+            "extra": "Read",
             "error-required": "You must agree to the processing of your data"
           },
           "submitButton": {
@@ -94,12 +95,12 @@
     },
     "privacy": {
       "title": "Privacy Policy",
-      "subtitle": "Your privacy is important to us",
+      "subtitle": "Your privacy is important to me",
       "lastUpdate": "Last updated",
       "backHome": "Back to Home",
       "intro": {
         "title": "Introduction",
-        "content": "This Privacy Policy describes how Stefano Biddau (\"we\", \"our\", or \"us\") collects, uses, and protects your personal information when you use the contact form on this website (www.stefanobiddau.com). We are committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR)."
+        "content": "This Privacy Policy describes how Stefano Biddau collects, uses, and protects your personal information when you use the contact form on this website (www.stefanobiddau.com). I am committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR)."
       },
       "dataController": {
         "title": "1. Data Controller",
@@ -107,52 +108,52 @@
         "email": "Email"
       },
       "dataCollected": {
-        "title": "2. Data We Collect",
-        "intro": "When you use the contact form on our website, we collect the following personal information:",
+        "title": "2. Data I Collect",
+        "intro": "When you use the contact form on my website, I collect the following personal information:",
         "name": "Name",
-        "nameDesc": "To identify you and personalize our response.",
+        "nameDesc": "To identify you and personalize my response.",
         "email": "Email Address",
         "emailDesc": "To communicate with you and respond to your inquiry.",
         "message": "Message Content",
-        "messageDesc": "The information you choose to share with us."
+        "messageDesc": "The information you choose to share with me."
       },
       "purpose": {
         "title": "3. Purpose of Data Processing",
-        "content": "We collect and process your personal data solely for the purpose of responding to your inquiries submitted through the contact form. We will not use your data for marketing purposes unless you explicitly consent to receive such communications."
+        "content": "I collect and process your personal data solely for the purpose of responding to your inquiries submitted through the contact form. I will not use your data for marketing purposes unless you explicitly consent to receive such communications."
       },
       "legalBasis": {
         "title": "4. Legal Basis for Processing",
-        "content": "The legal basis for processing your personal data is your explicit consent, which you provide by submitting the contact form and agreeing to our Privacy Policy. You have the right to withdraw your consent at any time by contacting us."
+        "content": "The legal basis for processing your personal data is your explicit consent, which you provide by submitting the contact form and agreeing to my Privacy Policy. You have the right to withdraw your consent at any time by contacting me."
       },
       "thirdParties": {
         "title": "5. Third-Party Services",
-        "intro": "We use EmailJS, a third-party email service, to send and receive messages from the contact form. When you submit the form, your data is transmitted to EmailJS servers. EmailJS is a trusted service provider that complies with data protection regulations.",
+        "intro": "I use EmailJS, a third-party email service, to send and receive messages from the contact form. When you submit the form, your data is transmitted to EmailJS servers. EmailJS is a trusted service provider that complies with data protection regulations.",
         "emailjs": "Used to process and deliver contact form submissions.",
         "privacyPolicy": "EmailJS Privacy Policy"
       },
       "dataRetention": {
         "title": "6. Data Retention",
-        "content": "We retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law. Once your inquiry has been resolved and there is no further need to retain your data, it will be securely deleted."
+        "content": "I retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law. Once your inquiry has been resolved and there is no further need to retain your data, it will be securely deleted."
       },
       "yourRights": {
         "title": "7. Your Rights",
         "intro": "Under the GDPR, you have the following rights regarding your personal data:",
-        "access": "Access: Request a copy of the personal data we hold about you.",
+        "access": "Access: Request a copy of the personal data I hold about you.",
         "rectification": "Rectification: Request corrections to any inaccurate or incomplete data.",
         "erasure": "Erasure: Request the deletion of your personal data.",
-        "restriction": "Restriction of Processing: Request that we limit the processing of your data.",
+        "restriction": "Restriction of Processing: Request that I limit the processing of your data.",
         "portability": "Data Portability: Request a copy of your data in a structured, machine-readable format.",
         "objection": "Objection: Object to the processing of your data under certain circumstances.",
-        "contact": "To exercise any of these rights, please contact us at"
+        "contact": "To exercise any of these rights, please contact me at"
       },
       "changes": {
         "title": "8. Changes to This Privacy Policy",
-        "content": "We may update this Privacy Policy from time to time to reflect changes in our practices or legal requirements. Any updates will be posted on this page with a revised \"Last Updated\" date. We encourage you to review this policy periodically."
+        "content": "I may update this Privacy Policy from time to time to reflect changes in my practices or legal requirements. Any updates will be posted on this page with a revised \"Last Updated\" date. I encourage you to review this policy periodically."
       }
     },
     "terms": {
       "title": "Terms and Conditions",
-      "subtitle": "Please read these terms carefully before using our website",
+      "subtitle": "Please read these terms carefully before using my website",
       "lastUpdate": "Last updated",
       "backHome": "Back to Home",
       "intro": {
@@ -161,7 +162,7 @@
       },
       "acceptance": {
         "title": "1. Acceptance of Terms",
-        "content": "By accessing and using this Website, you accept and agree to be bound by these Terms and our Privacy Policy. These Terms apply to all visitors, users, and others who access or use the Website."
+        "content": "By accessing and using this Website, you accept and agree to be bound by these Terms and my Privacy Policy. These Terms apply to all visitors, users, and others who access or use the Website."
       },
       "useOfWebsite": {
         "title": "2. Use of the Website",
@@ -180,15 +181,15 @@
         "intro": "When you submit information through the contact form on this Website, you agree that:",
         "point1": "The information you provide is accurate, complete, and truthful.",
         "point2": "You will not submit any content that is unlawful, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, or otherwise objectionable.",
-        "point3": "We may use the information you provide to respond to your inquiry and as described in our Privacy Policy."
+        "point3": "I may use the information you provide to respond to your inquiry and as described in my Privacy Policy."
       },
       "thirdPartyLinks": {
         "title": "5. Third-Party Links",
-        "content": "This Website may contain links to third-party websites or services that are not owned or controlled by us. We have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that we shall not be responsible or liable for any damage or loss caused by your use of any third-party content, goods, or services."
+        "content": "This Website may contain links to third-party websites or services that are not owned or controlled by me. I have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that I shall not be responsible or liable for any damage or loss caused by your use of any third-party content, goods, or services."
       },
       "disclaimer": {
         "title": "6. Disclaimer of Warranties",
-        "content": "This Website is provided on an \"as is\" and \"as available\" basis. We make no representations or warranties of any kind, express or implied, as to the operation of the Website or the information, content, or materials included on the Website. To the fullest extent permissible by law, we disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability and fitness for a particular purpose."
+        "content": "This Website is provided on an \"as is\" and \"as available\" basis. I make no representations or warranties of any kind, express or implied, as to the operation of the Website or the information, content, or materials included on the Website. To the fullest extent permissible by law, I disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability and fitness for a particular purpose."
       },
       "liability": {
         "title": "7. Limitation of Liability",
@@ -196,15 +197,15 @@
       },
       "changes": {
         "title": "8. Changes to These Terms",
-        "content": "We reserve the right to modify or replace these Terms at any time. Any changes will be effective immediately upon posting on this page with a revised \"Last Updated\" date. Your continued use of the Website after any changes to these Terms constitutes your acceptance of the new Terms."
+        "content": "I reserve the right to modify or replace these Terms at any time. Any changes will be effective immediately upon posting on this page with a revised \"Last Updated\" date. Your continued use of the Website after any changes to these Terms constitutes your acceptance of the new Terms."
       },
       "governingLaw": {
         "title": "9. Governing Law",
         "content": "These Terms shall be governed and construed in accordance with the laws of Italy, without regard to its conflict of law provisions. Any disputes arising out of or relating to these Terms or your use of the Website shall be subject to the exclusive jurisdiction of the courts of Italy."
       },
       "contact": {
-        "title": "10. Contact Us",
-        "content": "If you have any questions about these Terms, please contact us at"
+        "title": "10. Contact Me",
+        "content": "If you have any questions about these Terms, please contact me at"
       }
     }
   },

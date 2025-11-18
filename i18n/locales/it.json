@@ -80,6 +80,7 @@
           },
           "consentGiven": {
             "label": "Acconsento al trattamento dei dati forniti esclusivamente per finalità di contatto. I dati non verranno memorizzati né condivisi con terzi.",
+            "extra": "Leggi",
             "error-required": "Devi acconsentire al trattamento dei tuoi dati"
           },
           "submitButton": {
@@ -93,13 +94,13 @@
       }
     },
     "privacy": {
-      "title": "Privacy Policy",
-      "subtitle": "La tua privacy è importante per noi",
+      "title": "Informativa sulla Privacy",
+      "subtitle": "La tua privacy è importante per me",
       "lastUpdate": "Ultimo aggiornamento",
       "backHome": "Torna alla Home",
       "intro": {
         "title": "Introduzione",
-        "content": "Questa Privacy Policy descrive come Stefano Biddau (\"noi\", \"nostro\" o \"ci\") raccoglie, utilizza e protegge le tue informazioni personali quando utilizzi il modulo di contatto su questo sito web (www.stefanobiddau.com). Ci impegniamo a proteggere la tua privacy e a rispettare le leggi applicabili sulla protezione dei dati, incluso il Regolamento Generale sulla Protezione dei Dati (GDPR)."
+        "content": "Questa Privacy Policy descrive come Stefano Biddau raccoglie, utilizza e protegge le tue informazioni personali quando utilizzi il modulo di contatto su questo sito web (www.stefanobiddau.com). Mi impegno a proteggere la tua privacy e a rispettare le leggi applicabili sulla protezione dei dati, incluso il Regolamento Generale sulla Protezione dei Dati (GDPR)."
       },
       "dataController": {
         "title": "1. Titolare del Trattamento",
@@ -107,52 +108,52 @@
         "email": "Email"
       },
       "dataCollected": {
-        "title": "2. Dati che Raccogliamo",
-        "intro": "Quando utilizzi il modulo di contatto sul nostro sito web, raccogliamo le seguenti informazioni personali:",
+        "title": "2. Dati che Raccolgo",
+        "intro": "Quando utilizzi il modulo di contatto sul mio sito web, raccolgo le seguenti informazioni personali:",
         "name": "Nome",
-        "nameDesc": "Per identificarti e personalizzare la nostra risposta.",
+        "nameDesc": "Per identificarti e personalizzare la mia risposta.",
         "email": "Indirizzo Email",
         "emailDesc": "Per comunicare con te e rispondere alla tua richiesta.",
         "message": "Contenuto del Messaggio",
-        "messageDesc": "Le informazioni che scegli di condividere con noi."
+        "messageDesc": "Le informazioni che scegli di condividere con me."
       },
       "purpose": {
         "title": "3. Finalità del Trattamento dei Dati",
-        "content": "Raccogliamo e trattiamo i tuoi dati personali esclusivamente per rispondere alle tue richieste inviate tramite il modulo di contatto. Non utilizzeremo i tuoi dati per scopi di marketing a meno che tu non fornisca esplicito consenso per ricevere tali comunicazioni."
+        "content": "Raccolgo e tratto i tuoi dati personali esclusivamente per rispondere alle tue richieste inviate tramite il modulo di contatto. Non utilizzerò i tuoi dati per scopi di marketing a meno che tu non fornisca esplicito consenso per ricevere tali comunicazioni."
       },
       "legalBasis": {
         "title": "4. Base Giuridica del Trattamento",
-        "content": "La base giuridica per il trattamento dei tuoi dati personali è il tuo consenso esplicito, che fornisci inviando il modulo di contatto e accettando la nostra Privacy Policy. Hai il diritto di revocare il tuo consenso in qualsiasi momento contattandoci."
+        "content": "La base giuridica per il trattamento dei tuoi dati personali è il tuo consenso esplicito, che fornisci inviando il modulo di contatto e accettando la mia Privacy Policy. Hai il diritto di revocare il tuo consenso in qualsiasi momento contattandomi."
       },
       "thirdParties": {
         "title": "5. Servizi di Terze Parti",
-        "intro": "Utilizziamo EmailJS, un servizio email di terze parti, per inviare e ricevere messaggi dal modulo di contatto. Quando invii il modulo, i tuoi dati vengono trasmessi ai server di EmailJS. EmailJS è un fornitore di servizi affidabile che rispetta le normative sulla protezione dei dati.",
+        "intro": "Utilizzo EmailJS, un servizio email di terze parti, per inviare e ricevere messaggi dal modulo di contatto. Quando invii il modulo, i tuoi dati vengono trasmessi ai server di EmailJS. EmailJS è un fornitore di servizi affidabile che rispetta le normative sulla protezione dei dati.",
         "emailjs": "Utilizzato per elaborare e consegnare gli invii del modulo di contatto.",
         "privacyPolicy": "Privacy Policy di EmailJS"
       },
       "dataRetention": {
         "title": "6. Conservazione dei Dati",
-        "content": "Conserviamo i tuoi dati personali solo per il tempo necessario a soddisfare gli scopi delineati in questa Privacy Policy o come richiesto dalla legge. Una volta risolta la tua richiesta e non essendoci più necessità di conservare i tuoi dati, questi verranno eliminati in modo sicuro."
+        "content": "Conservo i tuoi dati personali solo per il tempo necessario a soddisfare gli scopi delineati in questa Privacy Policy o come richiesto dalla legge. Una volta risolta la tua richiesta e non essendoci più necessità di conservare i tuoi dati, questi verranno eliminati in modo sicuro."
       },
       "yourRights": {
         "title": "7. I Tuoi Diritti",
         "intro": "In base al GDPR, hai i seguenti diritti riguardo ai tuoi dati personali:",
-        "access": "Accesso: Richiedere una copia dei dati personali che deteniamo su di te.",
+        "access": "Accesso: Richiedere una copia dei dati personali che detengo su di te.",
         "rectification": "Rettifica: Richiedere correzioni a eventuali dati inesatti o incompleti.",
         "erasure": "Cancellazione: Richiedere la cancellazione dei tuoi dati personali.",
-        "restriction": "Limitazione del Trattamento: Richiedere che limitiamo il trattamento dei tuoi dati.",
+        "restriction": "Limitazione del Trattamento: Richiedere che limiti il trattamento dei tuoi dati.",
         "portability": "Portabilità dei Dati: Richiedere una copia dei tuoi dati in un formato strutturato e leggibile da dispositivo automatico.",
         "objection": "Opposizione: Opporti al trattamento dei tuoi dati in determinate circostanze.",
-        "contact": "Per esercitare uno qualsiasi di questi diritti, contattaci all'indirizzo"
+        "contact": "Per esercitare uno qualsiasi di questi diritti, contattami all'indirizzo"
       },
       "changes": {
         "title": "8. Modifiche a Questa Privacy Policy",
-        "content": "Potremmo aggiornare questa Privacy Policy di tanto in tanto per riflettere cambiamenti nelle nostre pratiche o requisiti legali. Eventuali aggiornamenti saranno pubblicati su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Ti incoraggiamo a rivedere periodicamente questa policy."
+        "content": "Potrei aggiornare questa Privacy Policy di tanto in tanto per riflettere cambiamenti nelle mie pratiche o requisiti legali. Eventuali aggiornamenti saranno pubblicati su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Ti incoraggio a rivedere periodicamente questa policy."
       }
     },
     "terms": {
       "title": "Termini e Condizioni",
-      "subtitle": "Si prega di leggere attentamente questi termini prima di utilizzare il nostro sito web",
+      "subtitle": "Si prega di leggere attentamente questi termini prima di utilizzare il mio sito web",
       "lastUpdate": "Ultimo aggiornamento",
       "backHome": "Torna alla Home",
       "intro": {
@@ -161,7 +162,7 @@
       },
       "acceptance": {
         "title": "1. Accettazione dei Termini",
-        "content": "Accedendo e utilizzando questo Sito Web, accetti ed acconsenti ad essere vincolato da questi Termini e dalla nostra Privacy Policy. Questi Termini si applicano a tutti i visitatori, utenti e altri che accedono o utilizzano il Sito Web."
+        "content": "Accedendo e utilizzando questo Sito Web, accetti ed acconsenti ad essere vincolato da questi Termini e dalla mia Privacy Policy. Questi Termini si applicano a tutti i visitatori, utenti e altri che accedono o utilizzano il Sito Web."
       },
       "useOfWebsite": {
         "title": "2. Utilizzo del Sito Web",
@@ -180,15 +181,15 @@
         "intro": "Quando invii informazioni tramite il modulo di contatto su questo Sito Web, accetti che:",
         "point1": "Le informazioni che fornisci siano accurate, complete e veritiere.",
         "point2": "Non invierai contenuti che siano illeciti, dannosi, minacciosi, abusivi, molesti, diffamatori, volgari, osceni o altrimenti discutibili.",
-        "point3": "Possiamo utilizzare le informazioni che fornisci per rispondere alla tua richiesta e come descritto nella nostra Privacy Policy."
+        "point3": "Posso utilizzare le informazioni che fornisci per rispondere alla tua richiesta e come descritto nella mia Privacy Policy."
       },
       "thirdPartyLinks": {
         "title": "5. Link di Terze Parti",
-        "content": "Questo Sito Web può contenere link a siti web o servizi di terze parti che non sono di nostra proprietà o sotto il nostro controllo. Non abbiamo alcun controllo e non ci assumiamo alcuna responsabilità per il contenuto, le politiche sulla privacy o le pratiche di siti web o servizi di terze parti. Riconosci e accetti che non saremo responsabili per eventuali danni o perdite causati dal tuo utilizzo di contenuti, beni o servizi di terze parti."
+        "content": "Questo Sito Web può contenere link a siti web o servizi di terze parti che non sono di mia proprietà o sotto il mio controllo. Non ho alcun controllo e non mi assumo alcuna responsabilità per il contenuto, le politiche sulla privacy o le pratiche di siti web o servizi di terze parti. Riconosci e accetti che non sarò responsabile per eventuali danni o perdite causati dal tuo utilizzo di contenuti, beni o servizi di terze parti."
       },
       "disclaimer": {
         "title": "6. Esclusione di Garanzie",
-        "content": "Questo Sito Web è fornito \"così com'è\" e \"come disponibile\". Non forniamo dichiarazioni o garanzie di alcun tipo, esplicite o implicite, riguardo al funzionamento del Sito Web o alle informazioni, contenuti o materiali inclusi nel Sito Web. Nella misura massima consentita dalla legge, escludiamo tutte le garanzie, esplicite o implicite, incluse ma non limitate alle garanzie implicite di commerciabilità e idoneità per uno scopo particolare."
+        "content": "Questo Sito Web è fornito \"così com'è\" e \"come disponibile\". Non fornisco dichiarazioni o garanzie di alcun tipo, esplicite o implicite, riguardo al funzionamento del Sito Web o alle informazioni, contenuti o materiali inclusi nel Sito Web. Nella misura massima consentita dalla legge, escludo tutte le garanzie, esplicite o implicite, incluse ma non limitate alle garanzie implicite di commerciabilità e idoneità per uno scopo particolare."
       },
       "liability": {
         "title": "7. Limitazione di Responsabilità",
@@ -196,15 +197,15 @@
       },
       "changes": {
         "title": "8. Modifiche a Questi Termini",
-        "content": "Ci riserviamo il diritto di modificare o sostituire questi Termini in qualsiasi momento. Eventuali modifiche saranno efficaci immediatamente dopo la pubblicazione su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Il tuo uso continuato del Sito Web dopo eventuali modifiche a questi Termini costituisce la tua accettazione dei nuovi Termini."
+        "content": "Mi riservo il diritto di modificare o sostituire questi Termini in qualsiasi momento. Eventuali modifiche saranno efficaci immediatamente dopo la pubblicazione su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Il tuo uso continuato del Sito Web dopo eventuali modifiche a questi Termini costituisce la tua accettazione dei nuovi Termini."
       },
       "governingLaw": {
         "title": "9. Legge Applicabile",
         "content": "Questi Termini saranno disciplinati e interpretati in conformità con le leggi italiane, senza riguardo alle sue disposizioni sui conflitti di legge. Eventuali controversie derivanti da o relative a questi Termini o al tuo utilizzo del Sito Web saranno soggette alla giurisdizione esclusiva dei tribunali italiani."
       },
       "contact": {
-        "title": "10. Contattaci",
-        "content": "Se hai domande su questi Termini, contattaci all'indirizzo"
+        "title": "10. Contattami",
+        "content": "Se hai domande su questi Termini, contattami all'indirizzo"
       }
     }
   },
