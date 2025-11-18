@@ -25,10 +25,10 @@ const { lock, unlock } = useLockScroll()
 
 const { el, elStyle } = useTypedText(
   computed(() => [
-    t('pages.home.subtitle.typed[0]'),
-    t('pages.home.subtitle.typed[1]'),
-    t('pages.home.subtitle.typed[2]'),
-    t('pages.home.subtitle.typed[3]'),
+    t('pages.home.subtitle.typed.0'),
+    t('pages.home.subtitle.typed.1'),
+    t('pages.home.subtitle.typed.2'),
+    t('pages.home.subtitle.typed.3'),
   ]),
   {
     backDelay: 500,
