@@ -42,7 +42,7 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full max-w-full sm:max-w-lg p-3.5 sm:p-5 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
+      'w-full sm:w-lg p-3.5 sm:p-5 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
       'shadow-[0_4px_20px_var(--color-sb-shadow)]',
       {
         'bg-[#0a3d2c] border-[#10b981]': props.type === 'success',
