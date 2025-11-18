@@ -2,7 +2,7 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n'],
   devtools: { enabled: true },
   css: ['./app/assets/css/main.css'],
   runtimeConfig: {
@@ -21,6 +21,21 @@ export default defineNuxtConfig({
     config: {
       stylistic: true,
 
+    },
+  },
+  i18n: {
+    // Modalità consigliata in Nuxt 4
+    strategy: 'prefix_except_default', // / -> en, /it -> italiano
+    defaultLocale: 'en',
+    locales: [
+      { code: 'en', iso: 'en-US', name: 'English', file: 'en.json' },
+      { code: 'it', iso: 'it-IT', name: 'Italiano', file: 'it.json' },
+    ],
+    langDir: 'locales/', // cartella con i file di traduzione
+    detectBrowserLanguage: {
+      useCookie: true,
+      cookieKey: 'i18n_redirected',
+      redirectOn: 'root', // solo sulla root
     },
   },
   icon: {
