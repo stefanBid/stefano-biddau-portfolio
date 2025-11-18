@@ -15,7 +15,7 @@ const emit = defineEmits<{
 }>()
 
 // Floating UI composable
-const { reference, floating, floatingStyles, open, toggleFloating } = useCustomFloating({
+const { reference, floating, floatingStyles, open, toggleFloating } = useFloatingUi({
   placement: 'bottom-start',
   offset: 8,
   strategy: 'fixed',
