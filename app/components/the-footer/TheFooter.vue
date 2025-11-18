@@ -10,6 +10,7 @@ interface TheFooterProps {
 
 // Dependencies
 const { t } = useI18n()
+const localePath = useLocalePath()
 
 // Input / Output
 const props = withDefaults(defineProps<TheFooterProps>(), {
@@ -166,14 +167,40 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     <!-- Bottom bar -->
     <div class="border-t border-sb-border bg-sb-main/98">
       <div
-        class="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex flex-col sm:flex-row items-center justify-between gap-2"
+        class="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2 u-sb-soft-transition"
       >
-        <p class="ty-sb-caption text-sb-muted text-center sm:text-left">
-          {{ t('footer.credit-section', { year: new Date().getFullYear() }) }}
-        </p>
-        <p class="ty-sb-caption text-sb-muted/80 text-center sm:text-right">
-          {{ t('footer.made-with') }}
-        </p>
+        <!-- Left side: credit + made with -->
+        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left u-sb-soft-transition">
+          <p>
+            {{ t('footer.credit-section', { year: new Date().getFullYear() }) }}
+          </p>
+
+          <p class="text-sb-muted/80">
+            {{ t('footer.made-with') }}
+          </p>
+        </div>
+
+        <!-- Right side: legal links -->
+        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 ty-sb-caption text-sb-muted/80 not-italic text-center lg:text-right u-sb-soft-transition">
+          <!-- Privacy -->
+          <NuxtLink
+            class="hover:text-sb-accent underline underline-offset-4 u-sb-focus rounded w-fit u-sb-soft-transition"
+            :to="localePath('privacy-policy')"
+          >
+            {{ t('nav.privacy-policy') }}
+          </NuxtLink>
+
+          <!-- Separator -->
+          <span class="opacity-40 select-none">|</span>
+
+          <!-- Terms -->
+          <NuxtLink
+            class="hover:text-sb-accent underline underline-offset-4 u-sb-focus rounded w-fit u-sb-soft-transition"
+            :to="localePath('terms-and-conditions')"
+          >
+            {{ t('nav.terms-and-conditions') }}
+          </NuxtLink>
+        </div>
       </div>
     </div>
   </footer>
