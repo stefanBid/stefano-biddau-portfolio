@@ -14,7 +14,11 @@ useHead(() => ({
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
 
-const announcement = `🚀 <b>The portfolio is getting a fresh new look!</b> <br> I'm currently updating the design and polishing the user experience. Thanks for your patience!`
+const announcement = computed(() => {
+  const title = t('announcement.ui-refactor.title')
+  const body = t('announcement.ui-refactor.body')
+  return `🚀 - <strong>${title}</strong>- 🚀<br/>${body}`
+})
 
 // State
 const showAnnouncement = ref(true)

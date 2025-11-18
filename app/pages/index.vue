@@ -187,9 +187,9 @@ onBeforeUnmount(() => {
         <BaseCard
           align="center"
           class="max-w-xl"
-          paragraph="A comprehensive overview of my skills, work experiences, and key projects. The document is updated and optimized for quick consultation."
-          subtitle="Discover my professional journey"
-          title="Download My CV"
+          :paragraph="t('pages.home.cvCard.paragraph')"
+          :subtitle="t('pages.home.cvCard.subtitle')"
+          :title="t('pages.home.cvCard.title')"
           variant="dark-hover"
         >
           <template #card-header>
@@ -197,16 +197,16 @@ onBeforeUnmount(() => {
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="downloadFile('/files/Stefano_Biddau_CV.pdf', 'Stefano_Biddau_CV.pdf')">
-              Download CV
+              {{ t('pages.home.cvCard.buttonText') }}
             </BaseButton>
           </template>
         </BaseCard>
         <BaseCard
           align="center"
           class="max-w-xl"
-          paragraph="If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together."
-          subtitle="Let's talk about your project"
-          title="Contact Me"
+          :paragraph="t('pages.home.contactCard.paragraph')"
+          :subtitle="t('pages.home.contactCard.subtitle')"
+          :title="t('pages.home.contactCard.title')"
           variant="dark-hover"
         >
           <template #card-header>
@@ -214,7 +214,7 @@ onBeforeUnmount(() => {
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="contactFormIsOpen = true">
-              Write to me
+              {{ t('pages.home.contactCard.buttonText') }}
             </BaseButton>
           </template>
         </BaseCard>

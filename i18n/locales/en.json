@@ -1,4 +1,10 @@
 {
+  "announcement": {
+    "ui-refactor": {
+      "title": "The portfolio is getting a fresh new look!",
+      "body": "I'm currently updating the design and polishing the user experience. Thanks for your patience!"
+    }
+  },
   "nav": {
     "home": "Home",
     "about-me": "About Me",
@@ -10,6 +16,10 @@
       "title": "Stefano Biddau - ",
       "description": "I'm Stefano Biddau, a web designer and front-end developer. I create modern, user-focused digital experiences. Explore my portfolio and get in touch for a collaboration."
     }
+  },
+    "header": {
+    "route-section": "Menu",
+    "settings-section": "Settings"
   },
   "pages": {
     "home": {
@@ -24,17 +34,17 @@
           "UI/ UX Enthusiast"
         ]
       },
-      "firstCard": {
+      "cvCard": {
         "title": "Download My CV",
         "subtitle": "Discover my professional journey",
         "paragraph": "A comprehensive overview of my skills, work experiences, and key projects. The document is updated and optimized for quick consultation.",
-        "button": "Download CV"
+        "buttonText": "Download CV"
       },
-      "secondCard": {
-        "tittle": "Contact Me",
+      "contactCard": {
+        "title": "Contact Me",
         "subtitle": "Let's talk about your projects",
         "paragraph": "If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together.",
-        "button": "Get in Touch"
+        "buttonText": "Get in Touch"
       }
     }
   }
