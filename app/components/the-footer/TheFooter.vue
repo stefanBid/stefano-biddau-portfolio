@@ -77,7 +77,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             v-else
             class="ty-sb-caption text-sb-muted/70 u-sb-soft-transition"
           >
-            Navigation coming soon.
+            {{ t('footer.route-fallback') }}
           </p>
         </nav>
       </section>

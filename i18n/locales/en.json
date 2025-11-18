@@ -51,6 +51,7 @@
   "footer": {
     "tagline": "I turn your ideas into digital experiences, one line of code at a time.",
     "route-section": "Quick Links",
+    "route-fallback": "Navigation coming soon",
     "contact-section": "Contacts & Social",
     "credit-section": "© { year } Stefano Biddau - All rights reserved.",
     "made-with": "Designed and developed with ❤ by Stefano Biddau"
