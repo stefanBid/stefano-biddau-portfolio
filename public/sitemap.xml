@@ -5,6 +5,8 @@
   <!-- Homepage EN -->
   <url>
     <loc>https://www.stefanobiddau.com/</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/" />
@@ -16,6 +18,8 @@
   <!-- Homepage IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it</loc>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/" />
@@ -27,7 +31,9 @@
   <!-- Privacy Policy EN -->
   <url>
     <loc>https://www.stefanobiddau.com/privacy-policy</loc>
-    <priority>0.7</priority>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/privacy-policy" />
     <xhtml:link rel="alternate" hreflang="en-US" href="https://www.stefanobiddau.com/privacy-policy" />
@@ -38,7 +44,9 @@
   <!-- Privacy Policy IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/privacy-policy</loc>
-    <priority>0.7</priority>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/privacy-policy" />
     <xhtml:link rel="alternate" hreflang="en-US" href="https://www.stefanobiddau.com/privacy-policy" />
@@ -49,7 +57,9 @@
   <!-- Terms & Conditions EN -->
   <url>
     <loc>https://www.stefanobiddau.com/terms-and-conditions</loc>
-    <priority>0.7</priority>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/terms-and-conditions" />
     <xhtml:link rel="alternate" hreflang="en-US" href="https://www.stefanobiddau.com/terms-and-conditions" />
@@ -60,7 +70,9 @@
   <!-- Terms & Conditions IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/terms-and-conditions</loc>
-    <priority>0.7</priority>
+    <lastmod>2025-11-18</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
     <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/terms-and-conditions" />
     <xhtml:link rel="alternate" hreflang="en-US" href="https://www.stefanobiddau.com/terms-and-conditions" />
