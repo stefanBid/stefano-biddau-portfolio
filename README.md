@@ -53,7 +53,9 @@ npm run preview
 
 ## License
 
-© 2025 Stefano Biddau - All rights reserved.
+Copyright © 2025 Stefano Biddau - All Rights Reserved
+
+This project is proprietary and confidential. See the [LICENSE](./LICENSE) file for details.
 
 
 ## Setup
