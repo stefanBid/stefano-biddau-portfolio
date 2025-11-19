@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.5...v1.0.6) (2025-11-19)
+
+
+### Bug Fixes
+
+* enhance CI workflow to detect and skip builds for release-please pull requests ([ba45a6a](https://github.com/stefanBid/stefano-biddau-portfolio/commit/ba45a6af53471b9417765298470c0a18ea0d8e41))
+
 ## [1.0.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.4...v1.0.5) (2025-11-19)
 
 
