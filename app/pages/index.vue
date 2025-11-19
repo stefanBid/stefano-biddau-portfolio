@@ -174,7 +174,7 @@ onBeforeUnmount(() => {
       <h2 class="ty-sb-title-xl text-center u-sb-soft-transition">
         {{ t('pages.home.title') }}
       </h2>
-      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition">
+      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition min-h-16">
         {{ t('pages.home.subtitle.costant') }}
         <span
           ref="el"
