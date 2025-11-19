@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.2...v1.0.3) (2025-11-19)
+
+
+### Bug Fixes
+
+* update glob package to version 10.5.0 ([bae4e79](https://github.com/stefanBid/stefano-biddau-portfolio/commit/bae4e79575fcbbf05dc6eec43eb2db3503875a29))
+
 ## [1.0.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.1...v1.0.2) (2025-11-19)
 
 
