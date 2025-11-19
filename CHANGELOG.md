@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.3...v1.0.4) (2025-11-19)
+
+
+### Bug Fixes
+
+* update CI workflow to include additional branches and disable sourcemaps in Nuxt config ([73c40c4](https://github.com/stefanBid/stefano-biddau-portfolio/commit/73c40c4d6e80f62fc8d12cc5c24d1f414dba61c3))
+
 ## [1.0.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.2...v1.0.3) (2025-11-19)
 
 
