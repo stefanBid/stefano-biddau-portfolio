@@ -2,9 +2,9 @@ name: CI (Nuxt)
 
 on:
   push:
-    branches: [ "**" ]
+    branches: [ "main", "develop", "release/**" ]
   pull_request:
-    branches: [ "**" ]
+    branches: [ "main" ]
 
 concurrency:
   group: ci-${{ github.ref }}
