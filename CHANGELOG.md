@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.1...v1.0.2) (2025-11-19)
+
+
+### Bug Fixes
+
+* ensure version field is consistently defined in package-lock.json ([19162db](https://github.com/stefanBid/stefano-biddau-portfolio/commit/19162db3a13db736ebb0c254e419295ca5a2677f))
+
 ## [1.0.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.0...v1.0.1) (2025-11-19)
 
 
