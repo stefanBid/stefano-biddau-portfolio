@@ -13,6 +13,10 @@ export default defineNuxtConfig({
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
     },
   },
+  sourcemap: {
+    client: false,
+    server: false,
+  },
   compatibilityDate: '2025-07-15',
   nitro: {
     preset: 'netlify',
