@@ -84,6 +84,7 @@ watch(isMdUp, (newVal) => {
         <NuxtLink
           class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer"
           :to="props.routes[0]?.path || '/'"
+          @click="onClose"
         >
           <NuxtImg
             alt="Logo"
@@ -141,7 +142,7 @@ watch(isMdUp, (newVal) => {
         aria-hidden="true"
         class="fixed inset-0 top-16 bg-black/50 transition-opacity duration-200"
         :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
-        @click.stop="onClose()"
+        @click="onClose"
       ></div>
 
       <!-- drawer -->
@@ -167,7 +168,7 @@ watch(isMdUp, (newVal) => {
                 'bg-sb-accent font-bold!': currentRoute.path === r.path,
               }"
               :to="r.path"
-              @click="onClose()"
+              @click="onClose"
             >
               {{ r.name }}
             </NuxtLink>
