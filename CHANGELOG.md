@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.7](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.6...v1.0.7) (2025-11-20)
+
+
+### Bug Fixes
+
+* update type definitions for MenuItem and replace LangItem references ([#23](https://github.com/stefanBid/stefano-biddau-portfolio/issues/23)) ([043f9b3](https://github.com/stefanBid/stefano-biddau-portfolio/commit/043f9b326c158e94e3e364633c6fdeb4874965ca))
+
 ## [1.0.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.5...v1.0.6) (2025-11-19)
 
 
