@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.8](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.7...v1.0.8) (2025-11-20)
+
+
+### Bug Fixes
+
+* simplify event handling for closing header drawer ([#25](https://github.com/stefanBid/stefano-biddau-portfolio/issues/25)) ([2275a12](https://github.com/stefanBid/stefano-biddau-portfolio/commit/2275a121c28e8b62f8c2d2b7bef5f974fac26275))
+
 ## [1.0.7](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.6...v1.0.7) (2025-11-20)
 
 
