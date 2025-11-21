@@ -30,6 +30,8 @@ const atTop = ref(true) // Track if user is at top of the page (to show or hide 
 
 const heroTitleWrap = ref<HTMLElement | null>(null)
 
+const selectedBioIndex = ref(0)
+
 // Events
 
 const onAnimateEnd = () => {
@@ -124,6 +126,47 @@ onBeforeUnmount(() => {
         />
       </transition>
     </section>
+    <!-- Timeline Section -->
+    <section aria-label="Professional Timeline" class="relative w-full py-10">
+      <div class="border-l-2 border-sb-contrast/30 relative flex flex-col gap-10 pl-6 sm:pl-10 mx-4 sm:mx-5 u-sb-soft-transition">
+        <article
+          v-for="item in 10"
+          :key="item"
+          class="relative"
+        >
+          <!-- Content -->
+          <div class="pl-6 sm:pl-10">
+            <h2 class="ty-sb-title u-sb-soft-transition">
+              Lorem Ipsum Dolor Sit Amet
+            </h2>
+            <p class="ty-sb-body text-sb-contrast/70 mt-2">
+              Placeholder description for this milestone event.
+            </p>
+          </div>
+
+          <!-- Timeline Point with Halo Effect -->
+          <div
+            class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-5.5 flex items-center justify-center pointer-events-none u-sb-soft-transition"
+          >
+            <!-- Static Halo (aureola fissa che rimane) -->
+            <div
+              class="absolute inset-0 rounded-full u-sb-soft-transition"
+              :class="{
+                'bg-sb-accent/40 scale-200': selectedBioIndex === item,
+                'bg-transparent scale-0': selectedBioIndex !== item,
+              }"
+            ></div>
+            <!-- Clickable Point -->
+            <button
+              :aria-label="`View milestone ${item}`"
+              :aria-pressed="selectedBioIndex === item"
+              class="relative size-4 sm:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
+              @click="selectedBioIndex = item"
+            ></button>
+          </div>
+        </article>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -139,6 +182,22 @@ onBeforeUnmount(() => {
   }
 }
 .animate-fade-in {
-  animation: fade-in 1.2s ease-in-out; /* 0.5s delay */
+  animation: fade-in 1.2s ease-in-out;
+}
+
+/* Halo Scale & Fade Animation */
+@keyframes scale-halo {
+  0% {
+    transform: scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: scale(2.5);
+    opacity: 0;
+  }
+}
+
+.scale-halo {
+  animation: scale-halo 0.6s ease-out forwards;
 }
 </style>

@@ -24,10 +24,10 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 </script>
 
 <template>
-  <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16">
+  <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16 px-6 sm:px-10">
     <div
-      class="max-w-[1400px] mx-auto px-6 md:px-10 py-10 md:py-12 lg:py-14 grid gap-10 md:gap-8 lg:gap-12
-             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition"
+      class="max-w-[1400px] mx-auto grid gap-8 sm:gap-10
+             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition py-10 sm:py-12"
     >
       <!-- 1) Logo + descrizione -->
       <section class="space-y-4">

@@ -78,9 +78,9 @@ watch(isMdUp, (newVal) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border  u-sb-soft-transition backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80"
+      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border u-sb-soft-transition backdrop-blur supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80 px-6 md:px-10"
     >
-      <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition px-6 md:px-10">
+      <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition">
         <NuxtLink
           class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer"
           :to="props.routes[0]?.path || '/'"
