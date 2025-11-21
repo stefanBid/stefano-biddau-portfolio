@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.8...v1.0.9) (2025-11-21)
+
+
+### Bug Fixes
+
+* remove dev page ([#27](https://github.com/stefanBid/stefano-biddau-portfolio/issues/27)) ([74888c0](https://github.com/stefanBid/stefano-biddau-portfolio/commit/74888c0071c94aee54740896c4ab91f0bc47c0d5))
+
 ## [1.0.8](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.7...v1.0.8) (2025-11-20)
 
 
