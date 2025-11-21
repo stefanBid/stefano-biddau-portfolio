@@ -3,6 +3,24 @@
 const { t } = useI18n()
 const route = useRoute()
 
+useSeoMeta({
+  // LOCALIZED
+  title: () => t('meta.about-me.title'),
+  description: () => t('meta.about-me.description'),
+  ogTitle: () => t('meta.about-me.ogTitle'),
+  ogDescription: () => t('meta.about-me.description'),
+  twitterTitle: () => t('meta.about-me.ogTitle'),
+  twitterDescription: () => t('meta.about-me.description'),
+
+  // GLOBALS
+  ogImage: '/images/card-logo.jpg',
+  twitterImage: '/images/card-logo.jpg',
+  twitterCard: 'summary',
+
+  // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
+  ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
+})
+
 // State
 const heroHasPlayed = useState('hero-about-me-has-played', () => false)
 const ready = ref(false)
@@ -95,7 +113,7 @@ onBeforeUnmount(() => {
         <h1
           class="ty-sb-hero bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] u-sb-soft-transition px-6 py-2"
         >
-          {{ 'Conoscimi meglio' }}
+          {{ t('pages.about-me.hero') }}
         </h1>
       </div>
       <transition name="fade">
