@@ -82,7 +82,7 @@ watch(isMdUp, (newVal) => {
     >
       <div class=" h-full flex items-center max-w-[1400px] mx-auto justify-between u-sb-soft-transition">
         <NuxtLink
-          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded-xl cursor-pointer"
+          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
           :to="props.routes[0]?.path || '/'"
           @click="onClose"
         >
@@ -100,7 +100,7 @@ watch(isMdUp, (newVal) => {
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
-                class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded-md"
+                class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
                 :class="{
                   'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path && !r.disabled,
                   'text-sb-accent font-bold!': currentRoute.path === r.path && !r.disabled,
@@ -162,7 +162,7 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-lg p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
+              class="rounded-xl p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
               :class="{
                 'hover:bg-sb-surface-2': currentRoute.path !== r.path,
                 'bg-sb-accent font-bold!': currentRoute.path === r.path,

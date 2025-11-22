@@ -27,8 +27,9 @@ const emits = defineEmits<{
 
 // State
 const MAX_DESCRIPTION_LENGTH = 100
+const needsExpansion = computed(() => props.description.length > MAX_DESCRIPTION_LENGTH)
 const getDescriptionPreview = (desc: string): string => {
-  if (desc.length <= MAX_DESCRIPTION_LENGTH) {
+  if (!needsExpansion.value || props.isActive) {
     return desc
   }
   return desc.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
@@ -45,7 +46,13 @@ const onSelect = () => {
     class="relative"
   >
     <!-- Content -->
-    <div>
+    <BaseCard
+      :class="{
+        'bg-transparent!': !props.isActive,
+      }"
+      full-custom-content
+      variant="dark"
+    >
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ props.title }}
       </h2>
@@ -61,13 +68,22 @@ const onSelect = () => {
       >
         {{ getDescriptionPreview(props.description) }}
       </p>
-    </div>
+      <!-- Expand indicator -->
+      <button
+        v-if="needsExpansion && !props.isActive"
+        class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
+        @click="onSelect"
+      >
+        <span>Leggi tutto</span>
+        <Icon class="size-4" name="solar:alt-arrow-down-bold-duotone" />
+      </button>
+    </BaseCard>
 
     <!-- Timeline Point with Halo Effect -->
     <div
-      class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-5.5 flex items-center justify-center pointer-events-none u-sb-soft-transition"
+      class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
     >
-      <!-- Static Halo (aureola fissa che rimane) -->
+      <!-- Static Halo -->
       <div
         class="absolute inset-0 rounded-full u-sb-soft-transition"
         :class="{

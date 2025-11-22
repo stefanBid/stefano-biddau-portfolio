@@ -32,7 +32,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <!-- 1) Logo + descrizione -->
       <section class="space-y-4">
         <NuxtLink
-          class="inline-flex items-center gap-2 u-sb-soft-transition u-sb-focus rounded-xl hover:opacity-90"
+          class="inline-flex items-center gap-2 u-sb-soft-transition u-sb-focus rounded hover:opacity-90"
           :to="props.quickLinks[0]?.path || '/'"
         >
           <NuxtImg
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit ty-sb-label normal-case! text-sb-contrast/80 hover:text-sb-contrast u-sb-soft-transition u-sb-focus rounded-md "
+                class="w-fit ty-sb-label normal-case! text-sb-contrast/80 hover:text-sb-contrast u-sb-soft-transition u-sb-focus rounded"
                 :to="link.path"
               >
                 {{ link.name }}
