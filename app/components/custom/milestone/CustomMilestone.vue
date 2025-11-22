@@ -42,12 +42,10 @@ const onSelect = () => {
 
 <template>
   <article
-    v-for="item in 10"
-    :key="item"
     class="relative"
   >
     <!-- Content -->
-    <div class="pl-6 sm:pl-10">
+    <div>
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ props.title }}
       </h2>
@@ -79,7 +77,7 @@ const onSelect = () => {
       ></div>
       <!-- Clickable Point -->
       <button
-        :aria-label="`View milestone ${item}`"
+        :aria-label="`View milestone ${props.id}`"
         :aria-pressed="props.isActive"
         class="relative size-4 sm:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
         @click="onSelect"
