@@ -21,6 +21,10 @@ useSeoMeta({
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
 
+const { fetchMilestones } = useMilestones()
+
+const { data: milestones } = await fetchMilestones()
+
 // State
 const heroHasPlayed = useState('hero-about-me-has-played', () => false)
 const ready = ref(false)
