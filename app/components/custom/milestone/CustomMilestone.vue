@@ -45,6 +45,27 @@ const onSelect = () => {
   <article
     class="relative"
   >
+    <!-- Timeline Point with Halo Effect -->
+    <div
+      class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
+    >
+      <!-- Static Halo -->
+      <div
+        class="absolute inset-0 rounded-full u-sb-soft-transition"
+        :class="{
+          'bg-sb-accent/40 scale-200': props.isActive,
+          'bg-transparent scale-0': !props.isActive,
+        }"
+      ></div>
+      <!-- Clickable Point -->
+      <button
+        :aria-label="`View milestone ${props.id}`"
+        :aria-pressed="props.isActive"
+        class="relative size-4 sm:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
+        @click="onSelect"
+      ></button>
+    </div>
+
     <!-- Content -->
     <BaseCard
       :class="{
@@ -78,26 +99,5 @@ const onSelect = () => {
         <Icon class="size-4" name="solar:alt-arrow-down-bold-duotone" />
       </button>
     </BaseCard>
-
-    <!-- Timeline Point with Halo Effect -->
-    <div
-      class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
-    >
-      <!-- Static Halo -->
-      <div
-        class="absolute inset-0 rounded-full u-sb-soft-transition"
-        :class="{
-          'bg-sb-accent/40 scale-200': props.isActive,
-          'bg-transparent scale-0': !props.isActive,
-        }"
-      ></div>
-      <!-- Clickable Point -->
-      <button
-        :aria-label="`View milestone ${props.id}`"
-        :aria-pressed="props.isActive"
-        class="relative size-4 sm:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
-        @click="onSelect"
-      ></button>
-    </div>
   </article>
 </template>
