@@ -184,20 +184,4 @@ onBeforeUnmount(() => {
 .animate-fade-in {
   animation: fade-in 1.2s ease-in-out;
 }
-
-/* Halo Scale & Fade Animation */
-@keyframes scale-halo {
-  0% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-  100% {
-    transform: scale(2.5);
-    opacity: 0;
-  }
-}
-
-.scale-halo {
-  animation: scale-halo 0.6s ease-out forwards;
-}
 </style>
