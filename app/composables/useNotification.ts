@@ -3,16 +3,24 @@ interface NotificationState {
   notificationId: string
 }
 
+function generateId(): string {
+  if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
+    return crypto.randomUUID()
+  }
+  // Fallback for environments without crypto.randomUUID
+  return `notif-${Math.random().toString(36).slice(2)}-${Date.now()}`
+}
+
 export default function useNotification() {
   const state = useState<NotificationState>('notifications', () => ({
     notifications: [],
-    notificationId: crypto.randomUUID(),
+    notificationId: generateId(),
   }))
 
   const notifications = computed(() => state.value.notifications)
   // Add notification
   const addNotification = (newNotification: Omit<NotificationItem, 'id'>) => {
-    const id = crypto.randomUUID()
+    const id = generateId()
 
     state.value.notifications.push({
       ...newNotification,
