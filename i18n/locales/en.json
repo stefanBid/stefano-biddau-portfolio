@@ -110,7 +110,8 @@
     },
     "about-me": {
       "hero": "Who am I?",
-      "milestones-error": {
+      "milestone-cta": "Read More",
+      "milestone-error": {
         "title": "Error Loading Milestones",
         "message": "An error occurred while loading the milestones. Please try again later."
       }

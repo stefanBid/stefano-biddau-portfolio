@@ -10,7 +10,6 @@ interface CustomMilestoneProps {
 }
 
 // Input / Output
-
 const props = withDefaults(
   defineProps<CustomMilestoneProps>(),
   {
@@ -27,6 +26,7 @@ const emits = defineEmits<{
 
 // Dependencies
 const { sanitizeHtml } = useSanitize()
+const { t } = useI18n()
 
 // State
 const MAX_DESCRIPTION_LENGTH = 100
@@ -98,7 +98,7 @@ const onSelect = () => {
         class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
         @click="onSelect"
       >
-        <span>Leggi tutto</span>
+        <span>{{ t('pages.about-me.milestone-cta') }}</span>
         <Icon class="size-4" name="solar:alt-arrow-down-bold-duotone" />
       </button>
     </BaseCard>

@@ -106,8 +106,8 @@ onBeforeUnmount(() => {
 watch(fetchError, (newError) => {
   if (newError) {
     error({
-      title: t('pages.about-me.milestones-error.title'),
-      message: t('pages.about-me.milestones-error.message'),
+      title: t('pages.about-me.milestone-error.title'),
+      message: t('pages.about-me.milestone-error.message'),
       autoClose: true,
       dismissible: true,
     })
