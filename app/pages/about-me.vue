@@ -22,8 +22,8 @@ useSeoMeta({
 })
 
 const { fetchMilestones } = useMilestones()
-
-const { data: milestones, pending, error } = await fetchMilestones()
+const { error } = useNotification()
+const { data: milestones, pending, error: fetchError } = await fetchMilestones()
 
 // State
 const heroHasPlayed = useState('hero-about-me-has-played', () => false)
@@ -104,10 +104,21 @@ onBeforeUnmount(() => {
 })
 
 watchEffect(() => {
-  if (milestones.value?.length && !selectedMilestoneId.value) {
-    _selectedMilestoneId.value = milestones.value[0]!.id
+  if (milestones.value?.length && !_selectedMilestoneId.value) {
+    _selectedMilestoneId.value = milestones.value[0]?.id ?? null
   }
 })
+
+watch(fetchError, (newError) => {
+  if (!newError) {
+    error({
+      title: t('errors.fetch-error-title'),
+      message: t('errors.failed-to-load-milestones'),
+      autoClose: false,
+      dismissible: true,
+    })
+  }
+}, { immediate: true })
 </script>
 
 <template>
@@ -145,16 +156,21 @@ watchEffect(() => {
     <section aria-label="Professional Timeline" class="relative w-full py-10">
       <div class="border-l-2 border-sb-contrast/30 relative flex flex-col gap-10 pl-6 sm:pl-10 mx-4 sm:mx-5 u-sb-soft-transition">
         <!-- Milestones -->
-        <CustomMilestone
-          v-for="(milestone) in milestones"
-          :id="milestone.id"
-          :key="milestone.id"
-          :description="milestone.description"
-          :is-active="selectedMilestoneId === milestone.id"
-          :subtitle="milestone.subtitle"
-          :title="milestone.title"
-          @select="selectedMilestoneId = milestone.id"
-        />
+        <template v-if="pending">
+          <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
+        </template>
+        <template v-else>
+          <CustomMilestone
+            v-for="(milestone) in milestones"
+            :id="milestone.id"
+            :key="milestone.id"
+            :description="milestone.description"
+            :is-active="selectedMilestoneId === milestone.id"
+            :subtitle="milestone.subtitle"
+            :title="milestone.title"
+            @select="selectedMilestoneId = milestone.id"
+          />
+        </template>
       </div>
     </section>
   </div>

@@ -1,12 +1,11 @@
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 
 export default function useSanitize() {
   const sanitizeHtml = (dirtyHtml: string): string => {
-    if (!import.meta.client) {
-      return dirtyHtml
-    }
+    // Converti newline in <br> PRIMA della sanitizzazione
+    const withBreaks = dirtyHtml.replace(/\n/g, '<br>')
 
-    return DOMPurify.sanitize(dirtyHtml, {
+    return DOMPurify.sanitize(withBreaks, {
       ALLOWED_TAGS: ['p', 'br', 'strong', 'em', 'u', 'a', 'ul', 'ol', 'li', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6'],
       ALLOWED_ATTR: ['href', 'target', 'rel'],
       ALLOW_DATA_ATTR: false,
@@ -15,7 +14,7 @@ export default function useSanitize() {
       FORBID_ATTR: ['onclick', 'onerror', 'onload'],
       KEEP_CONTENT: true,
       RETURN_TRUSTED_TYPE: false,
-    }).replace(/\n/g, '<br>')
+    })
   }
 
   return ({
