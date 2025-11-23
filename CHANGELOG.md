@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.1.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.9...v1.1.0) (2025-11-23)
+
+
+### Features
+
+* Add About Me page ([#29](https://github.com/stefanBid/stefano-biddau-portfolio/issues/29)) ([f51a4f7](https://github.com/stefanBid/stefano-biddau-portfolio/commit/f51a4f76bcc9a7fdf8be44c3410fb128a6004008))
+
+
+### Bug Fixes
+
+* handle fetch errors for milestones and display notifications ([f51a4f7](https://github.com/stefanBid/stefano-biddau-portfolio/commit/f51a4f76bcc9a7fdf8be44c3410fb128a6004008))
+
 ## [1.0.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.8...v1.0.9) (2025-11-21)
 
 
