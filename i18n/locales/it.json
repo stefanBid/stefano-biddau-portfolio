@@ -18,7 +18,7 @@
       "title": "Stefano Biddau - ",
       "description": "Sono Stefano Biddau, web designer e sviluppatore front-end. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
     },
-    "about-me": {
+    "about": {
       "title": "Chi Sono - Stefano Biddau",
       "ogTitle": "Chi Sono - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Mi chiamo Stefano Biddau e sono un web designer e sviluppatore front-end freelance. Scopri la mia storia, il mio percorso e il mio approccio al lavoro."
@@ -108,7 +108,7 @@
         }
       }
     },
-    "about-me": {
+    "about": {
       "hero": "Chi sono?",
       "milestone-cta": "Leggi di più",
       "milestone-error": {

@@ -5,12 +5,12 @@ const route = useRoute()
 
 useSeoMeta({
   // LOCALIZED
-  title: () => t('meta.about-me.title'),
-  description: () => t('meta.about-me.description'),
-  ogTitle: () => t('meta.about-me.ogTitle'),
-  ogDescription: () => t('meta.about-me.description'),
-  twitterTitle: () => t('meta.about-me.ogTitle'),
-  twitterDescription: () => t('meta.about-me.description'),
+  title: () => t('meta.about.title'),
+  description: () => t('meta.about.description'),
+  ogTitle: () => t('meta.about.ogTitle'),
+  ogDescription: () => t('meta.about.description'),
+  twitterTitle: () => t('meta.about.ogTitle'),
+  twitterDescription: () => t('meta.about.description'),
 
   // GLOBALS
   ogImage: '/images/card-logo.jpg',
@@ -129,8 +129,8 @@ watch(fetchError, (newError) => {
   } // ← GUARD CLIENT-ONLY
   if (newError) {
     error({
-      title: t('pages.about-me.milestone-error.title'),
-      message: t('pages.about-me.milestone-error.message'),
+      title: t('pages.about.milestone-error.title'),
+      message: t('pages.about.milestone-error.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -158,7 +158,7 @@ watch(fetchError, (newError) => {
         <h1
           class="ty-sb-hero bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] u-sb-soft-transition px-6 py-2"
         >
-          {{ t('pages.about-me.hero') }}
+          {{ t('pages.about.hero') }}
         </h1>
       </div>
       <transition name="fade">
