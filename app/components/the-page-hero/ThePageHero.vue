@@ -3,6 +3,7 @@ interface ThePageHeroProps {
   id: string
   text: string
   imageSrc?: string | null
+  lockScroll?: boolean
 }
 
 // Input / Output
@@ -10,6 +11,7 @@ const props = withDefaults(
   defineProps<ThePageHeroProps>(),
   {
     imageSrc: null,
+    lockScroll: false,
   },
 )
 
@@ -37,7 +39,9 @@ const onAnimateEnd = () => {
   heroDoneCount.value += 1
   if (heroDoneCount.value >= heroTarget.value) {
     ready.value = true
-    unlock()
+    if (props.lockScroll) {
+      unlock()
+    }
     heroHasPlayed.value = true
     // Clean up event listeners
     detach()
@@ -94,7 +98,9 @@ onMounted(() => {
   }
   else {
     heroDoneCount.value = 0
-    lock()
+    if (props.lockScroll) {
+      lock()
+    }
     attach()
   }
 
@@ -105,7 +111,9 @@ onMounted(() => {
 })
 
 onBeforeUnmount(() => {
-  unlock()
+  if (props.lockScroll) {
+    unlock()
+  }
   detach()
   if (import.meta.client) {
     window.removeEventListener('scroll', onScroll)
