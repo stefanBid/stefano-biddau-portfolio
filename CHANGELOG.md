@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.0...v1.1.1) (2025-11-23)
+
+
+### Bug Fixes
+
+* ssr problems ([#31](https://github.com/stefanBid/stefano-biddau-portfolio/issues/31)) ([ba2b416](https://github.com/stefanBid/stefano-biddau-portfolio/commit/ba2b4160bc675f070c2a27496e34cab3bed9c0e3))
+
 ## [1.1.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.0.9...v1.1.0) (2025-11-23)
 
 
