@@ -81,13 +81,13 @@ const onSelect = () => {
       variant="dark"
     >
       <!-- Header: Title + Date -->
-      <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4">
+      <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4 u-sb-soft-transition">
         <h2 class="ty-sb-title u-sb-soft-transition flex-1">
           {{ props.title }}
         </h2>
         <time
           v-if="props.date"
-          class="ty-sb-label text-sb-accent whitespace-nowrap"
+          class="ty-sb-label text-sb-accent whitespace-nowrap u-sb-soft-transition"
           :datetime="props.date"
         >
           {{ props.date }}
@@ -105,6 +105,31 @@ const onSelect = () => {
         v-html="getDescriptionPreview"
       >
       </p>
+
+      <!-- Polaroid Image (only when active) -->
+      <div
+        v-if="props.isActive && props.imageSrc"
+        class="mt-6 md:mt-8 flex justify-center u-sb-soft-transition"
+      >
+        <div
+          class="bg-white p-3 sm:p-4 shadow-lg max-w-sm w-full u-sb-soft-transition"
+        >
+          <div class="w-full max-h-72 sm:max-h-96 overflow-hidden u-sb-soft-transition">
+            <img
+              :alt="props.imageAlt || props.title"
+              class="w-full h-full object-cover"
+              :src="props.imageSrc"
+            />
+          </div>
+          <p
+            v-if="props.imageAlt"
+            class="text-center text-gray-700 mt-3 ty-sb-caption u-sb-soft-transition"
+          >
+            {{ props.imageAlt }}
+          </p>
+        </div>
+      </div>
+
       <!-- Expand indicator -->
       <button
         v-if="needsExpansion && !props.isActive"
