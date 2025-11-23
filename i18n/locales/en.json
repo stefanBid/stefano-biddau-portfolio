@@ -15,8 +15,13 @@
   },
   "meta": {
     "home": {
-      "title": "Stefano Biddau - ",
+      "title": "Stefano Biddau -",
       "description": "I'm Stefano Biddau, a web designer and front-end developer. I create modern, user-focused digital experiences. Explore my portfolio and get in touch for a collaboration."
+    },
+    "about-me": {
+      "title": "About Me - Stefano Biddau",
+      "ogTitle": "About Me - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "I'm Stefano Biddau, a freelance web designer and front-end developer. Learn more about my background, values, and approach to digital design."
     },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
@@ -101,6 +106,14 @@
             "message": "An error occurred while sending your message. Please try again later."
           }
         }
+      }
+    },
+    "about-me": {
+      "hero": "Who am I?",
+      "milestone-cta": "Read More",
+      "milestone-error": {
+        "title": "Error Loading Milestones",
+        "message": "An error occurred while loading the milestones. Please try again later."
       }
     },
     "privacy": {

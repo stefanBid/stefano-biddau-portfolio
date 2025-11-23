@@ -11,6 +11,7 @@ export default defineNuxtConfig({
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
+      strapiUrl: process.env.NUXT_PUBLIC_STRAPI_URL,
     },
   },
   sourcemap: {

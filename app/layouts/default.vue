@@ -19,7 +19,7 @@ const { notifications, removeNotification, info } = useNotification()
 
 const routes = computed(() => [
   { name: t('nav.home'), path: localePath('index') },
-  { name: t('nav.about-me'), path: localePath('about-me'), disabled: true },
+  { name: t('nav.about-me'), path: localePath('about-me') },
   { name: t('nav.my-skills'), path: localePath('my-skills'), disabled: true },
   { name: t('nav.my-projects'), path: localePath('my-projects'), disabled: true },
 ] as Array<RouteItem>)
@@ -60,7 +60,7 @@ onMounted(() => {
       :selected-lang-id="locale"
       @change-lang="langCode => onChangeLang(langCode)"
     />
-    <main class="pt-16 px-6 md:px-10">
+    <main class="pt-16 px-6 md:px-10 u-sb-soft-transition">
       <div class="w-full max-w-[1400px] mx-auto u-sb-soft-transition">
         <slot></slot>
       </div>
@@ -73,21 +73,23 @@ onMounted(() => {
       phone="+39 3297247711"
       :quick-links="routes"
     />
-    <TheNotificationBox>
-      <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">
-        <TheNotificationBanner
-          v-for="notification in notifications"
-          :key="notification.id"
-          :auto-close="notification.autoClose"
-          :dismissible="notification.dismissible"
-          :duration="notification.duration"
-          :icon="notification.icon"
-          :message="notification.message"
-          :title="notification.title"
-          :type="notification.type"
-          @close="onCloseNotification(notification.id)"
-        />
-      </transition-group>
-    </TheNotificationBox>
+    <ClientOnly>
+      <TheNotificationBox>
+        <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">
+          <TheNotificationBanner
+            v-for="notification in notifications"
+            :key="notification.id"
+            :auto-close="notification.autoClose"
+            :dismissible="notification.dismissible"
+            :duration="notification.duration"
+            :icon="notification.icon"
+            :message="notification.message"
+            :title="notification.title"
+            :type="notification.type"
+            @close="onCloseNotification(notification.id)"
+          />
+        </transition-group>
+      </TheNotificationBox>
+    </ClientOnly>
   </div>
 </template>
