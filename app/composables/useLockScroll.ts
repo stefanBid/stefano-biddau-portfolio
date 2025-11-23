@@ -1,7 +1,7 @@
 const SCROLL_LOCK_CLASS = 'sb-scroll-locked'
 
 export default function useLockScroll() {
-  // array globale condiviso tra TUTTI i chiamanti
+  // global state shared across instances
   const owners = useState<string[]>('scrollLockOwners', () => [])
   const isLocked = computed(() => owners.value.length > 0)
 
@@ -10,12 +10,7 @@ export default function useLockScroll() {
 
   const ensureOwnerId = () => {
     if (!ownerId.value) {
-      if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
-        ownerId.value = crypto.randomUUID()
-      }
-      else {
-        ownerId.value = `owner-${Math.random().toString(36).slice(2)}`
-      }
+      ownerId.value = generateUuid()
     }
     return ownerId.value
   }
@@ -27,7 +22,7 @@ export default function useLockScroll() {
 
     const id = ensureOwnerId()
 
-    // evita duplicati se lock() viene chiamato più volte dallo stesso owner
+    // avoid duplicates if lock() is called multiple times by the same owner
     if (!owners.value.includes(id)) {
       owners.value = [...owners.value, id]
     }
@@ -43,7 +38,7 @@ export default function useLockScroll() {
     }
   }
 
-  // Applica / rimuove la classe sul <html>
+  // Apply / remove the class on <html>
   watch(
     isLocked,
     (value) => {

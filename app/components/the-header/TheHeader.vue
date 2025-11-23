@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<TheHeaderProps>(), {
 const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
-const isMdUp = import.meta.client ? useMediaQuery('(min-width: 768px)') : ref(false)
+const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
 const currentRoute = useRoute()
 
 // Data
@@ -56,15 +56,26 @@ const onSelectLang = (langCode: string) => {
 
 onMounted(() => {
   if (import.meta.client) {
-    window.addEventListener('keydown', onKeydown)
-  }
-})
+    // Initialize media query reactivity only on client
+    const mediaQuery = window.matchMedia('(min-width: 768px)')
+    isMdUp.value = mediaQuery.matches
 
-onBeforeUnmount(() => {
-  if (import.meta.client) {
-    window.removeEventListener('keydown', onKeydown)
+    const handleMediaChange = (e: MediaQueryListEvent) => {
+      isMdUp.value = e.matches
+    }
+
+    mediaQuery.addEventListener('change', handleMediaChange)
+
+    // Also add keyboard listener
+    window.addEventListener('keydown', onKeydown)
+
+    // Cleanup
+    onBeforeUnmount(() => {
+      mediaQuery.removeEventListener('change', handleMediaChange)
+      window.removeEventListener('keydown', onKeydown)
+      unlock()
+    })
   }
-  unlock()
 })
 
 watch(isMdUp, (newVal) => {

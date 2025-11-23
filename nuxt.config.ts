@@ -62,7 +62,7 @@ export default defineNuxtConfig({
       },
     },
     domains: [
-      process.env.NUXT_PUBLIC_STRAPI_MEDIA_BASE || '',
+      process.env.NUXT_PUBLIC_STRAPI_URL || '',
     ],
     quality: 80,
     format: ['webp', 'avif', 'png'],

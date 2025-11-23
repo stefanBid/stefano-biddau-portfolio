@@ -1,18 +1,16 @@
 interface NotificationState {
   notifications: NotificationItem[]
-  notificationId: string
 }
 
 export default function useNotification() {
   const state = useState<NotificationState>('notifications', () => ({
     notifications: [],
-    notificationId: crypto.randomUUID(),
   }))
 
   const notifications = computed(() => state.value.notifications)
   // Add notification
   const addNotification = (newNotification: Omit<NotificationItem, 'id'>) => {
-    const id = crypto.randomUUID()
+    const id = generateUuid()
 
     state.value.notifications.push({
       ...newNotification,

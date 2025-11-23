@@ -41,14 +41,18 @@ const onCloseNotification = (id: string) => {
 onMounted(() => {
   if (import.meta.client) {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
+
+    // Show announcement notification only on client after hydration
+    nextTick(() => {
+      info({
+        title: `🚀 ${t('announcement.ui-refactor.title')}`,
+        message: t('announcement.ui-refactor.body'),
+        autoClose: true,
+        dismissible: true,
+        duration: 10000,
+      })
+    })
   }
-  info({
-    title: `🚀 ${t('announcement.ui-refactor.title')}`,
-    message: t('announcement.ui-refactor.body'),
-    autoClose: true,
-    dismissible: true,
-    duration: 10000,
-  })
 })
 </script>
 
