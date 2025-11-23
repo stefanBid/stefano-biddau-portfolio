@@ -47,6 +47,7 @@ const onSelect = () => {
 <template>
   <article
     class="relative"
+    :data-milestone-id="props.id"
   >
     <!-- Timeline Point with Halo Effect -->
     <div

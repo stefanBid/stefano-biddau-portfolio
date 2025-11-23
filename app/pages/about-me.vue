@@ -42,6 +42,25 @@ const selectedMilestoneId = computed(() => {
 
 const onSelectMilestone = (id: string | number) => {
   userSelectedId.value = String(id)
+
+  // Scroll to milestone with offset for header
+  nextTick(() => {
+    if (!import.meta.client) {
+      return
+    }
+
+    const milestoneElement = document.querySelector(`[data-milestone-id="${id}"]`)
+    if (milestoneElement) {
+      const headerOffset = 80 // Header height + some padding
+      const elementPosition = milestoneElement.getBoundingClientRect().top
+      const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth',
+      })
+    }
+  })
 }
 
 const onAnimateEnd = () => {
