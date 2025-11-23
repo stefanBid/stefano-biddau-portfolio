@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.3...v1.1.4) (2025-11-23)
+
+
+### Bug Fixes
+
+* general improvements ([#37](https://github.com/stefanBid/stefano-biddau-portfolio/issues/37)) ([8f83d8c](https://github.com/stefanBid/stefano-biddau-portfolio/commit/8f83d8c836cbc89a07874af93017a73409e79166))
+
 ## [1.1.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.2...v1.1.3) (2025-11-23)
 
 
