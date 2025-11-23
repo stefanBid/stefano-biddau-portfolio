@@ -1,67 +1,74 @@
-export interface Milestone {
-  id: number
+interface Milestone {
+  id: string
   title: string
   subtitle?: string | null
   description: string
   imageSrc?: string | null
-  imageAlt?: string | null
-  date?: string
-  order?: number
+  imageCaption?: string | null
+  date?: string | null
+}
+
+interface MilestoneBE {
+  id: number
+  documentId: string
+  title: string
+  subtitle?: string | null
+  description: string | null
+  image?: {
+    altermativeText: string | null
+    caption: string | null
+    formats: {
+      small: {
+        url: string
+      }
+      medium: {
+        url: string
+      }
+      large: {
+        url: string
+      }
+      thumbnail: {
+        url: string
+      }
+    }
+  } | null
+  date?: string | null
 }
 
 export default function useMilestones() {
   const config = useRuntimeConfig()
+  const { locale } = useI18n()
 
-  // Easy Call to fetch milestones from Strapi API
   const fetchMilestones = () => {
     return useFetch<Milestone[]>(
-      `${config.public.strapiUrl}/api/milestones`,
+      `${config.public.strapiUrl}/api/sb-milestones`,
       {
-        key: 'milestones', // cache key
+        key: `milestones-${locale.value}`,
         query: {
-          sort: 'order:asc',
+          locale: locale.value,
+          sort: 'id:asc',
           populate: '*',
         },
-        // Automatic transformation
         transform: (response) => {
-          const strapiResponse = response as unknown as StrapiResponse<Milestone[]>
-          return strapiResponse?.data || [] as Milestone[]
+          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
+          return strapiResponse.data.map((resItem) => {
+            return {
+              id: resItem.documentId,
+              title: resItem.title,
+              subtitle: resItem.subtitle ?? null,
+              description: resItem.description ?? null,
+              imageSrc: resItem.image?.formats.medium.url ?? null,
+              imageAlt: resItem.image?.caption ?? null,
+              date: resItem.date ?? null,
+            } as Milestone
+          })
         },
-      },
-    )
-  }
-
-  const fetchMilestonesAdvanced = () => {
-    return useAsyncData(
-      'milestones',
-      async () => {
-        const response = await $fetch<StrapiResponse<Milestone[]>>(
-          `${config.public.strapiUrl}/api/milestones`,
-          {
-            query: {
-              sort: 'order:asc',
-              populate: '*',
-            },
-          },
-        )
-        // Custom transformations
-        return response.data.map(m => ({
-          ...m,
-          // Add custom logic
-          isRecent: m.date ? new Date(m.date) > new Date('2024-01-01') : false,
-        }))
-      },
-      {
-        // Cache options
-        lazy: false, // await before render
-        server: true, // fetch on SSR
-        default: () => [] as Milestone[], // default value
+        watch: [locale],
       },
     )
   }
 
   return {
-    fetchMilestones, // Semplice
-    fetchMilestonesAdvanced, // Avanzato
+    fetchMilestones,
   }
 }

@@ -124,7 +124,6 @@ onBeforeUnmount(() => {
   <div>
     <section class="relative min-h-[calc(100vh-4rem)] flex flex-col items-center justify-center">
       <!-- Hero image -->
-
       <!-- Title with local overlay -->
       <div
         ref="heroTitleWrap"
