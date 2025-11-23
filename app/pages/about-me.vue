@@ -23,7 +23,7 @@ useSeoMeta({
 
 const { fetchMilestones } = useMilestones()
 const { error } = useNotification()
-const { data: milestones, pending, error: fetchError } = await fetchMilestones()
+const { data: milestones, pending, error: fetchError } = fetchMilestones()
 
 // State
 const heroHasPlayed = useState('hero-about-me-has-played', () => false)
@@ -31,18 +31,18 @@ const ready = ref(false)
 const heroDoneCount = ref(0)
 const HERO_TARGET = 1 // Number of animations to wait for
 const atTop = ref(true) // Track if user is at top of the page (to show or hide scroll indicator)
-
 const heroTitleWrap = ref<HTMLElement | null>(null)
-const _selectedMilestoneId = ref<string | null>(null)
+const userSelectedId = ref<string | null>(null)
 
-const selectedMilestoneId = computed<string | null>({
-  get: () => _selectedMilestoneId.value,
-  set: (value: string | null) => {
-    _selectedMilestoneId.value = value
-  },
+const selectedMilestoneId = computed(() => {
+  return userSelectedId.value ?? milestones.value?.[0]?.id ?? null
 })
 
 // Events
+
+const onSelectMilestone = (id: string | number) => {
+  userSelectedId.value = String(id)
+}
 
 const onAnimateEnd = () => {
   heroDoneCount.value += 1
@@ -103,14 +103,8 @@ onBeforeUnmount(() => {
   }
 })
 
-watchEffect(() => {
-  if (milestones.value?.length && !_selectedMilestoneId.value) {
-    _selectedMilestoneId.value = milestones.value[0]?.id ?? null
-  }
-})
-
 watch(fetchError, (newError) => {
-  if (!newError) {
+  if (newError) {
     error({
       title: t('errors.fetch-error-title'),
       message: t('errors.failed-to-load-milestones'),
@@ -168,7 +162,7 @@ watch(fetchError, (newError) => {
             :is-active="selectedMilestoneId === milestone.id"
             :subtitle="milestone.subtitle"
             :title="milestone.title"
-            @select="selectedMilestoneId = milestone.id"
+            @select="onSelectMilestone"
           />
         </template>
       </div>

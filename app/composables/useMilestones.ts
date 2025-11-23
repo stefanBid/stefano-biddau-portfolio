@@ -44,6 +44,9 @@ export default function useMilestones() {
       `${config.public.strapiUrl}/api/sb-milestones`,
       {
         key: `milestones-${locale.value}`,
+        lazy: true, // Do not block rendering
+        server: true, // Fetch on server side
+        dedupe: 'cancel', // Cancel previous requests when a new one is made
         query: {
           locale: locale.value,
           sort: 'id:asc',
