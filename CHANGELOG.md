@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.4...v1.1.5) (2025-11-23)
+
+
+### Bug Fixes
+
+* add lockScroll prop to ThePageHero component for scroll control ([#39](https://github.com/stefanBid/stefano-biddau-portfolio/issues/39)) ([5dc6b32](https://github.com/stefanBid/stefano-biddau-portfolio/commit/5dc6b32edf39011f990b7df99ac12bc1baef19cb))
+
 ## [1.1.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.3...v1.1.4) (2025-11-23)
 
 
