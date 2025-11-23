@@ -23,7 +23,7 @@ if (import.meta.client) {
 
 <template>
   <div
-    class="min-h-dvh bg-sb-main text-sb-contrast flex items-center justify-center pt-16 px-6 md:px-10"
+    class="min-h-dvh bg-sb-main text-sb-contrast flex items-center justify-center pt-16 px-6 md:px-10 u-sb-soft-transition"
   >
     <main class="w-full max-w-[1400px] mx-auto">
       <section
@@ -43,26 +43,26 @@ if (import.meta.client) {
 
         <!-- Title / message -->
         <div class="space-y-3 max-w-xl">
-          <p class="ty-sb-subtitle text-sb-contrast">
+          <p class="ty-sb-subtitle text-sb-contrast u-sb-soft-transition">
             {{ is404 ? 'The page you are looking for does not exist.' : (props.error.statusMessage || props.error.message || 'An unexpected error occurred.') }}
           </p>
 
           <!-- DEBUG: Show full error in dev -->
           <details v-if="!is404" class="text-left mt-4">
-            <summary class="ty-sb-label text-sb-muted cursor-pointer hover:text-sb-contrast">
+            <summary class="ty-sb-label text-sb-muted cursor-pointer hover:text-sb-contrast u-sb-soft-transition">
               Technical Details (debug)
             </summary>
-            <pre class="ty-sb-caption text-sb-muted bg-sb-surface border border-sb-border rounded p-3 mt-2 overflow-auto text-xs">{{ JSON.stringify(props.error, null, 2) }}</pre>
+            <pre class="ty-sb-caption text-sb-muted bg-sb-surface border border-sb-border rounded p-3 mt-2 overflow-auto text-xs u-sb-soft-transition">{{ JSON.stringify(props.error, null, 2) }}</pre>
           </details>
 
-          <p class="ty-sb-paragraph text-sb-muted">
+          <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
             Check the URL for mistakes, or go back to the homepage and continue exploring my work.
           </p>
         </div>
 
         <!-- Actions -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-4">
-          <BaseButton type="button" variant="primary" @click="handleBackHome">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-10 mt-4 u-sb-soft-transition">
+          <BaseButton type="button" variant="outline" @click="handleBackHome">
             Back to Home
           </BaseButton>
 

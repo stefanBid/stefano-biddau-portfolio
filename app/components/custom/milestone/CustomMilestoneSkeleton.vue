@@ -15,7 +15,7 @@
       <!-- Header: Title + Date -->
       <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4">
         <!-- Title Skeleton: ty-sb-title = text-2xl sm:text-3xl md:text-4xl -->
-        <div class="ty-sb-title bg-sb-muted/20 rounded animate-pulse flex-1">
+        <div class="ty-sb-title bg-sb-muted/20 rounded animate-pulse flex-1 w-full">
           &nbsp;
         </div>
         <!-- Date Skeleton: ty-sb-label = text-xs sm:text-sm -->
