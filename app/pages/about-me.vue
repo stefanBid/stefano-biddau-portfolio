@@ -122,7 +122,11 @@ onBeforeUnmount(() => {
   }
 })
 
+// Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
 watch(fetchError, (newError) => {
+  if (!import.meta.client) {
+    return
+  } // ← GUARD CLIENT-ONLY
   if (newError) {
     error({
       title: t('pages.about-me.milestone-error.title'),
@@ -131,7 +135,7 @@ watch(fetchError, (newError) => {
       dismissible: true,
     })
   }
-}, { immediate: true })
+})
 </script>
 
 <template>
