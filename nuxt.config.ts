@@ -21,6 +21,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   nitro: {
     preset: 'netlify',
+    // Exclude isomorphic-dompurify from server bundle to avoid jsdom issues
+    externals: {
+      external: ['isomorphic-dompurify'],
+    },
   },
   vite: {
     plugins: [tailwindcss()],

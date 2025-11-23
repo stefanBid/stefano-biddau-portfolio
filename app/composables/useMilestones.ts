@@ -54,18 +54,33 @@ export default function useMilestones() {
           populate: '*',
         },
         transform: (response) => {
-          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
-          return strapiResponse.data.map((resItem) => {
-            return {
-              id: resItem.documentId,
-              title: resItem.title,
-              subtitle: resItem.subtitle ?? null,
-              description: resItem.description ?? null,
-              imageSrc: resItem.image?.formats.medium.url ?? null,
-              imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
-              date: resItem.date ?? null,
-            } as Milestone
-          })
+          try {
+            const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
+
+            // Validate response structure
+            if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
+              // eslint-disable-next-line no-console
+              console.error('[useMilestones] Invalid response:', response)
+              return []
+            }
+
+            return strapiResponse.data.map((resItem) => {
+              return {
+                id: resItem.documentId,
+                title: resItem.title,
+                subtitle: resItem.subtitle ?? null,
+                description: resItem.description ?? null,
+                imageSrc: resItem.image?.formats?.medium?.url ?? null,
+                imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
+                date: resItem.date ?? null,
+              } as Milestone
+            })
+          }
+          catch (err) {
+            // eslint-disable-next-line no-console
+            console.error('[useMilestones] Transform error:', err)
+            return []
+          }
         },
         watch: [locale],
       },

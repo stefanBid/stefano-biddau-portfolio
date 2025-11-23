@@ -8,8 +8,14 @@ export default function useNotification() {
   }))
 
   const notifications = computed(() => state.value.notifications)
-  // Add notification
+
+  // Add notification (client-only, SSR-safe)
   const addNotification = (newNotification: Omit<NotificationItem, 'id'>) => {
+    // Notifications only make sense on client-side
+    if (!import.meta.client) {
+      return ''
+    }
+
     const id = generateUuid()
 
     state.value.notifications.push({
