@@ -225,13 +225,14 @@ const lastUpdate = computed(() => {
 
     <!-- Back to Home -->
     <div class="flex justify-center pt-6 sm:pt-8 md:pt-10">
-      <NuxtLink
-        class="ty-sb-btn-label bg-sb-accent hover:bg-sb-accent-hover border border-sb-accent-border text-sb-contrast px-6 py-3 rounded-xl u-sb-soft-transition u-sb-focus inline-flex items-center gap-2"
-        :to="localePath('index')"
+      <BaseButton
+        type="button"
+        variant="outline"
+        @click="$router.push(localePath('index'))"
       >
-        <Icon class="size-5" name="solar:arrow-left-line-duotone" />
+        <Icon class="inline-block size-5 sm:size-6 mr-2" name="solar:arrow-left-line-duotone" />
         {{ t('pages.privacy.backHome') }}
-      </NuxtLink>
+      </BaseButton>
     </div>
   </article>
 </template>
