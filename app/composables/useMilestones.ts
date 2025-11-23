@@ -32,6 +32,7 @@ interface MilestoneBE {
       }
     }
   } | null
+  imageCaption?: string | null
   date?: string | null
 }
 
@@ -49,7 +50,7 @@ export default function useMilestones() {
         dedupe: 'cancel', // Cancel previous requests when a new one is made
         query: {
           locale: locale.value,
-          sort: 'id:asc',
+          sort: 'date:asc',
           populate: '*',
         },
         transform: (response) => {
@@ -61,7 +62,7 @@ export default function useMilestones() {
               subtitle: resItem.subtitle ?? null,
               description: resItem.description ?? null,
               imageSrc: resItem.image?.formats.medium.url ?? null,
-              imageAlt: resItem.image?.caption ?? null,
+              imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
               date: resItem.date ?? null,
             } as Milestone
           })

@@ -166,7 +166,7 @@ watch(fetchError, (newError) => {
       </transition>
     </section>
     <!-- Timeline Section -->
-    <section aria-label="Professional Timeline" class="relative w-full py-10">
+    <section aria-label="Professional Timeline" class="relative w-full py-20">
       <div class="border-l-2 border-sb-contrast/30 relative flex flex-col gap-10 pl-6 sm:pl-10 mx-4 sm:mx-5 u-sb-soft-transition">
         <!-- Milestones -->
         <template v-if="pending">
@@ -177,6 +177,7 @@ watch(fetchError, (newError) => {
             v-for="(milestone) in milestones"
             :id="milestone.id"
             :key="milestone.id"
+            :date="milestone.date"
             :description="milestone.description"
             :is-active="selectedMilestoneId === milestone.id"
             :subtitle="milestone.subtitle"

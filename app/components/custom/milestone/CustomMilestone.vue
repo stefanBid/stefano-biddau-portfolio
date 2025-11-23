@@ -7,6 +7,7 @@ interface CustomMilestoneProps {
   description: string
   imageSrc?: string | null
   imageAlt?: string | null
+  date?: string | null
 }
 
 // Input / Output
@@ -16,6 +17,7 @@ const props = withDefaults(
     subtitle: null,
     imageSrc: null,
     imageAlt: null,
+    date: null,
   },
 )
 
@@ -78,9 +80,19 @@ const onSelect = () => {
       full-custom-content
       variant="dark"
     >
-      <h2 class="ty-sb-title u-sb-soft-transition">
-        {{ props.title }}
-      </h2>
+      <!-- Header: Title + Date -->
+      <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4">
+        <h2 class="ty-sb-title u-sb-soft-transition flex-1">
+          {{ props.title }}
+        </h2>
+        <time
+          v-if="props.date"
+          class="ty-sb-label text-sb-accent whitespace-nowrap"
+          :datetime="props.date"
+        >
+          {{ props.date }}
+        </time>
+      </div>
       <p
         v-if="props.subtitle"
         class="ty-sb-subtitle text-sb-muted mt-1 u-sb-soft-transition"

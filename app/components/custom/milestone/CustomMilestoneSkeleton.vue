@@ -12,9 +12,16 @@
 
     <!-- Content Skeleton -->
     <BaseCard full-custom-content variant="dark">
-      <!-- Title Skeleton: ty-sb-title = text-2xl sm:text-3xl md:text-4xl -->
-      <div class="ty-sb-title bg-sb-muted/20 rounded animate-pulse w-3/4">
-        &nbsp;
+      <!-- Header: Title + Date -->
+      <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4">
+        <!-- Title Skeleton: ty-sb-title = text-2xl sm:text-3xl md:text-4xl -->
+        <div class="ty-sb-title bg-sb-muted/20 rounded animate-pulse flex-1">
+          &nbsp;
+        </div>
+        <!-- Date Skeleton: ty-sb-label = text-xs sm:text-sm -->
+        <div class="ty-sb-label bg-sb-muted/20 rounded animate-pulse w-20">
+          &nbsp;
+        </div>
       </div>
 
       <!-- Subtitle Skeleton: ty-sb-subtitle = text-base sm:text-lg md:text-xl -->
