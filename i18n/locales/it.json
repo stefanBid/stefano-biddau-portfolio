@@ -114,6 +114,10 @@
       "milestone-error": {
         "title": "Errore nel caricamento dei traguardi",
         "message": "Si è verificato un errore durante il caricamento dei traguardi. Per favore, riprova più tardi."
+      },
+      "no-milestones": {
+        "title": "Nessun Traguardo",
+        "message": "Al momento non ci sono traguardi da visualizzare. Torna presto per aggiornamenti!"
       }
     },
     "privacy": {

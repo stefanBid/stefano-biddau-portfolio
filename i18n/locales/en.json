@@ -114,6 +114,10 @@
       "milestone-error": {
         "title": "Error Loading Milestones",
         "message": "An error occurred while loading the milestones. Please try again later."
+      },
+      "no-milestones": {
+        "title": "No Milestones Yet",
+        "message": "There are no milestones to display at the moment. Check back soon!"
       }
     },
     "privacy": {

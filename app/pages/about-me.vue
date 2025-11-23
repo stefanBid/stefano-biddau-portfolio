@@ -171,10 +171,30 @@ watch(fetchError, (newError) => {
     </section>
     <!-- Timeline Section -->
     <section aria-label="Professional Timeline" class="relative w-full py-20">
-      <div class="border-l-2 border-sb-contrast/30 relative flex flex-col gap-10 pl-6 sm:pl-10 mx-4 sm:mx-5 u-sb-soft-transition">
+      <div
+        class="relative flex flex-col gap-10 u-sb-soft-transition"
+        :class="{
+          'border-l-2 border-sb-contrast/30 pl-6 sm:pl-10 mx-4 sm:mx-5': milestones && milestones.length > 0,
+        }"
+      >
         <!-- Milestones -->
         <template v-if="pending">
           <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
+        </template>
+        <template v-else-if="!milestones || milestones.length === 0">
+          <!-- No milestones message -->
+          <div class="flex flex-col items-center justify-center text-center">
+            <Icon
+              class="size-20 md:size-24 text-sb-muted mb-6 u-sb-soft-transition"
+              name="solar:folder-with-files-bold-duotone"
+            />
+            <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
+              {{ t('pages.about.no-milestones.title') }}
+            </h3>
+            <p class="ty-sb-paragraph text-sb-muted max-w-md u-sb-soft-transition">
+              {{ t('pages.about.no-milestones.message') }}
+            </p>
+          </div>
         </template>
         <template v-else>
           <CustomMilestone
