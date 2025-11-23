@@ -25,15 +25,18 @@ const emits = defineEmits<{
   (e: 'select', id: number | string): void
 }>()
 
+// Dependencies
+const { sanitizeHtml } = useSanitize()
+
 // State
 const MAX_DESCRIPTION_LENGTH = 100
 const needsExpansion = computed(() => props.description.length > MAX_DESCRIPTION_LENGTH)
-const getDescriptionPreview = (desc: string): string => {
-  if (!needsExpansion.value || props.isActive) {
-    return desc
+const getDescriptionPreview = computed(() => {
+  if (needsExpansion.value && !props.isActive) {
+    return sanitizeHtml(props.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...')
   }
-  return desc.slice(0, MAX_DESCRIPTION_LENGTH) + '...'
-}
+  return sanitizeHtml(props.description)
+})
 
 // Events
 const onSelect = () => {
@@ -86,8 +89,8 @@ const onSelect = () => {
       <p
         v-if="props.description"
         class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
+        v-html="getDescriptionPreview"
       >
-        {{ getDescriptionPreview(props.description) }}
       </p>
       <!-- Expand indicator -->
       <button

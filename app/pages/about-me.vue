@@ -23,7 +23,7 @@ useSeoMeta({
 
 const { fetchMilestones } = useMilestones()
 
-const { data: milestones } = await fetchMilestones()
+const { data: milestones, pending, error } = await fetchMilestones()
 
 // State
 const heroHasPlayed = useState('hero-about-me-has-played', () => false)
@@ -33,30 +33,14 @@ const HERO_TARGET = 1 // Number of animations to wait for
 const atTop = ref(true) // Track if user is at top of the page (to show or hide scroll indicator)
 
 const heroTitleWrap = ref<HTMLElement | null>(null)
+const _selectedMilestoneId = ref<string | null>(null)
 
-const selectedMilestoneId = ref(0)
-
-const MILESTONES = [
-  {
-    id: 1,
-    title: 'Milestone 1',
-    subtitle: 'Subtitle 1',
-    description: 'Description for milestone 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
+const selectedMilestoneId = computed<string | null>({
+  get: () => _selectedMilestoneId.value,
+  set: (value: string | null) => {
+    _selectedMilestoneId.value = value
   },
-  {
-    id: 2,
-    title: 'Milestone 2',
-    subtitle: 'Subtitle 2',
-    description: 'Description for milestone 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-  },
-  {
-    id: 3,
-    title: 'Milestone 3',
-    subtitle: 'Subtitle 3',
-    description: 'Description for milestone 2. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. ',
-  },
-  // Add more milestones as needed
-]
+})
 
 // Events
 
@@ -118,6 +102,12 @@ onBeforeUnmount(() => {
     window.removeEventListener('scroll', onScroll)
   }
 })
+
+watchEffect(() => {
+  if (milestones.value?.length && !selectedMilestoneId.value) {
+    _selectedMilestoneId.value = milestones.value[0]!.id
+  }
+})
 </script>
 
 <template>
@@ -156,7 +146,7 @@ onBeforeUnmount(() => {
       <div class="border-l-2 border-sb-contrast/30 relative flex flex-col gap-10 pl-6 sm:pl-10 mx-4 sm:mx-5 u-sb-soft-transition">
         <!-- Milestones -->
         <CustomMilestone
-          v-for="(milestone) in MILESTONES"
+          v-for="(milestone) in milestones"
           :id="milestone.id"
           :key="milestone.id"
           :description="milestone.description"
