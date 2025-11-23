@@ -109,7 +109,11 @@
       }
     },
     "about-me": {
-      "hero": "Who am I?"
+      "hero": "Who am I?",
+      "milestones-error": {
+        "title": "Error Loading Milestones",
+        "message": "An error occurred while loading the milestones. Please try again later."
+      }
     },
     "privacy": {
       "title": "Privacy Policy",

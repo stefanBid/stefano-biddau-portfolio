@@ -106,9 +106,9 @@ onBeforeUnmount(() => {
 watch(fetchError, (newError) => {
   if (newError) {
     error({
-      title: t('errors.fetch-error-title'),
-      message: t('errors.failed-to-load-milestones'),
-      autoClose: false,
+      title: t('pages.about-me.milestones-error.title'),
+      message: t('pages.about-me.milestones-error.message'),
+      autoClose: true,
       dismissible: true,
     })
   }

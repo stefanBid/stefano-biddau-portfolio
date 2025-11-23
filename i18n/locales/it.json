@@ -109,7 +109,11 @@
       }
     },
     "about-me": {
-      "hero": "Chi sono?"
+      "hero": "Chi sono?",
+      "milestones-error": {
+        "title": "Errore nel caricamento dei traguardi",
+        "message": "Si è verificato un errore durante il caricamento dei traguardi. Per favore, riprova più tardi."
+      }
     },
     "privacy": {
       "title": "Informativa sulla Privacy",
