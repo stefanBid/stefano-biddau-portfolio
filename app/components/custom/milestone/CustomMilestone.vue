@@ -114,7 +114,7 @@ const onSelect = () => {
         <div
           class="bg-white p-3 sm:p-4 shadow-lg max-w-sm w-full u-sb-soft-transition"
         >
-          <div class="w-full max-h-72 sm:max-h-96 overflow-hidden u-sb-soft-transition">
+          <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden u-sb-soft-transition  ">
             <img
               :alt="props.imageAlt || props.title"
               class="w-full h-full object-cover"
