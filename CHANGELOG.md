@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.2...v1.1.3) (2025-11-23)
+
+
+### Bug Fixes
+
+* update lastmod dates and hreflang attributes in sitemap.xml ([#35](https://github.com/stefanBid/stefano-biddau-portfolio/issues/35)) ([884faf1](https://github.com/stefanBid/stefano-biddau-portfolio/commit/884faf1a5fd3b76f94a5560ecadf63c4bb40e769))
+
 ## [1.1.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.1...v1.1.2) (2025-11-23)
 
 
