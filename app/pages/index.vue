@@ -44,6 +44,7 @@ const contactFormIsOpen = ref(false)
     <ThePageHero
       id="home"
       image-src="/images/my-avatar.webp"
+      lock-scroll
       :text="t('pages.home.hero')"
       @hero-animations-ended="ready = true"
     />
