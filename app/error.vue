@@ -13,12 +13,6 @@ const is404 = props.error.statusCode === 404
 const handleBackHome = () => {
   clearError({ redirect: '/' })
 }
-
-// Log full error for debugging
-if (import.meta.client) {
-  // eslint-disable-next-line no-console
-  console.error('Error page props:', props.error)
-}
 </script>
 
 <template>
@@ -52,7 +46,7 @@ if (import.meta.client) {
             <summary class="ty-sb-label text-sb-muted cursor-pointer hover:text-sb-contrast u-sb-soft-transition">
               Technical Details (debug)
             </summary>
-            <pre class="ty-sb-caption text-sb-muted bg-sb-surface border border-sb-border rounded p-3 mt-2 overflow-auto text-xs u-sb-soft-transition">{{ JSON.stringify(props.error, null, 2) }}</pre>
+            <pre class="ty-sb-caption text-sb-muted bg-sb-surface border border-sb-border rounded-xl p-3 mt-2 overflow-auto u-sb-soft-transition">{{ JSON.stringify(props.error, null, 2) }}</pre>
           </details>
 
           <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">

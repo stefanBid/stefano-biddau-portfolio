@@ -50,6 +50,7 @@ onMounted(() => {
         autoClose: true,
         dismissible: true,
         duration: 10000,
+        icon: 'mdi:information-outline',
       })
     })
   }

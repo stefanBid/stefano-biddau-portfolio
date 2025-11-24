@@ -42,7 +42,7 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-3.5 sm:p-5 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
+      'w-full sm:w-lg p-4 sm:p-6 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
       'shadow-[0_4px_20px_var(--color-sb-shadow)]',
       {
         'bg-[#0a3d2c] border-[#10b981]': props.type === 'success',
@@ -58,7 +58,7 @@ onMounted(() => {
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-lg u-sb-soft-transition',
+          'shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl u-sb-soft-transition',
           {
             'bg-[#10b981]/15 text-[#6ee7b7]': props.type === 'success',
             'bg-[#f59e0b]/15 text-[#fbbf24]': props.type === 'warning',
@@ -75,7 +75,7 @@ onMounted(() => {
         <h3
           v-if="props.title"
           :class="[
-            'ty-sb-title text-lg sm:text-xl mb-1',
+            'font-bebas-neue text-lg sm:text-xl mb-1 u-sb-soft-transition',
             {
               'text-[#a7f3d0]': props.type === 'success',
               'text-[#fde68a]': props.type === 'warning',
@@ -88,7 +88,7 @@ onMounted(() => {
         </h3>
         <p
           :class="[
-            'ty-sb-paragraph text-[0.8125rem] sm:text-sm',
+            'text-[0.8125rem] sm:text-sm u-sb-soft-transition',
             {
               'text-[#d1fae5]': props.type === 'success',
               'text-[#fef3c7]': props.type === 'warning',
