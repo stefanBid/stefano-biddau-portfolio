@@ -16,12 +16,20 @@ type ReplyEmailForm = {
 }
 
 export default function useEmailJs() {
-  const config = useRuntimeConfig()
+  // Private state
+  const _config = useRuntimeConfig()
 
+  // State
+
+  /**
+   * Send contact email to admin
+   * @param payload AdminEmailForm - form data to send email
+   * @returns emailjs.SendResponse
+   */
   const sendContactEmailAdmin = async (payload: AdminEmailForm) => {
-    const serviceId = config.public.emailjsServiceId as string
-    const templateId = config.public.emailjsTemplateAdminId as string
-    const publicKey = config.public.emailjsPublicKey as string
+    const serviceId = _config.public.emailjsServiceId as string
+    const templateId = _config.public.emailjsTemplateAdminId as string
+    const publicKey = _config.public.emailjsPublicKey as string
 
     const result = await emailjs.send(
       serviceId,
@@ -32,10 +40,15 @@ export default function useEmailJs() {
     return result
   }
 
+  /**
+   * Send reply email to user
+   * @param payload ReplyEmailForm - form data to send email
+   * @returns emailjs.SendResponse
+   */
   const sendReplyToUser = async (payload: ReplyEmailForm) => {
-    const serviceId = config.public.emailjsServiceId as string
-    const templateId = config.public.emailjsTemplateReplyToId as string
-    const publicKey = config.public.emailjsPublicKey as string
+    const serviceId = _config.public.emailjsServiceId as string
+    const templateId = _config.public.emailjsTemplateReplyToId as string
+    const publicKey = _config.public.emailjsPublicKey as string
 
     const result = await emailjs.send(
       serviceId,
