@@ -16,7 +16,7 @@ type ReplyEmailForm = {
 }
 
 export default function useEmailJs() {
-  // Private state
+  // Internal state
   const _config = useRuntimeConfig()
 
   // State

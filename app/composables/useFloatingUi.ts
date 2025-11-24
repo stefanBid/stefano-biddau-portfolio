@@ -14,7 +14,7 @@ const DEFAULT_CONFIG: FloatingConfig = {
 }
 
 export default function useFloatingUi(conf: FloatingConfig = {}) {
-  // Private state
+  // Internal state
   const _mergedConf: FloatingConfig = {
     ...DEFAULT_CONFIG,
     ...conf,
