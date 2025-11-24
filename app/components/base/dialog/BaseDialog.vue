@@ -68,7 +68,7 @@ watch(
         v-if="isOpen"
         aria-labelledby="sb-dialog-title"
         aria-modal="true"
-        class="fixed inset-0 z-200 flex items-center justify-center p-4 sm:p-6"
+        class="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-6"
         role="dialog"
       >
         <!-- Overlay -->
@@ -91,7 +91,7 @@ watch(
         >
           <!-- HEADER -->
           <header
-            class="flex items-start justify-between gap-4 p-4 sm:p-6 border-b border-sb-border/70 u-sb-soft-transition"
+            class="flex items-start justify-between gap-4 p-4 md:p-6 border-b border-sb-border/70 u-sb-soft-transition"
           >
             <div class="flex flex-col flex-1 min-w-0">
               <h2
@@ -116,7 +116,7 @@ watch(
 
           <!-- BODY -->
           <section
-            class="flex-1 my-4 sm:my-6 p-4 sm:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition"
+            class="flex-1 my-4 md:my-6 p-4 md:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition"
           >
             <slot></slot>
           </section>
@@ -124,7 +124,7 @@ watch(
           <!-- FOOTER -->
           <footer
             v-if="$slots.footer"
-            class="flex justify-end gap-3 p-4 sm:p-6 border-t border-sb-border/70 u-sb-soft-transition"
+            class="flex justify-end gap-3 p-4 md:p-6 border-t border-sb-border/70 u-sb-soft-transition"
           >
             <slot name="footer"></slot>
           </footer>

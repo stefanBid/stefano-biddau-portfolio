@@ -55,7 +55,7 @@ const handleBackHome = () => {
         </div>
 
         <!-- Actions -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 sm:gap-10 mt-4 u-sb-soft-transition">
+        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-10 mt-4 u-sb-soft-transition">
           <BaseButton type="button" variant="outline" @click="handleBackHome">
             Back to Home
           </BaseButton>

@@ -50,7 +50,7 @@ const lastUpdate = computed(() => {
     <hr class="border-sb-border u-sb-soft-transition" />
 
     <!-- Introduction -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title-xl u-sb-soft-transition">
         {{ t('pages.terms.intro.title') }}
       </h2>
@@ -61,7 +61,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 1: Acceptance -->
     <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.terms.acceptance.title') }}
         </h2>
@@ -72,14 +72,14 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 2: Use of Website -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.terms.useOfWebsite.title') }}
       </h2>
       <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
         {{ t('pages.terms.useOfWebsite.intro') }}
       </p>
-      <ul class="space-y-2 sm:space-y-3 ml-4 sm:ml-6">
+      <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
         <li class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition flex gap-3">
           <span class="text-sb-accent shrink-0">•</span>
           <span>{{ t('pages.terms.useOfWebsite.point1') }}</span>
@@ -101,7 +101,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 3: Intellectual Property -->
     <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.terms.intellectualProperty.title') }}
         </h2>
@@ -112,14 +112,14 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 4: Contact Form -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.terms.contactForm.title') }}
       </h2>
       <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
         {{ t('pages.terms.contactForm.intro') }}
       </p>
-      <ul class="space-y-2 sm:space-y-3 ml-4 sm:ml-6">
+      <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
         <li class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition flex gap-3">
           <span class="text-sb-accent shrink-0">•</span>
           <span>{{ t('pages.terms.contactForm.point1') }}</span>
@@ -137,7 +137,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 5: Third-Party Links -->
     <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.terms.thirdPartyLinks.title') }}
         </h2>
@@ -148,7 +148,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 6: Disclaimer -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.terms.disclaimer.title') }}
       </h2>
@@ -159,7 +159,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 7: Limitation of Liability -->
     <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.terms.liability.title') }}
         </h2>
@@ -170,7 +170,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 8: Changes to Terms -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.terms.changes.title') }}
       </h2>
@@ -181,7 +181,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 9: Governing Law -->
     <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.terms.governingLaw.title') }}
         </h2>
@@ -192,7 +192,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 10: Contact -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.terms.contact.title') }}
       </h2>
@@ -214,7 +214,7 @@ const lastUpdate = computed(() => {
         variant="outline"
         @click="$router.push(localePath('index'))"
       >
-        <Icon class="inline-block size-5 sm:size-6 mr-2" name="solar:arrow-left-line-duotone" />
+        <Icon class="inline-block size-5 md:size-6 mr-2" name="solar:arrow-left-line-duotone" />
         {{ t('pages.terms.backHome') }}
       </BaseButton>
     </div>

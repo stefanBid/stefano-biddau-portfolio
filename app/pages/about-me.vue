@@ -84,7 +84,7 @@ watch(fetchError, (newError) => {
       <div
         class="relative flex flex-col gap-10 u-sb-soft-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 sm:pl-10 mx-4 sm:mx-5': milestones && milestones.length > 0,
+          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 mx-4 md:mx-5': milestones && milestones.length > 0,
         }"
       >
         <!-- Milestones -->

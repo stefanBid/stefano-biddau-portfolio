@@ -25,7 +25,7 @@ const model = defineModel<boolean>('input')
       autocomplete="on"
       class="
       relative
-      peer size-4.5 sm:size-5 shrink-0 rounded-md border
+      peer size-4.5 md:size-5 shrink-0 rounded-md border
       u-sb-soft-transition cursor-pointer
       appearance-none
       outline-none

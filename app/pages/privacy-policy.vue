@@ -50,7 +50,7 @@ const lastUpdate = computed(() => {
     <hr class="border-sb-border u-sb-soft-transition" />
 
     <!-- Introduction -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title-xl u-sb-soft-transition">
         {{ t('pages.privacy.intro.title') }}
       </h2>
@@ -61,11 +61,11 @@ const lastUpdate = computed(() => {
 
     <!-- Section 1: Data Controller -->
     <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.privacy.dataController.title') }}
         </h2>
-        <div class="space-y-3 sm:space-y-4">
+        <div class="space-y-3 md:space-y-4">
           <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
             {{ t('pages.privacy.dataController.name') }}: <span class="text-sb-contrast">Stefano Biddau</span>
           </p>
@@ -83,14 +83,14 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 2: Data Collected -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.privacy.dataCollected.title') }}
       </h2>
       <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
         {{ t('pages.privacy.dataCollected.intro') }}
       </p>
-      <ul class="space-y-3 sm:space-y-4 ml-4 sm:ml-6">
+      <ul class="space-y-3 md:space-y-4 ml-4 md:ml-6">
         <li class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition flex gap-3">
           <span class="text-sb-accent shrink-0">•</span>
           <span><strong class="text-sb-contrast">{{ t('pages.privacy.dataCollected.name') }}:</strong> {{ t('pages.privacy.dataCollected.nameDesc') }}</span>
@@ -108,7 +108,7 @@ const lastUpdate = computed(() => {
 
     <!-- Section 3: Purpose -->
     <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.privacy.purpose.title') }}
         </h2>
@@ -119,7 +119,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 4: Legal Basis -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.privacy.legalBasis.title') }}
       </h2>
@@ -130,14 +130,14 @@ const lastUpdate = computed(() => {
 
     <!-- Section 5: Third Parties -->
     <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.privacy.thirdParties.title') }}
         </h2>
         <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
           {{ t('pages.privacy.thirdParties.intro') }}
         </p>
-        <div class="space-y-2 sm:space-y-3">
+        <div class="space-y-2 md:space-y-3">
           <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
             <strong class="text-sb-contrast">EmailJS</strong> - {{ t('pages.privacy.thirdParties.emailjs') }}
           </p>
@@ -157,7 +157,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 6: Data Retention -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.privacy.dataRetention.title') }}
       </h2>
@@ -168,14 +168,14 @@ const lastUpdate = computed(() => {
 
     <!-- Section 7: Your Rights -->
     <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 sm:space-y-5">
+      <div class="space-y-4 md:space-y-5">
         <h2 class="ty-sb-title u-sb-soft-transition">
           {{ t('pages.privacy.yourRights.title') }}
         </h2>
         <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition">
           {{ t('pages.privacy.yourRights.intro') }}
         </p>
-        <ul class="space-y-2 sm:space-y-3 ml-4 sm:ml-6">
+        <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
           <li class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition flex gap-3">
             <span class="text-sb-accent shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.access') }}</span>
@@ -201,7 +201,7 @@ const lastUpdate = computed(() => {
             <span>{{ t('pages.privacy.yourRights.objection') }}</span>
           </li>
         </ul>
-        <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition pt-3 sm:pt-4">
+        <p class="ty-sb-paragraph text-sb-muted leading-relaxed u-sb-soft-transition pt-3 md:pt-4">
           {{ t('pages.privacy.yourRights.contact') }}:
           <a
             class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
@@ -214,7 +214,7 @@ const lastUpdate = computed(() => {
     </BaseCard>
 
     <!-- Section 8: Changes -->
-    <section class="space-y-4 sm:space-y-5">
+    <section class="space-y-4 md:space-y-5">
       <h2 class="ty-sb-title u-sb-soft-transition">
         {{ t('pages.privacy.changes.title') }}
       </h2>
@@ -230,7 +230,7 @@ const lastUpdate = computed(() => {
         variant="outline"
         @click="$router.push(localePath('index'))"
       >
-        <Icon class="inline-block size-5 sm:size-6 mr-2" name="solar:arrow-left-line-duotone" />
+        <Icon class="inline-block size-5 md:size-6 mr-2" name="solar:arrow-left-line-duotone" />
         {{ t('pages.privacy.backHome') }}
       </BaseButton>
     </div>

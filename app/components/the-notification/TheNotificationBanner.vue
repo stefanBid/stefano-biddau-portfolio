@@ -42,7 +42,7 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-4 sm:p-6 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
+      'w-full sm:w-lg p-4 md:p-6 rounded-xl border backdrop-blur-sm u-sb-soft-transition',
       'shadow-[0_4px_20px_var(--color-sb-shadow)]',
       {
         'bg-[#0a3d2c] border-[#10b981]': props.type === 'success',
@@ -53,12 +53,12 @@ onMounted(() => {
     ]"
     role="alert"
   >
-    <div class="flex items-start gap-3 sm:gap-4">
+    <div class="flex items-start gap-3 md:gap-4">
       <!-- Icon -->
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 rounded-xl u-sb-soft-transition',
+          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl u-sb-soft-transition',
           {
             'bg-[#10b981]/15 text-[#6ee7b7]': props.type === 'success',
             'bg-[#f59e0b]/15 text-[#fbbf24]': props.type === 'warning',
@@ -67,7 +67,7 @@ onMounted(() => {
           },
         ]"
       >
-        <Icon class="size-5 sm:size-6" :name="props.icon" />
+        <Icon class="size-5 md:size-6" :name="props.icon" />
       </div>
 
       <!-- Text Content -->
