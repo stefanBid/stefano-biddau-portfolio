@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
   <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16 px-6 md:px-10">
     <div
       class="max-w-[1400px] mx-auto grid gap-8 md:gap-10
-             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition py-10 sm:py-12"
+             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition py-10 md:py-12"
     >
       <!-- 1) Logo + descrizione -->
       <section class="space-y-4">
