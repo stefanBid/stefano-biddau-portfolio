@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.5...v1.1.6) (2025-11-24)
+
+
+### Bug Fixes
+
+* ui general ([#41](https://github.com/stefanBid/stefano-biddau-portfolio/issues/41)) ([2323595](https://github.com/stefanBid/stefano-biddau-portfolio/commit/23235959981d36fa54106a6b8975f5dbb6842b3e))
+
 ## [1.1.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.4...v1.1.5) (2025-11-23)
 
 
