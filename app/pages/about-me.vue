@@ -80,11 +80,11 @@ watch(fetchError, (newError) => {
       :text="t('pages.about.hero')"
     />
     <!-- Timeline Section -->
-    <section aria-label="Professional Timeline" class="relative w-full py-20">
+    <section aria-label="Professional Timeline" class="relative w-full py-20 u-sb-soft-transition">
       <div
-        class="relative flex flex-col gap-10 u-sb-soft-transition"
+        class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 mx-4 md:mx-5': milestones && milestones.length > 0,
+          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': (milestones && milestones.length > 0) || pending,
         }"
       >
         <!-- Milestones -->
