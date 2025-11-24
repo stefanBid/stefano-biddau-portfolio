@@ -26,7 +26,7 @@ export default function useEmailJs() {
    * @param payload AdminEmailForm - form data to send email
    * @returns emailjs.SendResponse
    */
-  const sendContactEmailAdmin = async (payload: AdminEmailForm) => {
+  async function sendContactEmailAdmin(payload: AdminEmailForm) {
     const serviceId = _config.public.emailjsServiceId as string
     const templateId = _config.public.emailjsTemplateAdminId as string
     const publicKey = _config.public.emailjsPublicKey as string
@@ -45,7 +45,7 @@ export default function useEmailJs() {
    * @param payload ReplyEmailForm - form data to send email
    * @returns emailjs.SendResponse
    */
-  const sendReplyToUser = async (payload: ReplyEmailForm) => {
+  async function sendReplyToUser(payload: ReplyEmailForm) {
     const serviceId = _config.public.emailjsServiceId as string
     const templateId = _config.public.emailjsTemplateReplyToId as string
     const publicKey = _config.public.emailjsPublicKey as string
