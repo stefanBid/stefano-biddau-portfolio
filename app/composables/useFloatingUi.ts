@@ -14,24 +14,32 @@ const DEFAULT_CONFIG: FloatingConfig = {
 }
 
 export default function useFloatingUi(conf: FloatingConfig = {}) {
-  const mergedConf: FloatingConfig = {
+  // Internal state
+  const _mergedConf: FloatingConfig = {
     ...DEFAULT_CONFIG,
     ...conf,
   }
+
+  // State
   const reference = ref<HTMLElement | null>(null)
   const floating = ref<HTMLElement | null>(null)
   const open = ref(false)
 
   const { floatingStyles } = useFloating(reference, floating, {
-    placement: mergedConf.placement,
-    strategy: mergedConf.strategy,
-    middleware: [offset(mergedConf.offset), flip(), shift()],
+    placement: _mergedConf.placement,
+    strategy: _mergedConf.strategy,
+    middleware: [offset(_mergedConf.offset), flip(), shift()],
     whileElementsMounted: autoUpdate,
     transform: false,
 
   })
 
-  const toggleFloating = (newFloatingState: boolean) => {
+  /**
+   * Toggle floating UI visibility
+   * @param newFloatingState boolean - desired floating state
+   * @returns void
+   */
+  function toggleFloating(newFloatingState: boolean) {
     if (newFloatingState === open.value) {
       return
     }

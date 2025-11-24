@@ -3,14 +3,17 @@ interface NotificationState {
 }
 
 export default function useNotification() {
-  const state = useState<NotificationState>('notifications', () => ({
+  // Internal State
+  const _state = useState<NotificationState>('notifications', () => ({
     notifications: [],
   }))
 
-  const notifications = computed(() => state.value.notifications)
-
-  // Add notification (client-only, SSR-safe)
-  const addNotification = (newNotification: Omit<NotificationItem, 'id'>) => {
+  /**
+   * Add a new notification (client-only, SSR-safe)
+   * @param newNotification Omit<NotificationItem, 'id'> - notification data without id
+   * @returns string - generated notification id
+   */
+  function _addNotification(newNotification: Omit<NotificationItem, 'id'>): string {
     // Notifications only make sense on client-side
     if (!import.meta.client) {
       return ''
@@ -18,48 +21,78 @@ export default function useNotification() {
 
     const id = generateUuid()
 
-    state.value.notifications.push({
+    _state.value.notifications.push({
       ...newNotification,
       id,
     })
     return id
   }
 
-  // Remove notification by id
-  const removeNotification = (id: string) => {
-    const index = state.value.notifications.findIndex(n => n.id === id)
+  // State
+
+  const notifications = computed(() => _state.value.notifications)
+
+  /**
+   * Remove a notification by id
+   * @param id string - notification id to remove
+   * @returns boolean - true if notification was found and removed, false otherwise
+   */
+  function removeNotification(id: string) {
+    const index = _state.value.notifications.findIndex(n => n.id === id)
     if (index > -1) {
-      state.value.notifications.splice(index, 1)
+      _state.value.notifications.splice(index, 1)
+      return true
     }
+    return false
   }
 
-  // Clear all notifications
-  const clearNotifications = () => {
-    state.value.notifications = []
+  /**
+   * Clear all notifications
+   */
+  function clearNotifications() {
+    _state.value.notifications = []
   }
 
-  // Helper methods for specific types
-  const success = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
-    return addNotification({ ...newNotification, type: 'success' })
+  /**
+   * Adds a success notification.
+   * @param newNotification Notification data without type and id
+   * @returns The generated notification id
+   */
+  function success(newNotification: Omit<NotificationItem, 'type' | 'id'>) {
+    return _addNotification({ ...newNotification, type: 'success' })
   }
 
-  const warning = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
-    return addNotification({ ...newNotification, type: 'warning' })
+  /**
+   * Adds a warning notification.
+   * @param newNotification Notification data without type and id
+   * @returns The generated notification id
+   */
+  function warning(newNotification: Omit<NotificationItem, 'type' | 'id'>) {
+    return _addNotification({ ...newNotification, type: 'warning' })
   }
 
-  const error = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
-    return addNotification({ ...newNotification, type: 'error' })
+  /**
+   * Adds an error notification.
+   * @param newNotification Notification data without type and id
+   * @returns The generated notification id
+   */
+  function error(newNotification: Omit<NotificationItem, 'type' | 'id'>) {
+    return _addNotification({ ...newNotification, type: 'error' })
   }
 
-  const info = (newNotification: Omit<NotificationItem, 'type' | 'id'>) => {
-    return addNotification({
+  /**
+   * Adds an info notification.
+   * @param newNotification Notification data without type and id
+   * @returns The generated notification id
+   */
+  function info(newNotification: Omit<NotificationItem, 'type' | 'id'>) {
+    return _addNotification({
       ...newNotification, type: 'info',
     })
   }
 
   return {
     notifications,
-    addNotification,
     removeNotification,
     clearNotifications,
     success,

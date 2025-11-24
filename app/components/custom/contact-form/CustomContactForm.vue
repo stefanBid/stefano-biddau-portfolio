@@ -105,7 +105,7 @@ const onSendMessage = async () => {
     success({
       title: t('pages.home.contactForm.notifications.success.title'),
       message: t('pages.home.contactForm.notifications.success.message'),
-      icon: '',
+      icon: 'solar:mailbox-bold-duotone',
       autoClose: true,
       dismissible: true,
       duration: 7000,
@@ -115,7 +115,7 @@ const onSendMessage = async () => {
     error({
       title: t('pages.home.contactForm.notifications.error.title'),
       message: t('pages.home.contactForm.notifications.error.message'),
-      icon: '',
+      icon: 'solar:folder-error-bold-duotone',
       autoClose: true,
       dismissible: true,
       duration: 7000,

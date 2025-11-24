@@ -37,19 +37,26 @@ interface MilestoneBE {
 }
 
 export default function useMilestones() {
-  const config = useRuntimeConfig()
-  const { locale } = useI18n()
+  // Internal state
+  const _config = useRuntimeConfig()
+  const { locale: _locale } = useI18n()
 
-  const fetchMilestones = () => {
+  // State
+
+  /**
+   * Fetch milestones from Strapi CMS
+   * @returns Promise<Milestone[]>
+   */
+  function fetchMilestones() {
     return useFetch<Milestone[]>(
-      `${config.public.strapiUrl}/api/sb-milestones`,
+      `${_config.public.strapiUrl}/api/sb-milestones`,
       {
-        key: `milestones-${locale.value}`,
+        key: `milestones-${_locale.value}`,
         lazy: true, // Do not block rendering
         server: true, // Fetch on server side
         dedupe: 'cancel', // Cancel previous requests when a new one is made
         query: {
-          locale: locale.value,
+          locale: _locale.value,
           sort: 'date:asc',
           populate: '*',
         },
@@ -82,7 +89,7 @@ export default function useMilestones() {
             return []
           }
         },
-        watch: [locale],
+        watch: [_locale],
       },
     )
   }
