@@ -39,19 +39,17 @@ const onCloseNotification = (id: string) => {
 }
 
 onMounted(() => {
-  if (import.meta.client) {
-    // Show announcement notification only on client after hydration
-    nextTick(() => {
-      info({
-        title: t('announcement.ui-refactor.title'),
-        message: t('announcement.ui-refactor.body'),
-        icon: 'solar:planet-bold-duotone',
-        autoClose: true,
-        dismissible: true,
-        duration: 10000,
-      })
+  // Show announcement notification only on client after hydration
+  nextTick(() => {
+    info({
+      title: t('announcement.ui-refactor.title'),
+      message: t('announcement.ui-refactor.body'),
+      icon: 'solar:planet-bold-duotone',
+      autoClose: true,
+      dismissible: true,
+      duration: 10000,
     })
-  }
+  })
 })
 </script>
 
