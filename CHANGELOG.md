@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.7](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.6...v1.1.7) (2025-11-24)
+
+
+### Bug Fixes
+
+* composables structure ([#43](https://github.com/stefanBid/stefano-biddau-portfolio/issues/43)) ([653f8c2](https://github.com/stefanBid/stefano-biddau-portfolio/commit/653f8c218f996dd4949cb91d2072e6f99b7cc07d))
+
 ## [1.1.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.5...v1.1.6) (2025-11-24)
 
 
