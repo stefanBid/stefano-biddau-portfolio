@@ -40,8 +40,6 @@ const onCloseNotification = (id: string) => {
 
 onMounted(() => {
   if (import.meta.client) {
-    window.scrollTo({ top: 0, left: 0, behavior: 'auto' })
-
     // Show announcement notification only on client after hydration
     nextTick(() => {
       info({

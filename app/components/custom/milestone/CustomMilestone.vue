@@ -53,7 +53,7 @@ const onSelect = () => {
   >
     <!-- Timeline Point with Halo Effect -->
     <div
-      class="absolute -left-[33px] sm:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
+      class="absolute -left-[33px] md:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
     >
       <!-- Static Halo -->
       <div
@@ -67,7 +67,7 @@ const onSelect = () => {
       <button
         :aria-label="`View milestone ${props.id}`"
         :aria-pressed="props.isActive"
-        class="relative size-4 sm:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
+        class="relative size-4 md:size-5 bg-sb-accent rounded-full hover:bg-sb-accent-hover u-sb-focus cursor-pointer u-sb-soft-transition pointer-events-auto z-10"
         @click="onSelect"
       ></button>
     </div>
@@ -112,7 +112,7 @@ const onSelect = () => {
         class="mt-6 md:mt-8 flex justify-center u-sb-soft-transition"
       >
         <div
-          class="bg-white p-3 sm:p-4 shadow-lg max-w-sm w-full u-sb-soft-transition"
+          class="bg-white p-3 md:p-4 shadow-lg max-w-sm w-full u-sb-soft-transition"
         >
           <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden u-sb-soft-transition  ">
             <img

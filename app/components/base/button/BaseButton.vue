@@ -21,7 +21,7 @@ const isInteractive = computed(() => {
 
 <template>
   <button
-    class="ty-sb-btn-label border px-4 py-2 sm:px-6 sm:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
+    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
     :class="[
       // General state
       isInteractive ? 'cursor-pointer' : 'opacity-45 cursor-not-allowed',
@@ -50,6 +50,6 @@ const isInteractive = computed(() => {
     :type="props.type"
   >
     <slot></slot>
-    <Icon v-if="props.isLoading" class="inline-block size-5 sm:size-6 ml-2 animate-spin" name="solar:refresh-circle-broken" />
+    <Icon v-if="props.isLoading" class="inline-block size-5 md:size-6 ml-2 animate-spin" name="solar:refresh-circle-broken" />
   </button>
 </template>
