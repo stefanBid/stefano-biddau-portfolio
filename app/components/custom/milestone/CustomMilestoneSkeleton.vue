@@ -6,7 +6,7 @@
     >
       <!-- Point -->
       <div
-        class="relative size-4 sm:size-5 bg-sb-muted/30 rounded-full animate-pulse u-sb-soft-transition"
+        class="relative size-4 md:size-5 bg-sb-muted/30 rounded-full animate-pulse u-sb-soft-transition"
       ></div>
     </div>
 
