@@ -74,7 +74,7 @@ watch(open, (newVal) => {
       ref="reference"
       :aria-expanded="open ? 'true' : 'false'"
       aria-haspopup="menu"
-      class="inline-flex items-center p-1 bg-transparent gap-2 rounded ty-sb-btn-label u-sb-soft-transition u-sb-focus cursor-pointer"
+      class="inline-flex items-center p-1 bg-transparent gap-2 rounded-xl ty-sb-btn-label u-sb-soft-transition u-sb-focus cursor-pointer"
       :class="{
         'text-sb-contrast/80 hover:text-sb-contrast': !open,
         'text-sb-contrast': open,
