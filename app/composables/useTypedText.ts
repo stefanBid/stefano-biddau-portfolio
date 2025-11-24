@@ -31,6 +31,74 @@ const GROUP_STRING_OPTIONS: InputOptions = {
 }
 
 export default function useTypedText(input: InputSource, options?: InputOptions) {
+  // Internal State
+
+  /* --- Internal typed.js instance --- */
+  let _instance: Typed | null = null
+  const _rawInput = computed<InputStrings>(() =>
+    isRef(input) ? input.value : input,
+  )
+  const _strings = shallowRef<string[]>(_normalizeStrings(_rawInput.value))
+  const _typedOptions = shallowRef<InputOptions>(_normalizeOptions(options))
+
+  function _normalizeStrings(value: InputStrings): string[] {
+    const arr = Array.isArray(value) ? value : [value]
+
+    return arr
+      .map(s => (typeof s === 'string' ? s.trim() : ''))
+      .filter(Boolean)
+  }
+
+  function _normalizeOptions(value?: InputOptions): InputOptions {
+    const isSingle = _strings.value?.length <= 1
+    const defaults = isSingle ? LONG_TEXT_OPTIONS : GROUP_STRING_OPTIONS
+
+    return {
+      ...defaults,
+      ...value || {},
+    }
+  }
+
+  function _reducedMotionOverrides(): InputOptions {
+    if (typeof window === 'undefined') {
+      return {}
+    }
+    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
+
+    return reduced ? { typeSpeed: 9999, backSpeed: 9999, loop: false, showCursor: false } : {}
+  }
+
+  /* --- core logic --- */
+  async function _mountTyped() {
+    if (!el.value || isRunning.value) {
+      return
+    }
+
+    // Snapshot the target element
+    const target = el.value
+    if (!target) {
+      return
+    }
+
+    const { default: Typed } = await import('typed.js') // Lazy load for SSR safety
+
+    const finalTypedOptions: TypedOptions = {
+      ..._normalizeOptions(_typedOptions.value), // for sync with reactive options
+      ..._reducedMotionOverrides(),
+      strings: _strings.value,
+    }
+
+    _instance = new Typed(target, finalTypedOptions)
+    isRunning.value = true
+  }
+
+  function _destroy() {
+    _instance?.destroy()
+    _instance = null
+    isRunning.value = false
+  }
+
+  // State
   /* --- Target DOM element reference --- */
   const el = ref<HTMLElement | null>(null)
   const elStyle = {
@@ -38,16 +106,8 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     verticalAlign: 'baseline',
     lineHeight: 'inherit',
   } as CSSProperties
-
-  /* --- Reactive state --- */
-  const rawInput = computed<InputStrings>(() =>
-    isRef(input) ? input.value : input,
-  )
-  const strings = shallowRef<string[]>(_normalizeStrings(rawInput.value))
-  const typedOptions = shallowRef<InputOptions>(_normalizeOptions(options))
   const isRunning = ref(false)
 
-  /* --- Public API --- */
   function start() {
     if (!_instance) {
       _mountTyped()
@@ -76,89 +136,27 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
   }
 
   function setOptions(next: InputOptions) {
-    typedOptions.value = _normalizeOptions({ ...typedOptions.value, ...next })
+    _typedOptions.value = _normalizeOptions({ ..._typedOptions.value, ...next })
     recreate()
   }
 
   function setStrings(next: InputStrings) {
-    strings.value = _normalizeStrings(next)
-    typedOptions.value = _normalizeOptions({ ...typedOptions.value })
+    _strings.value = _normalizeStrings(next)
+    _typedOptions.value = _normalizeOptions({ ..._typedOptions.value })
     recreate()
   }
 
   function update(nextInput?: InputStrings, nextOptions?: InputOptions) {
     if (nextInput) {
-      strings.value = _normalizeStrings(nextInput)
+      _strings.value = _normalizeStrings(nextInput)
       if (!nextOptions) {
-        typedOptions.value = _normalizeOptions({ ...typedOptions.value })
+        _typedOptions.value = _normalizeOptions({ ..._typedOptions.value })
       }
     }
     if (nextOptions) {
-      typedOptions.value = _normalizeOptions({ ...typedOptions.value, ...nextOptions })
+      _typedOptions.value = _normalizeOptions({ ..._typedOptions.value, ...nextOptions })
     }
     recreate()
-  }
-
-  /* --- Private API --- */
-  /* --- Internal typed.js instance --- */
-  let _instance: Typed | null = null
-
-  /* --- core logic --- */
-  async function _mountTyped() {
-    if (!el.value || isRunning.value) {
-      return
-    }
-
-    // Snapshot the target element
-    const target = el.value
-    if (!target) {
-      return
-    }
-
-    const { default: Typed } = await import('typed.js') // Lazy load for SSR safety
-
-    const finalTypedOptions: TypedOptions = {
-      ..._normalizeOptions(typedOptions.value), // for sync with reactive options
-      ..._reducedMotionOverrides(),
-      strings: strings.value,
-    }
-
-    _instance = new Typed(target, finalTypedOptions)
-    isRunning.value = true
-  }
-
-  function _destroy() {
-    _instance?.destroy()
-    _instance = null
-    isRunning.value = false
-  }
-
-  /* --- Helpers --- */
-  function _normalizeStrings(value: InputStrings): string[] {
-    const arr = Array.isArray(value) ? value : [value]
-
-    return arr
-      .map(s => (typeof s === 'string' ? s.trim() : ''))
-      .filter(Boolean)
-  }
-
-  function _normalizeOptions(value?: InputOptions): InputOptions {
-    const isSingle = strings.value?.length <= 1
-    const defaults = isSingle ? LONG_TEXT_OPTIONS : GROUP_STRING_OPTIONS
-
-    return {
-      ...defaults,
-      ...value || {},
-    }
-  }
-
-  function _reducedMotionOverrides(): InputOptions {
-    if (typeof window === 'undefined') {
-      return {}
-    }
-    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
-    return reduced ? { typeSpeed: 9999, backSpeed: 9999, loop: false, showCursor: false } : {}
   }
 
   onMounted(() => {
@@ -182,7 +180,7 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     _destroy()
   })
 
-  watch(rawInput, (next) => {
+  watch(_rawInput, (next) => {
     setStrings(next)
   })
 

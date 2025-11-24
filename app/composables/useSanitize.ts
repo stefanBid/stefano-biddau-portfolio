@@ -1,7 +1,12 @@
 import DOMPurify from 'isomorphic-dompurify'
 
 export default function useSanitize() {
-  const sanitizeHtml = (dirtyHtml: string): string => {
+  /**
+   * Sanitizes HTML content to prevent XSS attacks.
+   * @param dirtyHtml
+   * @returns Sanitized HTML string
+   */
+  function sanitizeHtml(dirtyHtml: string): string {
     // Convert newlines to <br> tags
     const withBreaks = dirtyHtml.replace(/\n/g, '<br>')
 
@@ -25,7 +30,7 @@ export default function useSanitize() {
     })
   }
 
-  return ({
+  return {
     sanitizeHtml,
-  })
+  }
 }
