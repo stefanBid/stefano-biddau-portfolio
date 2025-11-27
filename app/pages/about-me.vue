@@ -12,11 +12,6 @@ useSeoMeta({
   twitterTitle: () => t('meta.about.ogTitle'),
   twitterDescription: () => t('meta.about.description'),
 
-  // GLOBALS
-  ogImage: '/images/card-logo.jpg',
-  twitterImage: '/images/card-logo.jpg',
-  twitterCard: 'summary',
-
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
@@ -30,7 +25,7 @@ const userSelectedId = ref<string | null>(null)
 const safeMilestones = computed(() => milestones.value ?? [])
 
 const selectedMilestoneId = computed(() => {
-  return userSelectedId.value ?? safeMilestones.value?.[0]?.id ?? null
+  return userSelectedId.value || safeMilestones.value?.[0]?.id || null
 })
 
 // Events

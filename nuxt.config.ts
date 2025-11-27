@@ -20,9 +20,11 @@ export default defineNuxtConfig({
         // Global Open Graph
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Stefano Biddau' },
+        { property: 'og:image', content: 'https://www.stefanobiddau.com/images/card-logo.jpg' },
 
         // Global Twitter (not tied to content)
         { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:image', content: 'https://www.stefanobiddau.com/images/card-logo.jpg' },
       ],
       link: [
         // Global favicon

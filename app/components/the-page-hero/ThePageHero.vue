@@ -2,7 +2,7 @@
 interface ThePageHeroProps {
   id: string
   text: string
-  imageSrc?: string | null
+  imageSrc?: string
   lockScroll?: boolean
 }
 
@@ -10,7 +10,7 @@ interface ThePageHeroProps {
 const props = withDefaults(
   defineProps<ThePageHeroProps>(),
   {
-    imageSrc: null,
+    imageSrc: undefined,
     lockScroll: false,
   },
 )

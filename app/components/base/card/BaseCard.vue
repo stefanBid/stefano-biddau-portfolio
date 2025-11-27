@@ -1,17 +1,17 @@
 <script setup lang="ts">
 interface BaseCardProps {
-  title?: string | null
-  subtitle?: string | null
-  paragraph?: string | null
+  title?: string
+  subtitle?: string
+  paragraph?: string
   variant?: 'dark' | 'dark-hover' | 'light' | 'light-hover'
   align?: 'left' | 'center' | 'right'
   fullCustomContent?: boolean
 }
 
 const props = withDefaults(defineProps<BaseCardProps>(), {
-  title: null,
-  subtitle: null,
-  paragraph: null,
+  title: undefined,
+  subtitle: undefined,
+  paragraph: undefined,
   variant: 'light',
   align: 'left',
   fullCustomContent: false,

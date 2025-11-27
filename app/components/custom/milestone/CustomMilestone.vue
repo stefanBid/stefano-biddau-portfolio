@@ -3,21 +3,21 @@ interface CustomMilestoneProps {
   id: number | string
   isActive: boolean
   title: string
-  subtitle?: string | null
   description: string
-  imageSrc?: string | null
-  imageAlt?: string | null
-  date?: string | null
+  subtitle?: string
+  imageSrc?: string
+  imageAlt?: string
+  date?: string
 }
 
 // Input / Output
 const props = withDefaults(
   defineProps<CustomMilestoneProps>(),
   {
-    subtitle: null,
-    imageSrc: null,
-    imageAlt: null,
-    date: null,
+    subtitle: undefined,
+    imageSrc: undefined,
+    imageAlt: undefined,
+    date: undefined,
   },
 )
 
