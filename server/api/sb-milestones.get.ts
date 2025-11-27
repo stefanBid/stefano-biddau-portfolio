@@ -1,0 +1,42 @@
+// server/api/sb-milestones.get.ts
+
+// This endpoint acts as a proxy between your Nuxt app and Strapi.
+// It also applies server-side caching via cachedEventHandler,
+// which improves performance and reduces the number of calls to Strapi.
+
+export default cachedEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const query = getQuery(event)
+  const baseUrl = config.public.strapiUrl
+
+  if (!baseUrl) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'STRAPI_URL_NOT_CONFIGURED',
+    })
+  }
+
+  // Build Strapi API URL
+  const strapiUrl = `${baseUrl}/api/sb-milestones`
+
+  // Determine locale
+  const locale = typeof query.locale === 'string' ? query.locale : 'en'
+
+  // Forward request to Strapi
+  const response = await $fetch(strapiUrl, {
+    params: {
+      locale: locale,
+      sort: 'date:asc',
+      populate: '*',
+    },
+    timeout: 5000,
+  })
+  return response
+}, {
+  // Cache the response server-side for 6 hours.
+  // Netlify Functions + Nitro will keep this cached as long as the function stays warm.
+  maxAge: 60 * 60 * 6, // 6 hours
+
+  // Serve stale data while revalidating in background.
+  swr: true,
+})

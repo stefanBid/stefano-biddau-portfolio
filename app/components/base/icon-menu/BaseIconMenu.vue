@@ -105,7 +105,7 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 text-sb-contrast sb-focus ty-sb-label normal-case! gap-2 u-sb-focus u-sb-soft-transition"
+                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-sb-contrast sb-focus ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
                 :class="{
                   'bg-sb-surface-2': props.selectedItemId === item.code,
                   'hover:bg-sb-surface-2 cursor-pointer': props.selectedItemId !== item.code,
@@ -115,7 +115,17 @@ watch(open, (newVal) => {
                 @click="onSelect(item.code)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
-                <Icon class="size-4 shrink-0" :name="item.icon" />
+                <Icon
+                  v-if="item.iconType === 'nuxt-icon'"
+                  class="size-4 shrink-0"
+                  :name="item.icon"
+                />
+                <NuxtImg
+                  v-else-if="item.iconType === 'custom'"
+                  alt=""
+                  class="size-4 shrink-0"
+                  :src="item.icon"
+                />
               </button>
             </li>
           </ul>

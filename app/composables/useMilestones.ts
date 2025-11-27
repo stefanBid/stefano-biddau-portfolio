@@ -2,7 +2,7 @@ interface Milestone {
   id: string
   title: string
   subtitle?: string | null
-  description: string
+  description?: string | null
   imageSrc?: string | null
   imageCaption?: string | null
   date?: string | null
@@ -37,59 +37,47 @@ interface MilestoneBE {
 }
 
 export default function useMilestones() {
-  // Internal state
-  const _config = useRuntimeConfig()
   const { locale: _locale } = useI18n()
 
   // State
 
-  /**
-   * Fetch milestones from Strapi CMS
-   * @returns Promise<Milestone[]>
-   */
   function fetchMilestones() {
-    return useFetch<Milestone[]>(
-      `${_config.public.strapiUrl}/api/sb-milestones`,
+    return useFetch<Milestone[] | null>(
+      '/api/sb-milestones',
       {
-        key: `milestones-${_locale.value}`,
-        lazy: true, // Do not block rendering
-        server: true, // Fetch on server side
-        dedupe: 'cancel', // Cancel previous requests when a new one is made
+        // Key is reactive: when locale changes, Nuxt automatically re-fetches.
+        key: () => `milestones-${_locale.value}`,
+
+        // Enable SSR fetch (recommended for About page SEO)
+        server: true,
+
+        // Fetch immediately (not lazy) so SSR generates full HTML
+        lazy: false,
+
+        // Cancel ongoing requests if a new one starts
+        dedupe: 'cancel',
+
+        // Pass locale as query param to the server endpoint
         query: {
           locale: _locale.value,
-          sort: 'date:asc',
-          populate: '*',
         },
         transform: (response) => {
-          try {
-            const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
+          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 
-            // Validate response structure
-            if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-              // eslint-disable-next-line no-console
-              console.error('[useMilestones] Invalid response:', response)
-              return []
-            }
+          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
+            throw new Error('Invalid Strapi response structure')
+          }
 
-            return strapiResponse.data.map((resItem) => {
-              return {
-                id: resItem.documentId,
-                title: resItem.title,
-                subtitle: resItem.subtitle ?? null,
-                description: resItem.description ?? null,
-                imageSrc: resItem.image?.formats?.medium?.url ?? null,
-                imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
-                date: resItem.date ?? null,
-              } as Milestone
-            })
-          }
-          catch (err) {
-            // eslint-disable-next-line no-console
-            console.error('[useMilestones] Transform error:', err)
-            return []
-          }
+          return strapiResponse.data.map(resItem => ({
+            id: resItem.documentId,
+            title: resItem.title,
+            subtitle: resItem.subtitle ?? null,
+            description: resItem.description ?? null,
+            imageSrc: resItem.image?.formats?.medium?.url ?? null,
+            imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
+            date: resItem.date ?? null,
+          }))
         },
-        watch: [_locale],
       },
     )
   }

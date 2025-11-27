@@ -123,8 +123,8 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             v-if="props.githubUrl"
             aria-label="Open GitHub profile"
             class="inline-flex items-center gap-2 rounded-xl bg-sb-surface px-3 py-1.5 border border-sb-border u-sb-soft-transition u-sb-focus hover:bg-sb-surface-2"
-            :href="githubUrl"
-            rel="noopener noreferrer"
+            :href="props.githubUrl"
+            rel="me noopener noreferrer"
             target="_blank"
           >
             <Icon class="size-4" name="mdi:github" />
