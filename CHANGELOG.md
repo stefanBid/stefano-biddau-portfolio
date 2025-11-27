@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.11](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.10...v1.1.11) (2025-11-27)
+
+
+### Bug Fixes
+
+* semantik ([#52](https://github.com/stefanBid/stefano-biddau-portfolio/issues/52)) ([3cb637c](https://github.com/stefanBid/stefano-biddau-portfolio/commit/3cb637c18c9cbe2b37c74e7729b0a23ffa8ec0b2))
+
 ## [1.1.10](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.9...v1.1.10) (2025-11-27)
 
 
