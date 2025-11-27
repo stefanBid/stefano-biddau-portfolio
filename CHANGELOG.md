@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.8...v1.1.9) (2025-11-27)
+
+
+### Bug Fixes
+
+* website optimization ([#47](https://github.com/stefanBid/stefano-biddau-portfolio/issues/47)) ([05aa1ff](https://github.com/stefanBid/stefano-biddau-portfolio/commit/05aa1ff3ec277c8ef54cdf29bd1a68ad1eae4ce9))
+
 ## [1.1.8](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.7...v1.1.8) (2025-11-24)
 
 
