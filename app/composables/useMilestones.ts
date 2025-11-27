@@ -1,20 +1,20 @@
 interface Milestone {
   id: string
   title: string
-  subtitle?: string | null
-  description?: string | null
-  imageSrc?: string | null
-  imageCaption?: string | null
-  date?: string | null
+  description: string
+  subtitle?: string
+  imageSrc?: string
+  imageCaption?: string
+  date?: string
 }
 
 interface MilestoneBE {
   id: number
   documentId: string
   title: string
-  subtitle?: string | null
-  description: string | null
-  image?: {
+  subtitle: string | null
+  description: string
+  image: {
     altermativeText: string | null
     caption: string | null
     formats: {
@@ -32,8 +32,8 @@ interface MilestoneBE {
       }
     }
   } | null
-  imageCaption?: string | null
-  date?: string | null
+  imageCaption: string | null
+  date: string | null
 }
 
 export default function useMilestones() {
@@ -71,11 +71,11 @@ export default function useMilestones() {
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
-            subtitle: resItem.subtitle ?? null,
-            description: resItem.description ?? null,
-            imageSrc: resItem.image?.formats?.medium?.url ?? null,
-            imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
-            date: resItem.date ?? null,
+            subtitle: resItem.subtitle || undefined,
+            description: resItem.description,
+            imageSrc: resItem.image?.formats?.medium?.url || undefined,
+            imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
+            date: resItem.date || undefined,
           }))
         },
       },
