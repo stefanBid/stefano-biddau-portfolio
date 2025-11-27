@@ -26,7 +26,7 @@ export default defineNuxtConfig({
       ],
       link: [
         // Global favicon
-        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
       ],
     },
   },
