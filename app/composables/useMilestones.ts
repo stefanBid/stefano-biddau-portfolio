@@ -37,28 +37,29 @@ interface MilestoneBE {
 }
 
 export default function useMilestones() {
-  // Internal state
-  const _config = useRuntimeConfig()
   const { locale: _locale } = useI18n()
 
   // State
 
-  /**
-   * Fetch milestones from Strapi CMS
-   * @returns Promise<Milestone[]>
-   */
   function fetchMilestones() {
     return useFetch<Milestone[]>(
-      `${_config.public.strapiUrl}/api/sb-milestones`,
+      '/api/sb-milestones',
       {
-        key: `milestones-${_locale.value}`,
-        lazy: true, // Do not block rendering
-        server: true, // Fetch on server side
-        dedupe: 'cancel', // Cancel previous requests when a new one is made
+        // Key is reactive: when locale changes, Nuxt automatically re-fetches.
+        key: () => `milestones-${_locale.value}`,
+
+        // Enable SSR fetch (recommended for About page SEO)
+        server: true,
+
+        // Fetch immediately (not lazy) so SSR generates full HTML
+        lazy: false,
+
+        // Cancel ongoing requests if a new one starts
+        dedupe: 'cancel',
+
+        // Pass locale as query param to the server endpoint
         query: {
           locale: _locale.value,
-          sort: 'date:asc',
-          populate: '*',
         },
         transform: (response) => {
           try {
@@ -89,7 +90,6 @@ export default function useMilestones() {
             return []
           }
         },
-        watch: [_locale],
       },
     )
   }

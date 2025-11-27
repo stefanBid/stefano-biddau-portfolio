@@ -3,7 +3,33 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
   modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n'],
+  ssr: true,
   devtools: { enabled: process.env.NODE_ENV !== 'production' },
+  app: {
+    head: {
+      meta: [
+        // Mobile responsiveness
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+
+        // Disabled automatic detection of possible phone numbers on IOS devices
+        { name: 'format-detection', content: 'telephone=no' },
+
+        // Browser bar color on mobile devices
+        { name: 'theme-color', content: '#0f0f20' },
+
+        // Global Open Graph
+        { property: 'og:type', content: 'website' },
+        { property: 'og:site_name', content: 'Stefano Biddau' },
+
+        // Global Twitter (not tied to content)
+        { name: 'twitter:card', content: 'summary' },
+      ],
+      link: [
+        // Global favicon
+        { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+      ],
+    },
+  },
   css: ['./app/assets/css/main.css'],
   runtimeConfig: {
     public: {
@@ -13,6 +39,20 @@ export default defineNuxtConfig({
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
       strapiUrl: process.env.NUXT_PUBLIC_STRAPI_URL,
     },
+  },
+
+  routeRules: {
+    // EN
+    '/': { prerender: true },
+    '/about-me': { prerender: true },
+    '/privacy-policy': { prerender: true },
+    '/terms-and-conditions': { prerender: true },
+
+    // IT
+    '/it': { prerender: true },
+    '/it/about-me': { prerender: true },
+    '/it/privacy-policy': { prerender: true },
+    '/it/terms-and-conditions': { prerender: true },
   },
   sourcemap: {
     client: false,
