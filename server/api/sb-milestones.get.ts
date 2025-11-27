@@ -7,9 +7,17 @@
 export default cachedEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
+  const baseUrl = config.public.strapiUrl
+
+  if (!baseUrl) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'STRAPI_URL_NOT_CONFIGURED',
+    })
+  }
 
   // Build Strapi API URL
-  const strapiUrl = `${config.public.strapiUrl}/api/sb-milestones`
+  const strapiUrl = `${baseUrl}/api/sb-milestones`
 
   // Determine locale
   const locale = typeof query.locale === 'string' ? query.locale : 'en'
@@ -21,6 +29,7 @@ export default cachedEventHandler(async (event) => {
       sort: 'date:asc',
       populate: '*',
     },
+    timeout: 5000,
   })
   return response
 }, {
