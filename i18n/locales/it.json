@@ -23,6 +23,11 @@
       "ogTitle": "Chi Sono - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Mi chiamo Stefano Biddau e sono un web designer e sviluppatore front-end freelance. Scopri la mia storia, il mio percorso e il mio approccio al lavoro."
     },
+    "skills": {
+      "title": "Competenze & Tecnologie - Stefano Biddau",
+      "ogTitle": "Competenze & Tecnologie - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Competenze e tecnologie che utilizzo per sviluppare interfacce intuitive e performanti: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
@@ -119,6 +124,9 @@
         "title": "Nessun Traguardo",
         "message": "Al momento non ci sono traguardi da visualizzare. Torna presto per aggiornamenti!"
       }
+    },
+    "skills": {
+      "hero": "Conosciamoci meglio!"
     },
     "privacy": {
       "title": "Informativa sulla Privacy",

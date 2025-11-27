@@ -23,6 +23,11 @@
       "ogTitle": "About Me - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "I'm Stefano Biddau, a freelance web designer and front-end developer. Learn more about my background, values, and approach to digital design."
     },
+    "skills": {
+      "title": "Skills & Technologies - Stefano Biddau",
+      "ogTitle": "Skills & Technologies - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Skills and tools I use to build intuitive, high-performing interfaces: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
@@ -119,6 +124,9 @@
         "title": "No Milestones Yet",
         "message": "There are no milestones to display at the moment. Check back soon!"
       }
+    },
+    "skills": {
+      "hero": "Get to know me!"
     },
     "privacy": {
       "title": "Privacy Policy",
