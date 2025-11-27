@@ -27,9 +27,10 @@ const { data: milestones, pending, error: fetchError } = fetchMilestones()
 
 // State
 const userSelectedId = ref<string | null>(null)
+const safeMilestones = computed(() => milestones.value ?? [])
 
 const selectedMilestoneId = computed(() => {
-  return userSelectedId.value ?? milestones.value?.[0]?.id ?? null
+  return userSelectedId.value ?? safeMilestones.value?.[0]?.id ?? null
 })
 
 // Events
@@ -70,7 +71,7 @@ watch(fetchError, (newError) => {
       dismissible: true,
     })
   }
-})
+}, { immediate: true })
 </script>
 
 <template>
@@ -84,14 +85,14 @@ watch(fetchError, (newError) => {
       <div
         class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': (milestones && milestones.length > 0) || pending,
+          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': safeMilestones.length || pending,
         }"
       >
         <!-- Milestones -->
         <template v-if="pending">
           <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
         </template>
-        <template v-else-if="!milestones || milestones.length === 0">
+        <template v-else-if="!safeMilestones.length">
           <!-- No milestones message -->
           <div class="flex flex-col items-center justify-center text-center">
             <Icon
@@ -108,7 +109,7 @@ watch(fetchError, (newError) => {
         </template>
         <template v-else>
           <CustomMilestone
-            v-for="(milestone) in milestones"
+            v-for="(milestone) in safeMilestones"
             :id="milestone.id"
             :key="milestone.id"
             :date="milestone.date"
