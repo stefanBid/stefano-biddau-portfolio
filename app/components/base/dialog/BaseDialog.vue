@@ -10,6 +10,7 @@ interface BaseDialogProps {
 const { lock, unlock } = useLockScroll()
 // Input / Output
 const props = withDefaults(defineProps<BaseDialogProps>(), {
+  subtitle: undefined,
   size: 'sm',
 })
 

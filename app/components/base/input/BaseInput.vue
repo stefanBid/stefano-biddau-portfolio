@@ -6,7 +6,7 @@ interface BaseInputProps {
   placeholder?: string
   type?: 'text' | 'password' | 'email' | 'number'
   hint?: string
-  error?: string | null
+  error?: string
   autocomplete?: string
 }
 // Input / Output
@@ -17,7 +17,7 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   name: undefined,
   autocomplete: 'off',
   hint: undefined,
-  error: null,
+  error: undefined,
 })
 
 const model = defineModel<string>('input')

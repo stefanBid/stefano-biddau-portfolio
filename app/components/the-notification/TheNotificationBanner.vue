@@ -1,8 +1,8 @@
 <script setup lang="ts">
 interface TheNotificationBannerProps {
   type?: 'success' | 'warning' | 'error' | 'info'
-  icon?: string | null
-  title?: string | null
+  icon?: string
+  title?: string
   message: string
   dismissible?: boolean
   autoClose?: boolean
@@ -11,8 +11,8 @@ interface TheNotificationBannerProps {
 // Input / Output
 const props = withDefaults(defineProps<TheNotificationBannerProps>(), {
   type: 'info',
-  icon: null,
-  title: null,
+  icon: undefined,
+  title: undefined,
   dismissible: true,
   autoClose: false,
   duration: 5000,

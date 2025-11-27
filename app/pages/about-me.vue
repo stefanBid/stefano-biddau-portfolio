@@ -30,7 +30,7 @@ const userSelectedId = ref<string | null>(null)
 const safeMilestones = computed(() => milestones.value ?? [])
 
 const selectedMilestoneId = computed(() => {
-  return userSelectedId.value ?? safeMilestones.value?.[0]?.id ?? null
+  return userSelectedId.value || safeMilestones.value?.[0]?.id || null
 })
 
 // Events
