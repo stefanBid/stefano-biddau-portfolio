@@ -111,7 +111,7 @@ watch(isMdUp, (newVal) => {
 
         <!-- Desktop nav -->
         <div class="flex items-center">
-          <nav class="hidden md:flex items-center gap-6 bg-sb-surface rounded-xl px-4 py-2">
+          <nav class="hidden md:flex items-center gap-6 bg-sb-surface-2 rounded-xl px-4 py-2">
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
