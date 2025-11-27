@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.10](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.9...v1.1.10) (2025-11-27)
+
+
+### Bug Fixes
+
+* update favicon format from SVG to ICO ([#49](https://github.com/stefanBid/stefano-biddau-portfolio/issues/49)) ([4346557](https://github.com/stefanBid/stefano-biddau-portfolio/commit/434655771a19d54f2c9687f98afbb53c59a05ee0))
+
 ## [1.1.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.8...v1.1.9) (2025-11-27)
 
 
