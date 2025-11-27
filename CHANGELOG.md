@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.12](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.11...v1.1.12) (2025-11-27)
+
+
+### Bug Fixes
+
+* hydratation language missmatch ([#54](https://github.com/stefanBid/stefano-biddau-portfolio/issues/54)) ([c75d4c4](https://github.com/stefanBid/stefano-biddau-portfolio/commit/c75d4c4a4aafb00803637c3a684269fa419ac27f))
+
 ## [1.1.11](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.10...v1.1.11) (2025-11-27)
 
 
