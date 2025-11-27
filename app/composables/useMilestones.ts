@@ -2,7 +2,7 @@ interface Milestone {
   id: string
   title: string
   subtitle?: string | null
-  description: string
+  description?: string | null
   imageSrc?: string | null
   imageCaption?: string | null
   date?: string | null
@@ -42,7 +42,7 @@ export default function useMilestones() {
   // State
 
   function fetchMilestones() {
-    return useFetch<Milestone[]>(
+    return useFetch<Milestone[] | null>(
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
@@ -62,33 +62,21 @@ export default function useMilestones() {
           locale: _locale.value,
         },
         transform: (response) => {
-          try {
-            const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
+          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 
-            // Validate response structure
-            if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-              // eslint-disable-next-line no-console
-              console.error('[useMilestones] Invalid response:', response)
-              return []
-            }
+          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
+            throw new Error('Invalid Strapi response structure')
+          }
 
-            return strapiResponse.data.map((resItem) => {
-              return {
-                id: resItem.documentId,
-                title: resItem.title,
-                subtitle: resItem.subtitle ?? null,
-                description: resItem.description ?? null,
-                imageSrc: resItem.image?.formats?.medium?.url ?? null,
-                imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
-                date: resItem.date ?? null,
-              } as Milestone
-            })
-          }
-          catch (err) {
-            // eslint-disable-next-line no-console
-            console.error('[useMilestones] Transform error:', err)
-            return []
-          }
+          return strapiResponse.data.map(resItem => ({
+            id: resItem.documentId,
+            title: resItem.title,
+            subtitle: resItem.subtitle ?? null,
+            description: resItem.description ?? null,
+            imageSrc: resItem.image?.formats?.medium?.url ?? null,
+            imageCaption: resItem.imageCaption ?? resItem.image?.caption ?? null,
+            date: resItem.date ?? null,
+          }))
         },
       },
     )
