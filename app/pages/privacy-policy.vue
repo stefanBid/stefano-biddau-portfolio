@@ -13,11 +13,6 @@ useSeoMeta({
   twitterTitle: () => t('meta.privacy.title'),
   twitterDescription: () => t('meta.privacy.description'),
 
-  // GLOBALS
-  ogImage: '/images/card-logo.jpg',
-  twitterImage: '/images/card-logo.jpg',
-  twitterCard: 'summary',
-
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
