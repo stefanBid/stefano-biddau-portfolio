@@ -126,7 +126,22 @@
       }
     },
     "skills": {
-      "hero": "Get to know me!"
+      "hero": "Get to know me!",
+      "frontendCard": {
+        "title": "Frontend That Dominates the Stage",
+        "paragraph": "This is where I thrive: crafting interfaces that feel sharp, alive, and impossible to ignore. I bring ideas to life with clarity, speed, and a level of polish that makes users feel like everything is exactly where it should be. Smooth interactions, bold visuals, and experiences that hit hard from the very first click — that’s the standard I work with. If you’re looking for someone who can turn a simple concept into a front-end experience that actually sticks with people, you’re in the right place.",
+        "buttonText": "See My Frontend Power"
+      },
+      "backendCard": {
+        "title": "The Backbone You Can Actually Trust",
+        "paragraph": "A great product isn’t just a pretty interface — it needs a backend that can take the pressure, keep things moving, and never crack under real traffic. I focus on building foundations that are clean, predictable, and ready to scale without drama. Solid architecture, stable processes, and integrations that don’t fight you every step of the way. When the engine behind your product is reliable and consistent, the whole team moves faster and everything just works.",
+        "buttonText": "Discover My Backend Approach"
+      },
+      "designCard": {
+        "title": "Design That Feels Right Instantly",
+        "paragraph": "Good design isn’t about decoration — it’s about guiding people effortlessly through an experience. I bring structure, clarity, and intention to every layout I touch, working closely with designers to amplify their vision and turn it into something users immediately understand. It’s not about flashy visuals, it’s about experiences that flow naturally, look great, and make people feel confident in where they’re going next.",
+        "buttonText": "Explore My Creative Side"
+      }
     },
     "privacy": {
       "title": "Privacy Policy",

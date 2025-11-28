@@ -126,7 +126,22 @@
       }
     },
     "skills": {
-      "hero": "Conosciamoci meglio!"
+      "hero": "Conosciamoci meglio!",
+      "frontendCard": {
+        "title": "Frontend che Spacca, Punto.",
+        "paragraph": "Il frontend è il mio terreno di gioco, dove estetica e logica si intrecciano e ogni dettaglio conta. Creo interfacce che non solo funzionano: parlano, coinvolgono, trascinano l’utente dentro l’esperienza. Mi piace spingere ogni elemento al massimo, mantenendo tutto leggero, scattante e reattivo. Quando un’interfaccia scorre bene, quando tutto sembra “vivo”, quando l’utente percepisce che qualcuno dietro ci ha messo davvero la testa… ecco, lì so di aver fatto centro. Se vuoi un’esperienza che colpisce al primo impatto e rimane impressa, sei nel posto giusto.",
+        "buttonText": "Voglio vedere questo Frontend"
+      },
+      "backendCard": {
+        "title": "Il Motore che Non Tradisce Mai",
+        "paragraph": "Un'app può sembrare impeccabile in superficie, ma è il backend che decide se regge davvero la prova dei fatti. Il mio obiettivo è costruire un motore che non si inceppa, non si spaventa davanti ai picchi di traffico e soprattutto non ti fa rimpiangere scelte affrettate. Mi concentro su architetture solide, codice pulito e processi fluidi, così da garantire performance costanti e integrazioni che filano dritte come una lama. Lavoro per togliere problemi, non crearne. Quando il resto del team può contare su un backend che sta sempre in piedi, il progetto vola.",
+        "buttonText": "Mostrami la forza del Backend"
+      },
+      "designCard": {
+        "title": "Design che Fa Muovere le Persone",
+        "paragraph": "Un buon design non è solo estetica: è orientamento, logica, emozione. Mi piace costruire percorsi chiari, scorrevoli, che accompagnano l’utente senza farlo pensare troppo. Collaboro con i designer per dare forma a idee forti e trasformarle in esperienze reali, coerenti e soprattutto intuitive. Non insegno l’arte a nessuno, ma so come valorizzare ogni concept e trasformarlo in layout funzionali, consistenti e d’impatto. Il risultato? Soluzioni che non solo si vedono bene, ma funzionano alla grande e fanno dire all’utente: “ok, questo ha senso”.",
+        "buttonText": "Fammi vedere il lato creativo"
+      }
     },
     "privacy": {
       "title": "Informativa sulla Privacy",
