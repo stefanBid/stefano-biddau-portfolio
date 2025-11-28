@@ -48,7 +48,7 @@ const ICONS = {
       id="my-skills"
       :text="t('pages.skills.hero')"
     />
-    <section aria-label="Skills and Technologies" class=" w-full py-20 flex  flex-col gap-20">
+    <section aria-label="Skills and Technologies" class=" w-full py-20 flex flex-col gap-20">
       <!-- CARD FRONTEND SKILLS -->
       <BaseCard
         class="p-0!"
@@ -57,9 +57,9 @@ const ICONS = {
       >
         <div class="h-fit relative flex items-center overflow-hidden">
           <!-- Contenuto a sinistra -->
-          <div class="min-h-[470px] flex flex-col w-full lg:w-2/3 h-full justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
             <h2
-              class="ty-sb-title u-sb-soft-transition"
+              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
             >
               {{ t('pages.skills.frontendCard.title') }}
             </h2>
@@ -75,7 +75,7 @@ const ICONS = {
             </div>
           </div>
           <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
+          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
             <CustomSolarSystem :planets-icon="ICONS.frontend" />
           </div>
         </div>
@@ -86,11 +86,11 @@ const ICONS = {
         full-custom-content
         variant="dark"
       >
-        <div class="h-[470px] relative flex items-center overflow-hidden">
+        <div class="h-fit relative flex items-center overflow-hidden">
           <!-- Contenuto a sinistra -->
-          <div class="flex flex-col w-full lg:w-2/3 h-full justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
             <h2
-              class="ty-sb-title u-sb-soft-transition"
+              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
             >
               {{ t('pages.skills.backendCard.title') }}
             </h2>
@@ -106,7 +106,7 @@ const ICONS = {
             </div>
           </div>
           <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
+          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
             <CustomSolarSystem :planets-icon="ICONS.backend" />
           </div>
         </div>
@@ -117,11 +117,11 @@ const ICONS = {
         full-custom-content
         variant="dark"
       >
-        <div class="h-[470px] relative flex items-center overflow-hidden">
+        <div class="h-fit relative flex items-center overflow-hidden">
           <!-- Contenuto a sinistra -->
-          <div class="flex flex-col w-full lg:w-2/3 h-full justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
             <h2
-              class="ty-sb-title u-sb-soft-transition"
+              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
             >
               {{ t('pages.skills.designCard.title') }}
             </h2>
@@ -137,7 +137,7 @@ const ICONS = {
             </div>
           </div>
           <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
+          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
             <CustomSolarSystem :planets-icon="ICONS.design" />
           </div>
         </div>
