@@ -30,16 +30,29 @@ const planetAtmosphereColors = [
 ]
 
 const getOrbitStyle = (index: number, total: number) => {
+  const safeTotal = Math.max(total - 1, 1)
   const baseSize = 230
   const step = 50
   const size = baseSize + index * step
 
-  const baseDuration = 18
-  const stepDuration = -1.5
-  const duration = Math.max(10, baseDuration + index * stepDuration)
+  // Fewer planets make the whole system faster, and a non-linear curve distributes speed from inner (slower) to outer (faster) with staggered phase
+  const clampedTotal = Math.min(Math.max(total, 1), 8)
+  const systemRatio = (clampedTotal - 1) / 7 // 0 (few planets, fast) → 1 (many planets, slower)
 
-  const safe = Math.max(total, 1)
-  const phase = index / safe
+  const slowMin = 5.5 // was 4.5 → now slightly slower
+  const slowMax = 11.5 // was 10
+  const fastMin = 2.7 // was 2
+  const fastMax = 6.3 // was 5.5
+
+  const slowDuration = slowMin + (slowMax - slowMin) * systemRatio
+  const fastDuration = fastMin + (fastMax - fastMin) * systemRatio
+
+  const linear = safeTotal === 0 ? 0 : index / safeTotal
+  const curved = Math.pow(linear, 0.8)
+
+  const duration = slowDuration - curved * (slowDuration - fastDuration)
+
+  const phase = (index * 0.61803398875) % 1
   const delay = -(duration * phase)
 
   return {

@@ -91,16 +91,12 @@ export default defineNuxtConfig({
   },
   icon: {
     mode: 'svg',
-    cssLayer: 'base',
     serverBundle: 'local',
     fallbackToApi: false,
     clientBundle: {
-      scan: false,
-      icons: [
-        'flagpack:it',
-        'flagpack:gb-ukm',
-      ],
-      sizeLimitKb: 128,
+      scan: true,
+      includeCustomCollections: true,
+      sizeLimitKb: 256,
     },
   },
   image: {

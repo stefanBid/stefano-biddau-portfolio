@@ -16,16 +16,30 @@ useSeoMeta({
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
 
-const frontendIcons = [
-  'logos:javascript',
-  'logos:typescript-icon',
-  'logos:vue',
-  'logos:nodejs-icon',
-  'logos:nuxt-icon',
-  'logos:html-5',
-  'logos:css-3',
-  'logos:flutter',
-]
+const ICONS = {
+  frontend: [
+    'logos:html-5',
+    'logos:css-3',
+    'logos:javascript',
+    'logos:typescript-icon',
+    'logos:vue',
+    'logos:nuxt-icon',
+    'logos:angular-icon',
+    'logos:flutter',
+  ],
+  backend: [
+    'logos:nodejs-icon-alt',
+    'logos:java',
+    'logos:spring-icon',
+    'logos:strapi-icon',
+    'logos:mysql-icon',
+    'logos:graphql',
+  ],
+  design: [
+    'logos:figma',
+    'logos:adobe-xd',
+  ],
+}
 </script>
 
 <template>
@@ -62,7 +76,7 @@ const frontendIcons = [
           </div>
           <!-- Sistema solare a destra, metà visibile -->
           <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
-            <CustomSolarSystem :planets-icon="frontendIcons" />
+            <CustomSolarSystem :planets-icon="ICONS.frontend" />
           </div>
         </div>
       </BaseCard>
@@ -93,7 +107,7 @@ const frontendIcons = [
           </div>
           <!-- Sistema solare a destra, metà visibile -->
           <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
-            <CustomSolarSystem :planets-icon="frontendIcons" />
+            <CustomSolarSystem :planets-icon="ICONS.backend" />
           </div>
         </div>
       </BaseCard>
@@ -124,7 +138,7 @@ const frontendIcons = [
           </div>
           <!-- Sistema solare a destra, metà visibile -->
           <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 w-[300px] h-[300px] flex items-center justify-end pointer-events-none ">
-            <CustomSolarSystem :planets-icon="frontendIcons" />
+            <CustomSolarSystem :planets-icon="ICONS.design" />
           </div>
         </div>
       </BaseCard>

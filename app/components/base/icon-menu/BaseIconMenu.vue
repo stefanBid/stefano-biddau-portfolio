@@ -84,7 +84,8 @@ watch(open, (newVal) => {
     >
       <Icon
         class="size-6"
-        :name="props.icon"
+        :name="
+          props.icon"
       />
     </button>
 

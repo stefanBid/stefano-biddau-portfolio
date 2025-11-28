@@ -137,7 +137,7 @@ const onSelect = () => {
         @click="onSelect"
       >
         <span>{{ t('pages.about.milestone-cta') }}</span>
-        <Icon class="size-4" name="solar:alt-arrow-down-bold-duotone" />
+        <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
       </button>
     </BaseCard>
   </article>
