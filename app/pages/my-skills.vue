@@ -41,9 +41,9 @@ const frontendIcons = [
         full-custom-content
         variant="dark"
       >
-        <div class="h-[470px] relative flex items-center overflow-hidden">
+        <div class="h-fit relative flex items-center overflow-hidden">
           <!-- Contenuto a sinistra -->
-          <div class="flex flex-col w-full lg:w-2/3 h-full justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+          <div class="min-h-[470px] flex flex-col w-full lg:w-2/3 h-full justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
             <h2
               class="ty-sb-title u-sb-soft-transition"
             >

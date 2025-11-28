@@ -100,8 +100,9 @@ const getOrbitStyle = (index: number, total: number) => {
   height: 180px;
   transform: translate(-50%, -50%);
   pointer-events: none;
-  /* pulsazione di dimensione del sole intero */
   animation: sunPulse 4s ease-in-out infinite;
+  z-index: 10;              /* <-- sempre sopra tutto */
+  will-change: transform;   /* <-- hint GPU */
 }
 
 @keyframes sunPulse {
@@ -139,7 +140,6 @@ const getOrbitStyle = (index: number, total: number) => {
   );
   filter: blur(7px);
   opacity: 0.92;
-  /* pulsazione luminosa + leggero respiro */
   animation: coronaPulse 6s ease-in-out infinite;
 }
 
@@ -202,6 +202,8 @@ const getOrbitStyle = (index: number, total: number) => {
   border: 1px solid rgba(148, 163, 184, 0.28);
   animation: orbit-spin var(--orbit-duration) linear infinite;
   animation-delay: var(--orbit-delay);
+  z-index: 1;               /* <-- sotto il sole */
+  will-change: transform;   /* <-- hint GPU su rotazione */
 }
 
 .orbit--reverse {
@@ -223,10 +225,11 @@ const getOrbitStyle = (index: number, total: number) => {
 .planet {
   position: absolute;
   top: 50%;
-  left: -22px; /* parte dalla metà visibile */
+  left: -22px;
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
+  z-index: 5; /* sopra le orbite, sotto il sole (se si sovrapponesse mai) */
 }
 
 .planet-body {
@@ -243,6 +246,7 @@ const getOrbitStyle = (index: number, total: number) => {
     0 0 18px rgba(15, 23, 42, 0.3);
   transform: rotate(var(--planet-tilt));
   animation: planetTilt 9s ease-in-out infinite;
+  will-change: transform; /* tilt animato → hint GPU */
 }
 
 @keyframes planetTilt {
