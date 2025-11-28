@@ -127,7 +127,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="me noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4" name="mdi:github" />
+            <Icon class="size-4 bg-sb-contrast/85 rounded-full" name="logos:github-icon" />
             <span class="ty-sb-caption text-sb-contrast/85">
               GitHub
             </span>
@@ -141,7 +141,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4" name="mdi:linkedin" />
+            <Icon class="size-4" name="logos:linkedin-icon" />
             <span class="ty-sb-caption text-sb-contrast/85">
               LinkedIn
             </span>
@@ -155,7 +155,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             rel="noopener noreferrer"
             target="_blank"
           >
-            <Icon class="size-4" name="mdi:instagram" />
+            <Icon class="size-4 bg-sb-contrast/85 rounded-xl" name="logos:instagram-icon" />
             <span class="ty-sb-caption text-sb-contrast/85">
               Instagram
             </span>
