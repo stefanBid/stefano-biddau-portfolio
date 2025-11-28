@@ -90,8 +90,18 @@ export default defineNuxtConfig({
     detectBrowserLanguage: false,
   },
   icon: {
-    mode: 'css',
+    mode: 'svg',
     cssLayer: 'base',
+    serverBundle: 'local',
+    fallbackToApi: false,
+    clientBundle: {
+      scan: false,
+      icons: [
+        'flagpack:it',
+        'flagpack:gb-ukm',
+      ],
+      sizeLimitKb: 128,
+    },
   },
   image: {
     provider: process.env.NETLIFY ? 'netlify' : 'ipx',
