@@ -35,14 +35,14 @@ const getOrbitStyle = (index: number, total: number) => {
   const step = 50
   const size = baseSize + index * step
 
-  // Fewer planets make the whole system faster, and a non-linear curve distributes speed from inner (slower) to outer (faster) with staggered phase
+  // Fewer planets make the system faster; non-linear curve distributes speed inner→outer
   const clampedTotal = Math.min(Math.max(total, 1), 8)
-  const systemRatio = (clampedTotal - 1) / 7 // 0 (few planets, fast) → 1 (many planets, slower)
+  const systemRatio = (clampedTotal - 1) / 7
 
-  const slowMin = 5.5 // was 4.5 → now slightly slower
-  const slowMax = 11.5 // was 10
-  const fastMin = 2.7 // was 2
-  const fastMax = 6.3 // was 5.5
+  const slowMin = 6.8 // +0.9 from previous
+  const slowMax = 13.4 // +1.2
+  const fastMin = 3.4 // +0.5
+  const fastMax = 7.2 // +0.5
 
   const slowDuration = slowMin + (slowMax - slowMin) * systemRatio
   const fastDuration = fastMin + (fastMax - fastMin) * systemRatio
