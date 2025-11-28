@@ -34,7 +34,7 @@ const frontendIcons = [
       id="my-skills"
       :text="t('pages.skills.hero')"
     />
-    <section aria-label="Skills and Technologies" class=" w-full py-20 flex  flex-col gap-10">
+    <section aria-label="Skills and Technologies" class=" w-full py-20 flex  flex-col gap-20">
       <BaseCard
         v-for="value in 3"
         :key="value"
