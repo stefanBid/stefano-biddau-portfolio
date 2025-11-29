@@ -4,7 +4,7 @@ interface CustomSkillsDialogProps {
 }
 // Dependencies
 const { t } = useI18n()
-const { success, error } = useNotification()
+// const { success, error } = useNotification()
 
 // Input / Output
 const props = defineProps<CustomSkillsDialogProps>()
