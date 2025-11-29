@@ -145,6 +145,7 @@
       "skillsDialog": {
         "title": "Il Mio Stack Tecnologico",
         "subtitle": "Le tecnologie che guidano il mio lavoro.",
+        "total": "Competenze Totali: { tot }",
         "noSkills": {
           "title": "Nessuna Competenza Disponibile",
           "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"

@@ -145,10 +145,12 @@
       "skillsDialog": {
         "title": "My Development Toolkit",
         "subtitle": "The technologies that power my work.",
+        "total": "Total Skills: { tot }",
         "noSkills": {
           "title": "No Skills Yet",
           "message": "There are no skills to display at the moment. Check back soon!"
         }
+
       }
     },
     "privacy": {
