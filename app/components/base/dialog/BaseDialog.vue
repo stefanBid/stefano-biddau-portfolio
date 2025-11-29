@@ -81,12 +81,12 @@ watch(
         <!-- Dialog Panel -->
         <div
           ref="dialogRef"
-          class="relative z-10 w-full border rounded-xl border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] bg-sb-main u-sb-soft-transition outline-none flex flex-col max-h-[90dvh]"
+          class="relative z-10 w-full mx-auto border rounded-xl border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] bg-sb-main outline-none flex flex-col max-h-[90dvh] u-sb-soft-transition"
           :class="{
             'max-w-lg': size === 'sm',
             'max-w-4xl': size === 'md',
             'max-w-6xl': size === 'lg',
-            'max-w-none w-full': size === 'full',
+            'max-w-[1400px]': size === 'full',
           }"
           tabindex="-1"
         >
@@ -115,9 +115,17 @@ watch(
             />
           </header>
 
+          <section
+            v-if="$slots.header"
+            id="second-custom-header"
+            class="p-4 md:p-6 u-sb-soft-transition"
+          >
+            <slot name="header"></slot>
+          </section>
+
           <!-- BODY -->
           <section
-            class="flex-1 my-4 md:my-6 p-4 md:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition"
+            class="flex-1 p-4 md:p-6 overflow-y-auto ty-sb-paragraph u-sb-soft-transition"
           >
             <slot></slot>
           </section>

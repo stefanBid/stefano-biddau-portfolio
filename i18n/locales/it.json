@@ -141,6 +141,14 @@
         "title": "Design che Fa Muovere le Persone",
         "paragraph": "Un buon design non è solo estetica: è orientamento, logica, emozione. Mi piace costruire percorsi chiari, scorrevoli, che accompagnano l’utente senza farlo pensare troppo. Collaboro con i designer per dare forma a idee forti e trasformarle in esperienze reali, coerenti e soprattutto intuitive. Non insegno l’arte a nessuno, ma so come valorizzare ogni concept e trasformarlo in layout funzionali, consistenti e d’impatto. Il risultato? Soluzioni che non solo si vedono bene, ma funzionano alla grande e fanno dire all’utente: “ok, questo ha senso”.",
         "buttonText": "Fammi vedere il lato creativo"
+      },
+      "skillsDialog": {
+        "title": "Il Mio Stack Tecnologico",
+        "subtitle": "Le tecnologie che guidano il mio lavoro.",
+        "noSkills": {
+          "title": "Nessuna Competenza Disponibile",
+          "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"
+        }
       }
     },
     "privacy": {

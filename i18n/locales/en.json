@@ -141,6 +141,14 @@
         "title": "Design That Feels Right Instantly",
         "paragraph": "Good design isn’t about decoration — it’s about guiding people effortlessly through an experience. I bring structure, clarity, and intention to every layout I touch, working closely with designers to amplify their vision and turn it into something users immediately understand. It’s not about flashy visuals, it’s about experiences that flow naturally, look great, and make people feel confident in where they’re going next.",
         "buttonText": "Explore My Creative Side"
+      },
+      "skillsDialog": {
+        "title": "My Development Toolkit",
+        "subtitle": "The technologies that power my work.",
+        "noSkills": {
+          "title": "No Skills Yet",
+          "message": "There are no skills to display at the moment. Check back soon!"
+        }
       }
     },
     "privacy": {

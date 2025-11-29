@@ -16,6 +16,8 @@ useSeoMeta({
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
 
+// State
+const openSkillsDialog = ref<boolean>(false)
 const ICONS = {
   frontend: [
     'logos:html-5',
@@ -39,6 +41,15 @@ const ICONS = {
     'logos:figma',
     'logos:adobe-xd',
   ],
+}
+
+// Events
+const onOpenSkillsDialog = () => {
+  openSkillsDialog.value = true
+}
+
+const onCloseSkillsDialog = () => {
+  openSkillsDialog.value = false
 }
 </script>
 
@@ -69,7 +80,7 @@ const ICONS = {
               {{ t('pages.skills.frontendCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog">
                 {{ t('pages.skills.frontendCard.buttonText') }}
               </BaseButton>
             </div>
@@ -100,7 +111,7 @@ const ICONS = {
               {{ t('pages.skills.backendCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog">
                 {{ t('pages.skills.backendCard.buttonText') }}
               </BaseButton>
             </div>
@@ -131,7 +142,7 @@ const ICONS = {
               {{ t('pages.skills.designCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog">
                 {{ t('pages.skills.designCard.buttonText') }}
               </BaseButton>
             </div>
@@ -143,5 +154,6 @@ const ICONS = {
         </div>
       </BaseCard>
     </section>
+    <CustomSkillsDialog :open-dialog="openSkillsDialog" @close-dialog="onCloseSkillsDialog" />
   </div>
 </template>
