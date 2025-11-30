@@ -200,6 +200,7 @@ watch(open, (newVal) => {
         type="text"
         :value="valuesWithCommas"
         @click="toggleFloating(!open)"
+        @keydown.enter.prevent="toggleFloating(!open)"
       />
     </div>
 
