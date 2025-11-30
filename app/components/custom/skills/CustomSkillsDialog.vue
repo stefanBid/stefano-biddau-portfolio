@@ -7,6 +7,14 @@ interface CustomSkillsDialogProps {
 const { t } = useI18n()
 // const { success, error } = useNotification()
 
+const {
+  data: skills,
+  pending,
+  error,
+  fetchSkills,
+  pagination,
+} = useSkills()
+
 // Input / Output
 const props = withDefaults(defineProps<CustomSkillsDialogProps>(), {
   filterPreset: undefined,
@@ -18,13 +26,9 @@ const emits = defineEmits<{
 }>()
 
 // State
-const currentPage = ref<number>(1)
-const totalSkills = ref<number>(42)
-const skillsPerPage = ref<number>(9)
-const totalPages = computed(() => Math.ceil(totalSkills.value / skillsPerPage.value))
-
 const skillsKey = ref<string>('')
 const skillsTypes = ref<SkillType[]>([])
+const debounceHandle = ref<ReturnType<typeof setTimeout> | null>(null)
 
 const typesItems = computed<{ label: string, value: SkillType }[]>(() => [
   { label: t('pages.skills.skillsDialog.filterOptions.feLang'), value: 'feLang' },
@@ -36,19 +40,53 @@ const typesItems = computed<{ label: string, value: SkillType }[]>(() => [
   { label: t('pages.skills.skillsDialog.filterOptions.other'), value: 'other' },
 ])
 
+const currentPage = computed(() => pagination.value?.page ?? 1)
+const totalPages = computed(() => pagination.value?.pageCount ?? 1)
+const totalSkills = computed(() => pagination.value?.total ?? 0)
+
+const triggerFetch = (page?: number) => {
+  fetchSkills({
+    name: skillsKey.value,
+    types: skillsTypes.value,
+    page: page ?? currentPage.value,
+    pageSize: 9,
+  })
+}
+
+const debouncedFetch = () => {
+  if (debounceHandle.value) {
+    clearTimeout(debounceHandle.value)
+  }
+  debounceHandle.value = setTimeout(() => {
+    triggerFetch(1)
+  }, 400)
+}
+
+watch([skillsKey, skillsTypes], () => {
+  if (props.openDialog) {
+    debouncedFetch()
+  }
+})
+
 // Events
 const onCloseDialog = () => {
   emits('closeDialog', false)
 }
 
 const onGoToPrevPage = () => {
+  if (pending.value) {
+    return
+  }
   if (currentPage.value > 1) {
-    currentPage.value -= 1
+    triggerFetch(currentPage.value - 1)
   }
 }
 const onGoToNextPage = () => {
+  if (pending.value) {
+    return
+  }
   if (currentPage.value < totalPages.value) {
-    currentPage.value += 1
+    triggerFetch(currentPage.value + 1)
   }
 }
 
@@ -56,14 +94,12 @@ watch(
   () => props.openDialog,
   (newVal) => {
     if (newVal) {
-      // Reset to first page on open
-      currentPage.value = 1
-
       // Apply preset filters if any
       if (props.filterPreset) {
         skillsKey.value = props.filterPreset.key || ''
         skillsTypes.value = props.filterPreset.filters || []
       }
+      triggerFetch(1)
     }
     if (!newVal) {
       // Reset state on close
@@ -75,6 +111,12 @@ watch(
     }
   },
 )
+
+onBeforeUnmount(() => {
+  if (debounceHandle.value) {
+    clearTimeout(debounceHandle.value)
+  }
+})
 </script>
 
 <template>
@@ -109,13 +151,27 @@ watch(
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 min-h-[535px]"
     >
-      <CustomSkillsCard
-        v-for="(skill, index) in 10"
-        :key="skill"
-        icon="logos:vue"
-        :level="3"
-        :name="`#${index + 1} Vue`"
-      />
+      <template v-if="pending">
+        <CustomSkillsSkeleton
+          v-for="index in 9"
+          :key="`skill-skeleton-${index}`"
+        />
+      </template>
+      <template v-else-if="skills?.length">
+        <CustomSkillsCard
+          v-for="skill in skills"
+          :key="skill.id"
+          :icon="skill.icon || 'solar:bolt-line-duotone'"
+          :level="skill.level || 0"
+          :name="skill.name"
+        />
+      </template>
+      <div
+        v-else
+        class="col-span-1 sm:col-span-2 lg:col-span-3 bg-sb-surface-2 border border-sb-muted/30 rounded-lg p-6 text-center text-sb-muted u-sb-soft-transition"
+      >
+        {{ t('pages.skills.skillsDialog.noResults') }}
+      </div>
     </div>
     <template #footer>
       <div class="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 w-full">
@@ -125,18 +181,18 @@ watch(
         <div class="flex items-center gap-4">
           <BaseButton
             class="p-2!"
-            :is-disabled="currentPage === 1"
+            :is-disabled="pending || currentPage === 1 || totalPages === 0"
             variant="secondary"
             @click="onGoToPrevPage"
           >
             <Icon name="solar:map-arrow-left-bold-duotone" />
           </BaseButton>
           <span class=" text-sb-accent ty-sb-caption u-sb-soft-transition">
-            {{ currentPage }} / {{ totalPages }}
+            {{ currentPage }} / {{ totalPages === 0 ? 1 : totalPages }}
           </span>
           <BaseButton
             class="p-2!"
-            :is-disabled="currentPage === totalPages"
+            :is-disabled="pending || currentPage === totalPages || totalPages === 0"
             variant="secondary"
             @click="onGoToNextPage"
           >
