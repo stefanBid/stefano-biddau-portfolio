@@ -18,6 +18,8 @@ useSeoMeta({
 
 // State
 const openSkillsDialog = ref<boolean>(false)
+const skillsPreset = ref<SkillsFilterPreset | undefined>(undefined)
+
 const ICONS = {
   frontend: [
     'logos:html-5',
@@ -44,7 +46,39 @@ const ICONS = {
 }
 
 // Events
-const onOpenSkillsDialog = () => {
+const onOpenSkillsDialog = (filterPresetType?: 'frontend' | 'backend' | 'design') => {
+  switch (filterPresetType) {
+    case 'frontend':
+      skillsPreset.value = {
+        key: '',
+        filters: [
+          'feLang',
+          'feFramework',
+        ],
+      }
+      break
+    case 'backend':
+      skillsPreset.value = {
+        key: '',
+        filters: [
+          'beLang',
+          'beFramework',
+          'database',
+        ],
+      }
+      break
+    case 'design':
+      skillsPreset.value = {
+        key: '',
+        filters: [
+          'tool',
+        ],
+      }
+      break
+    default:
+      skillsPreset.value = undefined
+      break
+  }
   openSkillsDialog.value = true
 }
 

@@ -1,4 +1,9 @@
 declare global {
+  // ------------------------ Types ------------------------ /
+  type SkillType = 'beLang' | 'feLang' | 'beFramework' | 'feFramework' | 'database' | 'tool' | 'other'
+
+  // --------------------------------- Interfaces ------------------------ /
+
   interface MenuItem {
     code: string
     label: string
@@ -21,6 +26,11 @@ declare global {
     dismissible?: boolean
     autoClose?: boolean
     duration?: number
+  }
+
+  interface SkillsFilterPreset {
+    key: string
+    filters: SkillType[]
   }
 
   interface StrapiResponse<T> {
