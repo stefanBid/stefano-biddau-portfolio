@@ -8,6 +8,7 @@ interface BaseDialogProps {
 
 // Dependencies
 const { lock, unlock } = useLockScroll()
+
 // Input / Output
 const props = withDefaults(defineProps<BaseDialogProps>(), {
   subtitle: undefined,
@@ -50,15 +51,27 @@ onUnmounted(() => {
 watch(
   () => props.isOpen,
   (value) => {
+    // Avoid DOM access during SSR
+    if (!import.meta.client) {
+      return
+    }
+
     if (value) {
+      // Disable scroll when dialog opens
       lock()
-      nextTick(() => dialogRef.value?.focus())
+
+      nextTick(() => {
+        if (dialogRef.value) {
+          dialogRef.value.focus()
+        }
+      })
     }
     else {
+      // Re-enable scroll when dialog closes
       unlock()
     }
   },
-  { immediate: true },
+  { immediate: true, flush: 'post' },
 )
 </script>
 

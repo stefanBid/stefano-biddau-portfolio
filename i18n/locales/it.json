@@ -145,6 +145,20 @@
       "skillsDialog": {
         "title": "Il Mio Stack Tecnologico",
         "subtitle": "Le tecnologie che guidano il mio lavoro.",
+        "filters": {
+          "searchPlaceholder": "Cerca competenze per nome",
+          "typePlaceholder": "Filtra competenze per tipo"
+        },
+        "filterOptions": {
+          "all": "Tutte le Competenze",
+          "feLang": "Linguaggi Frontend",
+          "feFramework": "Framework Frontend",
+          "beLang": "Linguaggi Backend",
+          "beFramework": "Framework Backend",
+          "database": "Database",
+          "tool": "Strumenti & Piattaforme",
+          "other": "Altre Competenze"
+        },
         "total": "Competenze Totali: { tot }",
         "noSkills": {
           "title": "Nessuna Competenza Disponibile",

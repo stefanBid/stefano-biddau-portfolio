@@ -145,12 +145,24 @@
       "skillsDialog": {
         "title": "My Development Toolkit",
         "subtitle": "The technologies that power my work.",
+        "filters": {
+          "searchPlaceholder": "Search skills by name",
+          "typePlaceholder": "Filter skills by type"
+        },
+        "filterOptions": {
+          "feLang": "Frontend Languages",
+          "feFramework": "Frontend Frameworks",
+          "beLang": "Backend Languages",
+          "beFramework": "Backend Frameworks",
+          "database": "Databases",
+          "tool": "Tools & Platforms",
+          "other": "Other Skills"
+        },
         "total": "Total Skills: { tot }",
         "noSkills": {
           "title": "No Skills Yet",
           "message": "There are no skills to display at the moment. Check back soon!"
         }
-
       }
     },
     "privacy": {

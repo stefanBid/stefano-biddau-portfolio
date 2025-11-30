@@ -26,33 +26,15 @@ const totalPages = computed(() => Math.ceil(totalSkills.value / skillsPerPage.va
 const skillsKey = ref<string>('')
 const skillsTypes = ref<SkillType[]>([])
 
-const mergedSkillsKey = computed<string>({
-  get: () => {
-    if (props.filterPreset && props.filterPreset.key && skillsKey.value === '') {
-      return props.filterPreset.key
-    }
-    return skillsKey.value
-  },
-  set: (val: string) => {
-    skillsKey.value = val
-  },
-})
-
-const mergedSkillsTypes = computed<SkillType[]>({
-  get: () => {
-    // Merge and remove duplicates
-    return [
-      ...(props.filterPreset ? props.filterPreset.filters : []),
-      ...skillsTypes.value,
-    ].filter((value, index, self) => self.indexOf(value) === index)
-  },
-  set: (val: SkillType[]) => {
-    skillsTypes.value = [
-      ...skillsTypes.value,
-      ...val,
-    ].filter((value, index, self) => self.indexOf(value) === index)
-  },
-})
+const typesItems = computed<{ label: string, value: SkillType }[]>(() => [
+  { label: t('pages.skills.skillsDialog.filterOptions.feLang'), value: 'feLang' },
+  { label: t('pages.skills.skillsDialog.filterOptions.feFramework'), value: 'feFramework' },
+  { label: t('pages.skills.skillsDialog.filterOptions.beLang'), value: 'beLang' },
+  { label: t('pages.skills.skillsDialog.filterOptions.beFramework'), value: 'beFramework' },
+  { label: t('pages.skills.skillsDialog.filterOptions.database'), value: 'database' },
+  { label: t('pages.skills.skillsDialog.filterOptions.tool'), value: 'tool' },
+  { label: t('pages.skills.skillsDialog.filterOptions.other'), value: 'other' },
+])
 
 // Events
 const onCloseDialog = () => {
@@ -73,6 +55,16 @@ const onGoToNextPage = () => {
 watch(
   () => props.openDialog,
   (newVal) => {
+    if (newVal) {
+      // Reset to first page on open
+      currentPage.value = 1
+
+      // Apply preset filters if any
+      if (props.filterPreset) {
+        skillsKey.value = props.filterPreset.key || ''
+        skillsTypes.value = props.filterPreset.filters || []
+      }
+    }
     if (!newVal) {
       // Reset state on close
       const timeout = setTimeout(() => {
@@ -95,19 +87,22 @@ watch(
   >
     <template #header>
       <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-        {{ mergedSkillsKey }}
         <BaseInput
           id="skill-key"
-          v-model:input="mergedSkillsKey"
+          v-model:input="skillsKey"
           class="w-full md:w-2/3 u-sb-soft-transition"
-          placeholder="Search by skill name"
+          :placeholder="t('pages.skills.skillsDialog.filters.searchPlaceholder')"
           prefix-icon="solar:card-search-bold-duotone"
           type="search"
         />
-        <BaseInput
+        <BaseCombobox
           id="skill-level"
+          v-model:input="skillsTypes"
           class="w-full md:w-1/3 u-sb-soft-transition"
-          placeholder="Filter by skill type"
+          :items="typesItems"
+          :placeholder="t('pages.skills.skillsDialog.filters.typePlaceholder')"
+          prefix-icon="solar:filter-bold-duotone"
+          type="multiple"
         />
       </div>
     </template>

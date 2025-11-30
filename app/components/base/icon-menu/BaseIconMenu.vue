@@ -95,7 +95,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
           :style="floatingStyles"
         >
           <ul
