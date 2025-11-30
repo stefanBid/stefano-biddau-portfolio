@@ -241,9 +241,9 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.label">
               <button
                 :aria-current="model.includes(item.value) ? 'true' : 'false'"
-                class="relative group inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-sb-contrast cursor-pointer ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
+                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-sb-contrast cursor-pointer ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
                 :class="{
-                  'bg-sb-muted/50': model.includes(item.value),
+                  'bg-sb-border': model.includes(item.value),
                   'hover:bg-sb-surface-2': !model.includes(item.value),
                 }"
                 role="menuitem"
