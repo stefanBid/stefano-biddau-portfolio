@@ -5,7 +5,7 @@ interface BaseTextareaProps {
   label?: string
   placeholder?: string
   hint?: string
-  error?: string
+  error?: string | null
   maxLength?: number
 }
 
@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<BaseTextareaProps>(), {
   placeholder: 'Insert a value...',
   name: undefined,
   hint: undefined,
-  error: undefined,
+  error: null,
   maxLength: undefined,
 })
 
