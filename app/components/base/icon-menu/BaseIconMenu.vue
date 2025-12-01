@@ -84,7 +84,8 @@ watch(open, (newVal) => {
     >
       <Icon
         class="size-6"
-        :name="props.icon"
+        :name="
+          props.icon"
       />
     </button>
 
@@ -94,7 +95,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-100 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
           :style="floatingStyles"
         >
           <ul
@@ -105,7 +106,7 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-sb-contrast sb-focus ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
+                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-sb-contrast ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
                 :class="{
                   'bg-sb-surface-2': props.selectedItemId === item.code,
                   'hover:bg-sb-surface-2 cursor-pointer': props.selectedItemId !== item.code,

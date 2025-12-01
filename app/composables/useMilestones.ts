@@ -58,9 +58,9 @@ export default function useMilestones() {
         dedupe: 'cancel',
 
         // Pass locale as query param to the server endpoint
-        query: {
+        query: computed(() => ({
           locale: _locale.value,
-        },
+        })),
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 

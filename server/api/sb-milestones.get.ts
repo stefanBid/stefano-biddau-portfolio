@@ -29,7 +29,7 @@ export default cachedEventHandler(async (event) => {
       sort: 'date:asc',
       populate: '*',
     },
-    timeout: 5000,
+    timeout: 15000,
   })
   return response
 }, {

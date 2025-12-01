@@ -160,7 +160,7 @@ watch(
     :title="t('pages.home.contactForm.title')"
     @close="closeForm"
   >
-    <form class="flex flex-col gap-6" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
+    <form class="flex flex-col gap-6 my-4 md:my-6 u-sb-soft-transition" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
       <div class="flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput

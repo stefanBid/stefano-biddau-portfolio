@@ -23,6 +23,11 @@
       "ogTitle": "About Me - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "I'm Stefano Biddau, a freelance web designer and front-end developer. Learn more about my background, values, and approach to digital design."
     },
+    "skills": {
+      "title": "Skills & Technologies - Stefano Biddau",
+      "ogTitle": "Skills & Technologies - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Skills and tools I use to build intuitive, high-performing interfaces: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
@@ -118,6 +123,47 @@
       "no-milestones": {
         "title": "No Milestones Yet",
         "message": "There are no milestones to display at the moment. Check back soon!"
+      }
+    },
+    "skills": {
+      "hero": "Get to know me!",
+      "frontendCard": {
+        "title": "Frontend That Dominates the Stage",
+        "paragraph": "This is where I thrive: crafting interfaces that feel sharp, alive, and impossible to ignore. I bring ideas to life with clarity, speed, and a level of polish that makes users feel like everything is exactly where it should be. Smooth interactions, bold visuals, and experiences that hit hard from the very first click — that’s the standard I work with. If you’re looking for someone who can turn a simple concept into a front-end experience that actually sticks with people, you’re in the right place.",
+        "buttonText": "See My Frontend Power"
+      },
+      "backendCard": {
+        "title": "The Backbone You Can Actually Trust",
+        "paragraph": "A great product isn’t just a pretty interface — it needs a backend that can take the pressure, keep things moving, and never crack under real traffic. I focus on building foundations that are clean, predictable, and ready to scale without drama. Solid architecture, stable processes, and integrations that don’t fight you every step of the way. When the engine behind your product is reliable and consistent, the whole team moves faster and everything just works.",
+        "buttonText": "Discover My Backend Approach"
+      },
+      "designCard": {
+        "title": "Design That Feels Right Instantly",
+        "paragraph": "Good design isn’t about decoration — it’s about guiding people effortlessly through an experience. I bring structure, clarity, and intention to every layout I touch, working closely with designers to amplify their vision and turn it into something users immediately understand. It’s not about flashy visuals, it’s about experiences that flow naturally, look great, and make people feel confident in where they’re going next.",
+        "buttonText": "Explore My Creative Side"
+      },
+      "skillsDialog": {
+        "title": "My Development Toolkit",
+        "subtitle": "The technologies that power my work.",
+        "filters": {
+          "searchPlaceholder": "Search skills by name",
+          "typePlaceholder": "Filter skills by type"
+        },
+        "filterOptions": {
+          "feLang": "Frontend Languages",
+          "feFramework": "Frontend Frameworks",
+          "beLang": "Backend Languages",
+          "beFramework": "Backend Frameworks",
+          "database": "Databases",
+          "tool": "Tools & Platforms",
+          "other": "Other Skills"
+        },
+        "noResults": "No skills match your search criteria.",
+        "total": "Total Skills: { tot }",
+        "noSkills": {
+          "title": "No Skills Yet",
+          "message": "There are no skills to display at the moment. Check back soon!"
+        }
       }
     },
     "privacy": {

@@ -4,10 +4,11 @@ interface BaseInputProps {
   name?: string
   label?: string
   placeholder?: string
-  type?: 'text' | 'password' | 'email' | 'number'
+  type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'
   hint?: string
   error?: string
   autocomplete?: string
+  prefixIcon?: string
 }
 // Input / Output
 const props = withDefaults(defineProps<BaseInputProps>(), {
@@ -18,6 +19,7 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   autocomplete: 'off',
   hint: undefined,
   error: undefined,
+  prefixIcon: undefined,
 })
 
 const model = defineModel<string>('input')
@@ -37,21 +39,32 @@ const describedBy = computed(() => {
 <template>
   <div>
     <label
-      class="ty-sb-label block text-sb-muted u-sb-soft-transition mb-2 md:mb-3"
+      v-if="props.label"
+      class="ty-sb-label block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
       :for="props.id"
     >{{ props.label }}</label>
-    <input
-      :id="props.id"
-      v-model="model"
-      :aria-describedby="describedBy"
-      :aria-invalid="props.error ? 'true' : 'false'"
-      :autocomplete="props.autocomplete"
-      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent"
-      :class="props.error ? 'border-red-500' : 'border-sb-border'"
-      :name="props.name || `${props.id}-name`"
-      :placeholder="props.placeholder"
-      :type="props.type"
-    />
+    <div class="relative">
+      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition">
+        <Icon class="size-5" :name="props.prefixIcon" />
+      </span>
+      <input
+        :id="props.id"
+        v-model="model"
+        :aria-describedby="describedBy"
+        :aria-invalid="props.error ? 'true' : 'false'"
+        :autocomplete="props.autocomplete"
+        class="w-full rounded-xl bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        :class="{
+          'border-red-500': props.error,
+          'border-sb-border': !props.error,
+          'pl-9! md:pl-10!': props.prefixIcon,
+        }
+        "
+        :name="props.name || `${props.id}-name`"
+        :placeholder="props.placeholder"
+        :type="props.type"
+      />
+    </div>
     <!-- Hint -->
     <p
       v-if="props.hint"

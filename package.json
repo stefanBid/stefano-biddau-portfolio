@@ -15,6 +15,8 @@
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
     "@floating-ui/vue": "^1.1.9",
+    "@iconify-json/flagpack": "^1.2.6",
+    "@iconify-json/logos": "^1.2.10",
     "@iconify-json/solar": "^1.2.5",
     "@nuxt/eslint": "^1.11.0",
     "@nuxt/icon": "^2.1.0",

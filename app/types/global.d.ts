@@ -1,4 +1,9 @@
 declare global {
+  // ------------------------ Types ------------------------ /
+  type SkillType = 'beLang' | 'feLang' | 'beFramework' | 'feFramework' | 'database' | 'tool' | 'other'
+
+  // --------------------------------- Interfaces ------------------------ /
+
   interface MenuItem {
     code: string
     label: string
@@ -15,12 +20,17 @@ declare global {
   interface NotificationItem {
     id: string
     type: 'success' | 'warning' | 'error' | 'info'
-    icon?: string | null
-    title?: string | null
+    icon?: string
+    title?: string
     message: string
     dismissible?: boolean
     autoClose?: boolean
     duration?: number
+  }
+
+  interface SkillsFilterPreset {
+    key: string
+    filters: SkillType[]
   }
 
   interface StrapiResponse<T> {

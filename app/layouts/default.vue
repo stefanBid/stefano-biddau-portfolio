@@ -20,13 +20,13 @@ const { notifications, removeNotification, info } = useNotification()
 const routes = computed(() => [
   { name: t('nav.home'), path: localePath('index') },
   { name: t('nav.about-me'), path: localePath('about-me') },
-  { name: t('nav.my-skills'), path: localePath('my-skills'), disabled: true },
+  { name: t('nav.my-skills'), path: localePath('my-skills') },
   { name: t('nav.my-projects'), path: localePath('my-projects'), disabled: true },
 ] as Array<RouteItem>)
 
 const langs = [
-  { code: 'en', label: 'English', iconType: 'custom', icon: '/flags/en.svg' },
-  { code: 'it', label: 'Italiano', iconType: 'custom', icon: '/flags/it.svg' },
+  { code: 'en', label: 'English', iconType: 'nuxt-icon', icon: 'flagpack:gb-ukm' },
+  { code: 'it', label: 'Italiano', iconType: 'nuxt-icon', icon: 'flagpack:it' },
 ] as Array<MenuItem>
 
 // Events
