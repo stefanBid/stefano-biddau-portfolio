@@ -1,20 +1,18 @@
-interface Milestone {
+interface Project {
   id: string
   title: string
   description: string
-  subtitle?: string
-  imageSrc?: string
-  imageCaption?: string
-  date?: string
+  coverImageSrc?: string
+  codebaseUrl?: string
+  deployUrl?: string
 }
 
-interface MilestoneBE {
+interface ProjectBE {
   id: number
   documentId: string
   title: string
-  subtitle: string | null
   description: string
-  image: {
+  coverImage: {
     altermativeText: string | null
     caption: string | null
     formats: {
@@ -32,21 +30,20 @@ interface MilestoneBE {
       }
     }
   } | null
-  imageCaption: string | null
-  date: string | null
+  codebaseUrl: string | null
+  deployUrl: string | null
 }
 
-export default function useMilestones() {
+export default function useProjects() {
   const { locale: _locale } = useI18n()
 
   // State
-
-  function fetchMilestones() {
-    return useFetch<Milestone[] | null>(
-      '/api/sb-milestones',
+  function fetchProjects() {
+    return useFetch<Project[] | null>(
+      '/api/sb-projects',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: () => `milestones-${_locale.value}`,
+        key: () => `projects-${_locale.value}`,
 
         // Enable SSR fetch (recommended for About page SEO)
         server: true,
@@ -58,24 +55,18 @@ export default function useMilestones() {
         dedupe: 'cancel',
 
         // Pass locale as query param to the server endpoint
-        query: computed(() => ({
+        query: () => ({
           locale: _locale.value,
-        })),
+        }),
         transform: (response) => {
-          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
-
-          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            throw new Error('Invalid Strapi response structure')
-          }
-
+          const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
-            subtitle: resItem.subtitle || undefined,
             description: resItem.description,
-            imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
-            imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
-            date: resItem.date || undefined,
+            coverImageSrc: resItem.coverImage?.formats?.medium?.url || resItem.coverImage?.formats?.small?.url || resItem.coverImage?.formats?.thumbnail?.url || undefined,
+            codebaseUrl: resItem.codebaseUrl || undefined,
+            deployUrl: resItem.deployUrl || undefined,
           }))
         },
       },
@@ -83,6 +74,6 @@ export default function useMilestones() {
   }
 
   return {
-    fetchMilestones,
+    fetchProjects,
   }
 }
