@@ -69,36 +69,43 @@ const onGoToNextPage = () => {
 
 watch(
   () => props.openDialog,
-  (newVal) => {
-    if (newVal) {
-      // Apply preset filters if any
-      if (props.filterPreset) {
-        isFromPreset.value = true
-        skillsKey.value = props.filterPreset.key || ''
-        skillsTypes.value = props.filterPreset.filters || []
-      }
-      _triggerFetch(1)
-    }
-    if (!newVal) {
+  (isOpen) => {
+    if (!isOpen) {
       isFromPreset.value = false
-      // Reset state on close
       const timeout = setTimeout(() => {
         clearTimeout(timeout)
         skillsKey.value = ''
         skillsTypes.value = []
-      }, 300) // Match dialog close animation duration
+      }, 300)
+      return
     }
+
+    const hasPreset
+      = !!props.filterPreset
+        && ((props.filterPreset.key && props.filterPreset.key.length > 0)
+          || (props.filterPreset.filters && props.filterPreset.filters.length > 0))
+
+    if (hasPreset) {
+      isFromPreset.value = true
+      skillsKey.value = props.filterPreset!.key || ''
+      skillsTypes.value = props.filterPreset!.filters || []
+    }
+
+    _triggerFetch(1)
   },
 )
 
 watch([skillsKey, skillsTypes], () => {
-  if (props.openDialog) {
-    if (isFromPreset.value) {
-      isFromPreset.value = false
-      return
-    }
-    _debouncedFetch()
+  if (!props.openDialog) {
+    return
   }
+
+  if (isFromPreset.value) {
+    isFromPreset.value = false
+    return
+  }
+
+  _debouncedFetch()
 })
 
 watch(fetchError, (newError) => {
