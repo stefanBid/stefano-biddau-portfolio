@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.12...v1.2.0) (2025-12-01)
+
+
+### Features
+
+* add skills page with localization and SEO metadata ([#56](https://github.com/stefanBid/stefano-biddau-portfolio/issues/56)) ([fe83039](https://github.com/stefanBid/stefano-biddau-portfolio/commit/fe8303949d351cba348d1538436b3b6f4f66390f))
+
 ## [1.1.12](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.1.11...v1.1.12) (2025-11-27)
 
 
