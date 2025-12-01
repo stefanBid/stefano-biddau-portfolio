@@ -169,7 +169,7 @@ onBeforeUnmount(() => {
       </template>
       <div
         v-else
-        class="col-span-1 sm:col-span-2 lg:col-span-3 bg-sb-surface-2 border border-sb-muted/30 rounded-lg p-6 text-center text-sb-muted u-sb-soft-transition"
+        class="col-span-1 sm:col-span-2 lg:col-span-3 p-6 text-center ty-sb-caption text-sb-muted u-sb-soft-transition"
       >
         {{ t('pages.skills.skillsDialog.noResults') }}
       </div>

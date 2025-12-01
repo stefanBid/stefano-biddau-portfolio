@@ -159,6 +159,7 @@
           "tool": "Strumenti & Piattaforme",
           "other": "Altre Competenze"
         },
+        "noResults": "Nessuna competenza corrisponde ai criteri di ricerca.",
         "total": "Competenze Totali: { tot }",
         "noSkills": {
           "title": "Nessuna Competenza Disponibile",

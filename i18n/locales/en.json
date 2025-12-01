@@ -158,6 +158,7 @@
           "tool": "Tools & Platforms",
           "other": "Other Skills"
         },
+        "noResults": "No skills match your search criteria.",
         "total": "Total Skills: { tot }",
         "noSkills": {
           "title": "No Skills Yet",
