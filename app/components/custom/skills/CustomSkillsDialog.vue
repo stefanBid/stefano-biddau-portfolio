@@ -10,7 +10,6 @@ const { t } = useI18n()
 const {
   data: skills,
   pending,
-  error,
   fetchSkills,
   pagination,
 } = useSkills()
@@ -149,7 +148,7 @@ onBeforeUnmount(() => {
       </div>
     </template>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 min-h-[400px] auto-rows-fr items-stretch"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 auto-rows-fr items-stretch u-sb-soft-transition"
     >
       <template v-if="pending">
         <CustomSkillsSkeleton

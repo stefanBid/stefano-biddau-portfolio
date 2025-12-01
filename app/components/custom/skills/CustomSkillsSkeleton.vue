@@ -6,7 +6,7 @@
     <div class="flex items-center gap-4 md:gap-6 u-sb-soft-transition">
       <!-- Icon placeholder -->
       <div class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-md bg-sb-muted/25 animate-pulse shadow-md z-10 u-sb-soft-transition shirink-0">
-        <Icon class="size-7 sm:size-8 md:size-9 text-sb-contrast u-sb-soft-transition" name="solar:bolt-line-duotone" />
+        <Icon class="size-7 sm:size-8 md:size-9 text-sb-contrast u-sb-soft-transition animate-pulse" name="solar:bolt-line-duotone" />
       </div>
 
       <div class="flex flex-col gap-2 flex-1">

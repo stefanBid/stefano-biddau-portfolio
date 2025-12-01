@@ -16,11 +16,11 @@ const props = defineProps<CustomSkillCardProps>()
   >
     <div class="flex items-center gap-4 md:gap-6 u-sb-soft-transition">
       <!-- Icon -->
-      <div class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-md bg-sb-surface-2 shadow-md z-10 u-sb-soft-transition">
+      <div class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-md bg-sb-surface-2 shadow-md z-10 shrink-0 u-sb-soft-transition">
         <Icon class="size-7 sm:size-8 md:size-9 text-sb-contrast u-sb-soft-transition" :name="props.icon" />
       </div>
 
-      <div class="flex flex-col">
+      <div class="flex flex-col flex-1">
         <!-- Skill Name -->
         <span class="text-sb-contrast ty-sb-subtitle-lg font-bebas-neue! leading-tight! font-normal!">
           {{ props.name }}

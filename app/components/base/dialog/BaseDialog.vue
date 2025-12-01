@@ -99,7 +99,7 @@ watch(
             'max-w-lg': size === 'sm',
             'max-w-4xl': size === 'md',
             'max-w-6xl': size === 'lg',
-            'max-w-[1400px]': size === 'full',
+            'max-w-[1400px] h-full': size === 'full',
           }"
           tabindex="-1"
         >
