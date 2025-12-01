@@ -3,6 +3,7 @@ interface Project {
   title: string
   description: string
   coverImageSrc?: string
+  coverImageAlt?: string
   codebaseUrl?: string
   deployUrl?: string
 }
@@ -65,6 +66,7 @@ export default function useProjects() {
             title: resItem.title,
             description: resItem.description,
             coverImageSrc: resItem.coverImage?.formats?.medium?.url || resItem.coverImage?.formats?.small?.url || resItem.coverImage?.formats?.thumbnail?.url || undefined,
+            coverImageAlt: resItem.coverImage?.altermativeText || undefined,
             codebaseUrl: resItem.codebaseUrl || undefined,
             deployUrl: resItem.deployUrl || undefined,
           }))
