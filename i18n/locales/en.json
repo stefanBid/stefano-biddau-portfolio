@@ -28,6 +28,11 @@
       "ogTitle": "Skills & Technologies - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Skills and tools I use to build intuitive, high-performing interfaces: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
     },
+    "projects": {
+      "title": "Web Projects - Stefano Biddau",
+      "ogTitle": "Web Projects -Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Explore a selection of my web projects: modern, responsive, and user-focused solutions. Each project reflects my approach to design and development."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
@@ -164,6 +169,17 @@
           "title": "No Skills Yet",
           "message": "There are no skills to display at the moment. Check back soon!"
         }
+      }
+    },
+    "projects": {
+      "hero": "My Web Projects",
+      "projectError": {
+        "title": "Error Loading Projects",
+        "message": "An error occurred while loading the projects. Please try again later."
+      },
+      "noProjects": {
+        "title": "No Projects Yet",
+        "message": "There are no projects to display at the moment. Check back soon!"
       }
     },
     "privacy": {

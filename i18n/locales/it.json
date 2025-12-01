@@ -28,6 +28,11 @@
       "ogTitle": "Competenze & Tecnologie - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Competenze e tecnologie che utilizzo per sviluppare interfacce intuitive e performanti: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
     },
+    "projects": {
+      "title": "Progetti Web - Stefano Biddau",
+      "ogTitle": "Progetti Web - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Guarda una selezione dei miei progetti web: soluzioni digitali moderne, responsive e orientate all’esperienza utente. Ogni lavoro riflette il mio approccio al design e allo sviluppo."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
@@ -165,6 +170,17 @@
           "title": "Nessuna Competenza Disponibile",
           "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"
         }
+      }
+    },
+    "projects": {
+      "hero": "I miei progetti",
+      "projectError": {
+        "title": "Errore nel caricamento dei progetti",
+        "message": "Si è verificato un errore durante il caricamento dei progetti. Per favore, riprova più tardi."
+      },
+      "noProjects": {
+        "title": "Nessun Progetto Disponibile",
+        "message": "Al momento non ci sono progetti da mostrare. Torna presto per aggiornamenti!"
       }
     },
     "privacy": {

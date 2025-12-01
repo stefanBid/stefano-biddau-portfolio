@@ -26,7 +26,7 @@ export default cachedEventHandler(async (event) => {
   const response = await $fetch(strapiUrl, {
     params: {
       locale: locale,
-      sort: 'order:asc',
+      sort: 'title:asc',
       populate: '*',
     },
     timeout: 15000,
