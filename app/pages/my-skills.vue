@@ -163,7 +163,7 @@ const onCloseSkillsDialog = () => {
         variant="dark"
       >
         <div class="h-fit relative flex items-center overflow-hidden">
-          <!-- Contenuto a sinistra -->
+          <!-- Left content -->
           <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
             <h2
               class="ty-sb-title text-center md:text-left u-sb-soft-transition"

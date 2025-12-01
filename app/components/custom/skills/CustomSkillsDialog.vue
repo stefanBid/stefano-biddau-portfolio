@@ -149,18 +149,20 @@ onBeforeUnmount(() => {
       </div>
     </template>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 min-h-[535px]"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 min-h-[400px] auto-rows-fr items-stretch"
     >
       <template v-if="pending">
         <CustomSkillsSkeleton
           v-for="index in 9"
           :key="`skill-skeleton-${index}`"
+          class="h-20 md:h-24 "
         />
       </template>
-      <template v-else-if="skills?.length">
+      <template v-else-if="skills && skills.length > 0">
         <CustomSkillsCard
           v-for="skill in skills"
           :key="skill.id"
+          class="h-20 md:h-24 "
           :icon="skill.icon || 'solar:bolt-line-duotone'"
           :level="skill.level || 0"
           :name="skill.name"
