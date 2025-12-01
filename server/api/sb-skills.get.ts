@@ -41,7 +41,7 @@ export default defineEventHandler(async (event) => {
   // Flattened params to avoid JSON encoding for Strapi
   const params: Record<string, string | number | string[] | undefined> = {
     'populate': '*',
-    'sort': 'name:asc',
+    'sort': 'level:desc',
     'pagination[page]': Number.isFinite(page) && page > 0 ? page : DEFAULT_STARTING_PAGE,
     'pagination[pageSize]': Number.isFinite(pageSize) && pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE,
   }
