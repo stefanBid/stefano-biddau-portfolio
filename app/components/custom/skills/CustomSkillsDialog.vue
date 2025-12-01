@@ -5,12 +5,13 @@ interface CustomSkillsDialogProps {
 }
 // Dependencies
 const { t } = useI18n()
-// const { success, error } = useNotification()
+const { error } = useNotification()
 
 const {
   data: skills,
   pending,
   fetchSkills,
+  error: fetchError,
   pagination,
 } = useSkills()
 
@@ -25,6 +26,7 @@ const emits = defineEmits<{
 }>()
 
 // State
+const isFromPreset = ref<boolean>(false)
 const skillsKey = ref<string>('')
 const skillsTypes = ref<SkillType[]>([])
 const debounceHandle = ref<ReturnType<typeof setTimeout> | null>(null)
@@ -43,29 +45,6 @@ const currentPage = computed(() => pagination.value?.page ?? 1)
 const totalPages = computed(() => pagination.value?.pageCount ?? 1)
 const totalSkills = computed(() => pagination.value?.total ?? 0)
 
-const triggerFetch = (page?: number) => {
-  fetchSkills({
-    name: skillsKey.value,
-    types: skillsTypes.value,
-    page: page ?? currentPage.value,
-  })
-}
-
-const debouncedFetch = () => {
-  if (debounceHandle.value) {
-    clearTimeout(debounceHandle.value)
-  }
-  debounceHandle.value = setTimeout(() => {
-    triggerFetch(1)
-  }, 400)
-}
-
-watch([skillsKey, skillsTypes], () => {
-  if (props.openDialog) {
-    debouncedFetch()
-  }
-})
-
 // Events
 const onCloseDialog = () => {
   emits('closeDialog', false)
@@ -76,7 +55,7 @@ const onGoToPrevPage = () => {
     return
   }
   if (currentPage.value > 1) {
-    triggerFetch(currentPage.value - 1)
+    _triggerFetch(currentPage.value - 1)
   }
 }
 const onGoToNextPage = () => {
@@ -84,7 +63,7 @@ const onGoToNextPage = () => {
     return
   }
   if (currentPage.value < totalPages.value) {
-    triggerFetch(currentPage.value + 1)
+    _triggerFetch(currentPage.value + 1)
   }
 }
 
@@ -94,12 +73,14 @@ watch(
     if (newVal) {
       // Apply preset filters if any
       if (props.filterPreset) {
+        isFromPreset.value = true
         skillsKey.value = props.filterPreset.key || ''
         skillsTypes.value = props.filterPreset.filters || []
       }
-      triggerFetch(1)
+      _triggerFetch(1)
     }
     if (!newVal) {
+      isFromPreset.value = false
       // Reset state on close
       const timeout = setTimeout(() => {
         clearTimeout(timeout)
@@ -110,11 +91,53 @@ watch(
   },
 )
 
+watch([skillsKey, skillsTypes], () => {
+  if (props.openDialog) {
+    if (isFromPreset.value) {
+      isFromPreset.value = false
+      return
+    }
+    _debouncedFetch()
+  }
+})
+
+watch(fetchError, (newError) => {
+  if (!import.meta.client) {
+    return
+  } // ← GUARD CLIENT-ONLY
+  if (newError) {
+    error({
+      title: t('pages.skills.skillsDialog.noSkills.title'),
+      message: t('pages.skills.skillsDialog.noSkills.message'),
+      autoClose: true,
+      dismissible: true,
+    })
+  }
+}, { immediate: true })
+
 onBeforeUnmount(() => {
   if (debounceHandle.value) {
     clearTimeout(debounceHandle.value)
   }
 })
+
+// Private methods
+const _triggerFetch = (page?: number) => {
+  fetchSkills({
+    name: skillsKey.value,
+    types: skillsTypes.value,
+    page: page ?? currentPage.value,
+  })
+}
+
+const _debouncedFetch = () => {
+  if (debounceHandle.value) {
+    clearTimeout(debounceHandle.value)
+  }
+  debounceHandle.value = setTimeout(() => {
+    _triggerFetch(1)
+  }, 400)
+}
 </script>
 
 <template>

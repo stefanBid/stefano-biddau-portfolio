@@ -114,7 +114,7 @@ const onCloseSkillsDialog = () => {
               {{ t('pages.skills.frontendCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog('frontend')">
                 {{ t('pages.skills.frontendCard.buttonText') }}
               </BaseButton>
             </div>
@@ -145,7 +145,7 @@ const onCloseSkillsDialog = () => {
               {{ t('pages.skills.backendCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog('backend')">
                 {{ t('pages.skills.backendCard.buttonText') }}
               </BaseButton>
             </div>
@@ -176,7 +176,7 @@ const onCloseSkillsDialog = () => {
               {{ t('pages.skills.designCard.paragraph') }}
             </p>
             <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog">
+              <BaseButton variant="primary" @click="onOpenSkillsDialog('design')">
                 {{ t('pages.skills.designCard.buttonText') }}
               </BaseButton>
             </div>
@@ -188,6 +188,10 @@ const onCloseSkillsDialog = () => {
         </div>
       </BaseCard>
     </section>
-    <CustomSkillsDialog :open-dialog="openSkillsDialog" @close-dialog="onCloseSkillsDialog" />
+    <CustomSkillsDialog
+      :filter-preset="skillsPreset"
+      :open-dialog="openSkillsDialog"
+      @close-dialog="onCloseSkillsDialog"
+    />
   </div>
 </template>

@@ -6,6 +6,9 @@
 // - type filtering (single or multiple)
 // - pagination
 
+const DEFAULT_PAGE_SIZE = 12
+const DEFAULT_STARTING_PAGE = 1
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
@@ -39,8 +42,8 @@ export default defineEventHandler(async (event) => {
   const params: Record<string, string | number | string[] | undefined> = {
     'populate': '*',
     'sort': 'name:asc',
-    'pagination[page]': Number.isFinite(page) && page > 0 ? page : 1,
-    'pagination[pageSize]': Number.isFinite(pageSize) && pageSize > 0 ? pageSize : 9,
+    'pagination[page]': Number.isFinite(page) && page > 0 ? page : DEFAULT_STARTING_PAGE,
+    'pagination[pageSize]': Number.isFinite(pageSize) && pageSize > 0 ? pageSize : DEFAULT_PAGE_SIZE,
   }
 
   if (nameFilter) {
@@ -54,7 +57,7 @@ export default defineEventHandler(async (event) => {
   // Forward request to Strapi
   const response = await $fetch(strapiUrl, {
     params,
-    timeout: 5000,
+    timeout: 15000,
   })
 
   return response
