@@ -10,7 +10,7 @@ interface BaseComboboxProps {
   label?: string
   placeholder?: string
   hint?: string
-  error?: string
+  error?: string | null
   prefixIcon?: string
 }
 
@@ -21,7 +21,7 @@ const props = withDefaults(defineProps<BaseComboboxProps>(), {
   placeholder: 'Insert a value...',
   name: undefined,
   hint: undefined,
-  error: undefined,
+  error: null,
   prefixIcon: undefined,
 })
 

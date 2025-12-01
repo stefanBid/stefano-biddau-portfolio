@@ -53,7 +53,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <!-- 2) Link veloci -->
       <section class="space-y-3">
         <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
-          {{ t('footer.route-section') }}
+          {{ t('footer.routeSection') }}
         </h2>
 
         <nav class="flex flex-col gap-2">
@@ -78,7 +78,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             v-else
             class="ty-sb-caption text-sb-muted/70 u-sb-soft-transition"
           >
-            {{ t('footer.route-fallback') }}
+            {{ t('footer.routeFallback') }}
           </p>
         </nav>
       </section>
@@ -86,7 +86,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
         <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
-          {{ t('footer.contact-section') }}
+          {{ t('footer.contactSection') }}
         </h2>
 
         <div class="space-y-2">
@@ -172,11 +172,11 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <!-- Left side: credit + made with -->
         <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left u-sb-soft-transition">
           <p>
-            {{ t('footer.credit-section', { year: new Date().getFullYear() }) }}
+            {{ t('footer.creditSection', { year: new Date().getFullYear() }) }}
           </p>
 
           <p class="text-sb-muted/80">
-            {{ t('footer.made-with') }}
+            {{ t('footer.madeWith') }}
           </p>
         </div>
 

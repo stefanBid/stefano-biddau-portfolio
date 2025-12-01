@@ -3,14 +3,14 @@ interface BaseCheckboxProps {
   id: string
   name?: string
   label?: string
-  error?: string
+  error?: string | null
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseCheckboxProps>(), {
   name: undefined,
   label: undefined,
-  error: undefined,
+  error: null,
 })
 
 const model = defineModel<boolean>('input')

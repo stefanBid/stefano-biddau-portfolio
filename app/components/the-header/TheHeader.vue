@@ -170,7 +170,7 @@ watch(isMdUp, (newVal) => {
         :role="open ? 'dialog' : undefined"
       >
         <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">{{ t('header.route-section') }}</span>
+          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">{{ t('header.routeSection') }}</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
@@ -196,7 +196,7 @@ watch(isMdUp, (newVal) => {
           </template>
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
-          <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">{{ t('header.settings-section') }}</span>
+          <span class="ty-label text-sb-muted u-sb-soft-transition font-semibold ">{{ t('header.settingsSection') }}</span>
         </div>
         <div class="p-6">
           <BaseIconMenu

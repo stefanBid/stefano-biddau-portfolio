@@ -6,7 +6,7 @@ interface BaseInputProps {
   placeholder?: string
   type?: 'text' | 'password' | 'email' | 'number' | 'search' | 'tel' | 'url'
   hint?: string
-  error?: string
+  error?: string | null
   autocomplete?: string
   prefixIcon?: string
 }
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   name: undefined,
   autocomplete: 'off',
   hint: undefined,
-  error: undefined,
+  error: null,
   prefixIcon: undefined,
 })
 

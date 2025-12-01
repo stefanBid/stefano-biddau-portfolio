@@ -32,7 +32,7 @@ const ICONS = {
     'logos:flutter',
   ],
   backend: [
-    'logos:nodejs-icon-alt',
+    'logos:nodejs-icon',
     'logos:java',
     'logos:spring-icon',
     'logos:strapi-icon',
@@ -42,6 +42,8 @@ const ICONS = {
   design: [
     'logos:figma',
     'logos:adobe-xd',
+    'logos:storybook-icon',
+    'logos:chromatic-icon',
   ],
 }
 

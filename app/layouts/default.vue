@@ -42,8 +42,8 @@ onMounted(() => {
   // Show announcement notification only on client after hydration
   nextTick(() => {
     info({
-      title: t('announcement.ui-refactor.title'),
-      message: t('announcement.ui-refactor.body'),
+      title: t('announcement.uiRefactor.title'),
+      message: t('announcement.uiRefactor.body'),
       icon: 'solar:planet-bold-duotone',
       autoClose: true,
       dismissible: true,
