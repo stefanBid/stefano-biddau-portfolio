@@ -181,7 +181,7 @@ const _debouncedFetch = () => {
     >
       <template v-if="pending">
         <CustomSkillsSkeleton
-          v-for="index in 9"
+          v-for="index in 12"
           :key="`skill-skeleton-${index}`"
           class="h-20 md:h-24 "
         />
@@ -191,6 +191,7 @@ const _debouncedFetch = () => {
           v-for="skill in skills"
           :key="skill.id"
           class="h-20 md:h-24 "
+          :gold="skill.isGod || false"
           :icon="skill.icon || 'solar:bolt-line-duotone'"
           :level="skill.level || 0"
           :name="skill.name"

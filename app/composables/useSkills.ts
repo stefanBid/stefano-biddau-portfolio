@@ -7,6 +7,7 @@ interface Skill {
   level: number
   category?: SkillType
   icon?: string
+  isGod?: boolean
 }
 
 interface SkillBE {
@@ -16,6 +17,7 @@ interface SkillBE {
   level: number | string
   type: string
   icon?: string | null
+  isGod: boolean | null
 }
 
 const DEFAULT_PAGE_SIZE = 12
@@ -78,6 +80,7 @@ export default function useSkills() {
         level: Number(resItem.level) || 0,
         category: resItem.type as SkillType | undefined,
         icon: resItem.icon || undefined,
+        isGod: resItem.isGod || false,
       }))
     }
     catch (err) {
