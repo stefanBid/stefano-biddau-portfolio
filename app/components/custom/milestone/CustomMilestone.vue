@@ -136,7 +136,7 @@ const onSelect = () => {
         class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
         @click="onSelect"
       >
-        <span>{{ t('pages.about.milestone-cta') }}</span>
+        <span>{{ t('pages.about.milestoneCta') }}</span>
         <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
       </button>
     </BaseCard>

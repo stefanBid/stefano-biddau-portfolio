@@ -30,11 +30,11 @@ const consentGivenController = ref<boolean>(false)
 const MESSAGE_MIN_LENGTH = 10
 const MESSAGE_MAX_LENGTH = 800
 const contactValidationSchema = z.object({
-  name: z.string().min(1, t('pages.home.contactForm.fields.name.error-required')).max(100, t('pages.home.contactForm.fields.name.error-maxlength')),
-  email: z.email(t('pages.home.contactForm.fields.email.error-invalid')),
-  message: z.string().min(MESSAGE_MIN_LENGTH, t('pages.home.contactForm.fields.message.error-minlength')).max(MESSAGE_MAX_LENGTH, t('pages.home.contactForm.fields.message.error-maxlength')),
+  name: z.string().min(1, t('pages.home.contactForm.fields.name.errorRequired')).max(100, t('pages.home.contactForm.fields.name.errorMaxlength')),
+  email: z.email(t('pages.home.contactForm.fields.email.errorInvalid')),
+  message: z.string().min(MESSAGE_MIN_LENGTH, t('pages.home.contactForm.fields.message.errorMinlength')).max(MESSAGE_MAX_LENGTH, t('pages.home.contactForm.fields.message.errorMaxlength')),
   consentGiven: z.boolean().refine(val => val === true, {
-    message: t('pages.home.contactForm.fields.consentGiven.error-required'),
+    message: t('pages.home.contactForm.fields.consentGiven.errorRequired'),
   }),
 })
 

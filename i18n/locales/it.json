@@ -1,6 +1,6 @@
 {
   "announcement": {
-    "ui-refactor": {
+    "uiRefactor": {
       "title": "Il portfolio sta per avere un nuovo look!",
       "body": "Sto attualmente aggiornando il design e migliorando l'esperienza utente. Grazie per la pazienza!"
     }
@@ -38,8 +38,8 @@
     }
   },
   "header": {
-    "route-section": "Menu",
-    "settings-section": "Impostazioni"
+    "routeSection": "Menu",
+    "settingsSection": "Impostazioni"
   },
   "pages": {
     "home": {
@@ -73,25 +73,25 @@
           "name": {
             "label": "Nome",
             "placeholder": "Inserisci il tuo nome",
-            "error-required": "Il nome è obbligatorio",
-            "error-maxlength": "Il nome è troppo lungo"
+            "errorRequired": "Il nome è obbligatorio",
+            "errorMaxlength": "Il nome è troppo lungo"
           },
           "email": {
             "label": "Email",
             "placeholder": "Inserisci la tua email",
-            "error-invalid": "Indirizzo email non valido"
+            "errorInvalid": "Indirizzo email non valido"
           },
           "message": {
             "label": "Messaggio",
             "placeholder": "Scrivi qui il tuo messaggio...",
-            "error-required": "Il messaggio è obbligatorio",
-            "error-minlength": "Il messaggio è troppo corto",
-            "error-maxlength": "Il messaggio è troppo lungo"
+            "errorRequired": "Il messaggio è obbligatorio",
+            "errorMinlength": "Il messaggio è troppo corto",
+            "errorMaxlength": "Il messaggio è troppo lungo"
           },
           "consentGiven": {
             "label": "Acconsento al trattamento dei dati forniti esclusivamente per finalità di contatto. I dati non verranno memorizzati né condivisi con terzi.",
             "extra": "Leggi",
-            "error-required": "Devi acconsentire al trattamento dei tuoi dati"
+            "errorRequired": "Devi acconsentire al trattamento dei tuoi dati"
           },
           "submitButton": {
             "text": "Invia Messaggio",
@@ -115,12 +115,12 @@
     },
     "about": {
       "hero": "Chi sono?",
-      "milestone-cta": "Leggi di più",
-      "milestone-error": {
+      "milestoneCta": "Leggi di più",
+      "milestoneError": {
         "title": "Errore nel caricamento dei traguardi",
         "message": "Si è verificato un errore durante il caricamento dei traguardi. Per favore, riprova più tardi."
       },
-      "no-milestones": {
+      "noMilestones": {
         "title": "Nessun Traguardo",
         "message": "Al momento non ci sono traguardi da visualizzare. Torna presto per aggiornamenti!"
       }
@@ -285,10 +285,10 @@
   },
   "footer": {
     "tagline": "Trasformo le tue idee in esperienze digitali, una linea di codice alla volta.",
-    "route-section": "Link veloci",
-    "route-fallback": "Navigazione presto disponibile",
-    "contact-section": "Contatti & Social",
-    "credit-section": "© { year } Stefano Biddau - Tutti i diritti riservati.",
-    "made-with": "Progettato e sviluppato con ❤ da Stefano Biddau"
+    "routeSection": "Link veloci",
+    "routeFallback": "Navigazione presto disponibile",
+    "contactSection": "Contatti & Social",
+    "creditSection": "© { year } Stefano Biddau - Tutti i diritti riservati.",
+    "madeWith": "Progettato e sviluppato con ❤ da Stefano Biddau"
   }
 }

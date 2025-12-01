@@ -60,8 +60,8 @@ watch(fetchError, (newError) => {
   } // ← GUARD CLIENT-ONLY
   if (newError) {
     error({
-      title: t('pages.about.milestone-error.title'),
-      message: t('pages.about.milestone-error.message'),
+      title: t('pages.about.milestoneError.title'),
+      message: t('pages.about.milestoneError.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -95,10 +95,10 @@ watch(fetchError, (newError) => {
               name="solar:folder-with-files-bold-duotone"
             />
             <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
-              {{ t('pages.about.no-milestones.title') }}
+              {{ t('pages.about.noMilestones.title') }}
             </h3>
             <p class="ty-sb-paragraph text-sb-muted max-w-md u-sb-soft-transition">
-              {{ t('pages.about.no-milestones.message') }}
+              {{ t('pages.about.noMilestones.message') }}
             </p>
           </div>
         </template>
