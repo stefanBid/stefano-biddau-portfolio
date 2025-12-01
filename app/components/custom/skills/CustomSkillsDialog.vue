@@ -48,7 +48,6 @@ const triggerFetch = (page?: number) => {
     name: skillsKey.value,
     types: skillsTypes.value,
     page: page ?? currentPage.value,
-    pageSize: 9,
   })
 }
 

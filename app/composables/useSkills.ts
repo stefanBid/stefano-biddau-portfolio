@@ -22,7 +22,7 @@ export default function useSkills() {
     name: '',
     types: [] as SkillType[],
     page: 1,
-    pageSize: 9,
+    pageSize: 12,
   })
 
   const request = useFetch<Skill[] | null>('/api/sb-skills', {
