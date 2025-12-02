@@ -29,6 +29,24 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
   const set = new Set(expandedProjectIds.value)
   if (isExpanded) {
     set.add(projectId)
+    // Scroll to milestone with offset for header
+    nextTick(() => {
+      if (!import.meta.client) {
+        return
+      }
+
+      const milestoneElement = document.querySelector(`[data-project-id="${projectId}"]`)
+      if (milestoneElement) {
+        const headerOffset = 80 // Header height + some padding
+        const elementPosition = milestoneElement.getBoundingClientRect().top
+        const offsetPosition = elementPosition + window.scrollY - headerOffset
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        })
+      }
+    })
   }
   else { set.delete(projectId) }
   expandedProjectIds.value = set
@@ -62,6 +80,7 @@ watch(fetchError, (newError) => {
       <template v-else>
         <template v-for="(project) in projects" :key="project.id">
           <CustomProjectsCard
+            :id="project.id"
             class="min-h-[400px]"
             :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
             :codebase-url="project.codebaseUrl"

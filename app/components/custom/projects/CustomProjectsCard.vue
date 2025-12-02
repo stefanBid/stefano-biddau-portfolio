@@ -1,5 +1,6 @@
 <script setup lang="ts">
 interface CustomProjectsCardProps {
+  id: number | string
   title: string
   description: string
   imageSrc?: string
@@ -45,7 +46,7 @@ const onTriggerDescription = () => {
 </script>
 
 <template>
-  <article>
+  <article :data-project-id="props.id">
     <BaseCard
       class="p-0! h-full"
       full-custom-content
