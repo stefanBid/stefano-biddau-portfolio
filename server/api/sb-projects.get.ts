@@ -26,11 +26,11 @@ export default cachedEventHandler(async (event) => {
   const response = await $fetch(strapiUrl, {
     params: {
       locale: locale,
-      sort: 'title:asc',
       populate: '*',
     },
     timeout: 15000,
   })
+  console.log('Strapi response for projects:', response)
   return response
 }, {
   // Cache the response server-side for 6 hours.

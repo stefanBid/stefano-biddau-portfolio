@@ -13,7 +13,7 @@ interface ProjectBE {
   documentId: string
   title: string
   description: string
-  coverImage: {
+  cover: {
     altermativeText: string | null
     caption: string | null
     formats: {
@@ -56,17 +56,17 @@ export default function useProjects() {
         dedupe: 'cancel',
 
         // Pass locale as query param to the server endpoint
-        query: () => ({
+        query: computed(() => ({
           locale: _locale.value,
-        }),
+        })),
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
             description: resItem.description,
-            coverImageSrc: resItem.coverImage?.formats?.medium?.url || resItem.coverImage?.formats?.small?.url || resItem.coverImage?.formats?.thumbnail?.url || undefined,
-            coverImageAlt: resItem.coverImage?.altermativeText || undefined,
+            coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
+            coverImageAlt: resItem.cover?.altermativeText || undefined,
             codebaseUrl: resItem.codebaseUrl || undefined,
             deployUrl: resItem.deployUrl || undefined,
           }))

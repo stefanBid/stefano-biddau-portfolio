@@ -102,90 +102,107 @@ const onCloseSkillsDialog = () => {
         full-custom-content
         variant="dark"
       >
-        <div class="h-fit relative flex items-center overflow-hidden">
-          <!-- Contenuto a sinistra -->
-          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
-            <h2
-              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
-            >
-              {{ t('pages.skills.frontendCard.title') }}
-            </h2>
-            <p
-              class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
-            >
-              {{ t('pages.skills.frontendCard.paragraph') }}
-            </p>
-            <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog('frontend')">
-                {{ t('pages.skills.frontendCard.buttonText') }}
-              </BaseButton>
+        <!-- Relative wrapper that represents the visible area of the card -->
+        <div class="relative h-fit">
+          <!-- Left content (not clipped) -->
+          <div class="flex items-center">
+            <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+              <h2 class="ty-sb-title text-center md:text-left u-sb-soft-transition">
+                {{ t('pages.skills.frontendCard.title') }}
+              </h2>
+              <p class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition">
+                {{ t('pages.skills.frontendCard.paragraph') }}
+              </p>
+              <div class="mt-6 md:mt-8 u-sb-soft-transition">
+                <BaseButton variant="primary" @click="onOpenSkillsDialog('frontend')">
+                  {{ t('pages.skills.frontendCard.buttonText') }}
+                </BaseButton>
+              </div>
             </div>
           </div>
-          <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
-            <CustomSolarSystem :planets-icon="ICONS.frontend" />
+
+          <!-- Overlay that ONLY clips the solar system -->
+          <div
+            class="pointer-events-none absolute inset-0 overflow-hidden rounded-xl"
+          >
+            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+              <CustomSolarSystem :planets-icon="ICONS.frontend" />
+            </div>
           </div>
         </div>
       </BaseCard>
+
       <!-- CARD BACKEND SKILLS -->
       <BaseCard
         class="p-0!"
         full-custom-content
         variant="dark"
       >
-        <div class="h-fit relative flex items-center overflow-hidden">
-          <!-- Contenuto a sinistra -->
-          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
-            <h2
-              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
-            >
-              {{ t('pages.skills.backendCard.title') }}
-            </h2>
-            <p
-              class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
-            >
-              {{ t('pages.skills.backendCard.paragraph') }}
-            </p>
-            <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog('backend')">
-                {{ t('pages.skills.backendCard.buttonText') }}
-              </BaseButton>
+        <!-- Relative wrapper that represents the visible area of the card -->
+        <div class="relative h-fit">
+          <!-- Left content (not clipped) -->
+          <div class="flex items-center">
+            <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+              <h2 class="ty-sb-title text-center md:text-left u-sb-soft-transition">
+                {{ t('pages.skills.backendCard.title') }}
+              </h2>
+              <p class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition">
+                {{ t('pages.skills.backendCard.paragraph') }}
+              </p>
+              <div class="mt-6 md:mt-8 u-sb-soft-transition">
+                <BaseButton variant="primary" @click="onOpenSkillsDialog('backend')">
+                  {{ t('pages.skills.backendCard.buttonText') }}
+                </BaseButton>
+              </div>
             </div>
           </div>
-          <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
-            <CustomSolarSystem :planets-icon="ICONS.backend" />
+
+          <!-- Overlay that ONLY clips the solar system -->
+          <div
+            class="pointer-events-none absolute inset-0 overflow-hidden rounded-xl"
+          >
+            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+              <CustomSolarSystem :planets-icon="ICONS.backend" />
+            </div>
           </div>
         </div>
       </BaseCard>
+
       <!-- CARD DESIGN SKILLS -->
       <BaseCard
         class="p-0!"
         full-custom-content
         variant="dark"
       >
-        <div class="h-fit relative flex items-center overflow-hidden">
-          <!-- Left content -->
-          <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
-            <h2
-              class="ty-sb-title text-center md:text-left u-sb-soft-transition"
-            >
-              {{ t('pages.skills.designCard.title') }}
-            </h2>
-            <p
-              class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
-            >
-              {{ t('pages.skills.designCard.paragraph') }}
-            </p>
-            <div class="mt-6 md:mt-8 u-sb-soft-transition">
-              <BaseButton variant="primary" @click="onOpenSkillsDialog('design')">
-                {{ t('pages.skills.designCard.buttonText') }}
-              </BaseButton>
+        <!-- Relative wrapper that represents the visible area of the card -->
+        <div class="relative h-fit">
+          <!-- Left content (not clipped) -->
+          <div class="flex items-center">
+            <div class="min-h-[470px] w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-sb-surface/70 rounded-xl u-sb-soft-transition">
+              <h2 class="ty-sb-title text-center md:text-left u-sb-soft-transition">
+                {{ t('pages.skills.designCard.title') }}
+              </h2>
+              <p class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition">
+                {{ t('pages.skills.designCard.paragraph') }}
+              </p>
+              <div class="mt-6 md:mt-8 u-sb-soft-transition">
+                <BaseButton variant="primary" @click="onOpenSkillsDialog('design')">
+                  {{ t('pages.skills.designCard.buttonText') }}
+                </BaseButton>
+              </div>
             </div>
           </div>
-          <!-- Sistema solare a destra, metà visibile -->
-          <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 pointer-events-none">
-            <CustomSolarSystem :planets-icon="ICONS.design" />
+
+          <!-- Overlay that ONLY clips the solar system -->
+          <div
+            class="pointer-events-none absolute inset-0 overflow-hidden rounded-xl"
+          >
+            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+              <CustomSolarSystem :planets-icon="ICONS.design" />
+            </div>
           </div>
         </div>
       </BaseCard>
