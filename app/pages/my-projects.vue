@@ -74,6 +74,14 @@ watch(fetchError, (newError) => {
       id="my-projects"
       :text="t('pages.projects.hero')"
     />
+    <BaseTabs
+      class="mt-20"
+      selected-tab-id="personalProjects"
+      :tabs="[
+        { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.tabs.all') },
+        { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.tabs.web') },
+      ]"
+    />
     <div class="grid grid-cols-1 gap-20 md:grid-cols-2 py-20">
       <template v-if="pending">
       </template>
