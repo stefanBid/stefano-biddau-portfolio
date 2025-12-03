@@ -100,7 +100,7 @@ export default defineNuxtConfig({
     },
   },
   image: {
-    provider: 'ipx',
+    provider: process.env.NETLIFY ? 'netlify' : 'ipx',
     providers: {
       cloudinary: {
         name: 'cloudinary',
