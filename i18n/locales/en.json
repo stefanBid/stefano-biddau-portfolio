@@ -180,7 +180,9 @@
         "noProjects": {
           "title": "No Projects Yet",
           "message": "There are no projects to display at the moment. Check back soon!"
-        }
+        },
+        "readMoreCta": "Read More",
+        "readLessCta": "Read Less"
       },
       "sbTemplatesProject": {
         "tabLabel": "SB Templates Project",

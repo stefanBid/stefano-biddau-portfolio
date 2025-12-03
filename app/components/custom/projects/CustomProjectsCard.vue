@@ -121,7 +121,9 @@ const onTriggerDescription = () => {
             class="inline-flex items-center gap-1.5 ty-sb-label px-2 py-1 text-sb-accent hover:text-sb-accent-hover cursor-pointer rounded u-sb-soft-transition u-sb-focus"
             @click="onTriggerDescription()"
           >
-            <span>{{ t('pages.about.milestoneCta') }}</span>
+            <span>
+              {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
+            </span>
             <Icon
               class="size-5 transition-transform"
               :class="{ 'rotate-180': isDescriptionExpanded }"
