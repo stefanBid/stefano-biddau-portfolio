@@ -104,12 +104,15 @@ watch(fetchError, (newError) => {
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
           <template v-if="pending">
-            <!-- Loading state -->
+            <CustomProjectsSkeleton v-for="n in 4" :key="n" class="min-h-[400px]" />
           </template>
-          <template v-else-if="currentProjects.length === 0">
+          <template v-else-if="currentProjects.length !== 0">
             <div class="col-span-2 text-center py-20">
+              <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
+                {{ t('pages.projects.personalProjects.noProjects.title') }}
+              </h3>
               <p class="ty-sb-paragraph text-sb-muted">
-                {{ t('pages.projects.personalProjects.noProjects') }}
+                {{ t('pages.projects.personalProjects.noProjects.message') }}
               </p>
             </div>
           </template>
@@ -145,14 +148,7 @@ watch(fetchError, (newError) => {
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
           <template v-if="pending">
-            <!-- Loading state -->
-          </template>
-          <template v-else-if="currentProjects.length === 0">
-            <div class="col-span-2 text-center py-20">
-              <p class="ty-sb-paragraph text-sb-muted">
-                {{ t('pages.projects.sbTemplatesProject.noProjects') }}
-              </p>
-            </div>
+            <CustomProjectsSkeleton v-for="n in 6" :key="n" class="min-h-[400px]" />
           </template>
           <template v-else>
             <CustomProjectsCard
