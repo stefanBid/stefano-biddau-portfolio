@@ -1,7 +1,6 @@
 <script setup lang="ts">
 interface BaseTabsProps {
   tabs: Array<{ label: string, icon?: string, id: string | number }>
-  selectedTabId: string | number
   variant?: 'primary' | 'secondary'
   align?: 'left' | 'center' | 'right'
 }
@@ -12,17 +11,22 @@ const props = withDefaults(defineProps<BaseTabsProps>(), {
   align: 'left',
 })
 
-const emits = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
-  (e: 'update:selectedTabId', value: string | number): void
-}>()
+const selectedTabId = defineModel<string | number>('selectedTabId')
+
+// Computed
+const safeSelectedTabId = computed({
+  get: () => selectedTabId.value ?? props.tabs[0]?.id ?? '',
+  set: (value: string | number) => {
+    selectedTabId.value = value
+  },
+})
 
 // Events
 const onSelectTab = (tabId: string | number) => {
-  if (props.selectedTabId === tabId) {
+  if (safeSelectedTabId.value === tabId) {
     return
   }
-  emits('update:selectedTabId', tabId)
+  safeSelectedTabId.value = tabId
 }
 </script>
 
@@ -38,19 +42,19 @@ const onSelectTab = (tabId: string | number) => {
     <button
       v-for="tab in props.tabs"
       :key="tab.id"
-      :aria-selected="props.selectedTabId === tab.id"
+      :aria-selected="safeSelectedTabId === tab.id"
       class="ty-sb-btn-label border gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-xl u-sb-soft-transition inline-flex items-center justify-center cursor-pointer u-sb-focus"
       :class="[
         // Primary variant
         props.variant === 'primary'
-          ? props.selectedTabId === tab.id
+          ? safeSelectedTabId === tab.id
             ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
             : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
           : '',
 
         // Secondary variant
         props.variant === 'secondary'
-          ? props.selectedTabId === tab.id
+          ? safeSelectedTabId === tab.id
             ? 'bg-sb-surface-2 hover:bg-sb-surface border-sb-border text-sb-contrast'
             : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
           : '',

@@ -21,7 +21,17 @@ const { error } = useNotification()
 const { data: projects, pending, error: fetchError } = fetchProjects()
 
 // State
+const tabs = [
+  { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
+  { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.sbTemplatesProject.tabLabel') },
+]
 const expandedProjectIds = ref<Set<string>>(new Set())
+const currentTabId = ref<string>('personalProjects')
+
+// Computed
+const currentProjects = computed(() => {
+  return projects.value || []
+})
 
 // Events
 
@@ -75,32 +85,93 @@ watch(fetchError, (newError) => {
       :text="t('pages.projects.hero')"
     />
     <BaseTabs
+      v-model:selected-tab-id="currentTabId"
       class="mt-20"
-      selected-tab-id="personalProjects"
-      :tabs="[
-        { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.tabs.all') },
-        { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.tabs.web') },
-      ]"
+      :tabs="tabs"
     />
-    <div class="grid grid-cols-1 gap-20 md:grid-cols-2 py-20">
-      <template v-if="pending">
-      </template>
-      <template v-else>
-        <template v-for="(project) in projects" :key="project.id">
-          <CustomProjectsCard
-            :id="project.id"
-            class="min-h-[400px]"
-            :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
-            :codebase-url="project.codebaseUrl"
-            :deployment-url="project.deployUrl"
-            :description="project.description"
-            :image-alt="project.coverImageAlt"
-            :image-src="project.coverImageSrc"
-            :title="project.title"
-            @toggle-description="onTriggerProject(project.id, $event)"
-          />
-        </template>
-      </template>
-    </div>
+
+    <section class="py-10 md:py-16 u-sb-soft-transition">
+      <!-- Personal Projects Content -->
+      <div v-if="currentTabId === 'personalProjects'" class="flex flex-col gap-6 md:gap-8 u-sb-soft-transition">
+        <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
+          <h2 class="ty-sb-title-xl u-sb-soft-transition">
+            {{ t('pages.projects.personalProjects.title') }}
+          </h2>
+          <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+            {{ t('pages.projects.personalProjects.description') }}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
+          <template v-if="pending">
+            <!-- Loading state -->
+          </template>
+          <template v-else-if="currentProjects.length === 0">
+            <div class="col-span-2 text-center py-20">
+              <p class="ty-sb-paragraph text-sb-muted">
+                {{ t('pages.projects.personalProjects.noProjects') }}
+              </p>
+            </div>
+          </template>
+          <template v-else>
+            <CustomProjectsCard
+              v-for="project in currentProjects"
+              :id="project.id"
+              :key="project.id"
+              class="min-h-[400px]"
+              :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
+              :codebase-url="project.codebaseUrl"
+              :deployment-url="project.deployUrl"
+              :description="project.description"
+              :image-alt="project.coverImageAlt"
+              :image-src="project.coverImageSrc"
+              :title="project.title"
+              @toggle-description="onTriggerProject(project.id, $event)"
+            />
+          </template>
+        </div>
+      </div>
+
+      <!-- Template Projects Content -->
+      <div v-else-if="currentTabId === 'templateProject'" class="flex flex-col gap-6 md:gap-8 u-sb-soft-transition">
+        <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
+          <h2 class="ty-sb-title-xl u-sb-soft-transition">
+            {{ t('pages.projects.sbTemplatesProject.title') }}
+          </h2>
+          <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+            {{ t('pages.projects.sbTemplatesProject.description') }}
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
+          <template v-if="pending">
+            <!-- Loading state -->
+          </template>
+          <template v-else-if="currentProjects.length === 0">
+            <div class="col-span-2 text-center py-20">
+              <p class="ty-sb-paragraph text-sb-muted">
+                {{ t('pages.projects.sbTemplatesProject.noProjects') }}
+              </p>
+            </div>
+          </template>
+          <template v-else>
+            <CustomProjectsCard
+              v-for="project in currentProjects"
+              :id="project.id"
+              :key="project.id"
+              class="min-h-[400px]"
+              :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
+              :codebase-url="project.codebaseUrl"
+              :deployment-url="project.deployUrl"
+              :description="project.description"
+              :image-alt="project.coverImageAlt"
+              :image-src="project.coverImageSrc"
+              :title="project.title"
+              @toggle-description="onTriggerProject(project.id, $event)"
+            />
+          </template>
+        </div>
+      </div>
+    </section>
   </div>
 </template>

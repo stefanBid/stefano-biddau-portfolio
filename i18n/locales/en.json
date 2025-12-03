@@ -173,6 +173,16 @@
     },
     "projects": {
       "hero": "My Web Projects",
+      "personalProjects": {
+        "tabLabel": "Personal Projects",
+        "title": "Personal Projects & Selected Work",
+        "description": "This section showcases a collection of projects that highlight my growth as a developer. Some were built to experiment with new technologies and refine my skills; others are professional projects created for clients who entrusted me with the development of their platforms. Where possible, you can explore the final deployed product, while the source code remains private out of respect for client confidentiality. Each project reflects my approach to development: attention to detail, focus on user experience, and a desire to turn ideas into something tangible."
+      },
+      "sbTemplatesProject": {
+        "tabLabel": "SB Templates Project",
+        "title": "SB Templates: a faster, smarter way to start your next project",
+        "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building."
+      },
       "projectError": {
         "title": "Error Loading Projects",
         "message": "An error occurred while loading the projects. Please try again later."
