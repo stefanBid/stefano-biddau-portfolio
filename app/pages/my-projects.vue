@@ -137,7 +137,7 @@ watch(fetchError, (newError) => {
             <div class="w-fit bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition">
               <NuxtImg
                 alt="SBT Logo"
-                class="w-30 md:w-45 u-sb-soft-transition"
+                class="w-25 md:w-40 u-sb-soft-transition"
                 src="/images/sbt-logo.png"
               />
             </div>
