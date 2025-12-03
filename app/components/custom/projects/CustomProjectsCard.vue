@@ -63,7 +63,7 @@ const onTriggerDescription = () => {
               :src="props.imageSrc"
             />
           </div>
-          <div class="absolute inset-0 bg-black/60"></div>
+          <div class="absolute inset-0 bg-black/50"></div>
         </div>
 
         <!-- Flex-between content wrapper (NOT clipped) -->

@@ -28,11 +28,6 @@ const tabs = [
 const expandedProjectIds = ref<Set<string>>(new Set())
 const currentTabId = ref<string>('personalProjects')
 
-// Computed
-const currentProjects = computed(() => {
-  return projects.value || []
-})
-
 // Events
 
 const onTriggerProject = (projectId: string, isExpanded: boolean) => {
@@ -92,7 +87,7 @@ watch(fetchError, (newError) => {
 
     <section class="py-10 md:py-16 u-sb-soft-transition">
       <!-- Personal Projects Content -->
-      <div v-if="currentTabId === 'personalProjects'" class="flex flex-col gap-6 md:gap-8 u-sb-soft-transition">
+      <div v-if="currentTabId === 'personalProjects'" class="flex flex-col gap-20 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
           <h2 class="ty-sb-title-xl u-sb-soft-transition">
             {{ t('pages.projects.personalProjects.title') }}
@@ -104,9 +99,9 @@ watch(fetchError, (newError) => {
 
         <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
           <template v-if="pending">
-            <CustomProjectsSkeleton v-for="n in 4" :key="n" class="min-h-[400px]" />
+            <CustomProjectsSkeleton v-for="n in 4" :key="n" class="min-h-[300px] md:min-h-[400px]" />
           </template>
-          <template v-else-if="currentProjects.length !== 0">
+          <template v-else-if="projects?.length === 0">
             <div class="col-span-2 text-center py-20">
               <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
                 {{ t('pages.projects.personalProjects.noProjects.title') }}
@@ -118,10 +113,10 @@ watch(fetchError, (newError) => {
           </template>
           <template v-else>
             <CustomProjectsCard
-              v-for="project in currentProjects"
+              v-for="project in projects"
               :id="project.id"
               :key="project.id"
-              class="min-h-[400px]"
+              class="min-h-[300px] md:min-h-[400px]"
               :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
               :codebase-url="project.codebaseUrl"
               :deployment-url="project.deployUrl"
@@ -138,6 +133,15 @@ watch(fetchError, (newError) => {
       <!-- Template Projects Content -->
       <div v-else-if="currentTabId === 'templateProject'" class="flex flex-col gap-6 md:gap-8 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
+          <div class="flex items-center justify-center mb-4 md:mb-6 ">
+            <div class="w-fit bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition">
+              <NuxtImg
+                alt="SBT Logo"
+                class="w-30 md:w-45 u-sb-soft-transition"
+                src="/images/sbt-logo.png"
+              />
+            </div>
+          </div>
           <h2 class="ty-sb-title-xl u-sb-soft-transition">
             {{ t('pages.projects.sbTemplatesProject.title') }}
           </h2>
@@ -151,20 +155,6 @@ watch(fetchError, (newError) => {
             <CustomProjectsSkeleton v-for="n in 6" :key="n" class="min-h-[400px]" />
           </template>
           <template v-else>
-            <CustomProjectsCard
-              v-for="project in currentProjects"
-              :id="project.id"
-              :key="project.id"
-              class="min-h-[400px]"
-              :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
-              :codebase-url="project.codebaseUrl"
-              :deployment-url="project.deployUrl"
-              :description="project.description"
-              :image-alt="project.coverImageAlt"
-              :image-src="project.coverImageSrc"
-              :title="project.title"
-              @toggle-description="onTriggerProject(project.id, $event)"
-            />
           </template>
         </div>
       </div>
