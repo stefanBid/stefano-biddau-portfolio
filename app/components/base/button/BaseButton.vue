@@ -1,7 +1,9 @@
 <script setup lang="ts">
 interface BaseButtonProps {
   variant?: 'primary' | 'secondary' | 'outline'
-  type?: 'button' | 'submit' | 'reset'
+  type?: 'button' | 'submit' | 'reset' | 'link'
+  ariaLabel?: string
+  to?: string
   isDisabled?: boolean
   isLoading?: boolean
 }
@@ -10,6 +12,8 @@ interface BaseButtonProps {
 const props = withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'primary',
   type: 'button',
+  to: undefined,
+  ariaLabel: undefined,
   isDisabled: false,
   isLoading: false,
 })
@@ -20,8 +24,35 @@ const isInteractive = computed(() => {
 </script>
 
 <template>
-  <button
+  <a
+    v-if="props.type === 'link'"
+    :aria-label="props.ariaLabel"
     class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
+    :class="[
+      // Variants
+      props.variant === 'primary'
+        ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
+        : '',
+
+      props.variant === 'secondary'
+        ? 'bg-sb-surface-2 hover:bg-sb-surface border-sb-border text-sb-contrast'
+        : '',
+
+      props.variant === 'outline'
+        ? 'bg-transparent border-sb-accent text-sb-accent hover:bg-sb-accent hover:text-sb-main'
+        : '',
+    ]"
+    :href="props.to"
+    rel="noopener noreferrer"
+    target="_blank"
+  >
+    <slot></slot>
+  </a>
+  <button
+    v-else
+    :aria-label="props.ariaLabel"
+    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
+
     :class="[
       // General state
       isInteractive ? 'cursor-pointer' : 'opacity-45 cursor-not-allowed',
@@ -45,7 +76,6 @@ const isInteractive = computed(() => {
           : 'bg-transparent border-sb-accent text-sb-accent'
         : '',
     ]"
-
     :disabled="props.isDisabled || props.isLoading"
     :type="props.type"
   >

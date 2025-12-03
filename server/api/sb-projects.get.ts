@@ -30,7 +30,6 @@ export default cachedEventHandler(async (event) => {
     },
     timeout: 15000,
   })
-  console.log('Strapi response for projects:', response)
   return response
 }, {
   // Cache the response server-side for 6 hours.

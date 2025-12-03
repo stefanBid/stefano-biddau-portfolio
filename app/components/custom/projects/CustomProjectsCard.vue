@@ -72,8 +72,10 @@ const onTriggerDescription = () => {
           <div class="flex items-center gap-2 self-end mb-10 md:mb-20 u-sb-soft-transition">
             <BaseButton
               v-if="props.codebaseUrl"
+              aria-label="Open link to project codebase"
               class="p-2!"
               :to="props.codebaseUrl"
+              type="link"
               variant="primary"
             >
               <Icon
@@ -83,8 +85,10 @@ const onTriggerDescription = () => {
             </BaseButton>
             <BaseButton
               v-if="props.deploymentUrl"
+              aria-label="Open link to deployed project"
               class="p-2!"
               :to="props.deploymentUrl"
+              type="link"
               variant="primary"
             >
               <Icon
