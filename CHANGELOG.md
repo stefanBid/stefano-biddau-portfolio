@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.1...v1.3.2) (2025-12-04)
+
+
+### Bug Fixes
+
+* remove unused info notification and comment out onMounted logic ([#64](https://github.com/stefanBid/stefano-biddau-portfolio/issues/64)) ([1926b6b](https://github.com/stefanBid/stefano-biddau-portfolio/commit/1926b6b41e65b49304dcf86de0e25965fcae03d9))
+
 ## [1.3.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.0...v1.3.1) (2025-12-04)
 
 
