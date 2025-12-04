@@ -13,7 +13,7 @@ useHead(() => ({
 
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
-const { notifications, removeNotification, info } = useNotification()
+const { notifications, removeNotification } = useNotification()
 
 // State
 
@@ -38,19 +38,21 @@ const onCloseNotification = (id: string) => {
   removeNotification(id)
 }
 
-onMounted(() => {
-  // Show announcement notification only on client after hydration
-  nextTick(() => {
-    info({
-      title: t('announcement.uiRefactor.title'),
-      message: t('announcement.uiRefactor.body'),
-      icon: 'solar:planet-bold-duotone',
-      autoClose: true,
-      dismissible: true,
-      duration: 10000,
+/*
+  onMounted(() => {
+    // Show announcement notification only on client after hydration
+    nextTick(() => {
+      info({
+        title: t('announcement.uiRefactor.title'),
+        message: t('announcement.uiRefactor.body'),
+        icon: 'solar:planet-bold-duotone',
+        autoClose: true,
+        dismissible: true,
+        duration: 10000,
+      })
     })
   })
-})
+*/
 </script>
 
 <template>
