@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.2.1...v1.3.0) (2025-12-04)
+
+
+### Features
+
+* create projects page ([#60](https://github.com/stefanBid/stefano-biddau-portfolio/issues/60)) ([7744215](https://github.com/stefanBid/stefano-biddau-portfolio/commit/77442150438c5332a7fa1dadec102c8e38bc4eff))
+
 ## [1.2.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.2.0...v1.2.1) (2025-12-01)
 
 
