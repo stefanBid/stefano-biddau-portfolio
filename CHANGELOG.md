@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.0...v1.3.1) (2025-12-04)
+
+
+### Bug Fixes
+
+* add prerendering for skills and projects pages ([#62](https://github.com/stefanBid/stefano-biddau-portfolio/issues/62)) ([9a28d43](https://github.com/stefanBid/stefano-biddau-portfolio/commit/9a28d431670656bf86023085b4391dea93b6ca1e))
+
 ## [1.3.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.2.1...v1.3.0) (2025-12-04)
 
 
