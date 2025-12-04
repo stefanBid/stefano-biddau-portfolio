@@ -28,6 +28,11 @@
       "ogTitle": "Competenze & Tecnologie - Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Competenze e tecnologie che utilizzo per sviluppare interfacce intuitive e performanti: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
     },
+    "projects": {
+      "title": "Progetti Web - Stefano Biddau",
+      "ogTitle": "Progetti Web - Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Guarda una selezione dei miei progetti web: soluzioni digitali moderne, responsive e orientate all’esperienza utente. Ogni lavoro riflette il mio approccio al design e allo sviluppo."
+    },
     "privacy": {
       "title": "Privacy Policy - Stefano Biddau",
       "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
@@ -165,6 +170,38 @@
           "title": "Nessuna Competenza Disponibile",
           "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"
         }
+      }
+    },
+    "projects": {
+      "hero": "I miei progetti",
+      "personalProjects": {
+        "tabLabel": "Progetti Personali",
+        "title": "Progetti Personali & Lavori Selezionati",
+        "description": "In questa sezione trovi una raccolta di progetti che raccontano il mio percorso di crescita come sviluppatore. Alcuni sono stati creati per sperimentare nuove tecnologie e affinare le mie competenze; altri sono lavori professionali realizzati per clienti che hanno scelto di affidarmi lo sviluppo delle loro piattaforme. Dove possibile è disponibile il prodotto finale online, mentre il codice rimane privato per tutelare la riservatezza dei committenti. Ogni progetto riflette il mio modo di lavorare: attenzione ai dettagli, cura dell’esperienza utente e la volontà di trasformare un’idea in qualcosa di concreto.",
+        "noProjects": {
+          "title": "Nessun Progetto Disponibile",
+          "message": "Al momento non ci sono progetti da mostrare. Torna presto per aggiornamenti!"
+        },
+        "readMoreCta": "Leggi di più",
+        "readLessCta": "Leggi meno"
+      },
+      "sbTemplatesProject": {
+        "tabLabel": "SB Templates Project",
+        "title": "Il modo più rapido e intelligente per avviare un nuovo progetto",
+        "description": "SB Templates nasce con un obiettivo molto semplice: eliminare la parte noiosa e ripetitiva dell’avvio di un progetto e permettere allo sviluppatore di concentrarsi subito sulla costruzione dell’applicazione. Ho raccolto in diverse repository pubbliche su GitHub una serie di template pronti all’uso — per web e mobile — progettati per offrire una struttura solida e già configurata con tutto ciò che serve: architettura pulita, strumenti di build, regole di formattazione, linting e un ambiente iniziale curato nei dettagli. L’idea è duplice: fornire un punto di partenza moderno e affidabile e ridurre drasticamente i tempi di setup. Tutto è completamente open source e totalmente personalizzabile, così ogni sviluppatore può adattare il template al proprio stile e al proprio flusso di lavoro. In sintesi, SB Templates vuole essere un alleato: una base veloce, comoda e flessibile che permette di concentrarsi su ciò che conta davvero — costruire.",
+        "linkToCta": "Usa questo template",
+        "comingSoonCard": {
+          "title": "Template in Arrivo",
+          "paragraph": "Sto lavorando a nuovi template per diversi framework e piattaforme. Resta sintonizzato per gli aggiornamenti!"
+        }
+      },
+      "projectError": {
+        "title": "Errore nel caricamento dei progetti",
+        "message": "Si è verificato un errore durante il caricamento dei progetti. Per favore, riprova più tardi."
+      },
+      "templatesError": {
+        "title": "Errore nel caricamento dei template",
+        "message": "Si è verificato un errore durante il caricamento dei template. Per favore, riprova più tardi."
       }
     },
     "privacy": {

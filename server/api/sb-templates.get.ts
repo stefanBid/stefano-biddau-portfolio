@@ -1,4 +1,4 @@
-// server/api/sb-milestones.get.ts
+// server/api/sb-templates.get.ts
 
 // This endpoint acts as a proxy between your Nuxt app and Strapi.
 // It also applies server-side caching via cachedEventHandler,
@@ -17,7 +17,7 @@ export default cachedEventHandler(async (event) => {
   }
 
   // Build Strapi API URL
-  const strapiUrl = `${baseUrl}/api/sb-milestones`
+  const strapiUrl = `${baseUrl}/api/sb-templates`
 
   // Determine locale
   const locale = typeof query.locale === 'string' ? query.locale : 'en'
@@ -26,9 +26,9 @@ export default cachedEventHandler(async (event) => {
   const response = await $fetch(strapiUrl, {
     params: {
       'locale': locale,
-      'sort': 'date:asc',
+      'sort': 'createdAt:desc',
       'populate': '*',
-      'pagination[pageSize]': 100, // Explicitly fetch all milestones (adjust based on your needs)
+      'pagination[pageSize]': 100, // Explicitly fetch all templates (adjust based on your needs)
     },
     timeout: 15000,
   })
@@ -40,11 +40,4 @@ export default cachedEventHandler(async (event) => {
 
   // Serve stale data while revalidating in background.
   swr: true,
-
-  // Generate cache key based on locale to avoid mixing different languages
-  getKey: (event) => {
-    const query = getQuery(event)
-    const locale = typeof query.locale === 'string' ? query.locale : 'en'
-    return `sb-milestones-${locale}`
-  },
 })

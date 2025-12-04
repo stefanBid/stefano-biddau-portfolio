@@ -1,20 +1,20 @@
-interface Milestone {
+interface Project {
   id: string
   title: string
   description: string
-  subtitle?: string
-  imageSrc?: string
-  imageCaption?: string
-  date?: string
+  coverImageSrc?: string
+  coverImageAlt?: string
+  codebaseUrl?: string
+  deployUrl?: string
 }
 
-interface MilestoneBE {
+interface ProjectBE {
   id: number
   documentId: string
+  createdAt: string
   title: string
-  subtitle: string | null
   description: string
-  image: {
+  cover: {
     altermativeText: string | null
     caption: string | null
     formats: {
@@ -32,23 +32,22 @@ interface MilestoneBE {
       }
     }
   } | null
-  imageCaption: string | null
-  date: string | null
+  codebaseUrl: string | null
+  deployUrl: string | null
 }
 
-export default function useMilestones(settings?: { server?: boolean, lazy?: boolean }) {
+export default function useProjects(settings?: { server?: boolean, lazy?: boolean }) {
   const { locale: _locale } = useI18n()
 
   // State
-
-  function fetchMilestones() {
-    return useFetch<Milestone[] | null>(
-      '/api/sb-milestones',
+  function fetchProjects() {
+    return useFetch<Project[] | null>(
+      '/api/sb-projects',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `milestones-${_locale.value}`,
+        key: `projects-${_locale.value}`,
 
-        // Enable SSR fetch (recommended for SEO)
+        // Enable SSR fetch (recommended for About page SEO)
         server: settings?.server || true,
 
         // Fetch immediately (not lazy) so SSR generates full HTML
@@ -65,20 +64,15 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
           locale: _locale.value,
         },
         transform: (response) => {
-          const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
-
-          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            throw new Error('Invalid Strapi response structure')
-          }
-
+          const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
-            subtitle: resItem.subtitle || undefined,
             description: resItem.description,
-            imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
-            imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
-            date: resItem.date || undefined,
+            coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
+            coverImageAlt: resItem.cover?.altermativeText || undefined,
+            codebaseUrl: resItem.codebaseUrl || undefined,
+            deployUrl: resItem.deployUrl || undefined,
           }))
         },
       },
@@ -86,6 +80,6 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
   }
 
   return {
-    fetchMilestones,
+    fetchProjects,
   }
 }
