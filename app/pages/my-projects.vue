@@ -110,6 +110,11 @@ watch(templatesError, (newError) => {
     />
 
     <section class="pt-10 pb-20">
+      <NuxtImg
+        alt="SBT Logo"
+        class="w-25 md:w-40 u-sb-soft-transition"
+        src="/images/sbt-logo.webp"
+      />
       <!-- Personal Projects Content -->
       <div v-if="currentTabId === 'personalProjects'" class="flex flex-col gap-20 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
