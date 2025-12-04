@@ -25,12 +25,14 @@ export default cachedEventHandler(async (event) => {
   // Forward request to Strapi
   const response = await $fetch(strapiUrl, {
     params: {
-      locale: locale,
-      sort: 'createdAt:asc',
-      populate: '*',
+      'locale': locale,
+      'sort': 'createdAt:asc',
+      'populate': '*',
+      'pagination[pageSize]': 100, // Explicitly fetch all projects (adjust based on your needs)
     },
     timeout: 15000,
   })
+
   return response
 }, {
   // Cache the response server-side for 6 hours.
@@ -39,4 +41,11 @@ export default cachedEventHandler(async (event) => {
 
   // Serve stale data while revalidating in background.
   swr: true,
+
+  // Generate cache key based on locale to avoid mixing different languages
+  getKey: (event) => {
+    const query = getQuery(event)
+    const locale = typeof query.locale === 'string' ? query.locale : 'en'
+    return `sb-projects-${locale}`
+  },
 })

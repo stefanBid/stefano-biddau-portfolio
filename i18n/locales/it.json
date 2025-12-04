@@ -191,7 +191,7 @@
         "description": "SB Templates nasce con un obiettivo molto semplice: eliminare la parte noiosa e ripetitiva dell’avvio di un progetto e permettere allo sviluppatore di concentrarsi subito sulla costruzione dell’applicazione. Ho raccolto in diverse repository pubbliche su GitHub una serie di template pronti all’uso — per web e mobile — progettati per offrire una struttura solida e già configurata con tutto ciò che serve: architettura pulita, strumenti di build, regole di formattazione, linting e un ambiente iniziale curato nei dettagli. L’idea è duplice: fornire un punto di partenza moderno e affidabile e ridurre drasticamente i tempi di setup. Tutto è completamente open source e totalmente personalizzabile, così ogni sviluppatore può adattare il template al proprio stile e al proprio flusso di lavoro. In sintesi, SB Templates vuole essere un alleato: una base veloce, comoda e flessibile che permette di concentrarsi su ciò che conta davvero — costruire.",
         "linkToCta": "Usa questo template",
         "comingSoonCard": {
-          "title": "Altri Template in Arrivo",
+          "title": "Template in Arrivo",
           "paragraph": "Sto lavorando a nuovi template per diversi framework e piattaforme. Resta sintonizzato per gli aggiornamenti!"
         }
       },

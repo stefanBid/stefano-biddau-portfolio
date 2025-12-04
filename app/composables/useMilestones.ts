@@ -46,7 +46,7 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: () => `milestones-${_locale.value}`,
+        key: `milestones-${_locale.value}`,
 
         // Enable SSR fetch (recommended for SEO)
         server: settings?.server || true,
@@ -54,13 +54,16 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
         // Fetch immediately (not lazy) so SSR generates full HTML
         lazy: settings?.lazy || false,
 
+        // Watch locale changes and refetch
+        watch: [_locale],
+
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
 
         // Pass locale as query param to the server endpoint
-        query: computed(() => ({
+        query: {
           locale: _locale.value,
-        })),
+        },
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 

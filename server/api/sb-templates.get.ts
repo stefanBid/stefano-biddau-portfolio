@@ -25,9 +25,10 @@ export default cachedEventHandler(async (event) => {
   // Forward request to Strapi
   const response = await $fetch(strapiUrl, {
     params: {
-      locale: locale,
-      sort: 'createdAt:desc',
-      populate: '*',
+      'locale': locale,
+      'sort': 'createdAt:desc',
+      'populate': '*',
+      'pagination[pageSize]': 100, // Explicitly fetch all templates (adjust based on your needs)
     },
     timeout: 15000,
   })

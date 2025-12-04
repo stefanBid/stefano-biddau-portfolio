@@ -25,9 +25,10 @@ export default cachedEventHandler(async (event) => {
   // Forward request to Strapi
   const response = await $fetch(strapiUrl, {
     params: {
-      locale: locale,
-      sort: 'date:asc',
-      populate: '*',
+      'locale': locale,
+      'sort': 'date:asc',
+      'populate': '*',
+      'pagination[pageSize]': 100, // Explicitly fetch all milestones (adjust based on your needs)
     },
     timeout: 15000,
   })
@@ -39,4 +40,11 @@ export default cachedEventHandler(async (event) => {
 
   // Serve stale data while revalidating in background.
   swr: true,
+
+  // Generate cache key based on locale to avoid mixing different languages
+  getKey: (event) => {
+    const query = getQuery(event)
+    const locale = typeof query.locale === 'string' ? query.locale : 'en'
+    return `sb-milestones-${locale}`
+  },
 })

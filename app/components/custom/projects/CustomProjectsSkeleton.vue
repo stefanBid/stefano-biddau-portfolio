@@ -6,7 +6,7 @@
       variant="dark-hover"
     >
       <!-- Header wrapper: skeleton for image and buttons -->
-      <div class="relative rounded-t-xl bg-sb-muted/20 min-h-[200px] md:min-h-[250px]">
+      <div class="relative rounded-t-xl bg-sb-muted/20 h-[170px] md:h-[270px] u-sb-soft-transition">
         <!-- Flex-between content wrapper -->
         <div class="relative z-10 flex flex-col justify-between p-4 md:p-6 u-sb-soft-transition h-full">
           <!-- Top row: skeleton actions buttons -->

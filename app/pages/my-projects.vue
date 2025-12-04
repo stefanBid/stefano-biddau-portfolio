@@ -123,7 +123,7 @@ watch(templatesError, (newError) => {
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 u-sb-soft-transition">
           <template v-if="pending">
-            <CustomProjectsSkeleton v-for="n in 4" :key="n" class="min-h-[300px] md:min-h-[400px]" />
+            <CustomProjectsSkeleton v-for="n in 4" :key="n" />
           </template>
           <template v-else-if="projects?.length === 0">
             <div class="col-span-2 text-center py-20">
@@ -175,7 +175,7 @@ watch(templatesError, (newError) => {
 
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
           <template v-if="templatesPending">
-            <CustomProjectsSkeleton v-for="n in 6" :key="n" class="min-h-[400px]" />
+            <CustomSbTemplatesSkeleton v-for="n in 3" :key="n" />
           </template>
           <template v-else>
             <template v-if="templates && templates.length > 0">
@@ -191,7 +191,7 @@ watch(templatesError, (newError) => {
               />
             </template>
             <CustomSbTemplatesCard
-              v-for="n in 3"
+              v-for="n in 2"
               :id="n"
               :key="n"
               :short-description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
