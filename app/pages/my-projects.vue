@@ -189,14 +189,23 @@ watch(templatesError, (newError) => {
                 :image-src="template.logoSrc"
                 :title="template.title"
               />
+              <CustomSbTemplatesCard
+                v-for="n in 2"
+                :id="n"
+                :key="n"
+                :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+                :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
+              />
             </template>
-            <CustomSbTemplatesCard
-              v-for="n in 2"
-              :id="n"
-              :key="n"
-              :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
-              :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
-            />
+            <template v-else>
+              <CustomSbTemplatesCard
+                v-for="n in 3"
+                :id="n"
+                :key="n"
+                :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+                :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
+              />
+            </template>
           </template>
         </div>
       </div>
