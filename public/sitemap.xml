@@ -5,7 +5,7 @@
   <!-- Homepage EN (default) -->
   <url>
     <loc>https://www.stefanobiddau.com/</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
@@ -16,7 +16,7 @@
   <!-- Homepage IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
@@ -27,7 +27,7 @@
   <!-- About Me EN -->
   <url>
     <loc>https://www.stefanobiddau.com/about-me</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/about-me" />
@@ -38,7 +38,7 @@
   <!-- About Me IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/about-me</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/about-me" />
@@ -49,7 +49,7 @@
   <!-- My Skills EN -->
   <url>
     <loc>https://www.stefanobiddau.com/my-skills</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-skills" />
@@ -60,7 +60,7 @@
   <!-- My Skills IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/my-skills</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-skills" />
@@ -71,7 +71,7 @@
   <!-- My Projects EN -->
   <url>
     <loc>https://www.stefanobiddau.com/my-projects</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-projects" />
@@ -82,7 +82,7 @@
   <!-- My Projects IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/my-projects</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-projects" />
@@ -93,7 +93,7 @@
   <!-- Privacy Policy EN -->
   <url>
     <loc>https://www.stefanobiddau.com/privacy-policy</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
@@ -104,7 +104,7 @@
   <!-- Privacy Policy IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/privacy-policy</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
@@ -115,7 +115,7 @@
   <!-- Terms & Conditions EN -->
   <url>
     <loc>https://www.stefanobiddau.com/terms-and-conditions</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
@@ -126,7 +126,7 @@
   <!-- Terms & Conditions IT -->
   <url>
     <loc>https://www.stefanobiddau.com/it/terms-and-conditions</loc>
-    <lastmod>2025-12-03</lastmod>
+    <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
