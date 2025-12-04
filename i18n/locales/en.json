@@ -187,7 +187,12 @@
       "sbTemplatesProject": {
         "tabLabel": "SB Templates Project",
         "title": "A faster, smarter way to start your next project",
-        "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building."
+        "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building.",
+        "linkToCta": "Use this template",
+        "comingSoonCard": {
+          "title": "More Templates Coming Soon",
+          "paragraph": "I'm working on new templates for different frameworks and platforms. Stay tuned for updates!"
+        }
       },
       "projectError": {
         "title": "Error Loading Projects",

@@ -70,7 +70,7 @@ watch(fetchError, (newError) => {
       dismissible: true,
     })
   }
-})
+}, { immediate: true })
 </script>
 
 <template>
@@ -85,7 +85,7 @@ watch(fetchError, (newError) => {
       :tabs="tabs"
     />
 
-    <section class="py-10 md:py-16 u-sb-soft-transition">
+    <section class="pt-10 pb-20">
       <!-- Personal Projects Content -->
       <div v-if="currentTabId === 'personalProjects'" class="flex flex-col gap-20 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
@@ -97,7 +97,7 @@ watch(fetchError, (newError) => {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 u-sb-soft-transition">
           <template v-if="pending">
             <CustomProjectsSkeleton v-for="n in 4" :key="n" class="min-h-[300px] md:min-h-[400px]" />
           </template>
@@ -131,14 +131,14 @@ watch(fetchError, (newError) => {
       </div>
 
       <!-- Template Projects Content -->
-      <div v-else-if="currentTabId === 'templateProject'" class="flex flex-col gap-6 md:gap-8 u-sb-soft-transition">
+      <div v-else-if="currentTabId === 'templateProject'" class="flex flex-col gap-20 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
           <div class="flex items-center justify-center mb-4 md:mb-6 ">
             <div class="w-fit bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition">
               <NuxtImg
                 alt="SBT Logo"
                 class="w-25 md:w-40 u-sb-soft-transition"
-                src="/images/sbt-logo.png"
+                src="/images/sbt-logo.webp"
               />
             </div>
           </div>
@@ -150,11 +150,23 @@ watch(fetchError, (newError) => {
           </p>
         </div>
 
-        <div class="grid grid-cols-1 gap-10 md:grid-cols-2 md:gap-20 u-sb-soft-transition">
+        <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
           <template v-if="pending">
             <CustomProjectsSkeleton v-for="n in 6" :key="n" class="min-h-[400px]" />
           </template>
           <template v-else>
+            <CustomSbTemplatesCard
+              v-for="n in 4"
+              :id="n"
+              :key="n"
+              class="min-h-[400px]"
+              :icons="[
+                'logos:nuxt-icon',
+                'logos:typescript-icon',
+              ]"
+              :short-description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+              :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
+            />
           </template>
         </div>
       </div>
