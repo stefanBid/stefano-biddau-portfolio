@@ -3,130 +3,45 @@
 [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
 ![Node.js](https://img.shields.io/badge/Node.js-24.x-339933?style=flat&logo=node.js&logoColor=white)
 ![Nuxt](https://img.shields.io/badge/Nuxt-4.2.1-00DC82?style=flat&logo=nuxt.js&logoColor=white)
-![Vue](https://img.shields.io/badge/Vue-3.5.24-4FC08D?style=flat&logo=vue.js&logoColor=white)
+![Vue](https://img.shields.io/badge/Vue-3.5.25-4FC08D?style=flat&logo=vue.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-4.1.17-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript&logoColor=white)
 
-## About
+## 👋 About Me
 
-Personal portfolio website showcasing my work as a web designer and front-end developer. Built with modern web technologies to deliver a fast, accessible, and multilingual experience.
+I'm a passionate **Front-End Developer** and **Web Designer** with a strong focus on creating modern, accessible, and performant web applications. I specialize in building user-centric interfaces that combine elegant design with cutting-edge technology.
 
-## Features
+My expertise lies in the Vue.js ecosystem, particularly Nuxt, where I leverage the latest web standards to deliver fast, SEO-optimized, and multilingual experiences. I'm committed to writing clean, maintainable code and following best practices in web accessibility and performance optimization.
 
-- 🌍 **Internationalization** - Support for multiple languages (English/Italian)
-- 🎨 **Modern UI** - Clean and responsive design with Tailwind CSS
-- ⚡ **Performance** - Optimized with Nuxt 4 SSR/SSG capabilities
-- 📧 **Contact Form** - Integrated email service for direct communication
-- 🔍 **SEO Optimized** - Meta tags, sitemap, and structured data
-- ♿ **Accessible** - WCAG compliant components and navigation
+## 🚀 This Portfolio
 
-## Tech Stack
+This website serves as a showcase of my professional work and technical capabilities. Built entirely with modern web technologies, it demonstrates my approach to:
 
-- **Framework:** Nuxt 4
-- **UI Library:** Vue 3 (Composition API)
+- **User Experience** - Intuitive navigation and responsive design across all devices
+- **Performance** - Optimized loading times and efficient resource management
+- **Accessibility** - WCAG compliant components ensuring inclusivity for all users
+- **Internationalization** - Seamless multilingual support (English/Italian)
+- **Modern Development** - Leveraging the latest features of Nuxt 4, Vue 3, and TypeScript
+
+## 🛠️ Tech Stack
+
+This portfolio is powered by:
+
+- **Framework:** Nuxt 4 with SSR/SSG capabilities
+- **UI Library:** Vue 3 Composition API
 - **Styling:** Tailwind CSS 4
-- **TypeScript:** Full type safety
+- **Language:** TypeScript for full type safety
 - **Internationalization:** @nuxtjs/i18n
-- **Email Service:** EmailJS
+- **Email Service:** EmailJS integration
 - **Icons:** Iconify (Solar & Circle Flags)
-- **Utilities:** VueUse
-- **Validation:** Zod
-- **Animations:** Typed.js
+- **Utilities:** VueUse, Zod validation, Typed.js animations
 
-## Development
+## 📬 Get in Touch
 
-```bash
-# Install dependencies
-npm install
+Feel free to explore my work and reach out if you'd like to collaborate or discuss web development projects.
 
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-
-# Generate static site
-npm run generate
-
-# Preview production build
-npm run preview
-```
-
-## License
+## 📄 License
 
 Copyright © 2025 Stefano Biddau - All Rights Reserved
 
 This project is proprietary and confidential. See the [LICENSE](./LICENSE) file for details.
-
-
-## Setup
-
-Make sure to install dependencies:
-
-```bash
-# npm
-npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
-```
-
-## Development Server
-
-Start the development server on `http://localhost:3000`:
-
-```bash
-# npm
-npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
