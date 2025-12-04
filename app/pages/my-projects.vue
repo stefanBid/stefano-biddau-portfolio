@@ -116,7 +116,6 @@ watch(fetchError, (newError) => {
               v-for="project in projects"
               :id="project.id"
               :key="project.id"
-              class="min-h-[300px] md:min-h-[400px]"
               :class="{ 'col-span-2': expandedProjectIds.has(project.id) }"
               :codebase-url="project.codebaseUrl"
               :deployment-url="project.deployUrl"
@@ -159,11 +158,10 @@ watch(fetchError, (newError) => {
               v-for="n in 4"
               :id="n"
               :key="n"
-              class="min-h-[400px]"
-              :icons="[
+              :icons="n%2 === 0 ? [
                 'logos:nuxt-icon',
                 'logos:typescript-icon',
-              ]"
+              ] : []"
               :short-description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
               :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
             />

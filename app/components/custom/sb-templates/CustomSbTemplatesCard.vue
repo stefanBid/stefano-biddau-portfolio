@@ -25,7 +25,7 @@ const { t } = useI18n()
 <template>
   <article :data-template-id="props.id">
     <BaseCard
-      class="h-full flex flex-col"
+      class="h-full"
       full-custom-content
       :variant="props.deploymentUrl ? 'dark-hover' : 'dark'"
     >
