@@ -1,20 +1,20 @@
-interface Project {
+interface SbTemplate {
   id: string
   title: string
   description: string
-  coverImageSrc?: string
-  coverImageAlt?: string
-  codebaseUrl?: string
-  deployUrl?: string
+  deploymentUrl: string
+  logoSrc?: string
+  icons?: string[]
 }
 
-interface ProjectBE {
+interface SbTemplateBE {
   id: number
   documentId: string
   createdAt: string
   title: string
   description: string
-  cover: {
+  deploymentUrl: string
+  logo: {
     altermativeText: string | null
     caption: string | null
     formats: {
@@ -32,26 +32,26 @@ interface ProjectBE {
       }
     }
   } | null
-  codebaseUrl: string | null
-  deployUrl: string | null
+  icons: string[] | null
 }
 
-export default function useProjects(settings?: { server?: boolean, lazy?: boolean }) {
+export default function useTemplates(settings?: { server?: boolean, lazy?: boolean }) {
   const { locale: _locale } = useI18n()
 
   // State
-  function fetchProjects() {
-    return useFetch<Project[] | null>(
-      '/api/sb-projects',
+  function fetchTemplates() {
+    return useFetch<SbTemplate[] | null>(
+      '/api/sb-templates',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: () => `projects-${_locale.value}`,
+        key: () => `sb-templates-${_locale.value}`,
 
-        // Enable SSR fetch (recommended for About page SEO)
+        // Enable SSR fetch (recommended for SEO)
         server: settings?.server || true,
 
         // Fetch immediately (not lazy) so SSR generates full HTML
         lazy: settings?.lazy || false,
+
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
 
@@ -59,23 +59,29 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         query: computed(() => ({
           locale: _locale.value,
         })),
+
         transform: (response) => {
-          const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
+          const strapiResponse = response as unknown as StrapiResponse<SbTemplateBE[]>
+
+          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
+            throw new Error('Invalid Strapi response structure')
+          }
+
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
             description: resItem.description,
-            coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
-            coverImageAlt: resItem.cover?.altermativeText || undefined,
-            codebaseUrl: resItem.codebaseUrl || undefined,
-            deployUrl: resItem.deployUrl || undefined,
+            deploymentUrl: resItem.deploymentUrl,
+            logoSrc: resItem.logo?.formats?.medium?.url || resItem.logo?.formats?.small?.url || resItem.logo?.formats?.thumbnail?.url || undefined,
+            icons: resItem.icons || undefined,
           }))
         },
+
       },
     )
   }
 
   return {
-    fetchProjects,
+    fetchTemplates,
   }
 }

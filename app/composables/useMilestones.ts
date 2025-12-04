@@ -36,7 +36,7 @@ interface MilestoneBE {
   date: string | null
 }
 
-export default function useMilestones() {
+export default function useMilestones(settings?: { server?: boolean, lazy?: boolean }) {
   const { locale: _locale } = useI18n()
 
   // State
@@ -48,11 +48,11 @@ export default function useMilestones() {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
         key: () => `milestones-${_locale.value}`,
 
-        // Enable SSR fetch (recommended for About page SEO)
-        server: true,
+        // Enable SSR fetch (recommended for SEO)
+        server: settings?.server || true,
 
         // Fetch immediately (not lazy) so SSR generates full HTML
-        lazy: false,
+        lazy: settings?.lazy || false,
 
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
