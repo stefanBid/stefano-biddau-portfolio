@@ -2,9 +2,9 @@ export interface SbTemplate {
   id: string
   title: string
   description: string
-  deploymentUrl: string
+  codebaseUrl: string
   logoSrc?: string
-  icons?: string[]
+  langIcons?: string[]
 }
 
 interface SbTemplateBE {
@@ -13,7 +13,7 @@ interface SbTemplateBE {
   createdAt: string
   title: string
   description: string
-  deploymentUrl: string
+  codebaseUrl: string
   logo: {
     altermativeText: string | null
     caption: string | null
@@ -32,7 +32,7 @@ interface SbTemplateBE {
       }
     }
   } | null
-  icons: string[] | null
+  langIcons: string[] | null
 }
 
 export default function useTemplates() {
@@ -61,9 +61,9 @@ export default function useTemplates() {
         id: resItem.documentId,
         title: resItem.title,
         description: resItem.description,
-        deploymentUrl: resItem.deploymentUrl,
+        codebaseUrl: resItem.codebaseUrl,
         logoSrc: resItem.logo?.formats?.medium?.url || resItem.logo?.formats?.small?.url || resItem.logo?.formats?.thumbnail?.url || undefined,
-        icons: resItem.icons || undefined,
+        langIcons: resItem.langIcons || undefined,
       }))
     }
     catch (err) {

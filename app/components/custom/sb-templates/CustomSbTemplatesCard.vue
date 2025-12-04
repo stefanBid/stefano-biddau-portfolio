@@ -2,10 +2,10 @@
 interface CustomSbTemplatesCardProps {
   id: number | string
   title: string
-  shortDescription: string
+  description: string
   imageSrc?: string
   icons?: string[]
-  deploymentUrl?: string
+  codebaseUrl?: string
 }
 
 // Input / Output
@@ -27,7 +27,7 @@ const { t } = useI18n()
     <BaseCard
       class="h-full"
       full-custom-content
-      :variant="props.deploymentUrl ? 'dark-hover' : 'dark'"
+      :variant="props.codebaseUrl ? 'dark-hover' : 'dark'"
     >
       <!-- Header: Logo -->
       <div class="flex items-center justify-center p-8 md:p-10 bg-sb-surface-2 rounded-xl u-sb-soft-transition">
@@ -55,7 +55,7 @@ const { t } = useI18n()
 
         <!-- Description -->
         <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
-          {{ props.shortDescription }}
+          {{ props.description }}
         </p>
 
         <!-- Technologies -->
@@ -84,9 +84,9 @@ const { t } = useI18n()
         <div class="mt-6 flex justify-center">
           <BaseButton
             aria-label="Use template"
-            :is-disabled="!props.deploymentUrl"
-            :to="props.deploymentUrl"
-            :type="props.deploymentUrl ? 'link' : 'button'"
+            :is-disabled="!props.codebaseUrl"
+            :to="props.codebaseUrl"
+            :type="props.codebaseUrl ? 'link' : 'button'"
             variant="primary"
           >
             <Icon

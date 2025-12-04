@@ -183,10 +183,10 @@ watch(templatesError, (newError) => {
                 v-for="template in templates"
                 :id="template.id"
                 :key="template.id"
-                :deployment-url="template.deploymentUrl"
-                :icons="template.icons"
+                :codebase-url="template.codebaseUrl"
+                :description="template.description"
+                :icons="template.langIcons"
                 :image-src="template.logoSrc"
-                :short-description="template.description"
                 :title="template.title"
               />
             </template>
@@ -194,7 +194,7 @@ watch(templatesError, (newError) => {
               v-for="n in 2"
               :id="n"
               :key="n"
-              :short-description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+              :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
               :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
             />
           </template>
