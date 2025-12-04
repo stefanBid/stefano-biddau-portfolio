@@ -53,7 +53,7 @@ const onTriggerDescription = () => {
       variant="dark-hover"
     >
       <!-- Header wrapper: height driven by content (flex between) -->
-      <div class="relative rounded-t-xl">
+      <div class="relative rounded-t-xl h-[170px] md:h-[270px] u-sb-soft-transition">
         <!-- Background image layer: clipped by overflow-hidden -->
         <div class="absolute inset-0 overflow-hidden rounded-t-xl">
           <div class="w-full h-full">
@@ -67,13 +67,13 @@ const onTriggerDescription = () => {
         </div>
 
         <!-- Flex-between content wrapper (NOT clipped) -->
-        <div class="relative z-10 flex flex-col justify-between p-4 md:p-6 u-sb-soft-transition">
+        <div class="relative z-10 flex flex-col h-full justify-between p-4 md:p-6 u-sb-soft-transition">
           <!-- Top row: actions -->
           <div class="flex items-center gap-2 self-end mb-10 md:mb-20 u-sb-soft-transition">
             <BaseButton
               v-if="props.codebaseUrl"
               aria-label="Open link to project codebase"
-              class="p-2!"
+              class="p-2! shrink-0"
               :to="props.codebaseUrl"
               type="link"
               variant="primary"
@@ -86,7 +86,7 @@ const onTriggerDescription = () => {
             <BaseButton
               v-if="props.deploymentUrl"
               aria-label="Open link to deployed project"
-              class="p-2!"
+              class="p-2! shrink-0"
               :to="props.deploymentUrl"
               type="link"
               variant="primary"
@@ -108,7 +108,7 @@ const onTriggerDescription = () => {
       </div>
 
       <!-- Card body -->
-      <div class="flex flex-col flex-1 px-4 py-4 md:px-6 md:py-6">
+      <div class="flex flex-col px-4 py-4 md:px-6 md:py-6 flex-1">
         <p
           v-if="props.description"
           class="ty-sb-paragraph mt-2 u-sb-soft-transition text-justify"

@@ -1,4 +1,4 @@
-// server/api/sb-projects.get.ts
+// server/api/sb-templates.get.ts
 
 // This endpoint acts as a proxy between your Nuxt app and Strapi.
 // It also applies server-side caching via cachedEventHandler,
@@ -17,7 +17,7 @@ export default cachedEventHandler(async (event) => {
   }
 
   // Build Strapi API URL
-  const strapiUrl = `${baseUrl}/api/sb-projects`
+  const strapiUrl = `${baseUrl}/api/sb-templates`
 
   // Determine locale
   const locale = typeof query.locale === 'string' ? query.locale : 'en'
@@ -26,7 +26,7 @@ export default cachedEventHandler(async (event) => {
   const response = await $fetch(strapiUrl, {
     params: {
       locale: locale,
-      sort: 'createdAt:asc',
+      sort: 'createdAt:desc',
       populate: '*',
     },
     timeout: 15000,

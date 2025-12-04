@@ -11,6 +11,7 @@ interface Project {
 interface ProjectBE {
   id: number
   documentId: string
+  createdAt: string
   title: string
   description: string
   cover: {
