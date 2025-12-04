@@ -20,6 +20,9 @@ const { fetchProjects } = useProjects()
 const { error } = useNotification()
 const { data: projects, pending, error: fetchError } = fetchProjects()
 
+// Templates - fetch on demand
+const { data: templates, pending: templatesPending, error: templatesError, fetchTemplates } = useTemplates()
+
 // State
 const tabs = [
   { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
@@ -27,6 +30,13 @@ const tabs = [
 ]
 const expandedProjectIds = ref<Set<string>>(new Set())
 const currentTabId = ref<string>('personalProjects')
+
+// Watch tab change to fetch templates on demand
+watch(currentTabId, async (newTab) => {
+  if (newTab === 'templateProject' && !templates.value) {
+    await fetchTemplates()
+  }
+})
 
 // Events
 
@@ -66,6 +76,20 @@ watch(fetchError, (newError) => {
     error({
       title: t('pages.projects.projectsError.title'),
       message: t('pages.projects.projectsError.message'),
+      autoClose: true,
+      dismissible: true,
+    })
+  }
+}, { immediate: true })
+
+watch(templatesError, (newError) => {
+  if (!import.meta.client) {
+    return
+  } // ← GUARD CLIENT-ONLY
+  if (newError) {
+    error({
+      title: t('pages.projects.templatesError.title'),
+      message: t('pages.projects.templatesError.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -150,18 +174,26 @@ watch(fetchError, (newError) => {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
-          <template v-if="pending">
+          <template v-if="templatesPending">
             <CustomProjectsSkeleton v-for="n in 6" :key="n" class="min-h-[400px]" />
           </template>
           <template v-else>
+            <template v-if="templates && templates.length > 0">
+              <CustomSbTemplatesCard
+                v-for="template in templates"
+                :id="template.id"
+                :key="template.id"
+                :deployment-url="template.deploymentUrl"
+                :icons="template.icons"
+                :image-src="template.logoSrc"
+                :short-description="template.description"
+                :title="template.title"
+              />
+            </template>
             <CustomSbTemplatesCard
-              v-for="n in 4"
+              v-for="n in 3"
               :id="n"
               :key="n"
-              :icons="n%2 === 0 ? [
-                'logos:nuxt-icon',
-                'logos:typescript-icon',
-              ] : []"
               :short-description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
               :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
             />

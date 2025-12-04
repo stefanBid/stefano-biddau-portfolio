@@ -197,6 +197,10 @@
       "projectError": {
         "title": "Error Loading Projects",
         "message": "An error occurred while loading the projects. Please try again later."
+      },
+      "templatesError": {
+        "title": "Error Loading Templates",
+        "message": "An error occurred while loading the templates. Please try again later."
       }
     },
     "privacy": {

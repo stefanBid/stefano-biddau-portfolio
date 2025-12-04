@@ -50,26 +50,26 @@ const onCloseDialog = () => {
   emits('closeDialog', false)
 }
 
-const onGoToPrevPage = () => {
+const onGoToPrevPage = async () => {
   if (pending.value) {
     return
   }
   if (currentPage.value > 1) {
-    _triggerFetch(currentPage.value - 1)
+    await _triggerFetch(currentPage.value - 1)
   }
 }
-const onGoToNextPage = () => {
+const onGoToNextPage = async () => {
   if (pending.value) {
     return
   }
   if (currentPage.value < totalPages.value) {
-    _triggerFetch(currentPage.value + 1)
+    await _triggerFetch(currentPage.value + 1)
   }
 }
 
 watch(
   () => props.openDialog,
-  (isOpen) => {
+  async (isOpen) => {
     if (!isOpen) {
       isFromPreset.value = false
       const timeout = setTimeout(() => {
@@ -91,11 +91,11 @@ watch(
       skillsTypes.value = props.filterPreset!.filters || []
     }
 
-    _triggerFetch(1)
+    await _triggerFetch(1)
   },
 )
 
-watch([skillsKey, skillsTypes], () => {
+watch([skillsKey, skillsTypes], async () => {
   if (!props.openDialog) {
     return
   }
@@ -105,7 +105,7 @@ watch([skillsKey, skillsTypes], () => {
     return
   }
 
-  _debouncedFetch()
+  await _debouncedFetch()
 })
 
 watch(fetchError, (newError) => {
@@ -129,20 +129,20 @@ onBeforeUnmount(() => {
 })
 
 // Private methods
-const _triggerFetch = (page?: number) => {
-  fetchSkills({
+const _triggerFetch = async (page?: number) => {
+  await fetchSkills({
     name: skillsKey.value,
     types: skillsTypes.value,
     page: page ?? currentPage.value,
   })
 }
 
-const _debouncedFetch = () => {
+const _debouncedFetch = async () => {
   if (debounceHandle.value) {
     clearTimeout(debounceHandle.value)
   }
-  debounceHandle.value = setTimeout(() => {
-    _triggerFetch(1)
+  debounceHandle.value = setTimeout(async () => {
+    await _triggerFetch(1)
   }, 400)
 }
 </script>

@@ -198,6 +198,10 @@
       "projectError": {
         "title": "Errore nel caricamento dei progetti",
         "message": "Si è verificato un errore durante il caricamento dei progetti. Per favore, riprova più tardi."
+      },
+      "templatesError": {
+        "title": "Errore nel caricamento dei template",
+        "message": "Si è verificato un errore durante il caricamento dei template. Per favore, riprova più tardi."
       }
     },
     "privacy": {
