@@ -32,7 +32,7 @@ interface SbTemplateBE {
       }
     }
   } | null
-  langIcons: string[] | null
+  langIcons: { icons: string[] | null } | null
 }
 
 export default function useTemplates() {
@@ -63,7 +63,7 @@ export default function useTemplates() {
         description: resItem.description,
         codebaseUrl: resItem.codebaseUrl,
         logoSrc: resItem.logo?.formats?.medium?.url || resItem.logo?.formats?.small?.url || resItem.logo?.formats?.thumbnail?.url || undefined,
-        langIcons: resItem.langIcons || undefined,
+        langIcons: resItem.langIcons?.icons || undefined,
       }))
     }
     catch (err) {
