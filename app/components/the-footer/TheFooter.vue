@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 <template>
   <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16 px-6 md:px-10">
     <div
-      class="max-w-[1400px] mx-auto grid gap-8 md:gap-10
+      class="max-w-350 mx-auto grid gap-8 md:gap-10
              grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition py-10 md:py-12"
     >
       <!-- 1) Logo + descrizione -->
@@ -173,7 +173,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     <!-- Bottom bar -->
     <div class="border-t border-sb-border bg-sb-main/98">
       <div
-        class="max-w-[1400px] mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2 u-sb-soft-transition"
+        class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2 u-sb-soft-transition"
       >
         <!-- Left side: credit + made with -->
         <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left u-sb-soft-transition">

@@ -64,7 +64,7 @@ const onCloseNotification = (id: string) => {
       @change-lang="langCode => onChangeLang(langCode)"
     />
     <main class="pt-16 px-6 md:px-10 u-sb-soft-transition">
-      <div class="w-full max-w-[1400px] mx-auto u-sb-soft-transition">
+      <div class="w-full max-w-350 mx-auto u-sb-soft-transition">
         <slot></slot>
       </div>
     </main>
