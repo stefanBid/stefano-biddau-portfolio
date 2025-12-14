@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.7](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.6...v1.3.7) (2025-12-14)
+
+
+### Bug Fixes
+
+* update max-width classes to 350px for consistency across components ([#74](https://github.com/stefanBid/stefano-biddau-portfolio/issues/74)) ([88c562d](https://github.com/stefanBid/stefano-biddau-portfolio/commit/88c562dd4b93549c08ed7586e4c1f7cfb8c011c2))
+
 ## [1.3.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.5...v1.3.6) (2025-12-14)
 
 
