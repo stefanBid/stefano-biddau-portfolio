@@ -16,16 +16,6 @@ useSeoMeta({
   ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
 })
 
-useHead({
-  link: [
-    {
-      rel: 'preload',
-      as: 'image',
-      href: '/images/my-avatar.webp',
-    },
-  ],
-})
-
 const { el, elStyle } = useTypedText(
   computed(() => [
     t('pages.home.subtitle.typed.0'),

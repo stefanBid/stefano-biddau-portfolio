@@ -3,17 +3,6 @@
 const { t } = useI18n()
 const route = useRoute()
 
-// Preload SBT logo
-useHead({
-  link: [
-    {
-      rel: 'preload',
-      as: 'image',
-      href: '/images/sbt-logo.webp',
-    },
-  ],
-})
-
 useSeoMeta({
   // LOCALIZED
   title: () => t('meta.projects.title'),
