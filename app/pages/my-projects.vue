@@ -157,11 +157,15 @@ watch(templatesError, (newError) => {
       <div v-else-if="currentTabId === 'templateProject'" class="flex flex-col gap-20 u-sb-soft-transition">
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
           <div class="flex items-center justify-center mb-4 md:mb-6 ">
-            <div class="w-fit bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition">
+            <div class="w-33 md:w-52 bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition">
               <img
                 alt="SBT Logo"
-                class="w-25 md:w-40 u-sb-soft-transition"
+                class="w-full h-auto u-sb-soft-transition"
+                fetchpriority="high"
+                height="160"
+                loading="eager"
                 src="/images/sbt-logo.webp"
+                width="160"
               />
             </div>
           </div>
