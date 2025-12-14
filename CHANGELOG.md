@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.3...v1.3.4) (2025-12-14)
+
+
+### Bug Fixes
+
+* combobox arrow ([#68](https://github.com/stefanBid/stefano-biddau-portfolio/issues/68)) ([ac9f566](https://github.com/stefanBid/stefano-biddau-portfolio/commit/ac9f566afaa00415515d1cffe66a6e656c595292))
+
 ## [1.3.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.2...v1.3.3) (2025-12-04)
 
 
