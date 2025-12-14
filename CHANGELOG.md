@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.4...v1.3.5) (2025-12-14)
+
+
+### Bug Fixes
+
+* optimize image loading for hero and project logos ([#70](https://github.com/stefanBid/stefano-biddau-portfolio/issues/70)) ([b17529c](https://github.com/stefanBid/stefano-biddau-portfolio/commit/b17529c0b806cd5ca998247a767d5bef75a2e23a))
+
 ## [1.3.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.3...v1.3.4) (2025-12-14)
 
 
