@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.8](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.7...v1.3.8) (2025-12-14)
+
+
+### Bug Fixes
+
+* logo images ([#76](https://github.com/stefanBid/stefano-biddau-portfolio/issues/76)) ([bc3fd73](https://github.com/stefanBid/stefano-biddau-portfolio/commit/bc3fd73efbdc40f2be047811e4a1ff7fe2e2eae7))
+
 ## [1.3.7](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.6...v1.3.7) (2025-12-14)
 
 
