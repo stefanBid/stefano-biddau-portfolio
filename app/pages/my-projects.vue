@@ -161,6 +161,7 @@ watch(templatesError, (newError) => {
               <img
                 alt="SBT Logo"
                 class="w-full h-auto u-sb-soft-transition"
+                fetchpriority="high"
                 height="187"
                 loading="eager"
                 src="/images/sbt-logo.webp"
