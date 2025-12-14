@@ -178,9 +178,21 @@ watch(open, (newVal) => {
     <div class="relative">
       <span
         v-if="props.prefixIcon"
-        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition"
+        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition pointer-events-none"
       >
         <Icon class="size-5" :name="props.prefixIcon" />
+      </span>
+
+      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-sb-contrast u-sb-soft-transition pointer-events-none">
+        <Icon
+          class="size-5 u-sb-soft-transition"
+          :class="{
+            'rotate-0': !open,
+            'rotate-180': open,
+          }"
+          name="solar:alt-arrow-down-broken"
+        />
+
       </span>
 
       <input
@@ -188,7 +200,7 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-9 py-1.5 md:pl-4 md:pr-10 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
         :class="{
           'border-red-500': props.error,
           'border-sb-border': !props.error,

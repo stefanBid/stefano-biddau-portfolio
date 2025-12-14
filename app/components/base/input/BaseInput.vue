@@ -44,7 +44,7 @@ const describedBy = computed(() => {
       :for="props.id"
     >{{ props.label }}</label>
     <div class="relative">
-      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition">
+      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition pointer-events-none">
         <Icon class="size-5" :name="props.prefixIcon" />
       </span>
       <input
