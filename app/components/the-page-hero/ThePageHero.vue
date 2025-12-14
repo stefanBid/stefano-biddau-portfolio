@@ -135,6 +135,7 @@ onBeforeUnmount(() => {
       <NuxtImg
         alt="Hero"
         class="w-full h-auto"
+        loading="eager"
         :src="props.imageSrc"
       />
     </div>
