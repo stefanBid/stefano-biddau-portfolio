@@ -95,7 +95,7 @@ watch(isMdUp, (newVal) => {
         'supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80': !open,
       }"
     >
-      <div class="h-full flex items-center max-w-[1400px] mx-auto justify-between">
+      <div class="h-full flex items-center max-w-350 mx-auto justify-between">
         <NuxtLink
           class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
           :to="props.routes[0]?.path || '/'"
