@@ -62,7 +62,7 @@ export default function useTemplates() {
         title: resItem.title,
         description: resItem.description,
         codebaseUrl: resItem.codebaseUrl,
-        logoSrc: resItem.logo?.formats?.medium?.url || resItem.logo?.formats?.small?.url || resItem.logo?.formats?.thumbnail?.url || undefined,
+        logoSrc: resItem.logo?.formats?.small?.url || resItem.logo?.formats?.thumbnail?.url || undefined,
         langIcons: resItem.langIcons?.icons || undefined,
       }))
     }

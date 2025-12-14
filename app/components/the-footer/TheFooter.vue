@@ -38,6 +38,8 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <NuxtImg
             alt="Logo"
             class="object-contain size-7 sm:size-8 md:size-9 u-sb-soft-transition"
+            fetchpriority="high"
+            loading="eager"
             src="/images/logo.webp"
           />
           <span class="ty-sb-title">
