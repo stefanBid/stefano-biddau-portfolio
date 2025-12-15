@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.10](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.9...v1.3.10) (2025-12-15)
+
+
+### Bug Fixes
+
+* update zod dependency to version 4.2.0 ([#80](https://github.com/stefanBid/stefano-biddau-portfolio/issues/80)) ([703ce10](https://github.com/stefanBid/stefano-biddau-portfolio/commit/703ce10a622de162a452b1c030b09dd9142ead12))
+
 ## [1.3.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.8...v1.3.9) (2025-12-15)
 
 
