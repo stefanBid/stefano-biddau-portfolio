@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.11](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.10...v1.3.11) (2025-12-15)
+
+
+### Bug Fixes
+
+* update Nuxt and TailwindCSS badge versions in README ([#82](https://github.com/stefanBid/stefano-biddau-portfolio/issues/82)) ([87e36ce](https://github.com/stefanBid/stefano-biddau-portfolio/commit/87e36ce33677600be257569e270b4444c5378121))
+
 ## [1.3.10](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.9...v1.3.10) (2025-12-15)
 
 
