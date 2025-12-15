@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.9](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.8...v1.3.9) (2025-12-15)
+
+
+### Bug Fixes
+
+* update sbt logo image ([#78](https://github.com/stefanBid/stefano-biddau-portfolio/issues/78)) ([bc30835](https://github.com/stefanBid/stefano-biddau-portfolio/commit/bc3083576046a122ff5750829016e346855cafc3))
+
 ## [1.3.8](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.7...v1.3.8) (2025-12-14)
 
 
