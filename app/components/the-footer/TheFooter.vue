@@ -121,53 +121,41 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
         <!-- Social badges -->
         <div class="flex flex-wrap items-center gap-3 mt-2">
-          <a
+          <BaseChip
             v-if="props.githubUrl"
-            aria-label="Open GitHub profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-sb-surface px-3 py-1.5 border border-sb-border u-sb-soft-transition u-sb-focus hover:bg-sb-surface-2"
-            :href="props.githubUrl"
-            rel="me noopener noreferrer"
-            target="_blank"
-          >
-            <span class="inline-flex items-center justify-center p-0.5 bg-sb-contrast/85 rounded">
-              <Icon class="size-4 " name="logos:github-icon" />
-            </span>
-            <span class="ty-sb-caption text-sb-contrast/85">
-              GitHub
-            </span>
-          </a>
+            icon="mdi:github"
+            :linkable="{
+              href: props.githubUrl,
+              target: '_blank',
+              rel: 'me noopener noreferrer',
+            }"
+            text="GitHub"
+            variant="primary"
+          />
 
-          <a
+          <BaseChip
             v-if="props.linkedinUrl"
-            aria-label="Open LinkedIn profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-sb-surface px-3 py-1.5 border border-sb-border u-sb-soft-transition u-sb-focus hover:bg-sb-surface-2"
-            :href="props.linkedinUrl"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span class="inline-flex items-center justify-center p-0.5 bg-sb-contrast/85 rounded">
-              <Icon class="size-4" name="logos:linkedin-icon" />
-            </span>
-            <span class="ty-sb-caption text-sb-contrast/85">
-              LinkedIn
-            </span>
-          </a>
+            icon="mdi:linkedin"
+            :linkable="{
+              href: props.linkedinUrl,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            }"
+            text="LinkedIn"
+            variant="primary"
+          />
 
-          <a
+          <BaseChip
             v-if="props.instagramUrl"
-            aria-label="Open Instagram profile"
-            class="inline-flex items-center gap-2 rounded-xl bg-sb-surface px-3 py-1.5 border border-sb-border u-sb-soft-transition u-sb-focus hover:bg-sb-surface-2"
-            :href="props.instagramUrl"
-            rel="noopener noreferrer"
-            target="_blank"
-          >
-            <span class="inline-flex items-center justify-center p-0.5 bg-sb-contrast/85 rounded">
-              <Icon class="size-4" name="logos:instagram-icon" />
-            </span>
-            <span class="ty-sb-caption text-sb-contrast/85">
-              Instagram
-            </span>
-          </a>
+            icon="mdi:instagram"
+            :linkable="{
+              href: props.instagramUrl,
+              target: '_blank',
+              rel: 'noopener noreferrer',
+            }"
+            text="Instagram"
+            variant="primary"
+          />
         </div>
       </section>
     </div>

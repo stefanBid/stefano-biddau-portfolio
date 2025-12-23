@@ -157,7 +157,7 @@ watch(isMdUp, (newVal) => {
       <!-- overlay -->
       <div
         aria-hidden="true"
-        class="fixed inset-0 top-16 bg-black/50 transition-opacity duration-200"
+        class="fixed inset-0 top-16 bg-sb-main/80 backdrop-blur-sm transition-opacity duration-200"
         :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
         @click="onClose"
       ></div>
