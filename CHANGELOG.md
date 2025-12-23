@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.12](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.11...v1.3.12) (2025-12-23)
+
+
+### Bug Fixes
+
+* card ui ([#84](https://github.com/stefanBid/stefano-biddau-portfolio/issues/84)) ([f82ce72](https://github.com/stefanBid/stefano-biddau-portfolio/commit/f82ce72aaf4a5aa5c858e37ab76989a94693413c))
+
 ## [1.3.11](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.10...v1.3.11) (2025-12-15)
 
 
