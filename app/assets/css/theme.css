@@ -5,6 +5,10 @@
   --font-bebas-neue: 'Bebas Neue', system-ui, sans-serif;
   --font-space-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
 
+  --font-sans: initial;
+  --font-serif: initial;
+  --font-mono: initial;
+
   /* =======================================
      BASE COLORS
      ======================================= */
@@ -23,4 +27,18 @@
   --color-sb-contrast: #f1f1f1;      /* main text on dark backgrounds */
   --color-sb-muted: #9ca3af;         /* secondary or subdued text */
   --color-sb-error: #ef4444;         /* alert or error */
+
+
+  /* =======================================
+     STATUS COLORS - LIGHT MODE
+     ======================================= */
+  --color-sb-success: #22c55e;  /* success state: bright green */
+  --color-sb-warning: #fb923c;  /* warning state: orange */
+  --color-sb-error: #ef4444;    /* error state: red */
+  --color-sb-info: #60a5fa;     /* info state: blue */
+
+  --color-sb-success-bg: #14532d;  /* dark green background */
+  --color-sb-warning-bg: #78350f;  /* dark amber background */
+  --color-sb-error-bg: #7f1d1d;    /* dark red background */
+  --color-sb-info-bg: #1e3a8a;     /* dark blue background */
 }

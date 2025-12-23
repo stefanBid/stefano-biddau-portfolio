@@ -42,7 +42,7 @@ const model = defineModel<boolean>('input')
       before:content-['✓'] before:opacity-0
       checked:before:opacity-100
     "
-      :class="props.error ? 'border-red-500' : 'border-sb-border'"
+      :class="props.error ? 'border-sb-error' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       type="checkbox"
     />

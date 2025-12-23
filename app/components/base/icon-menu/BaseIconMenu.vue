@@ -70,24 +70,15 @@ watch(open, (newVal) => {
 <template>
   <div class="relative inline-block">
     <!-- Trigger -->
-    <button
-      ref="reference"
-      :aria-expanded="open ? 'true' : 'false'"
-      aria-haspopup="menu"
-      class="inline-flex items-center p-1 bg-transparent gap-2 rounded-xl ty-sb-btn-label u-sb-soft-transition u-sb-focus cursor-pointer"
-      :class="{
-        'text-sb-contrast/80 hover:text-sb-contrast': !open,
-        'text-sb-contrast': open,
-      }"
-      type="button"
-      @click="toggleFloating(!open)"
-    >
-      <Icon
-        class="size-6"
-        :name="
-          props.icon"
+    <div ref="reference">
+      <BaseIconButton
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-haspopup="menu"
+        :icon="props.icon"
+        :is-active="open"
+        @click="toggleFloating(!open)"
       />
-    </button>
+    </div>
 
     <!-- Menu -->
     <Teleport to="body">
