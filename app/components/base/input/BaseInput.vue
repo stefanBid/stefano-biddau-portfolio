@@ -55,7 +55,7 @@ const describedBy = computed(() => {
         :autocomplete="props.autocomplete"
         class="w-full rounded-xl bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
         :class="{
-          'border-red-500': props.error,
+          'border-sb-error': props.error,
           'border-sb-border': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }
@@ -78,7 +78,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-red-500 mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="ty-sb-label normal-case! text-sb-error mt-1 md:mt-1.5 u-sb-soft-transition"
       role="alert"
     >
       {{ props.error }}

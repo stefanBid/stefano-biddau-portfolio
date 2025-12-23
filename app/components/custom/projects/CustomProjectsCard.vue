@@ -54,9 +54,9 @@ const onTriggerDescription = (event: Event) => {
     >
       <!-- Card Header -->
       <template #card-header>
-        <div class="relative w-full h-72 md:h-80 border-4 border-sb-surface-2 rounded-t-xl u-sb-soft-transition">
+        <div class="relative w-full h-72 md:h-80 rounded-t-xl u-sb-soft-transition">
           <!-- Background image layer: clipped by overflow-hidden -->
-          <div class="absolute inset-0 overflow-hidden rounded-t-lg">
+          <div class="absolute inset-0 overflow-hidden rounded-t-xl">
             <div class="w-full h-full">
               <NuxtImg
                 :alt="props.imageAlt || props.title"
