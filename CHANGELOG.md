@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.13](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.12...v1.3.13) (2025-12-23)
+
+
+### Bug Fixes
+
+* update Vue badge version in README ([#86](https://github.com/stefanBid/stefano-biddau-portfolio/issues/86)) ([55d335d](https://github.com/stefanBid/stefano-biddau-portfolio/commit/55d335dc5b379581f79c488d33a1de469fa30706))
+
 ## [1.3.12](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.11...v1.3.12) (2025-12-23)
 
 
