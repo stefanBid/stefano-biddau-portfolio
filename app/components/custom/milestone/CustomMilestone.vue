@@ -53,7 +53,7 @@ const onSelect = () => {
   >
     <!-- Timeline Point with Halo Effect -->
     <div
-      class="absolute -left-[33px] md:-left-[51px] top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
+      class="absolute -left-8.25 md:-left-12.75 top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none u-sb-soft-transition"
     >
       <!-- Static Halo -->
       <div
@@ -131,14 +131,16 @@ const onSelect = () => {
       </div>
 
       <!-- Expand indicator -->
-      <button
-        v-if="needsExpansion && !props.isActive"
-        class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
-        @click="onSelect"
-      >
-        <span>{{ t('pages.about.milestoneCta') }}</span>
-        <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
-      </button>
+      <div class="flex justify-center md:justify-start">
+        <button
+          v-if="needsExpansion && !props.isActive"
+          class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
+          @click="onSelect"
+        >
+          <span>{{ t('pages.about.milestoneCta') }}</span>
+          <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
+        </button>
+      </div>
     </BaseCard>
   </article>
 </template>
