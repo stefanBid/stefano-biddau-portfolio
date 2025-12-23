@@ -25,29 +25,30 @@ const { t } = useI18n()
 <template>
   <article :data-template-id="props.id">
     <BaseCard
-      class="h-full"
-      full-custom-content
+      class="h-full group"
       :variant="props.codebaseUrl ? 'dark-hover' : 'dark'"
     >
-      <!-- Header: Logo -->
-      <div class="flex items-center justify-center p-8 md:p-10 bg-sb-surface-2 rounded-xl u-sb-soft-transition">
-        <div class="logo-container w-28 h-28 md:w-32 md:h-32 flex items-center justify-center rounded-2xl bg-sb-contrast shadow-[0_8px_30px_var(--color-sb-shadow)] ring-1 ring-white/5 u-sb-soft-transition">
-          <NuxtImg
-            v-if="props.imageSrc"
-            :alt="`${props.title} logo`"
-            class="w-20 h-20 md:w-24 md:h-24 object-contain u-sb-soft-transition"
-            :src="props.imageSrc"
-          />
-          <Icon
-            v-else
-            class="size-20 md:size-24 text-sb-muted u-sb-soft-transition"
-            name="solar:box-bold"
-          />
+      <!-- Card Header: Logo -->
+      <template #card-header>
+        <div class="flex items-center justify-center p-4 bg-sb-surface-2 w-full rounded-xl u-sb-soft-transition">
+          <div class="logo-container size-28 md:size-32 flex items-center justify-center rounded-2xl bg-sb-contrast shadow-[0_8px_30px_var(--color-sb-shadow)] ring-1 ring-white/5 u-sb-soft-transition transition-transform">
+            <NuxtImg
+              v-if="props.imageSrc"
+              :alt="`${props.title} logo`"
+              class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
+              :src="props.imageSrc"
+            />
+            <Icon
+              v-else
+              class="template-icon size-20 md:size-24 text-sb-muted u-sb-soft-transition transition-transform"
+              name="solar:box-bold"
+            />
+          </div>
         </div>
-      </div>
+      </template>
 
-      <!-- Body: Title, Description, Technologies -->
-      <div class="flex-1 flex flex-col px-4 py-5 md:px-6 md:py-6 u-sb-soft-transition">
+      <!-- Card Body: Title, Description, Technologies -->
+      <template #card-body>
         <!-- Title -->
         <h3 class="ty-sb-title text-center text-sb-contrast u-sb-soft-transition">
           {{ props.title }}
@@ -76,42 +77,51 @@ const { t } = useI18n()
             </span>
           </template>
         </div>
+      </template>
 
-        <!-- Spacer -->
-        <div class="flex-1"></div>
-
-        <!-- CTA -->
-        <div class="mt-6 flex justify-center">
-          <BaseButton
-            aria-label="Use template"
-            :is-disabled="!props.codebaseUrl"
-            :to="props.codebaseUrl"
-            :type="props.codebaseUrl ? 'link' : 'button'"
-            variant="primary"
-          >
-            <Icon
-              class="size-5 md:size-6 mr-2"
-              name="solar:rocket-2-bold-duotone"
-            />
-            {{ t('pages.projects.sbTemplatesProject.linkToCta') }}
-          </BaseButton>
-        </div>
-      </div>
+      <!-- Card Footer: CTA -->
+      <template #card-footer>
+        <BaseButton
+          aria-label="Use template"
+          class="w-full cta-button transition-transform"
+          :is-disabled="!props.codebaseUrl"
+          :to="props.codebaseUrl"
+          :type="props.codebaseUrl ? 'link' : 'button'"
+          variant="primary"
+        >
+          <Icon
+            class="size-5 md:size-6 mr-2"
+            name="solar:rocket-2-bold-duotone"
+          />
+          {{ t('pages.projects.sbTemplatesProject.linkToCta') }}
+        </BaseButton>
+      </template>
     </BaseCard>
   </article>
 </template>
 
 <style scoped>
-/* Enhanced glow on hover - only when deploymentUrl exists */
-article:has(a[href]):hover .logo-container {
+/* Enhanced glow on hover and focus - only when codebaseUrl exists */
+article:has(a[href]):hover .logo-container,
+article:has(a[href]):focus-within .logo-container {
   box-shadow:
     0 8px 40px var(--color-sb-shadow),
-    0 0 25px rgba(233, 89, 5, 0.25);
+    0 0 40px rgba(233, 89, 5, 0.5),
+    0 0 60px rgba(233, 89, 5, 0.3);
+  transform: scale(1.05);
 }
 
-/* Scale effect on logo on hover - only when deploymentUrl exists */
+/* Scale effect on logo on hover and focus - only when codebaseUrl exists */
 article:has(a[href]):hover img,
-article:has(a[href]):hover .size-20 {
+article:has(a[href]):hover .template-icon,
+article:has(a[href]):focus-within img,
+article:has(a[href]):focus-within .template-icon {
   transform: scale(1.08);
+}
+
+/* Scale effect on button on hover and focus - only when codebaseUrl exists */
+article:has(a[href]):hover .cta-button,
+article:has(a[href]):focus-within .cta-button {
+  transform: scale(1.05);
 }
 </style>

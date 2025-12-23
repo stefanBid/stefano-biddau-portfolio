@@ -27,7 +27,7 @@ const isInteractive = computed(() => {
   <a
     v-if="props.type === 'link'"
     :aria-label="props.ariaLabel"
-    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
+    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center u-sb-focus"
     :class="[
       // Variants
       props.variant === 'primary'
@@ -51,7 +51,7 @@ const isInteractive = computed(() => {
   <button
     v-else
     :aria-label="props.ariaLabel"
-    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center u-sb-focus"
+    class="ty-sb-btn-label border px-4 py-2 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center u-sb-focus"
 
     :class="[
       // General state
