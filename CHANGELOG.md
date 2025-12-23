@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.14](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.13...v1.3.14) (2025-12-23)
+
+
+### Bug Fixes
+
+* adjust positioning and layout of milestone expand button ([#88](https://github.com/stefanBid/stefano-biddau-portfolio/issues/88)) ([1efd747](https://github.com/stefanBid/stefano-biddau-portfolio/commit/1efd74746717621c0fddc43406623bfa918435bc))
+
 ## [1.3.13](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.12...v1.3.13) (2025-12-23)
 
 
