@@ -2,7 +2,7 @@
   "name": "stefano-biddau-portfolio",
   "type": "module",
   "private": true,
-  "version": "1.3.11",
+  "version": "1.3.12",
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
