@@ -2,7 +2,7 @@
 interface BaseChipProps {
   text: string
   icon?: string
-  variant?: 'accent' | 'primary' | 'secondary'
+  variant?: 'primary' | 'secondary' | 'outline'
   clickable?: boolean
   linkable?: {
     href: string
@@ -14,7 +14,7 @@ interface BaseChipProps {
 // Input / Output
 const props = withDefaults(defineProps<BaseChipProps>(), {
   icon: undefined,
-  variant: 'accent',
+  variant: 'primary',
   clickable: false,
   linkable: undefined,
 })
@@ -50,14 +50,14 @@ const onClick = () => {
 <template>
   <component
     :is="componentTag"
-    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-xl u-sb-soft-transition u-sb-focus"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1 md:px-3 md:py-1.5 rounded-xl u-sb-soft-transition"
     :class="{
-      'bg-sb-accent text-white': props.variant === 'accent',
-      'bg-sb-surface border border-sb-border text-sb-contrast': props.variant === 'primary',
-      'bg-sb-surface-2 border border-sb-border text-sb-contrast': props.variant === 'secondary',
-      'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'accent',
-      'cursor-pointer hover:bg-sb-surface-2 active:bg-sb-border': isInteractive && props.variant === 'primary',
-      'cursor-pointer hover:bg-sb-border active:opacity-80': isInteractive && props.variant === 'secondary',
+      'bg-sb-accent text-white': props.variant === 'primary',
+      'bg-sb-surface border border-sb-border text-sb-contrast': props.variant === 'secondary',
+      'bg-transparent border border-sb-accent text-sb-accent': props.variant === 'outline',
+      'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'primary',
+      'cursor-pointer hover:bg-sb-surface-2 active:bg-sb-border': isInteractive && props.variant === 'secondary',
+      'cursor-pointer hover:bg-sb-accent hover:text-white active:opacity-90': isInteractive && props.variant === 'outline',
     }"
     :href="props.linkable?.href"
     :rel="props.linkable?.rel"
