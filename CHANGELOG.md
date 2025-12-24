@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.15](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.14...v1.3.15) (2025-12-24)
+
+
+### Bug Fixes
+
+* secondary variant and accent color ([#90](https://github.com/stefanBid/stefano-biddau-portfolio/issues/90)) ([d2c411f](https://github.com/stefanBid/stefano-biddau-portfolio/commit/d2c411fa643169df40fb996a95a8cb9491d694cd))
+
 ## [1.3.14](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.13...v1.3.14) (2025-12-23)
 
 
