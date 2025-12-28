@@ -55,10 +55,7 @@ const onSelectMilestone = (id: string | number) => {
 
 // Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
 watch(fetchError, (newError) => {
-  if (!import.meta.client) {
-    return
-  } // ← GUARD CLIENT-ONLY
-  if (newError) {
+  if (newError && import.meta.client) {
     error({
       title: t('pages.about.milestoneError.title'),
       message: t('pages.about.milestoneError.message'),
@@ -86,6 +83,14 @@ watch(fetchError, (newError) => {
         <!-- Milestones -->
         <template v-if="pending">
           <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
+        </template>
+        <template v-else-if="fetchError">
+          <!-- Error message -->
+          <BaseEmptyBox
+            icon="solar:danger-triangle-bold-duotone"
+            :message="t('pages.about.milestoneError.message')"
+            :title="t('pages.about.milestoneError.title')"
+          />
         </template>
         <template v-else-if="!safeMilestones.length">
           <!-- No milestones message -->

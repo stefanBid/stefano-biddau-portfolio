@@ -109,13 +109,10 @@ watch([skillsKey, skillsTypes], async () => {
 })
 
 watch(fetchError, (newError) => {
-  if (!import.meta.client) {
-    return
-  } // ← GUARD CLIENT-ONLY
-  if (newError) {
+  if (newError && import.meta.client) {
     error({
-      title: t('pages.skills.skillsDialog.noSkills.title'),
-      message: t('pages.skills.skillsDialog.noSkills.message'),
+      title: t('pages.skills.skillsDialog.skillsError.title'),
+      message: t('pages.skills.skillsDialog.skillsError.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -205,8 +202,8 @@ const _debouncedFetch = async () => {
           v-if="fetchError"
           dimension="small"
           icon="solar:danger-triangle-bold-duotone"
-          :message="t('pages.skills.skillsDialog.noSkills.message')"
-          :title="t('pages.skills.skillsDialog.noSkills.title')"
+          :message="t('pages.skills.skillsDialog.skillsError.message')"
+          :title="t('pages.skills.skillsDialog.skillsError.title')"
         />
         <BaseEmptyBox
           v-else

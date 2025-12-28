@@ -171,6 +171,10 @@
         "noSkills": {
           "title": "No Skills Yet",
           "message": "There are no skills to display at the moment. Check back soon!"
+        },
+        "skillsError": {
+          "title": "Error Loading Skills",
+          "message": "An error occurred while loading the skills. Please try again later."
         }
       }
     },
