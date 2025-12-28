@@ -1,7 +1,7 @@
 interface Project {
   id: string
   title: string
-  description: string
+  content: RichBlock[]
   coverImageSrc?: string
   coverImageAlt?: string
   codebaseUrl?: string
@@ -13,7 +13,7 @@ interface ProjectBE {
   documentId: string
   createdAt: string
   title: string
-  description: string
+  content: RichBlock[]
   cover: {
     altermativeText: string | null
     caption: string | null
@@ -45,13 +45,13 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
       '/api/sb-projects',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `projects-${_locale.value}`,
+        key: `sb-projects-${_locale.value}`,
 
         // Enable SSR fetch (recommended for About page SEO)
-        server: settings?.server || true,
+        server: settings?.server ?? true,
 
-        // Fetch immediately (not lazy) so SSR generates full HTML
-        lazy: settings?.lazy || false,
+        // Use lazy to avoid blocking SSR/prerendering if Strapi is unavailable
+        lazy: settings?.lazy ?? true,
 
         // Watch locale changes and refetch
         watch: [_locale],
@@ -65,15 +65,17 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         },
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
-          return strapiResponse.data.map(resItem => ({
-            id: resItem.documentId,
-            title: resItem.title,
-            description: resItem.description,
-            coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
-            coverImageAlt: resItem.cover?.altermativeText || undefined,
-            codebaseUrl: resItem.codebaseUrl || undefined,
-            deployUrl: resItem.deployUrl || undefined,
-          }))
+          return strapiResponse.data.map((resItem) => {
+            return {
+              id: resItem.documentId,
+              title: resItem.title,
+              content: resItem.content,
+              coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
+              coverImageAlt: resItem.cover?.altermativeText || undefined,
+              codebaseUrl: resItem.codebaseUrl || undefined,
+              deployUrl: resItem.deployUrl || undefined,
+            }
+          })
         },
       },
     )

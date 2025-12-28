@@ -3,7 +3,7 @@ interface CustomMilestoneProps {
   id: number | string
   isActive: boolean
   title: string
-  description: string
+  content: RichBlock[]
   subtitle?: string
   imageSrc?: string
   imageAlt?: string
@@ -27,17 +27,21 @@ const emits = defineEmits<{
 }>()
 
 // Dependencies
-const { sanitizeHtml } = useSanitize()
 const { t } = useI18n()
 
 // State
-const MAX_DESCRIPTION_LENGTH = 100
-const needsExpansion = computed(() => props.description.length > MAX_DESCRIPTION_LENGTH)
-const getDescriptionPreview = computed(() => {
-  if (needsExpansion.value && !props.isActive) {
-    return sanitizeHtml(props.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...')
+const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
+
+const needsExpansion = computed(() => {
+  const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
+  return hasManyBlocks
+})
+
+const getContentPreview = computed(() => {
+  if (!props.isActive && props.content.length > MAX_CONTENT_BLOCKS) {
+    return props.content.slice(0, MAX_CONTENT_BLOCKS)
   }
-  return sanitizeHtml(props.description)
+  return props.content
 })
 
 // Events
@@ -99,12 +103,11 @@ const onSelect = () => {
       >
         {{ props.subtitle }}
       </p>
-      <p
-        v-if="props.description"
-        class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
-        v-html="getDescriptionPreview"
-      >
-      </p>
+      <BaseRichText
+        v-if="props.content.length > 0"
+        :blocks="getContentPreview"
+        class="mt-3 md:mt-4 u-sb-soft-transition"
+      />
 
       <!-- Polaroid Image (only when active) -->
       <div

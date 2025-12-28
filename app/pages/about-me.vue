@@ -55,10 +55,7 @@ const onSelectMilestone = (id: string | number) => {
 
 // Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
 watch(fetchError, (newError) => {
-  if (!import.meta.client) {
-    return
-  } // ← GUARD CLIENT-ONLY
-  if (newError) {
+  if (newError && import.meta.client) {
     error({
       title: t('pages.about.milestoneError.title'),
       message: t('pages.about.milestoneError.message'),
@@ -87,28 +84,29 @@ watch(fetchError, (newError) => {
         <template v-if="pending">
           <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
         </template>
+        <template v-else-if="fetchError">
+          <!-- Error message -->
+          <BaseEmptyBox
+            icon="solar:danger-triangle-bold-duotone"
+            :message="t('pages.about.milestoneError.message')"
+            :title="t('pages.about.milestoneError.title')"
+          />
+        </template>
         <template v-else-if="!safeMilestones.length">
           <!-- No milestones message -->
-          <div class="flex flex-col items-center justify-center text-center">
-            <Icon
-              class="size-20 md:size-24 text-sb-muted mb-6 u-sb-soft-transition"
-              name="solar:folder-with-files-bold-duotone"
-            />
-            <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
-              {{ t('pages.about.noMilestones.title') }}
-            </h3>
-            <p class="ty-sb-paragraph text-sb-muted max-w-md u-sb-soft-transition">
-              {{ t('pages.about.noMilestones.message') }}
-            </p>
-          </div>
+          <BaseEmptyBox
+            icon="solar:history-3-bold-duotone"
+            :message="t('pages.about.noMilestones.message')"
+            :title="t('pages.about.noMilestones.title')"
+          />
         </template>
         <template v-else>
           <CustomMilestone
             v-for="(milestone) in safeMilestones"
             :id="milestone.id"
             :key="milestone.id"
+            :content="milestone.content"
             :date="milestone.date"
-            :description="milestone.description"
             :image-alt="milestone.imageCaption"
             :image-src="milestone.imageSrc"
             :is-active="selectedMilestoneId === milestone.id"

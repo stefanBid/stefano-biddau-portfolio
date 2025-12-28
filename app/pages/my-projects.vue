@@ -69,13 +69,10 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
 
 // Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
 watch(fetchError, (newError) => {
-  if (!import.meta.client) {
-    return
-  } // ← GUARD CLIENT-ONLY
-  if (newError) {
+  if (newError && import.meta.client) {
     error({
-      title: t('pages.projects.projectsError.title'),
-      message: t('pages.projects.projectsError.message'),
+      title: t('pages.projects.projectError.title'),
+      message: t('pages.projects.projectError.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -83,10 +80,7 @@ watch(fetchError, (newError) => {
 }, { immediate: true })
 
 watch(templatesError, (newError) => {
-  if (!import.meta.client) {
-    return
-  } // ← GUARD CLIENT-ONLY
-  if (newError) {
+  if (newError && import.meta.client) {
     error({
       title: t('pages.projects.templatesError.title'),
       message: t('pages.projects.templatesError.message'),
@@ -125,14 +119,22 @@ watch(templatesError, (newError) => {
           <template v-if="pending">
             <CustomProjectsSkeleton v-for="n in 4" :key="n" />
           </template>
-          <template v-else-if="projects?.length === 0">
-            <div class="col-span-2 text-center py-20">
-              <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
-                {{ t('pages.projects.personalProjects.noProjects.title') }}
-              </h3>
-              <p class="ty-sb-paragraph text-sb-muted">
-                {{ t('pages.projects.personalProjects.noProjects.message') }}
-              </p>
+          <template v-else-if="fetchError">
+            <div class="col-span-2">
+              <BaseEmptyBox
+                icon="solar:danger-triangle-bold-duotone"
+                :message="t('pages.projects.projectError.message')"
+                :title="t('pages.projects.projectError.title')"
+              />
+            </div>
+          </template>
+          <template v-else-if="!projects || projects.length === 0">
+            <div class="col-span-2">
+              <BaseEmptyBox
+                icon="solar:laptop-minimalistic-bold-duotone"
+                :message="t('pages.projects.personalProjects.noProjects.message')"
+                :title="t('pages.projects.personalProjects.noProjects.title')"
+              />
             </div>
           </template>
           <template v-else>
@@ -142,8 +144,8 @@ watch(templatesError, (newError) => {
               :key="project.id"
               :class="{ 'lg:col-span-2': expandedProjectIds.has(project.id) }"
               :codebase-url="project.codebaseUrl"
+              :content="project.content"
               :deployment-url="project.deployUrl"
-              :description="project.description"
               :image-alt="project.coverImageAlt"
               :image-src="project.coverImageSrc"
               :title="project.title"
@@ -180,6 +182,15 @@ watch(templatesError, (newError) => {
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
           <template v-if="templatesPending">
             <CustomSbTemplatesSkeleton v-for="n in 3" :key="n" />
+          </template>
+          <template v-else-if="templatesError">
+            <div class="col-span-full">
+              <BaseEmptyBox
+                icon="solar:danger-triangle-bold-duotone"
+                :message="t('pages.projects.templatesError.message')"
+                :title="t('pages.projects.templatesError.title')"
+              />
+            </div>
           </template>
           <template v-else>
             <template v-if="templates && templates.length > 0">

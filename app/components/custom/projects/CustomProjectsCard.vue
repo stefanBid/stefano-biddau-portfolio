@@ -2,7 +2,7 @@
 interface CustomProjectsCardProps {
   id: number | string
   title: string
-  description: string
+  content: RichBlock[]
   imageSrc?: string
   imageAlt?: string
   codebaseUrl?: string
@@ -24,18 +24,25 @@ const emits = defineEmits<{
 }>()
 
 // Dependencies
-const { sanitizeHtml } = useSanitize()
 const { t } = useI18n()
 
 // State
 const isDescriptionExpanded = ref(false)
-const MAX_DESCRIPTION_LENGTH = 200
-const needsExpansion = computed(() => props.description.length > MAX_DESCRIPTION_LENGTH)
-const getDescriptionPreview = computed(() => {
-  if (needsExpansion.value && !isDescriptionExpanded.value) {
-    return sanitizeHtml(props.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...')
+const MAX_CONTENT_BLOCKS = 1 // numero massimo di blocchi da mostrare in preview
+
+const needsExpansion = computed(() => {
+  const hasManyBlocks = props.content?.length > MAX_CONTENT_BLOCKS
+  return hasManyBlocks
+})
+
+const getContentPreview = computed(() => {
+  if (!props.content || !Array.isArray(props.content)) {
+    return []
   }
-  return sanitizeHtml(props.description)
+  if (!isDescriptionExpanded.value && props.content.length > MAX_CONTENT_BLOCKS) {
+    return props.content.slice(0, MAX_CONTENT_BLOCKS)
+  }
+  return props.content
 })
 
 // Events
@@ -116,11 +123,11 @@ const onTriggerDescription = (event: Event) => {
 
       <!-- Card Body -->
       <template #card-body>
-        <p
-          v-if="props.description"
-          class="ty-sb-paragraph u-sb-soft-transition text-justify"
-          v-html="getDescriptionPreview"
-        ></p>
+        <BaseRichText
+          v-if="props.content.length > 0"
+          :blocks="getContentPreview"
+          class="u-sb-soft-transition"
+        />
       </template>
 
       <!-- Card Footer -->

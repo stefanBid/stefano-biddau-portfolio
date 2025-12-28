@@ -164,11 +164,18 @@
           "tool": "Strumenti & Piattaforme",
           "other": "Altre Competenze"
         },
-        "noResults": "Nessuna competenza corrisponde ai criteri di ricerca.",
+        "noResults": {
+          "title": "Nessuna Competenza Trovata",
+          "message": "Nessuna competenza corrisponde ai criteri di ricerca. Prova con parole chiave o filtri diversi."
+        },
         "total": "Competenze Totali: { tot }",
         "noSkills": {
           "title": "Nessuna Competenza Disponibile",
           "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"
+        },
+        "skillsError": {
+          "title": "Errore nel caricamento delle competenze",
+          "message": "Si è verificato un errore durante il caricamento delle competenze. Per favore, riprova più tardi."
         }
       }
     },

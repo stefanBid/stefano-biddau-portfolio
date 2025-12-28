@@ -1,7 +1,7 @@
 interface Milestone {
   id: string
   title: string
-  description: string
+  content: RichBlock[]
   subtitle?: string
   imageSrc?: string
   imageCaption?: string
@@ -13,7 +13,7 @@ interface MilestoneBE {
   documentId: string
   title: string
   subtitle: string | null
-  description: string
+  content: RichBlock[]
   image: {
     altermativeText: string | null
     caption: string | null
@@ -46,13 +46,13 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `milestones-${_locale.value}`,
+        key: `sb-milestones-${_locale.value}`,
 
         // Enable SSR fetch (recommended for SEO)
-        server: settings?.server || true,
+        server: settings?.server ?? true,
 
-        // Fetch immediately (not lazy) so SSR generates full HTML
-        lazy: settings?.lazy || false,
+        // Use lazy to avoid blocking SSR/prerendering if Strapi is unavailable
+        lazy: settings?.lazy ?? true,
 
         // Watch locale changes and refetch
         watch: [_locale],
@@ -71,15 +71,17 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
             throw new Error('Invalid Strapi response structure')
           }
 
-          return strapiResponse.data.map(resItem => ({
-            id: resItem.documentId,
-            title: resItem.title,
-            subtitle: resItem.subtitle || undefined,
-            description: resItem.description,
-            imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
-            imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
-            date: resItem.date || undefined,
-          }))
+          return strapiResponse.data.map((resItem) => {
+            return {
+              id: resItem.documentId,
+              title: resItem.title,
+              subtitle: resItem.subtitle || undefined,
+              content: resItem.content,
+              imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
+              imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
+              date: resItem.date || undefined,
+            }
+          })
         },
       },
     )
