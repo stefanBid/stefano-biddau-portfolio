@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.18](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.17...v1.3.18) (2025-12-28)
+
+
+### Bug Fixes
+
+* handle null responses and increase timeout for API requests ([#96](https://github.com/stefanBid/stefano-biddau-portfolio/issues/96)) ([48cfe41](https://github.com/stefanBid/stefano-biddau-portfolio/commit/48cfe41c45e100a3029a6e3ceac87e998762243d))
+
 ## [1.3.17](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.16...v1.3.17) (2025-12-28)
 
 
