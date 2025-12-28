@@ -42,7 +42,7 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
   // State
 
   function fetchMilestones() {
-    return useFetch<Milestone[] | null>(
+    return useFetch<Milestone[]>(
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
@@ -60,6 +60,9 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
 
+        // Default value to prevent null during language switch
+        default: () => [],
+
         // Pass locale as query param to the server endpoint
         query: {
           locale: _locale.value,
@@ -68,7 +71,8 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
           const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 
           if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            throw new Error('Invalid Strapi response structure')
+            // console.warn('[useMilestones] Invalid Strapi response:', strapiResponse)
+            return []
           }
 
           return strapiResponse.data.map(resItem => ({
