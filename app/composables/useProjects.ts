@@ -51,7 +51,7 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         server: settings?.server ?? true,
 
         // Use lazy to avoid blocking SSR/prerendering if Strapi is unavailable
-        lazy: settings?.lazy ?? true,
+        lazy: settings?.lazy ?? false,
 
         // Watch locale changes and refetch
         watch: [_locale],
