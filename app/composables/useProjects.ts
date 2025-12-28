@@ -66,7 +66,6 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
           return strapiResponse.data.map((resItem) => {
-            console.log('[PROJECT TRANSFORM] resItem.content:', resItem.content)
             return {
               id: resItem.documentId,
               title: resItem.title,

@@ -72,7 +72,6 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
           }
 
           return strapiResponse.data.map((resItem) => {
-            console.log('[MILESTONE TRANSFORM] resItem.content:', resItem.content)
             return {
               id: resItem.documentId,
               title: resItem.title,
