@@ -164,7 +164,10 @@
           "tool": "Strumenti & Piattaforme",
           "other": "Altre Competenze"
         },
-        "noResults": "Nessuna competenza corrisponde ai criteri di ricerca.",
+        "noResults": {
+          "title": "Nessuna Competenza Trovata",
+          "message": "Nessuna competenza corrisponde ai criteri di ricerca. Prova con parole chiave o filtri diversi."
+        },
         "total": "Competenze Totali: { tot }",
         "noSkills": {
           "title": "Nessuna Competenza Disponibile",

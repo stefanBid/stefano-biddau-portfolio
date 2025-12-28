@@ -163,7 +163,10 @@
           "tool": "Tools & Platforms",
           "other": "Other Skills"
         },
-        "noResults": "No skills match your search criteria.",
+        "noResults": {
+          "title": "No Skills Found",
+          "message": "No skills match your search criteria. Please try different keywords or filters."
+        },
         "total": "Total Skills: { tot }",
         "noSkills": {
           "title": "No Skills Yet",

@@ -74,8 +74,8 @@ watch(fetchError, (newError) => {
   } // ← GUARD CLIENT-ONLY
   if (newError) {
     error({
-      title: t('pages.projects.projectsError.title'),
-      message: t('pages.projects.projectsError.message'),
+      title: t('pages.projects.projectError.title'),
+      message: t('pages.projects.projectError.message'),
       autoClose: true,
       dismissible: true,
     })
@@ -125,14 +125,13 @@ watch(templatesError, (newError) => {
           <template v-if="pending">
             <CustomProjectsSkeleton v-for="n in 4" :key="n" />
           </template>
-          <template v-else-if="projects?.length === 0">
-            <div class="col-span-2 text-center py-20">
-              <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
-                {{ t('pages.projects.personalProjects.noProjects.title') }}
-              </h3>
-              <p class="ty-sb-paragraph text-sb-muted">
-                {{ t('pages.projects.personalProjects.noProjects.message') }}
-              </p>
+          <template v-else-if="fetchError || projects?.length === 0">
+            <div class="col-span-2">
+              <BaseEmptyBox
+                icon="solar:laptop-minimalistic-bold-duotone"
+                :message="t('pages.projects.personalProjects.noProjects.message')"
+                :title="t('pages.projects.personalProjects.noProjects.title')"
+              />
             </div>
           </template>
           <template v-else>

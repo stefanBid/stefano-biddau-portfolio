@@ -89,18 +89,11 @@ watch(fetchError, (newError) => {
         </template>
         <template v-else-if="!safeMilestones.length">
           <!-- No milestones message -->
-          <div class="flex flex-col items-center justify-center text-center">
-            <Icon
-              class="size-20 md:size-24 text-sb-muted mb-6 u-sb-soft-transition"
-              name="solar:folder-with-files-bold-duotone"
-            />
-            <h3 class="ty-sb-title text-sb-contrast mb-2 u-sb-soft-transition">
-              {{ t('pages.about.noMilestones.title') }}
-            </h3>
-            <p class="ty-sb-paragraph text-sb-muted max-w-md u-sb-soft-transition">
-              {{ t('pages.about.noMilestones.message') }}
-            </p>
-          </div>
+          <BaseEmptyBox
+            icon="solar:history-3-bold-duotone"
+            :message="t('pages.about.noMilestones.message')"
+            :title="t('pages.about.noMilestones.title')"
+          />
         </template>
         <template v-else>
           <CustomMilestone

@@ -199,9 +199,22 @@ const _debouncedFetch = async () => {
       </template>
       <div
         v-else
-        class="col-span-1 sm:col-span-2 lg:col-span-3 p-6 text-center ty-sb-caption text-sb-muted u-sb-soft-transition"
+        class="col-span-1 sm:col-span-2 lg:col-span-3"
       >
-        {{ t('pages.skills.skillsDialog.noResults') }}
+        <BaseEmptyBox
+          v-if="fetchError"
+          dimension="small"
+          icon="solar:danger-triangle-bold-duotone"
+          :message="t('pages.skills.skillsDialog.noSkills.message')"
+          :title="t('pages.skills.skillsDialog.noSkills.title')"
+        />
+        <BaseEmptyBox
+          v-else
+          dimension="small"
+          icon="solar:shield-warning-bold-duotone"
+          :message="t('pages.skills.skillsDialog.noResults.message')"
+          :title="t('pages.skills.skillsDialog.noResults.title')"
+        />
       </div>
     </div>
     <template #footer>
