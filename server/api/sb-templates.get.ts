@@ -30,7 +30,7 @@ export default cachedEventHandler(async (event) => {
       'populate': '*',
       'pagination[pageSize]': 100, // Explicitly fetch all templates (adjust based on your needs)
     },
-    timeout: 15000,
+    timeout: 30000,
   })
   return response
 }, {
