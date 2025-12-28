@@ -46,7 +46,7 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `milestones-${_locale.value}`,
+        key: `sb-milestones-${_locale.value}`,
 
         // Enable SSR fetch (recommended for SEO)
         server: settings?.server || true,

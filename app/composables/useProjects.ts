@@ -45,7 +45,7 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
       '/api/sb-projects',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `projects-${_locale.value}`,
+        key: `sb-projects-${_locale.value}`,
 
         // Enable SSR fetch (recommended for About page SEO)
         server: settings?.server || true,
