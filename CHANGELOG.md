@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.17](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.16...v1.3.17) (2025-12-28)
+
+
+### Bug Fixes
+
+* disable lazy loading for milestones and projects ([#94](https://github.com/stefanBid/stefano-biddau-portfolio/issues/94)) ([0c7e41c](https://github.com/stefanBid/stefano-biddau-portfolio/commit/0c7e41cd03f87fc292618f1df692713f9700c936))
+
 ## [1.3.16](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.15...v1.3.16) (2025-12-28)
 
 
