@@ -48,10 +48,10 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         key: `sb-projects-${_locale.value}`,
 
         // Enable SSR fetch (recommended for About page SEO)
-        server: settings?.server || true,
+        server: settings?.server ?? true,
 
-        // Fetch immediately (not lazy) so SSR generates full HTML
-        lazy: settings?.lazy || false,
+        // Use lazy to avoid blocking SSR/prerendering if Strapi is unavailable
+        lazy: settings?.lazy ?? true,
 
         // Watch locale changes and refetch
         watch: [_locale],

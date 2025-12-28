@@ -49,10 +49,10 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
         key: `sb-milestones-${_locale.value}`,
 
         // Enable SSR fetch (recommended for SEO)
-        server: settings?.server || true,
+        server: settings?.server ?? true,
 
-        // Fetch immediately (not lazy) so SSR generates full HTML
-        lazy: settings?.lazy || false,
+        // Use lazy to avoid blocking SSR/prerendering if Strapi is unavailable
+        lazy: settings?.lazy ?? true,
 
         // Watch locale changes and refetch
         watch: [_locale],
