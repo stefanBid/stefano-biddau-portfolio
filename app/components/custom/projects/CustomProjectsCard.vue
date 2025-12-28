@@ -36,7 +36,9 @@ const needsExpansion = computed(() => {
 })
 
 const getContentPreview = computed(() => {
-  if (!props.content || !Array.isArray(props.content)) return []
+  if (!props.content || !Array.isArray(props.content)) {
+    return []
+  }
   if (!isDescriptionExpanded.value && props.content.length > MAX_CONTENT_BLOCKS) {
     return props.content.slice(0, MAX_CONTENT_BLOCKS)
   }
