@@ -65,10 +65,15 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
           locale: _locale.value,
         },
         transform: (response) => {
+          // Handle null/undefined during failed fetch
+          if (!response) {
+            return []
+          }
+
           const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 
           if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            throw new Error('Invalid Strapi response structure')
+            return []
           }
 
           return strapiResponse.data.map((resItem) => {

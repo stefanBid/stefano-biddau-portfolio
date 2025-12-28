@@ -64,7 +64,17 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
           locale: _locale.value,
         },
         transform: (response) => {
+          // Handle null/undefined during failed fetch
+          if (!response) {
+            return []
+          }
+
           const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
+
+          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
+            return []
+          }
+
           return strapiResponse.data.map((resItem) => {
             return {
               id: resItem.documentId,
