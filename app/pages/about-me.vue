@@ -107,6 +107,7 @@ watch(fetchError, (newError) => {
             v-for="(milestone) in safeMilestones"
             :id="milestone.id"
             :key="milestone.id"
+            :content="milestone.content"
             :date="milestone.date"
             :description="milestone.description"
             :image-alt="milestone.imageCaption"

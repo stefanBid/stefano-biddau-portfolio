@@ -3,6 +3,7 @@ interface CustomMilestoneProps {
   id: number | string
   isActive: boolean
   title: string
+  content: RichBlock[]
   description: string
   subtitle?: string
   imageSrc?: string
@@ -32,12 +33,26 @@ const { t } = useI18n()
 
 // State
 const MAX_DESCRIPTION_LENGTH = 100
-const needsExpansion = computed(() => props.description.length > MAX_DESCRIPTION_LENGTH)
+const MAX_CONTENT_BLOCKS = 2 // numero massimo di blocchi da mostrare in preview
+
+const needsExpansion = computed(() => {
+  const hasLongDescription = props.description.length > MAX_DESCRIPTION_LENGTH
+  const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
+  return hasLongDescription || hasManyBlocks
+})
+
 const getDescriptionPreview = computed(() => {
   if (needsExpansion.value && !props.isActive) {
     return sanitizeHtml(props.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...')
   }
   return sanitizeHtml(props.description)
+})
+
+const getContentPreview = computed(() => {
+  if (!props.isActive && props.content.length > MAX_CONTENT_BLOCKS) {
+    return props.content.slice(0, MAX_CONTENT_BLOCKS)
+  }
+  return props.content
 })
 
 // Events
@@ -105,6 +120,11 @@ const onSelect = () => {
         v-html="getDescriptionPreview"
       >
       </p>
+      <BaseRichText
+        v-if="props.content.length > 0"
+        :blocks="getContentPreview"
+        class="mt-3 md:mt-4 u-sb-soft-transition"
+      />
 
       <!-- Polaroid Image (only when active) -->
       <div

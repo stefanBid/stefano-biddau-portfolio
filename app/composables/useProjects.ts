@@ -1,6 +1,7 @@
 interface Project {
   id: string
   title: string
+  content: RichBlock[]
   description: string
   coverImageSrc?: string
   coverImageAlt?: string
@@ -13,6 +14,7 @@ interface ProjectBE {
   documentId: string
   createdAt: string
   title: string
+  content: RichBlock[]
   description: string
   cover: {
     altermativeText: string | null
@@ -68,6 +70,7 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
           return strapiResponse.data.map(resItem => ({
             id: resItem.documentId,
             title: resItem.title,
+            content: resItem.content,
             description: resItem.description,
             coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
             coverImageAlt: resItem.cover?.altermativeText || undefined,

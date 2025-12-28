@@ -1,6 +1,7 @@
 interface Milestone {
   id: string
   title: string
+  content: RichBlock[]
   description: string
   subtitle?: string
   imageSrc?: string
@@ -13,6 +14,7 @@ interface MilestoneBE {
   documentId: string
   title: string
   subtitle: string | null
+  content: RichBlock[]
   description: string
   image: {
     altermativeText: string | null
@@ -75,6 +77,7 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
             id: resItem.documentId,
             title: resItem.title,
             subtitle: resItem.subtitle || undefined,
+            content: resItem.content,
             description: resItem.description,
             imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
             imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
