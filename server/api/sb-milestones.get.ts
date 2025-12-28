@@ -3,6 +3,7 @@
 // This endpoint acts as a proxy between your Nuxt app and Strapi.
 // It also applies server-side caching via cachedEventHandler,
 // which improves performance and reduces the number of calls to Strapi.
+
 export default cachedEventHandler(async (event) => {
   const config = useRuntimeConfig()
   const query = getQuery(event)
@@ -27,13 +28,14 @@ export default cachedEventHandler(async (event) => {
       'locale': locale,
       'sort': 'date:asc',
       'populate': '*',
-      'pagination[pageSize]': 100,
+      'pagination[pageSize]': 100, // Explicitly fetch all milestones (adjust based on your needs)
     },
     timeout: 15000,
   })
   return response
 }, {
   // Cache the response server-side for 6 hours.
+  // Netlify Functions + Nitro will keep this cached as long as the function stays warm.
   maxAge: 60 * 60 * 6, // 6 hours
 
   // Serve stale data while revalidating in background.

@@ -42,11 +42,11 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
   // State
 
   function fetchMilestones() {
-    return useFetch<Milestone[]>(
+    return useFetch<Milestone[] | null>(
       '/api/sb-milestones',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `sb-milestones-${_locale.value}`,
+        key: `milestones-${_locale.value}`,
 
         // Enable SSR fetch (recommended for SEO)
         server: settings?.server || true,
@@ -60,9 +60,6 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
 
-        // Default value to prevent null during language switch
-        default: () => [],
-
         // Pass locale as query param to the server endpoint
         query: {
           locale: _locale.value,
@@ -71,19 +68,21 @@ export default function useMilestones(settings?: { server?: boolean, lazy?: bool
           const strapiResponse = response as unknown as StrapiResponse<MilestoneBE[]>
 
           if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            // console.warn('[useMilestones] Invalid Strapi response:', strapiResponse)
-            return []
+            throw new Error('Invalid Strapi response structure')
           }
 
-          return strapiResponse.data.map(resItem => ({
-            id: resItem.documentId,
-            title: resItem.title,
-            subtitle: resItem.subtitle || undefined,
-            content: resItem.content,
-            imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
-            imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
-            date: resItem.date || undefined,
-          }))
+          return strapiResponse.data.map((resItem) => {
+            console.log('[MILESTONE TRANSFORM] resItem.content:', resItem.content)
+            return {
+              id: resItem.documentId,
+              title: resItem.title,
+              subtitle: resItem.subtitle || undefined,
+              content: resItem.content,
+              imageSrc: resItem.image?.formats?.medium?.url || resItem.image?.formats?.small?.url || resItem.image?.formats?.thumbnail?.url || undefined,
+              imageCaption: resItem.imageCaption || resItem.image?.caption || undefined,
+              date: resItem.date || undefined,
+            }
+          })
         },
       },
     )

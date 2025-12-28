@@ -28,7 +28,7 @@ export default cachedEventHandler(async (event) => {
       'locale': locale,
       'sort': 'createdAt:asc',
       'populate': '*',
-      'pagination[pageSize]': 100,
+      'pagination[pageSize]': 100, // Explicitly fetch all projects (adjust based on your needs)
     },
     timeout: 15000,
   })
@@ -36,6 +36,7 @@ export default cachedEventHandler(async (event) => {
   return response
 }, {
   // Cache the response server-side for 6 hours.
+  // Netlify Functions + Nitro will keep this cached as long as the function stays warm.
   maxAge: 60 * 60 * 6, // 6 hours
 
   // Serve stale data while revalidating in background.

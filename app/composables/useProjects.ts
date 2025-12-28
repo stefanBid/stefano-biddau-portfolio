@@ -41,11 +41,11 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
 
   // State
   function fetchProjects() {
-    return useFetch<Project[]>(
+    return useFetch<Project[] | null>(
       '/api/sb-projects',
       {
         // Key is reactive: when locale changes, Nuxt automatically re-fetches.
-        key: `sb-projects-${_locale.value}`,
+        key: `projects-${_locale.value}`,
 
         // Enable SSR fetch (recommended for About page SEO)
         server: settings?.server || true,
@@ -59,30 +59,24 @@ export default function useProjects(settings?: { server?: boolean, lazy?: boolea
         // Cancel ongoing requests if a new one starts
         dedupe: 'cancel',
 
-        // Default value to prevent null during language switch
-        default: () => [],
-
         // Pass locale as query param to the server endpoint
         query: {
           locale: _locale.value,
         },
         transform: (response) => {
           const strapiResponse = response as unknown as StrapiResponse<ProjectBE[]>
-
-          if (!strapiResponse?.data || !Array.isArray(strapiResponse.data)) {
-            // console.warn('[useProjects] Invalid Strapi response:', strapiResponse)
-            return []
-          }
-
-          return strapiResponse.data.map(resItem => ({
-            id: resItem.documentId,
-            title: resItem.title,
-            content: resItem.content,
-            coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
-            coverImageAlt: resItem.cover?.altermativeText || undefined,
-            codebaseUrl: resItem.codebaseUrl || undefined,
-            deployUrl: resItem.deployUrl || undefined,
-          }))
+          return strapiResponse.data.map((resItem) => {
+            console.log('[PROJECT TRANSFORM] resItem.content:', resItem.content)
+            return {
+              id: resItem.documentId,
+              title: resItem.title,
+              content: resItem.content,
+              coverImageSrc: resItem.cover?.formats?.medium?.url || resItem.cover?.formats?.small?.url || resItem.cover?.formats?.thumbnail?.url || undefined,
+              coverImageAlt: resItem.cover?.altermativeText || undefined,
+              codebaseUrl: resItem.codebaseUrl || undefined,
+              deployUrl: resItem.deployUrl || undefined,
+            }
+          })
         },
       },
     )
