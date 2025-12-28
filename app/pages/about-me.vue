@@ -109,7 +109,6 @@ watch(fetchError, (newError) => {
             :key="milestone.id"
             :content="milestone.content"
             :date="milestone.date"
-            :description="milestone.description"
             :image-alt="milestone.imageCaption"
             :image-src="milestone.imageSrc"
             :is-active="selectedMilestoneId === milestone.id"

@@ -4,7 +4,6 @@ interface CustomMilestoneProps {
   isActive: boolean
   title: string
   content: RichBlock[]
-  description: string
   subtitle?: string
   imageSrc?: string
   imageAlt?: string
@@ -28,24 +27,14 @@ const emits = defineEmits<{
 }>()
 
 // Dependencies
-const { sanitizeHtml } = useSanitize()
 const { t } = useI18n()
 
 // State
-const MAX_DESCRIPTION_LENGTH = 100
-const MAX_CONTENT_BLOCKS = 2 // numero massimo di blocchi da mostrare in preview
+const MAX_CONTENT_BLOCKS = 1 // numero massimo di blocchi da mostrare in preview
 
 const needsExpansion = computed(() => {
-  const hasLongDescription = props.description.length > MAX_DESCRIPTION_LENGTH
   const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
-  return hasLongDescription || hasManyBlocks
-})
-
-const getDescriptionPreview = computed(() => {
-  if (needsExpansion.value && !props.isActive) {
-    return sanitizeHtml(props.description.slice(0, MAX_DESCRIPTION_LENGTH) + '...')
-  }
-  return sanitizeHtml(props.description)
+  return hasManyBlocks
 })
 
 const getContentPreview = computed(() => {
@@ -113,12 +102,6 @@ const onSelect = () => {
         class="ty-sb-subtitle text-sb-muted mt-1 u-sb-soft-transition"
       >
         {{ props.subtitle }}
-      </p>
-      <p
-        v-if="props.description"
-        class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
-        v-html="getDescriptionPreview"
-      >
       </p>
       <BaseRichText
         v-if="props.content.length > 0"
