@@ -30,7 +30,7 @@ const emits = defineEmits<{
 const { t } = useI18n()
 
 // State
-const MAX_CONTENT_BLOCKS = 1 // numero massimo di blocchi da mostrare in preview
+const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
 
 const needsExpansion = computed(() => {
   const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
