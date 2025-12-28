@@ -40,4 +40,11 @@ export default cachedEventHandler(async (event) => {
 
   // Serve stale data while revalidating in background.
   swr: true,
+
+  // Generate cache key based on locale to avoid mixing different languages
+  getKey: (event) => {
+    const query = getQuery(event)
+    const locale = typeof query.locale === 'string' ? query.locale : 'en'
+    return `sb-templates-${locale}`
+  },
 })
