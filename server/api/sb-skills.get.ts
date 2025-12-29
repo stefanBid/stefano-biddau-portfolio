@@ -54,11 +54,18 @@ export default defineEventHandler(async (event) => {
     params['filters[type][$in]'] = types
   }
 
-  // Forward request to Strapi
-  const response = await $fetch(strapiUrl, {
-    params,
-    timeout: 15000,
-  })
+  try {
+    // Forward request to Strapi
+    const response = await $fetch(strapiUrl, {
+      params,
+      timeout: 15000,
+    })
 
-  return response
+    return response
+  }
+  catch {
+    // Silently return empty data to prevent build failure
+    // This allows the build to complete even if Strapi is down
+    return { data: [], meta: { pagination: { page: 1, pageSize: DEFAULT_PAGE_SIZE, pageCount: 0, total: 0 } } }
+  }
 })

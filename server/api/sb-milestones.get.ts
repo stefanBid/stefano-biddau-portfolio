@@ -22,17 +22,24 @@ export default cachedEventHandler(async (event) => {
   // Determine locale
   const locale = typeof query.locale === 'string' ? query.locale : 'en'
 
-  // Forward request to Strapi
-  const response = await $fetch(strapiUrl, {
-    params: {
-      'locale': locale,
-      'sort': 'date:asc',
-      'populate': '*',
-      'pagination[pageSize]': 100, // Explicitly fetch all milestones (adjust based on your needs)
-    },
-    timeout: 30000,
-  })
-  return response
+  try {
+    // Forward request to Strapi
+    const response = await $fetch(strapiUrl, {
+      params: {
+        'locale': locale,
+        'sort': 'date:asc',
+        'populate': '*',
+        'pagination[pageSize]': 100, // Explicitly fetch all milestones (adjust based on your needs)
+      },
+      timeout: 30000,
+    })
+    return response
+  }
+  catch {
+    // Silently return empty data to prevent build failure
+    // This allows the build to complete even if Strapi is down
+    return { data: [] }
+  }
 }, {
   // Cache the response server-side for 6 hours.
   // Netlify Functions + Nitro will keep this cached as long as the function stays warm.
