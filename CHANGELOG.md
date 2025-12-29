@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.19](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.18...v1.3.19) (2025-12-29)
+
+
+### Bug Fixes
+
+* handle Strapi request failures to prevent build failures ([#98](https://github.com/stefanBid/stefano-biddau-portfolio/issues/98)) ([5cb79a3](https://github.com/stefanBid/stefano-biddau-portfolio/commit/5cb79a38068242688a549f1af80d75b9edafbfaf))
+
 ## [1.3.18](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.17...v1.3.18) (2025-12-28)
 
 
