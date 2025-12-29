@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24.11.0"
+
+# Skip deploy for release-please PRs
+[context.deploy-preview]
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF . || [ \"$HEAD\" != \"${HEAD#release-please--}\" ]"
