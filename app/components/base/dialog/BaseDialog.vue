@@ -60,10 +60,13 @@ watch(
       // Disable scroll when dialog opens
       lock()
 
+      // Use requestAnimationFrame to avoid forced reflow
       nextTick(() => {
-        if (dialogRef.value) {
-          dialogRef.value.focus()
-        }
+        requestAnimationFrame(() => {
+          if (dialogRef.value) {
+            dialogRef.value.focus()
+          }
+        })
       })
     }
     else {
@@ -77,13 +80,14 @@ watch(
 
 <template>
   <Teleport to="body">
-    <Transition name="scale-fade">
+    <Transition appear name="scale-fade">
       <div
         v-if="isOpen"
         aria-labelledby="sb-dialog-title"
         aria-modal="true"
-        class="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-6"
+        class="fixed inset-0 z-200 flex items-center justify-center p-4 md:p-6 will-change-[opacity,transform]"
         role="dialog"
+        style="isolation: isolate;"
       >
         <!-- Overlay -->
         <div
