@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.21](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.20...v1.3.21) (2026-01-06)
+
+
+### Bug Fixes
+
+* **BaseDialog:** upgrade logic  for open/close status for a good accessibility ([#102](https://github.com/stefanBid/stefano-biddau-portfolio/issues/102)) ([4a5b129](https://github.com/stefanBid/stefano-biddau-portfolio/commit/4a5b129c9c30ec4d3860f3977084160a5b3a1029))
+
 ## [1.3.20](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.19...v1.3.20) (2025-12-29)
 
 
