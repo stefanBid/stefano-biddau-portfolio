@@ -2,8 +2,8 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
 ![Node.js](https://img.shields.io/badge/Node.js-24.x-339933?style=flat&logo=node.js&logoColor=white)
-![Nuxt](https://img.shields.io/badge/Nuxt-4.2.2-00DC82?style=flat&logo=nuxt.js&logoColor=white)
-![Vue](https://img.shields.io/badge/Vue-3.5.26-4FC08D?style=flat&logo=vue.js&logoColor=white)
+![Nuxt](https://img.shields.io/badge/Nuxt-4.3.0-00DC82?style=flat&logo=nuxt.js&logoColor=white)
+![Vue](https://img.shields.io/badge/Vue-3.5.27-4FC08D?style=flat&logo=vue.js&logoColor=white)
 ![TailwindCSS](https://img.shields.io/badge/Tailwind-4.1.18-06B6D4?style=flat&logo=tailwindcss&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.x-3178C6?style=flat&logo=typescript&logoColor=white)
 
