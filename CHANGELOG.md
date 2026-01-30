@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.22](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.21...v1.3.22) (2026-01-30)
+
+
+### Bug Fixes
+
+* **deps:** update dependencies to latest versions ([#104](https://github.com/stefanBid/stefano-biddau-portfolio/issues/104)) ([5a32b82](https://github.com/stefanBid/stefano-biddau-portfolio/commit/5a32b82ffca47db7e3e0e5344bcbc254ba7ba000))
+
 ## [1.3.21](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.20...v1.3.21) (2026-01-06)
 
 
