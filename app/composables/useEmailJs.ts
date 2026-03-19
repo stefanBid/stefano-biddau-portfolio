@@ -30,14 +30,22 @@ export default function useEmailJs() {
     const serviceId = _config.public.emailjsServiceId as string
     const templateId = _config.public.emailjsTemplateAdminId as string
     const publicKey = _config.public.emailjsPublicKey as string
-
-    const result = await emailjs.send(
-      serviceId,
-      templateId,
-      payload,
-      { publicKey },
-    )
-    return result
+    try {
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        payload,
+        { publicKey },
+      )
+      return {
+        success: true, data: result, error: null,
+      }
+    }
+    catch (error) {
+      return {
+        success: false, data: null, error,
+      }
+    }
   }
 
   /**
@@ -50,14 +58,23 @@ export default function useEmailJs() {
     const templateId = _config.public.emailjsTemplateReplyToId as string
     const publicKey = _config.public.emailjsPublicKey as string
 
-    const result = await emailjs.send(
-      serviceId,
-      templateId,
-      payload,
-      { publicKey },
-    )
+    try {
+      const result = await emailjs.send(
+        serviceId,
+        templateId,
+        payload,
+        { publicKey },
+      )
 
-    return result
+      return {
+        success: true, data: result, error: null,
+      }
+    }
+    catch (error) {
+      return {
+        success: false, data: null, error,
+      }
+    }
   }
 
   return {
