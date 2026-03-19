@@ -205,9 +205,7 @@ watch(templatesError, (newError) => {
                 :title="template.title"
               />
               <CustomSbTemplatesCard
-                v-for="n in 2"
-                :id="n"
-                :key="n"
+                :id="1"
                 :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
                 :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
               />

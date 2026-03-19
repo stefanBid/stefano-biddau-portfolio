@@ -87,6 +87,7 @@ const onSendMessage = async () => {
   // Prepare Message Data
   const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
   emailIsSending.value = true
+
   const resultFirst = await sendContactEmailAdmin({
     from_name: nameController.value,
     from_email: emailController.value,
@@ -101,7 +102,7 @@ const onSendMessage = async () => {
     year: new Date().getFullYear().toString(),
   })
 
-  if (resultFirst.status === 200 && resultSecond.status === 200) {
+  if (resultFirst.success && resultSecond.success) {
     success({
       title: t('pages.home.contactForm.notifications.success.title'),
       message: t('pages.home.contactForm.notifications.success.message'),
@@ -220,8 +221,7 @@ watch(
       </BaseCheckbox>
       <div class="w-full flex justify-end items-center mt-4 gap-4">
         <BaseButton
-
-          :is-disabled="!formIsChanged"
+          :is-disabled="!formIsChanged || emailIsSending"
           type="reset"
           variant="secondary"
         >
