@@ -5,13 +5,13 @@
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
   ![Version](https://img.shields.io/badge/version-1.3.23-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.4.2-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.32-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
 
-  **Portfolio personale di Stefano Biddau — Front-End Developer & Web Designer**
+  **Stefano Biddau's personal portfolio — Front-End Developer & Web Designer**
 
   [www.stefanobiddau.com](https://www.stefanobiddau.com)
 
@@ -25,32 +25,32 @@
 2. [Getting Started](#2-getting-started)
 3. [Project Structure](#3-project-structure)
 4. [Design System](#4-design-system)
-5. [Routing & Pages](#5-routing--pages)
-6. [Layouts](#6-layouts)
-7. [Components](#7-components)
+5. [Components](#5-components)
+6. [Pages & Routing](#6-pages--routing)
+7. [Server API — Nitro Proxy Layer](#7-server-api--nitro-proxy-layer)
 8. [Composables & Utils](#8-composables--utils)
-9. [Server API — Nitro Proxy Layer](#9-server-api--nitro-proxy-layer)
+9. [i18n](#9-i18n)
 10. [AI Tooling — Prompts & Instructions](#10-ai-tooling--prompts--instructions)
 11. [Deployment](#11-deployment)
-12. [Environment Variables](#12-environment-variables)
-13. [Versioning](#13-versioning)
-14. [Dependencies](#14-dependencies)
+12. [Dependencies](#12-dependencies)
 
 ---
 
 ## 1. Overview
 
-This is Stefano Biddau's personal portfolio — a production Nuxt 4 SSG/SSR application deployed on Netlify. It showcases professional experience, projects, skills and a contact form.
+Stefano Biddau's personal portfolio — a production Nuxt 4 SSG/SSR application deployed on Netlify. It showcases professional experience, projects, skills and a contact form.
 
 Content is served via a **Strapi CMS** backend; all data fetching goes through a **Nitro proxy layer** (`server/api/`) to avoid CORS issues and enable server-side caching. The app is always dark-themed (no light/dark toggle).
 
+**Stack highlights:** Nuxt 4 · Vue 3 · Tailwind CSS v4 · TypeScript (strict) · Strapi CMS · EmailJS · Zod · i18n (EN + IT) · Netlify
+
 Key design principles:
 
-- **Always dark** — a single dark colour palette, no theme switching overhead.
-- **Strapi-powered** — all portfolio content (milestones, projects, skills, templates) lives in the CMS and is fetched through server-side proxies.
+- **Always dark** — a single dark colour palette; no `dark:` Tailwind variants, no theme switching overhead.
+- **Strapi-powered** — all portfolio content (milestones, projects, skills, templates) lives in the CMS and is fetched through server-side Nitro proxies.
 - **i18n-first** — every user-facing string goes through `useI18n()`, supporting English (default) and Italian.
-- **SSG + SSR hybrid** — all public pages are pre-rendered at build time; dynamic data (skills filters) is fetched client-side.
-- **Type-safe throughout** — strict TypeScript, global interfaces in `global.d.ts`, Zod for form validation.
+- **SSG + SSR hybrid** — all public pages are pre-rendered at build time via `routeRules`; dynamic data (skills filters) is fetched client-side.
+- **Type-safe throughout** — strict TypeScript, global interfaces in `global.d.ts`, Zod for contact form validation.
 
 ---
 
@@ -73,7 +73,7 @@ npm install
 
 ### Environment setup
 
-Create a `.env` file at the project root (see [Environment Variables](#12-environment-variables) for the full list):
+Create a `.env` file at the project root (see [Deployment](#11-deployment) for the full list):
 
 ```env
 NUXT_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
@@ -81,6 +81,7 @@ NUXT_EMAILJS_SERVICE_ID=your_emailjs_service_id
 NUXT_EMAILJS_TEMPLATE_ADMIN_ID=your_admin_template_id
 NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID=your_reply_to_template_id
 NUXT_PUBLIC_STRAPI_URL=https://your-strapi-url.com
+NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 ```
 
 ### Available commands
@@ -178,6 +179,7 @@ All colours are CSS custom properties defined inside an `@theme` block in `theme
 | `--color-sb-surface` | `bg-sb-surface` | `#1a1a2e` | Card / elevated surface |
 | `--color-sb-surface-2` | `bg-sb-surface-2` | `#232342` | Nested surfaces, inputs |
 | `--color-sb-border` | `border-sb-border` | `#2a2a44` | Default borders |
+| `--color-sb-shadow` | `shadow-[0_4px_20px_var(--color-sb-shadow)]` | `rgba(0,0,0,0.45)` | Shadows (always via `var()`) |
 | `--color-sb-accent` | `bg-sb-accent / text-sb-accent` | `#e95905` | Primary CTA, highlights |
 | `--color-sb-accent-hover` | `hover:bg-sb-accent-hover` | `#d24f05` | Hover state of accent |
 | `--color-sb-accent-border` | `border-sb-accent-border` | `#b34704` | Border on accent elements |
@@ -224,6 +226,7 @@ Custom `@utility` classes defined in `typography.css`. Apply them as regular Tai
 | `u-sb-hard-transition` | `transition-all duration-500 ease-in-out` |
 | `u-sb-focus` | `outline-none ring-sb-contrast focus-visible:ring-2` |
 | `u-sb-focus-within` | `outline-none ring-sb-contrast focus-within:ring-2` |
+| `u-sb-no-focus` | Removes all focus outlines (use only on elements with custom focus handling) |
 
 Always add `u-sb-soft-transition` to interactive elements.
 
@@ -260,74 +263,7 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 
 ---
 
-## 5. Routing & Pages
-
-All pages are in `app/pages/` and follow Nuxt 4 file-based routing. Every page is **pre-rendered** at build time (`routeRules` in `nuxt.config.ts`). The i18n strategy is `prefix_except_default`: English is the default (no prefix), Italian gets `/it/`.
-
-| File | Route (EN) | Route (IT) | Content |
-|---|---|---|---|
-| `index.vue` | `/` | `/it` | Hero + `CustomSolarSystem` + skills preview + contact form |
-| `about-me.vue` | `/about-me` | `/it/about-me` | Career timeline via `useMilestones` |
-| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Filterable skills grid via `useSkills` with `BaseTabs` |
-| `my-projects.vue` | `/my-projects` | `/it/my-projects` | Projects grid via `useProjects` |
-| `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
-| `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` | Legal |
-
-### Adding a new page — step by step
-
-1. Create the `.vue` file in `app/pages/` (kebab-case filename).
-2. Call `useSeoMeta()` with translated meta tags.
-3. Add translation keys to both `i18n/locales/en.json` and `i18n/locales/it.json`.
-4. Add `prerender: true` in `nuxt.config.ts` for **both** EN and IT routes.
-5. Add a `RouteItem` entry in `TheHeader` and `TheFooter` if the page should appear in navigation.
-
-### Minimal page template
-
-```vue
-<script setup lang="ts">
-// Dependencies
-const { t } = useI18n()
-
-// SEO
-useSeoMeta({
-  title: t('pageName.meta.title'),
-  description: t('pageName.meta.description'),
-  ogTitle: t('pageName.meta.title'),
-  ogDescription: t('pageName.meta.description'),
-  ogUrl: 'https://www.stefanobiddau.com/my-page',
-})
-</script>
-
-<template>
-  <!-- page content -->
-</template>
-```
-
-### i18n navigation
-
-Use `localePath()` for all navigation links:
-
-```vue
-<NuxtLink :to="localePath('/my-skills')">Skills</NuxtLink>
-```
-
----
-
-## 6. Layouts
-
-### `default.vue`
-
-The only layout. Used by all pages. Structure: `TheHeader` → `<slot>` (page content) → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`.
-
-A `useLocaleHead()` call in `default.vue` injects the correct `hreflang` alternate links on every page automatically.
-
-### `ThePageHero`
-
-Full-screen intro animation used on pages that need a cinematic entry. After the animation ends it emits `hero-animations-ended` so the page can reveal its content.
-
----
-
-## 7. Components
+## 5. Components
 
 All reusable components live in `app/components/`. Three component tiers:
 
@@ -336,6 +272,8 @@ All reusable components live in `app/components/`. Three component tiers:
 | `Base` | Fully reusable, zero business logic, no Strapi/API calls | `BaseButton`, `BaseInput`, `BaseTabs` |
 | `Custom` | Portfolio-specific, may use data composables and business logic | `CustomSkillsCard`, `CustomContactForm` |
 | `The` | Singleton — used once per layout | `TheHeader`, `TheFooter`, `ThePageHero` |
+
+### Base components
 
 ### `BaseButton`
 
@@ -354,11 +292,7 @@ Slot: `default` (button label / content)
 <BaseButton variant="primary" :is-loading="isSaving" type="submit">
   Save
 </BaseButton>
-<BaseButton
-  type="link"
-  to="https://github.com/stefanoBid"
-  variant="outline"
->
+<BaseButton type="link" to="https://github.com/stefanoBid" variant="outline">
   <Icon name="mdi:github" class="size-4" /> GitHub
 </BaseButton>
 ```
@@ -384,7 +318,7 @@ Slots: `default`, `card-header`, `card-body`, `card-footer`
 | `name` | `string` | `undefined` | Falls back to `${id}-name` |
 | `label` | `string` | `undefined` | |
 | `placeholder` | `string` | `'Insert a value...'` | |
-| `type` | `'text' \| 'password' \| 'email' \| …` | `'text'` | |
+| `type` | `'text' \| 'password' \| 'email' \| 'number' \| 'search' \| 'tel' \| 'url'` | `'text'` | |
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | Shows error message + red border |
 | `autocomplete` | `string` | `'off'` | |
@@ -585,7 +519,7 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 
 ### `CustomSolarSystem`
 
-Decorative animated orbit component used in `my-skills.vue` to visualise tech categories as orbiting planets.
+Decorative animated orbit component used in `index.vue`, visualising tech categories as orbiting planets.
 
 | Prop | Type | Notes |
 |---|---|---|
@@ -595,7 +529,189 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ---
 
+### Singleton components (The*)
+
+### `TheHeader` / `TheHeaderMenuToggle`
+
+Top navigation bar. Renders `RouteItem[]` links and a language switcher (`BaseIconMenu`). `TheHeaderMenuToggle` is the hamburger button on mobile.
+
+### `TheFooter`
+
+Bottom bar with navigation links and social icons.
+
+### `TheNotificationBanner` / `TheNotificationBox`
+
+Notification display layer. `TheNotificationBanner` shows toast-style banners at screen top; `TheNotificationBox` shows a fixed overlay list. Both consume `useNotification()` state.
+
+### `ThePageHero`
+
+Full-screen entry animation. After the animation ends it emits `hero-animations-ended` — use this to reveal page content.
+
+---
+
+### Creating a new component
+
+**Base component:**
+1. Create `app/components/base/<my-widget>/BaseMyWidget.vue`
+2. Use `<script setup lang="ts">` with sections: `// Dependencies`, `// Input / Output`, `// Data`, `// Events`
+3. Zero business logic — no composable data calls, no Strapi
+4. Style with design tokens only (no raw hex, no hardcoded sizes)
+
+**Custom component:**
+1. Create `app/components/custom/<feature>/CustomMyFeature.vue`
+2. May use data composables (`useSkills`, `useProjects`, etc.)
+3. Always pair with `CustomMyFeatureSkeleton.vue` for async loading states
+
+**The component:**
+1. Create `app/components/the-<name>/TheMyName.vue`
+2. Singleton — used once per layout; no props unless strictly necessary
+
+---
+
+## 6. Pages & Routing
+
+All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every public page is **pre-rendered** at build time via `routeRules` in `nuxt.config.ts`. The i18n strategy is `prefix_except_default`: English is the default (no prefix), Italian gets `/it/`.
+
+### File-based routing
+
+| File | Route (EN) | Route (IT) | Content |
+|---|---|---|---|
+| `index.vue` | `/` | `/it` | Hero + `CustomSolarSystem` + skills preview + contact form |
+| `about-me.vue` | `/about-me` | `/it/about-me` | Career timeline via `useMilestones` |
+| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Filterable skills grid via `useSkills` with `BaseTabs` |
+| `my-projects.vue` | `/my-projects` | `/it/my-projects` | Projects grid via `useProjects` |
+| `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
+| `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` | Legal |
+
+### Creating a new page
+
+1. Create the `.vue` file in `app/pages/` (kebab-case filename).
+2. Call `useSeoMeta()` with translated meta tags.
+3. Add translation keys to both `i18n/locales/en.json` and `i18n/locales/it.json`.
+4. Add `prerender: true` in `nuxt.config.ts` for **both** EN and IT routes.
+5. Add a `RouteItem` entry in `TheHeader` and `TheFooter` if the page should appear in navigation.
+
+### Minimal page template
+
+```vue
+<script setup lang="ts">
+// Dependencies
+const { t } = useI18n()
+
+// SEO
+useSeoMeta({
+  title: t('pageName.meta.title'),
+  description: t('pageName.meta.description'),
+  ogTitle: t('pageName.meta.title'),
+  ogDescription: t('pageName.meta.description'),
+  ogUrl: 'https://www.stefanobiddau.com/my-page',
+})
+</script>
+
+<template>
+  <!-- page content -->
+</template>
+```
+
+### Layouts
+
+The only layout is `default.vue`. Structure: `TheHeader` → `<slot>` → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`. A `useLocaleHead()` call injects the correct `hreflang` alternate links on every page automatically.
+
+### i18n routing
+
+Use `localePath()` for all navigation links — never hardcode locale prefixes:
+
+```vue
+<NuxtLink :to="localePath('/my-skills')">Skills</NuxtLink>
+```
+
+---
+
+## 7. Server API — Nitro Proxy Layer
+
+The frontend **never calls Strapi directly**. All data flows through a Nitro proxy layer in `server/api/`. This avoids CORS issues, hides the Strapi URL from the client bundle, enables server-side caching and allows graceful degradation.
+
+```
+Client / SSR
+    │
+    ▼
+/api/sb-*  (Nitro — server/api/)
+    │
+    ▼
+Strapi CMS  (NUXT_PUBLIC_STRAPI_URL)
+```
+
+### Existing endpoints
+
+| File | Route | Method | Caching | Notes |
+|---|---|---|---|---|
+| `_health.get.ts` | `GET /api/_health` | `defineEventHandler` | None | Health check |
+| `sb-milestones.get.ts` | `GET /api/sb-milestones` | `cachedEventHandler` | 6h SWR | Locale-aware, sorted `date:asc` |
+| `sb-projects.get.ts` | `GET /api/sb-projects` | `cachedEventHandler` | 6h SWR | Locale-aware, sorted `createdAt:asc` |
+| `sb-skills.get.ts` | `GET /api/sb-skills` | `defineEventHandler` | None | Dynamic filters + pagination |
+| `sb-templates.get.ts` | `GET /api/sb-templates` | `cachedEventHandler` | 6h SWR | Locale-aware, sorted `createdAt:desc` |
+
+### Caching strategy
+
+| Setting | Value | Effect |
+|---|---|---|
+| `maxAge` | `60 * 60 * 6` | Cache lives for 6h on the server |
+| `swr` | `true` | Returns cached data immediately while refreshing in background |
+| `getKey` | locale string | Separate cache bucket per language |
+
+Use `cachedEventHandler` for static/semi-static data. Use `defineEventHandler` for endpoints with dynamic query params (e.g. skills filters) — caching would grow unboundedly.
+
+### Adding a new endpoint
+
+1. Create `server/api/sb-<resource>.get.ts`.
+2. Follow the locale-aware `cachedEventHandler` pattern (or `defineEventHandler` for dynamic filters).
+3. Guard `baseUrl` at the top — return `500` if missing.
+4. Sanitise every query param before forwarding to Strapi.
+5. Return `{ data: [] }` in the `catch` block to prevent build failures.
+6. Add a matching composable `app/composables/use<Resource>.ts`.
+7. Add a `*Skeleton.vue` component for the loading state.
+
+---
+
 ## 8. Composables & Utils
+
+Composables live in `app/composables/`. All are auto-imported — no manual imports needed.
+
+### Data composables (Strapi-driven)
+
+### `useMilestones(settings?)` / `useProjects(settings?)`
+
+Fetch Strapi data through the Nitro proxy. Locale-aware — re-fetches automatically when the language changes.
+
+```ts
+const { data, pending, error } = useMilestones().fetchMilestones()
+const { data, pending, error } = useProjects().fetchProjects()
+// Non-blocking SSR:
+const { data, pending, error } = useMilestones({ server: false, lazy: true }).fetchMilestones()
+```
+
+### `useSkills()`
+
+Fetches skills with filters and pagination. Uses `$fetch` (manual trigger) because query params vary at runtime.
+
+```ts
+const { data, pending, error, pagination, fetchSkills } = useSkills()
+await fetchSkills()
+await fetchSkills({ name: 'vue', types: ['feFramework'], page: 1, pageSize: 12 })
+```
+
+### `useTemplates()`
+
+Fetches GitHub templates via `$fetch` (manual trigger).
+
+```ts
+const { data, pending, error, fetchTemplates } = useTemplates()
+await fetchTemplates()
+```
+
+---
+
+### UI composables
 
 ### `useNotification()`
 
@@ -616,8 +732,6 @@ info({
 
 All four methods accept `Omit<NotificationItem, 'type' | 'id'>`. Must be called **client-side only**.
 
----
-
 ### `useEmailJs()`
 
 Sends emails via EmailJS. **Client-side only.**
@@ -634,50 +748,7 @@ const result = await sendContactEmailAdmin({
 })
 ```
 
-Both functions return `{ success: boolean, data: SendResponse | null, error: unknown | null }`. Config keys come from `useRuntimeConfig().public`.
-
----
-
-### `useMilestones(settings?)` / `useProjects(settings?)`
-
-Fetch Strapi data through the Nitro proxy. Locale-aware — re-fetches automatically when the language changes.
-
-```ts
-const { data, pending, error } = useMilestones().fetchMilestones()
-const { data, pending, error } = useProjects().fetchProjects()
-```
-
-- Uses `useFetch` with `watch: [locale]`.
-- `settings.server` (default `true`) — enable SSR fetch.
-- `settings.lazy` (default `false`) — non-blocking SSR fetch.
-
----
-
-### `useSkills()`
-
-Fetches skills with filters and pagination. Uses `$fetch` (manual trigger) because query params vary at runtime.
-
-```ts
-const { data, pending, error, pagination, fetchSkills } = useSkills()
-
-await fetchSkills()
-await fetchSkills({ name: 'vue', types: ['feFramework'], page: 1, pageSize: 12 })
-```
-
-State: `data: Ref<Skill[] | null>`, `pending: Ref<boolean>`, `error: Ref<Error | null>`, `pagination: ComputedRef<StrapiPagination | null>`.
-
----
-
-### `useTemplates()`
-
-Fetches GitHub templates via `$fetch` (manual trigger).
-
-```ts
-const { data, pending, error, fetchTemplates } = useTemplates()
-await fetchTemplates()
-```
-
----
+Both functions return `{ success: boolean, data: SendResponse | null, error: unknown | null }`.
 
 ### `useTypedText(input, options?)`
 
@@ -685,19 +756,25 @@ Typewriter animation via `typed.js`. **Client-side only.**
 
 ```ts
 const { el, elStyle, isRunning } = useTypedText(['Frontend Dev', 'Vue Enthusiast', 'UI Craftsman'])
+// or with reactive computed (auto-updates when locale changes)
+const { el, elStyle } = useTypedText(computed(() => [t('key.0'), t('key.1')]))
 ```
 
 ```vue
 <span ref="el" :style="elStyle"></span>
 ```
 
-- Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace).
-- Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing).
-- Cursor character: `'\u00A0_'` (non-breaking space + underscore).
-- Respects `prefers-reduced-motion` automatically.
-- Loaded via dynamic import — SSR-safe.
+| Return | Type | Description |
+|---|---|---|
+| `el` | `Ref<HTMLElement \| null>` | Bind via `ref="el"` |
+| `elStyle` | `CSSProperties` | Bind via `:style="elStyle"` |
+| `isRunning` | `Ref<boolean>` | Whether animation is active |
+| `start()` / `stop()` / `reset(hard?)` | — | Manual playback control |
+| `recreate()` / `setOptions()` / `setStrings()` / `update()` | — | Dynamic reconfiguration |
 
----
+- Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace)
+- Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing)
+- Respects `prefers-reduced-motion` automatically
 
 ### `useFloatingUi(config?)`
 
@@ -711,8 +788,6 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 })
 ```
 
----
-
 ### `useLockScroll()`
 
 Prevents page scroll. Multi-caller safe — each instance holds its own owner ID.
@@ -723,8 +798,6 @@ lock()    // adds scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
 ```
 
----
-
 ### `useSanitize()`
 
 XSS-safe HTML rendering via `isomorphic-dompurify`.
@@ -734,20 +807,17 @@ const { sanitizeHtml } = useSanitize()
 const clean = sanitizeHtml(dirtyHtml)
 ```
 
-Server-side: skips DOMPurify (content trusted from CMS). Client-side: full DOMPurify sanitisation. Use only via `BaseRichText` — never write `v-html` directly.
+Server-side: skips DOMPurify (content trusted from CMS). Client-side: full sanitisation. Use only via `BaseRichText` — never write `v-html` directly.
 
 ---
 
 ### Utils
 
-#### `generateUuid(): string`
-Returns a random UUID v4 string.
-
-#### `blocksToHtml(blocks: RichBlock[]): string`
-Converts a Strapi `RichBlock[]` array to an HTML string. Always pair with `useSanitize()` before `v-html`, or use `BaseRichText` directly.
-
-#### `downloadFile(publicUrl: string, filename: string): void`
-Triggers a browser file download from a public URL (e.g. CV download). **Client-side only.**
+| Function | Signature | Description |
+|---|---|---|
+| `generateUuid` | `(): string` | Returns a random UUID v4 string |
+| `blocksToHtml` | `(blocks: RichBlock[]): string` | Converts Strapi `RichBlock[]` to HTML. Always pair with `useSanitize()` or use `BaseRichText` |
+| `downloadFile` | `(publicUrl: string, filename: string): void` | Triggers a browser file download. **Client-side only** |
 
 ---
 
@@ -767,51 +837,40 @@ All interfaces are declared globally — no import needed.
 
 ---
 
-## 9. Server API — Nitro Proxy Layer
+## 9. i18n
 
-The frontend **never calls Strapi directly**. All data flows through a Nitro proxy:
+The app uses `@nuxtjs/i18n` with the `prefix_except_default` strategy. English (`en`) is the default locale — no URL prefix. Italian (`it`) uses the `/it/` prefix.
 
+Translation files live in `i18n/locales/`. English is the source of truth.
+
+### Adding a new translation key
+
+1. Add the key to `i18n/locales/en.json` (English value).
+2. Add the same key to `i18n/locales/it.json` (Italian value).
+3. Use `$t('key')` in templates or `const { t } = useI18n()` in `<script setup>`.
+
+**Never hardcode user-facing strings.** Every visible string — labels, placeholders, `aria-label`, error messages, button text — must go through `$t()`.
+
+```vue
+<!-- Template -->
+<p>{{ $t('pages.home.hero') }}</p>
+
+<!-- Script -->
+<script setup lang="ts">
+const { t } = useI18n()
+const label = t('nav.home')
+</script>
 ```
-Client / SSR
-    │
-    ▼
-/api/sb-*  (Nitro — server/api/)
-    │
-    ▼
-Strapi CMS  (NUXT_PUBLIC_STRAPI_URL)
-```
 
-This pattern avoids CORS issues, hides the Strapi URL from the client bundle, enables server-side caching and allows graceful degradation.
+### Adding a new language
 
-### Endpoint catalogue
-
-| File | Route | Caching | Notes |
-|---|---|---|---|
-| `_health.get.ts` | `GET /api/_health` | None | Health check |
-| `sb-milestones.get.ts` | `GET /api/sb-milestones` | 6h SWR | Locale-aware |
-| `sb-projects.get.ts` | `GET /api/sb-projects` | 6h SWR | Locale-aware |
-| `sb-skills.get.ts` | `GET /api/sb-skills` | None | Dynamic filters + pagination |
-| `sb-templates.get.ts` | `GET /api/sb-templates` | 6h SWR | Locale-aware |
-
-### Caching strategy
-
-| Setting | Value | Effect |
-|---|---|---|
-| `maxAge` | `60 * 60 * 6` | Cache lives for 6h on the server |
-| `swr` | `true` | Returns cached data immediately while refreshing in background |
-| `getKey` | locale string | Separate cache bucket per language |
-
-Use `cachedEventHandler` for static/semi-static Strapi collections (milestones, projects, templates). Use `defineEventHandler` for endpoints with dynamic query params (skills) — caching filter combinations would grow unboundedly.
-
-### Adding a new endpoint
-
-1. Create `server/api/sb-<resource>.get.ts`.
-2. Follow the locale-aware `cachedEventHandler` pattern (or `defineEventHandler` for dynamic filters).
-3. Guard `baseUrl` at the top — return a `500` if missing.
-4. Sanitise every query param before forwarding to Strapi.
-5. Return `{ data: [] }` in the `catch` block to prevent build failures.
-6. Add a matching composable `app/composables/use<Resource>.ts`.
-7. Add a `*Skeleton.vue` component for the loading state.
+1. Add a locale file `i18n/locales/<code>.json` with all keys translated.
+2. Register it in `nuxt.config.ts → i18n.locales`:
+   ```ts
+   { code: 'fr', iso: 'fr-FR', language: 'fr-FR', name: 'Français', file: 'fr.json' }
+   ```
+3. Add `routeRules` entries for the new locale prefix in `nuxt.config.ts`.
+4. Add the flag to the language switcher in `TheHeader`.
 
 ---
 
@@ -824,10 +883,12 @@ The project ships with pre-configured [GitHub Copilot](https://github.com/featur
 | File / folder | Purpose |
 |---|---|
 | `.github/copilot-instructions.md` | Global rules: app context, response language, stack, naming conventions |
-| `.github/instructions/*.instructions.md` | Scoped rules loaded automatically per file type |
+| `.github/instructions/*.instructions.md` | Scoped rules loaded automatically per file type (`applyTo` patterns) |
 | `.github/prompts/*.prompt.md` | Reusable Agent-mode workflows triggered by a phrase |
 
 ### Available prompts
+
+To run a prompt, type the trigger phrase in **Agent mode** (`#` or `@agent`).
 
 | Prompt file | Trigger phrases | What it does |
 |---|---|---|
@@ -835,7 +896,7 @@ The project ships with pre-configured [GitHub Copilot](https://github.com/featur
 | `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining errors |
 | `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build` |
 | `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Updates `package.json` version, `CHANGELOG.md` and README badges |
-| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, runs `npm audit` |
+| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, runs `npm audit fix` |
 | `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, meta tags across all pages |
 
 ### Instruction files
@@ -865,77 +926,68 @@ Connect the GitHub repository to Netlify with:
 - **Publish directory:** `.output/public`
 - **Node version:** `24.11.0`
 
-Add all required environment variables under **Site settings → Environment variables** (see below).
+### Changing the deployment target
 
----
+Edit `nuxt.config.ts → nitro.preset`. See [Nitro deploy presets](https://nitro.unjs.io/deploy) for all options (Vercel, Cloudflare, AWS Lambda, etc.).
 
-## 12. Environment Variables
+### Environment variables
+
+Add all variables under **Site settings → Environment variables** on Netlify. All are accessed via `useRuntimeConfig().public` — never read `process.env` directly in Vue components.
 
 | Variable | Required | Description |
 |---|---|---|
 | `NUXT_EMAILJS_PUBLIC_KEY` | Yes | EmailJS public key |
 | `NUXT_EMAILJS_SERVICE_ID` | Yes | EmailJS service ID |
-| `NUXT_EMAILJS_TEMPLATE_ADMIN_ID` | Yes | EmailJS template ID for admin notification email |
-| `NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID` | Yes | EmailJS template ID for reply-to-user email |
+| `NUXT_EMAILJS_TEMPLATE_ADMIN_ID` | Yes | EmailJS template ID — admin notification email |
+| `NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID` | Yes | EmailJS template ID — reply-to-user email |
 | `NUXT_PUBLIC_STRAPI_URL` | Yes | Strapi CMS base URL (e.g. `https://cms.example.com`) |
+| `NUXT_PUBLIC_CLOUDINARY_BASE` | Optional | Cloudinary base URL for `@nuxt/image` cloud provider |
 
-All variables are accessed in the app via `useRuntimeConfig().public`. They are declared in `nuxt.config.ts → runtimeConfig.public`. Never read `process.env` directly in Vue components.
+### Versioning
 
----
-
-## 13. Versioning
-
-The project uses manual versioning via `package.json` and maintains a `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com) with Semantic Versioning.
-
-```bash
-# 1. Bump version
-npm version patch   # 1.0.0 → 1.0.1
-npm version minor   # 1.0.0 → 1.1.0
-npm version major   # 1.0.0 → 2.0.0
-
-# 2. Update CHANGELOG.md
-
-# 3. Commit and tag
-git add package.json CHANGELOG.md
-git commit -m "chore: bump version to 1.0.1"
-git tag -a "v1.0.1" -m "Release v1.0.1"
-git push origin main && git push origin v1.0.1
-```
-
-Use the `bump-version` Copilot Agent prompt to automate the full workflow (see [AI Tooling](#10-ai-tooling--prompts--instructions)).
+The project uses manual versioning via `package.json` with `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com). Use the `bump-version` Copilot Agent prompt to automate the full workflow.
 
 ---
 
-## 14. Dependencies
+## 12. Dependencies
+
+### Runtime dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `nuxt` | ^4.4.2 | Core framework |
-| `vue` | ^3.5.x | UI framework |
-| `vue-router` | ^5.x | Routing |
-| `tailwindcss` | ^4.x | Utility-first CSS |
-| `@tailwindcss/vite` | ^4.x | Tailwind v4 Vite plugin |
-| `@nuxt/icon` | ^2.x | SVG icon system |
-| `@nuxt/image` | ^2.x | Image optimisation |
-| `@nuxtjs/i18n` | ^10.x | Multi-language support (EN + IT) |
-| `@vueuse/nuxt` | ^14.x | Vue composition utilities |
-| `@floating-ui/vue` | ^1.x | Floating element positioning |
-| `isomorphic-dompurify` | ^3.x | XSS-safe HTML sanitisation |
-| `@emailjs/browser` | ^4.x | Contact form email sending |
-| `typed.js` | ^3.x | Typewriter text animation |
-| `zod` | ^4.x | Runtime form validation |
-| `@iconify-json/solar` *(dev)* | ^1.x | Solar icon set |
-| `@iconify-json/mdi` *(dev)* | ^1.x | MDI icon set |
-| `@iconify-json/logos` *(dev)* | ^1.x | Brand/tech logo icons |
-| `@iconify-json/flagpack` *(dev)* | ^1.x | Flag icons |
-| `@nuxt/eslint` *(dev)* | ^1.x | ESLint + stylistic rules |
-| `@types/node` *(dev)* | ^25.x | Node.js type definitions |
+| `nuxt` | `^4.4.2` | Core framework |
+| `vue` | `^3.5.32` | UI framework |
+| `vue-router` | `^5.0.4` | Routing |
+| `tailwindcss` | `^4.2.2` | Utility-first CSS |
+| `@tailwindcss/vite` | `^4.2.2` | Tailwind v4 Vite plugin |
+| `@nuxt/eslint` | `^1.15.2` | ESLint + stylistic rules |
+| `@nuxt/icon` | `^2.2.1` | SVG icon system |
+| `@nuxt/image` | `^2.0.0` | Image optimisation |
+| `@nuxtjs/i18n` | `^10.2.4` | Multi-language support (EN + IT) |
+| `@vueuse/core` | `^14.2.1` | Vue composition utilities |
+| `@vueuse/nuxt` | `^14.2.1` | Nuxt integration for VueUse |
+| `@floating-ui/vue` | `^1.1.11` | Floating element positioning |
+| `isomorphic-dompurify` | `^3.7.1` | XSS-safe HTML sanitisation |
+| `@emailjs/browser` | `^4.4.1` | Contact form email sending |
+| `typed.js` | `^3.0.0` | Typewriter text animation |
+| `zod` | `^4.3.6` | Runtime form validation |
+| `eslint` | `^10.1.0` | Linter |
+
+### Dev dependencies
+
+| Package | Version | Purpose |
+|---|---|---|
+| `@iconify-json/solar` | `^1.2.5` | Solar icon set |
+| `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
+| `@iconify-json/logos` | `^1.2.11` | Brand/tech logo icons |
+| `@iconify-json/flagpack` | `^1.2.7` | Flag icons |
+| `@types/node` | `^25.5.2` | Node.js type definitions |
 
 ---
 
 <div align="center">
 
-Copyright © 2025 Stefano Biddau — All Rights Reserved
+Copyright © 2026 Stefano Biddau — All Rights Reserved
 
 This project is proprietary and confidential. See the [LICENSE](./LICENSE) file for details.
 
