@@ -20,11 +20,11 @@ export default defineNuxtConfig({
         // Global Open Graph
         { property: 'og:type', content: 'website' },
         { property: 'og:site_name', content: 'Stefano Biddau' },
-        { property: 'og:image', content: 'https://www.stefanobiddau.com/images/card-logo.jpg' },
+        { property: 'og:image', content: 'https://stefanobiddau.com/images/card-logo.jpg' },
 
         // Global Twitter (not tied to content)
         { name: 'twitter:card', content: 'summary' },
-        { name: 'twitter:image', content: 'https://www.stefanobiddau.com/images/card-logo.jpg' },
+        { name: 'twitter:image', content: 'https://stefanobiddau.com/images/card-logo.jpg' },
       ],
       link: [
         // Global favicon
@@ -93,7 +93,7 @@ export default defineNuxtConfig({
     },
   },
   i18n: {
-    baseUrl: 'https://www.stefanobiddau.com',
+    baseUrl: 'https://stefanobiddau.com',
     strategy: 'prefix_except_default',
     defaultLocale: 'en',
 

@@ -13,7 +13,7 @@ useSeoMeta({
   twitterDescription: () => t('meta.projects.description'),
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
-  ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
+  ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
 const { fetchProjects } = useProjects()

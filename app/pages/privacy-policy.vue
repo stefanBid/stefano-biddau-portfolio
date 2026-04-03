@@ -14,7 +14,7 @@ useSeoMeta({
   twitterDescription: () => t('meta.privacy.description'),
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
-  ogUrl: () => `https://www.stefanobiddau.com${route.fullPath}`,
+  ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
 const lastUpdate = computed(() => {
