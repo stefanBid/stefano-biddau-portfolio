@@ -82,6 +82,7 @@ export default defineNuxtConfig({
         'typed.js',
         '@emailjs/browser',
         '@floating-ui/vue',
+        'isomorphic-dompurify',
       ],
     },
   },
