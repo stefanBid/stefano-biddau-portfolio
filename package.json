@@ -36,7 +36,8 @@
     "@iconify-json/logos": "^1.2.11",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/solar": "^1.2.5",
-    "@types/node": "^25.5.2"
+    "@types/node": "^25.5.2",
+    "vue-tsc": "^3.2.6"
   },
   "engines": {
     "node": ">=24.11.0"
