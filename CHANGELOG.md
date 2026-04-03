@@ -1,5 +1,22 @@
 # Changelog
 
+## [1.4.0] — 2026-04-03
+
+### Features
+- Add GitHub Copilot instructions and prompt workflows for AI-assisted development
+  (server API, components, design system, pages, composables, project config)
+- Add prompt workflows: bump-version, check-build, check-dependencies, check-gsc, check-lint, update-docs
+
+### Changed
+- Overhaul README.md with improved structure and detailed documentation sections
+- Update dependencies in package.json
+
+### Fixed
+- Update README.md version badges and dependency references
+
+### Dependencies
+- Add vue-tsc as development dependency
+
 ## [1.3.23](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.22...v1.3.23) (2026-03-19)
 
 
