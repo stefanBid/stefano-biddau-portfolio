@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.0...v1.4.1) (2026-04-03)
+
+
+### Bug Fixes
+
+* update URLs to remove 'www' prefix across the application ([#111](https://github.com/stefanBid/stefano-biddau-portfolio/issues/111)) ([c4d29fd](https://github.com/stefanBid/stefano-biddau-portfolio/commit/c4d29fd18b6c771da42f59100549cf599bc63755))
+
 ## [1.4.1] — 2026-04-03
 
 ### Fixed
