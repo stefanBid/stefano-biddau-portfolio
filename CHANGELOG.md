@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.23...v1.4.0) (2026-04-03)
+
+
+### Features
+
+* add ai code assistent ([#109](https://github.com/stefanBid/stefano-biddau-portfolio/issues/109)) ([f15364a](https://github.com/stefanBid/stefano-biddau-portfolio/commit/f15364adb92ec4a05f253ace82a9a9d7a0186cfe))
+
 ## [1.4.0] — 2026-04-03
 
 ### Features
