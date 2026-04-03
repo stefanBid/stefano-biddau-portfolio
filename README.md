@@ -900,6 +900,7 @@ To run a prompt, type the trigger phrase in **Agent mode** (`#` or `@agent`).
 | `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Updates `package.json` version, `CHANGELOG.md` and README badges |
 | `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, runs `npm audit fix` |
 | `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, meta tags across all pages |
+| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates dependencies, SEO, build and lint checks; auto-bumps version; optionally updates docs |
 
 ### Instruction files
 
