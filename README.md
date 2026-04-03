@@ -3,7 +3,7 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-1.4.0-blue)
+  ![Version](https://img.shields.io/badge/version-1.4.1-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.4.2-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.32-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -13,7 +13,7 @@
 
   **Stefano Biddau's personal portfolio — Front-End Developer & Web Designer**
 
-  [www.stefanobiddau.com](https://www.stefanobiddau.com)
+  [stefanobiddau.com](https://stefanobiddau.com)
 
 </div>
 
@@ -599,12 +599,14 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 const { t } = useI18n()
 
 // SEO
+const route = useRoute()
+
 useSeoMeta({
-  title: t('pageName.meta.title'),
-  description: t('pageName.meta.description'),
-  ogTitle: t('pageName.meta.title'),
-  ogDescription: t('pageName.meta.description'),
-  ogUrl: 'https://www.stefanobiddau.com/my-page',
+  title: () => t('pageName.meta.title'),
+  description: () => t('pageName.meta.description'),
+  ogTitle: () => t('pageName.meta.title'),
+  ogDescription: () => t('pageName.meta.description'),
+  ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 </script>
 
@@ -982,6 +984,7 @@ The project uses manual versioning via `package.json` with `CHANGELOG.md` follow
 | `@iconify-json/logos` | `^1.2.11` | Brand/tech logo icons |
 | `@iconify-json/flagpack` | `^1.2.7` | Flag icons |
 | `@types/node` | `^25.5.2` | Node.js type definitions |
+| `vue-tsc` | `^3.2.6` | Vue TypeScript type checking |
 
 ---
 
@@ -991,6 +994,6 @@ Copyright © 2026 Stefano Biddau — All Rights Reserved
 
 This project is proprietary and confidential. See the [LICENSE](./LICENSE) file for details.
 
-[www.stefanobiddau.com](https://www.stefanobiddau.com) · [@stefanoBid](https://github.com/stefanoBid)
+[stefanobiddau.com](https://stefanobiddau.com) · [@stefanoBid](https://github.com/stefanoBid)
 
 </div>
