@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1] — 2026-04-03
+
+### Fixed
+- Remove `www.` prefix from all canonical URLs to align with the Netlify primary domain (`stefanobiddau.com`)
+  — updated `nuxt.config.ts` (i18n.baseUrl, og:image, twitter:image), `public/robots.txt`,
+    `public/sitemap.xml` (all 12 routes) and all 6 page `ogUrl` meta tags
+
 ## [1.4.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.3.23...v1.4.0) (2026-04-03)
 
 

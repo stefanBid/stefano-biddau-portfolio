@@ -4,134 +4,134 @@
 
   <!-- Homepage EN (default) -->
   <url>
-    <loc>https://www.stefanobiddau.com/</loc>
+    <loc>https://stefanobiddau.com/</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it" />
   </url>
 
   <!-- Homepage IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it</loc>
+    <loc>https://stefanobiddau.com/it</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it" />
   </url>
 
   <!-- About Me EN -->
   <url>
-    <loc>https://www.stefanobiddau.com/about-me</loc>
+    <loc>https://stefanobiddau.com/about-me</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/about-me" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/about-me" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/about-me" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/about-me" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/about-me" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/about-me" />
   </url>
 
   <!-- About Me IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it/about-me</loc>
+    <loc>https://stefanobiddau.com/it/about-me</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/about-me" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/about-me" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/about-me" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/about-me" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/about-me" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/about-me" />
   </url>
 
   <!-- My Skills EN -->
   <url>
-    <loc>https://www.stefanobiddau.com/my-skills</loc>
+    <loc>https://stefanobiddau.com/my-skills</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-skills" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/my-skills" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/my-skills" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/my-skills" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/my-skills" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/my-skills" />
   </url>
 
   <!-- My Skills IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it/my-skills</loc>
+    <loc>https://stefanobiddau.com/it/my-skills</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-skills" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/my-skills" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/my-skills" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/my-skills" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/my-skills" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/my-skills" />
   </url>
 
   <!-- My Projects EN -->
   <url>
-    <loc>https://www.stefanobiddau.com/my-projects</loc>
+    <loc>https://stefanobiddau.com/my-projects</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-projects" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/my-projects" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/my-projects" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/my-projects" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/my-projects" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/my-projects" />
   </url>
 
   <!-- My Projects IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it/my-projects</loc>
+    <loc>https://stefanobiddau.com/it/my-projects</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/my-projects" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/my-projects" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/my-projects" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/my-projects" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/my-projects" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/my-projects" />
   </url>
 
   <!-- Privacy Policy EN -->
   <url>
-    <loc>https://www.stefanobiddau.com/privacy-policy</loc>
+    <loc>https://stefanobiddau.com/privacy-policy</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/privacy-policy" />
   </url>
 
   <!-- Privacy Policy IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it/privacy-policy</loc>
+    <loc>https://stefanobiddau.com/it/privacy-policy</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/privacy-policy" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/privacy-policy" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/privacy-policy" />
   </url>
 
   <!-- Terms & Conditions EN -->
   <url>
-    <loc>https://www.stefanobiddau.com/terms-and-conditions</loc>
+    <loc>https://stefanobiddau.com/terms-and-conditions</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/terms-and-conditions" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/terms-and-conditions" />
   </url>
 
   <!-- Terms & Conditions IT -->
   <url>
-    <loc>https://www.stefanobiddau.com/it/terms-and-conditions</loc>
+    <loc>https://stefanobiddau.com/it/terms-and-conditions</loc>
     <lastmod>2025-12-04</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.5</priority>
-    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.stefanobiddau.com/terms-and-conditions" />
-    <xhtml:link rel="alternate" hreflang="en" href="https://www.stefanobiddau.com/terms-and-conditions" />
-    <xhtml:link rel="alternate" hreflang="it-IT" href="https://www.stefanobiddau.com/it/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://stefanobiddau.com/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://stefanobiddau.com/terms-and-conditions" />
+    <xhtml:link rel="alternate" hreflang="it-IT" href="https://stefanobiddau.com/it/terms-and-conditions" />
   </url>
 
 </urlset>
