@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.4.2] — 2026-04-04
+
+### Changed
+- Add `full-checkup.prompt.md` — new Agent-mode workflow that orchestrates
+  dependencies, SEO, build and lint checks in sequence, auto-bumps version
+  and optionally updates the documentation
+- Add "Documentation sync — mandatory rule" to `copilot-instructions.md`:
+  every change creating a discrepancy with README.md must be followed by
+  a targeted documentation update in the same session
+- Register `full-checkup.prompt.md` in the Available Prompts table of README.md
+
+### Dependencies
+- `eslint` updated `^10.1.0` → `^10.2.0` (minor, no breaking changes)
+
 ## [1.4.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.0...v1.4.1) (2026-04-03)
 
 
