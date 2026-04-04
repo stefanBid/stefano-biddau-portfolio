@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3] — 2026-04-04
+
+### Fixed
+- Added `scripts/safe-install.sh` — script that runs `npm ci` on `main` and `npm install` on any other branch
+- Added `npm run si` script alias in `package.json` for convenient safe-install execution
+- Updated AI prompt files (`check-dependencies.prompt.md`, `bump-version.prompt.md`) to use `npm run si` instead of bare `npm install`
+
 ## [1.4.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.1...v1.4.2) (2026-04-04)
 
 
