@@ -94,6 +94,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Check code quality with ESLint |
 | `npm run lint:fix` | Auto-fix ESLint issues |
+| `npm run si` | Safe install dependencies (auto-detects branch, and run `npm install` or `npm ci`) |
 
 ---
 

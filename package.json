@@ -10,7 +10,8 @@
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "si": "bash scripts/safe-install.sh"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",
