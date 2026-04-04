@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.2...v1.4.3) (2026-04-04)
+
+
+### Bug Fixes
+
+* implement safe install script and update npm install policy ([#115](https://github.com/stefanBid/stefano-biddau-portfolio/issues/115)) ([1ddfa3f](https://github.com/stefanBid/stefano-biddau-portfolio/commit/1ddfa3fc73033cbf203c6f61259f7bd894c2f62c))
+
 ## [1.4.3] — 2026-04-04
 
 ### Fixed
