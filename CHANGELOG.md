@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.1...v1.4.2) (2026-04-04)
+
+
+### Bug Fixes
+
+* ai prompts flux ([#113](https://github.com/stefanBid/stefano-biddau-portfolio/issues/113)) ([20abbb4](https://github.com/stefanBid/stefano-biddau-portfolio/commit/20abbb41c17a8cecd57eee637bb3306f7af78b87))
+
 ## [1.4.2] — 2026-04-04
 
 ### Changed
