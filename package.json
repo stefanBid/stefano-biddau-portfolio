@@ -24,7 +24,7 @@
     "@vueuse/core": "^14.2.1",
     "@vueuse/nuxt": "^14.2.1",
     "eslint": "^10.2.0",
-    "isomorphic-dompurify": "^3.7.1",
+    "isomorphic-dompurify": "^3.8.0",
     "nuxt": "^4.4.2",
     "tailwindcss": "^4.2.2",
     "typed.js": "^3.0.0",
@@ -37,7 +37,7 @@
     "@iconify-json/logos": "^1.2.11",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/solar": "^1.2.5",
-    "@types/node": "^25.5.2",
+    "@types/node": "^25.6.0",
     "vue-tsc": "^3.2.6"
   },
   "engines": {
