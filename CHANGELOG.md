@@ -1,5 +1,20 @@
 # Changelog
 
+## [1.4.4] — 2026-04-12
+
+### Fixed
+- Removed `titleTemplate` from `app/layouts/default.vue` — meta titles are now fully defined in the i18n files (`en.json` / `it.json`)
+- Fixed `|` separator in meta titles using the `{'|'}` vue-i18n literal interpolation syntax (`|` is reserved as the pluralization separator)
+- Removed duplicate `ogTitle` keys from i18n files — `ogTitle` and `twitterTitle` now reference `meta.*.title` (single source of truth)
+- Updated `lastmod` in sitemap for all 12 URLs to `2026-04-12`
+- Updated attached CV files: `Stefano_Biddau_CV.pdf`, `Stefano_Biddau_CV_en.pdf`, `Stefano_Biddau_CV_it.pdf`
+
+### Dependencies
+- `@types/node` `^25.5.2` → `^25.6.0`
+- `isomorphic-dompurify` `^3.7.1` → `^3.8.0`
+- `unhead` + `@unhead/vue` patched via `npm audit fix` (moderate CVE)
+- `vite` patched via `npm audit fix` (high CVE — path traversal)
+
 ## [1.4.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.2...v1.4.3) (2026-04-04)
 
 

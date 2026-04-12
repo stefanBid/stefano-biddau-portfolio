@@ -15,30 +15,27 @@
   },
   "meta": {
     "home": {
-      "title": "Stefano Biddau - ",
+      "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
       "description": "Sono Stefano Biddau, web designer e sviluppatore front-end. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
     },
     "about": {
-      "title": "Chi Sono - Stefano Biddau",
-      "ogTitle": "Chi Sono - Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Mi chiamo Stefano Biddau e sono un web designer e sviluppatore front-end freelance. Scopri la mia storia, il mio percorso e il mio approccio al lavoro."
     },
     "skills": {
-      "title": "Competenze & Tecnologie - Stefano Biddau",
-      "ogTitle": "Competenze & Tecnologie - Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Competenze & Tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Competenze e tecnologie che utilizzo per sviluppare interfacce intuitive e performanti: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
     },
     "projects": {
-      "title": "Progetti Web - Stefano Biddau",
-      "ogTitle": "Progetti Web - Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Progetti Web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Guarda una selezione dei miei progetti web: soluzioni digitali moderne, responsive e orientate all’esperienza utente. Ogni lavoro riflette il mio approccio al design e allo sviluppo."
     },
     "privacy": {
-      "title": "Privacy Policy - Stefano Biddau",
+      "title": "Privacy Policy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
     },
     "terms": {
-      "title": "Termini e Condizioni - Stefano Biddau",
+      "title": "Termini e Condizioni {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Termini e condizioni per l'utilizzo di stefanobiddau.com - Regole e linee guida per i visitatori del sito."
     }
   },

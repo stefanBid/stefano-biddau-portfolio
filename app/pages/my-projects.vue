@@ -7,9 +7,9 @@ useSeoMeta({
   // LOCALIZED
   title: () => t('meta.projects.title'),
   description: () => t('meta.projects.description'),
-  ogTitle: () => t('meta.projects.ogTitle'),
+  ogTitle: () => t('meta.projects.title'),
   ogDescription: () => t('meta.projects.description'),
-  twitterTitle: () => t('meta.projects.ogTitle'),
+  twitterTitle: () => t('meta.projects.title'),
   twitterDescription: () => t('meta.projects.description'),
 
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE

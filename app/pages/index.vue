@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Dependencies
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 
 useSeoMeta({
@@ -32,6 +32,11 @@ const { el, elStyle } = useTypedText(
 
 const ready = ref(false)
 const contactFormIsOpen = ref(false)
+
+const getFile = computed<{ name: string, path: string }>(() => ({
+  name: `Stefano_Biddau_CV_${locale.value}.pdf`,
+  path: `/files/Stefano_Biddau_CV_${locale.value}.pdf`,
+}))
 </script>
 
 <template>
@@ -74,7 +79,7 @@ const contactFormIsOpen = ref(false)
             <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:folder-with-files-bold-duotone" />
           </template>
           <template #card-footer>
-            <BaseButton variant="primary" @click.stop="downloadFile('/files/Stefano_Biddau_CV.pdf', 'Stefano_Biddau_CV.pdf')">
+            <BaseButton variant="primary" @click.stop="downloadFile(getFile.path, getFile.name)">
               {{ t('pages.home.cvCard.buttonText') }}
             </BaseButton>
           </template>
