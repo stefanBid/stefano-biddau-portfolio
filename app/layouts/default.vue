@@ -8,7 +8,6 @@ useHead(() => ({
   htmlAttrs: i18nHead.value.htmlAttrs,
   meta: i18nHead.value.meta,
   link: i18nHead.value.link,
-  titleTemplate: '%s Full-Stack Developer & Web Designer',
 }))
 
 const { t, setLocale, locale } = useI18n()
