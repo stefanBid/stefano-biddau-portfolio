@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.3...v1.4.4) (2026-04-12)
+
+
+### Bug Fixes
+
+* profile info ([#117](https://github.com/stefanBid/stefano-biddau-portfolio/issues/117)) ([eebd305](https://github.com/stefanBid/stefano-biddau-portfolio/commit/eebd305b7eb11783ccd8b57ab0d535ca8fa3576e))
+
 ## [1.4.4] — 2026-04-12
 
 ### Fixed
