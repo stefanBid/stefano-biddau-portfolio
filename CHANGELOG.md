@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.4...v1.4.5) (2026-04-25)
+
+
+### Bug Fixes
+
+* montly checkup ([#119](https://github.com/stefanBid/stefano-biddau-portfolio/issues/119)) ([d78f4b3](https://github.com/stefanBid/stefano-biddau-portfolio/commit/d78f4b3c9fcce7d9a21e26c5d631eddc6cdb787c))
+
 ## [1.4.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.3...v1.4.4) (2026-04-12)
 
 
