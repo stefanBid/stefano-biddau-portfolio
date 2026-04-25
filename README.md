@@ -898,10 +898,9 @@ To run a prompt, type the trigger phrase in **Agent mode** (`#` or `@agent`).
 | `update-docs.prompt.md` | "Aggiorna la documentazione" · "Aggiorna il README" | Reads the full project and rewrites `README.md` |
 | `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining errors |
 | `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build` |
-| `bump-version.prompt.md` | "Aggiornami il progetto alla versione X.Y.Z" | Updates `package.json` version, `CHANGELOG.md` and README badges |
 | `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, runs `npm audit fix` |
 | `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, meta tags across all pages |
-| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates dependencies, SEO, build and lint checks; auto-bumps version; optionally updates docs |
+| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates dependencies, SEO, build and lint checks; optionally updates docs |
 
 ### Instruction files
 
@@ -949,7 +948,7 @@ Add all variables under **Site settings → Environment variables** on Netlify. 
 
 ### Versioning
 
-The project uses manual versioning via `package.json` with `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com). Use the `bump-version` Copilot Agent prompt to automate the full workflow.
+Versioning is handled automatically by the [Release Please](https://github.com/googleapis/release-please) GitHub Action on every push to `main`. It bumps `package.json`, creates a GitHub Release and updates `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com) conventions.
 
 ---
 
