@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.5...v1.4.6) (2026-05-24)
+
+
+### Bug Fixes
+
+* correct typo in README regarding global TypeScript types ([#122](https://github.com/stefanBid/stefano-biddau-portfolio/issues/122)) ([e180cde](https://github.com/stefanBid/stefano-biddau-portfolio/commit/e180cde964b6c908d4fe0a47543681907d55d8be))
+
 ## [1.4.5](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.4...v1.4.5) (2026-04-25)
 
 
