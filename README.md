@@ -826,7 +826,7 @@ Server-side: skips DOMPurify (content trusted from CMS). Client-side: full sanit
 
 ### Global TypeScript types (`app/types/global.d.ts`)
 
-All interfaces are declared globally — no import needed.
+All interfaces are declared globally — no import needed
 
 | Type | Description |
 |---|---|
