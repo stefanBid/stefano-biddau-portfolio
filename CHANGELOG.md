@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.6...v1.5.0) (2026-06-10)
+
+
+### Features
+
+* refactor code structure for improved readability and maintainability ([#124](https://github.com/stefanBid/stefano-biddau-portfolio/issues/124)) ([9a7d345](https://github.com/stefanBid/stefano-biddau-portfolio/commit/9a7d3452bd64606dd57600608243b451c340fff0))
+
 ## [1.4.6](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.5...v1.4.6) (2026-05-24)
 
 
