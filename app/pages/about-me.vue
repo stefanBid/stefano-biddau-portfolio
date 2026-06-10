@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import useMilestones from '~/composables/data/useMilestones'
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
@@ -16,16 +18,13 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const { fetchMilestones } = useMilestones()
-const { error } = useNotification()
-const { data: milestones, pending, error: fetchError } = fetchMilestones()
+const { milestones } = useMilestones()
 
 // State
 const userSelectedId = ref<string | null>(null)
-const safeMilestones = computed(() => milestones.value ?? [])
 
 const selectedMilestoneId = computed(() => {
-  return userSelectedId.value || safeMilestones.value?.[0]?.id || null
+  return userSelectedId.value || milestones.value?.[0]?.id || null
 })
 
 // Events
@@ -52,18 +51,6 @@ const onSelectMilestone = (id: string | number) => {
     }
   })
 }
-
-// Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
-watch(fetchError, (newError) => {
-  if (newError && import.meta.client) {
-    error({
-      title: t('pages.about.milestoneError.title'),
-      message: t('pages.about.milestoneError.message'),
-      autoClose: true,
-      dismissible: true,
-    })
-  }
-}, { immediate: true })
 </script>
 
 <template>
@@ -77,22 +64,11 @@ watch(fetchError, (newError) => {
       <div
         class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': safeMilestones.length || pending,
+          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': milestones.length,
         }"
       >
         <!-- Milestones -->
-        <template v-if="pending">
-          <CustomMilestoneSkeleton v-for="n in 3" :key="n" />
-        </template>
-        <template v-else-if="fetchError">
-          <!-- Error message -->
-          <BaseEmptyBox
-            icon="solar:danger-triangle-bold-duotone"
-            :message="t('pages.about.milestoneError.message')"
-            :title="t('pages.about.milestoneError.title')"
-          />
-        </template>
-        <template v-else-if="!safeMilestones.length">
+        <template v-if="!milestones.length">
           <!-- No milestones message -->
           <BaseEmptyBox
             icon="solar:history-3-bold-duotone"
@@ -102,7 +78,7 @@ watch(fetchError, (newError) => {
         </template>
         <template v-else>
           <CustomMilestone
-            v-for="(milestone) in safeMilestones"
+            v-for="(milestone) in milestones"
             :id="milestone.id"
             :key="milestone.id"
             :content="milestone.content"

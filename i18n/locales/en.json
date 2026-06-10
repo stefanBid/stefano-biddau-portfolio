@@ -118,6 +118,33 @@
     "about": {
       "hero": "Who am I?",
       "milestoneCta": "Read More",
+      "milestones": [
+        {
+          "id": "1",
+          "title": "My Academic Journey",
+          "subtitle": "UNISA - Computer Science (Fisciano)",
+          "date": "09/09/2018",
+          "imageSrc": "/images/milestones/unisa.webp",
+          "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
+          "content": "My academic journey at UNISA was much more than a traditional course of study: it was the place where I truly learned what it means to build solutions, tackle complexity, grow through challenges, and mature both as a developer and as a person.\n\nI began in 2018 with curiosity and only a few certainties, and over the years I built a solid foundation based on theory, practice, and a clearer understanding of what I wanted to become.\n\nI developed strong skills in **object-oriented programming with Java**, explored **distributed programming through Java EE**, and strengthened my abilities in **web development using HTML, CSS, and JavaScript**. Alongside these technical areas, I studied **mathematics and statistics** and applied them directly through **Python** for data analysis and experimentation.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, was one of the most significant challenges of my university years. Working with the **Fashion-MNIST** dataset, I compared different classification models and discovered the depth, rigor, and potential of machine learning when applied to real-world problems.\n\nBeyond theory, I completed several practical projects, including an e-commerce platform for automotive products. This experience taught me what it truly means to design and implement a fully functional application—from concept to execution—integrating both front-end and back-end logic.\n\nYet the most valuable part of those years was not only the technical knowledge I gained: it was the experience of working in teams, developing leadership when needed, and becoming a reliable reference point for other students. These soft skills shaped my collaborative mindset and the way I approach complex challenges today.\n\nWhen I graduated in December 2022, I felt that I was closing an important chapter—while carrying with me all the tools, knowledge, and self-awareness needed to begin a new one."
+        },
+        {
+          "id": "2",
+          "title": "Internship at SI2001",
+          "subtitle": "Full Stack Developer (internship)",
+          "date": "11/20/2022",
+          "content": "My internship at **SI2001** was my first real step into the world of professional software development. During those months, I trained as a **full-stack developer**, contributing to the development of web applications built with **Spring Boot** and **Angular**. I developed front-end components, integrated REST APIs, implemented back-end business logic, and managed databases, gaining a comprehensive understanding of application architecture and the end-to-end development workflow.\n\nThis experience allowed me to transform academic knowledge into practical skills, applying them to real-world projects within a structured team environment. By the end of the internship, I was no longer just an intern—I was a young developer ready to continue growing and taking on new challenges."
+        },
+        {
+          "id": "3",
+          "title": "Permanent Position at SI2001",
+          "subtitle": "Full Stack Developer",
+          "date": "03/01/2023",
+          "imageSrc": "/images/milestones/workstation.webp",
+          "imageCaption": "Me at my remote workstation, surrounded by screens and code as I bring new features to life.",
+          "content": "My transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
+        }
+      ],
       "milestoneError": {
         "title": "Error Loading Milestones",
         "message": "An error occurred while loading the milestones. Please try again later."
@@ -181,6 +208,51 @@
         "tabLabel": "Personal Projects",
         "title": "Personal Projects & Selected Work",
         "description": "This section showcases a collection of projects that highlight my growth as a developer. Some were built to experiment with new technologies and refine my skills; others are professional projects created for clients who entrusted me with the development of their platforms. Where possible, you can explore the final deployed product, while the source code remains private out of respect for client confidentiality. Each project reflects my approach to development: attention to detail, focus on user experience, and a desire to turn ideas into something tangible.",
+         "list": [
+          {
+            "id": "1",
+            "title": "Comparazione algoritmi di Machine Learning per la classificazione di immagini",
+            "codebaseUrl": "https://github.com/stefanBid/Classificazione-Immagini",
+            "coverImageSrc": "/images/projects/image-classification-cover.webp",
+            "coverImageAlt": "Image Classification project cover",
+            "content": "**Artificial Intelligence** is spreading across many fields and offers a wide range of application contexts.\n\nImage recognition and classification are among the areas that enable some of its most impressive results.\n\nThe purpose of this research is to analyze the most well-known classification algorithms, such as **K-Nearest Neighbors (KNN)**, **Decision Trees**, **Random Forest**, **Support Vector Machines (SVM)**, and **Artificial Neural Networks (ANNs)**.\n\nThe goal is to evaluate their efficiency in classifying the sample images contained in the **MNIST** and **Fashion-MNIST (F-MNIST)** datasets.\n\nThe study was carried out using **Python** libraries, particularly **Scikit-learn**.\n\nThese libraries provide implementations of the algorithms and allow fine-tuning of their parameters.\n\nThis makes it possible to identify which parameters most influence learning capability and to improve classification accuracy when the models are trained on the provided datasets.\n\nThe behavior of the algorithms helped clarify the reasons behind the transition from **MNIST**—now considered outdated and overused—to its successor, **Fashion-MNIST**.\n\nWith the same parameter settings, the examined algorithms show lower classification accuracy on **F-MNIST** compared to **MNIST**.\n\nThis highlights that **F-MNIST** is more challenging and therefore requires closer consideration of algorithm characteristics to achieve high accuracy.\n\nDespite this increased difficulty, these algorithms still achieve strong performance when trained on **F-MNIST**.\n\nThis confirms their ability to generalize and provide efficient results on other existing datasets as well."
+          },
+          {
+            "id": "2",
+            "title": "Studio Legale Romano (Website)",
+            "deployUrl": "https://studiodiavvocatiromano.com/",
+            "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
+            "coverImageAlt": "Romano Law Firm - Website project cover",
+            "content": "The **Studio Legale Romano** website is a project that was commissioned to me by the Romano law firm with the goal of creating a modern and professional digital showcase.\n\nThe website was designed to accurately represent the firm's identity while providing visitors with a clear, elegant, and trustworthy point of reference.\n\nI carefully crafted every aspect of the user interface, choosing a clean and contemporary design that reflects the standards and professionalism of the legal sector.\n\nThe browsing experience was designed to be intuitive and straightforward, guiding users through the most important content with ease.\n\nThe website includes a dedicated section presenting the firm's history, the professional backgrounds of its lawyers, and the values that guide their work.\n\nEach lawyer has a complete profile designed to highlight their expertise, experience, and areas of specialization.\n\nI also developed a dedicated services section where the firm's main legal services are presented in a clear and user-friendly manner.\n\nThis allows visitors to quickly identify their area of interest and understand how the firm can support their needs.\n\nContact information is always prominently displayed and easily accessible from every page of the website.\n\nAdditionally, I integrated a system that displays the firm's opening hours in real time, improving communication and accessibility for clients.\n\nThe result is a showcase website that combines visual refinement, functionality, and professionalism.\n\nA tailor-made project built for Studio Legale Romano, designed to strengthen its online presence and enhance the relationship between the firm and its visitors."
+          },
+          {
+            "id": "3",
+            "title": "Guess My Number",
+            "codebaseUrl": "https://github.com/stefanBid/Guess-My-Number",
+            "deployUrl": "https://stefanbid.github.io/Guess-My-Number/",
+            "coverImageSrc": "/images/projects/guess-my-number.webp",
+            "coverImageAlt": "Guess My Number project cover",
+            "content": "The game follows a level-based progression system: each match starts with **five lives**, and the objective is to guess a randomly generated number between **1 and 20** before running out of attempts.\n\nEvery game begins with five lives, and your goal is to find the correct number within that limit.\n\nEvery **five levels**, you unlock a **bonus stage** where you must identify the correct number from three possible choices.\n\n**Try to beat your best score!**"
+          },
+          {
+            "id": "4",
+            "title": "Pig Game",
+            "codebaseUrl": "https://github.com/stefanBid/Pig-Game",
+            "deployUrl": "https://stefanbid.github.io/Pig-Game/",
+            "coverImageSrc": "/images/projects/pig-game.webp",
+            "coverImageAlt": "Pig Game project cover",
+            "content": "The game is a **1 vs 1 challenge** between two players, configured at the beginning of each new match.\n\nThe active player starts their turn by rolling a die. The value obtained can either be saved and added to their total score, or they can choose to roll again in an attempt to accumulate more points.\n\nHowever, pushing your luck comes with a risk: if the die lands on **1**, the player loses all the points accumulated during that turn that have not yet been saved, and the turn immediately passes to the opponent.\n\nThe game ends when one of the two players is the first to reach **exactly 100 points**."
+          },
+          {
+            "id": "5",
+            "title": "sb-floating-panel-vue",
+            "codebaseUrl": "https://github.com/stefanBid/sb-floating-panel-vue",
+            "deployUrl": "https://www.npmjs.com/package/sb-floating-panel-vue",
+            "coverImageSrc": "/images/projects/sb-floating-panel-vue.webp",
+            "coverImageAlt": "sb-floating-panel-vue project cover",
+            "content": "A flexible and lightweight **Vue 3 floating panel system** powered by **{'@'}floating-ui/vue**.\n\nIt includes composable hooks and plug-and-play components with support for **arrows** and **resizing**."
+          }
+        ],
         "noProjects": {
           "title": "No Projects Yet",
           "message": "There are no projects to display at the moment. Check back soon!"
@@ -192,6 +264,24 @@
         "tabLabel": "SB Templates Project",
         "title": "A faster, smarter way to start your next project",
         "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building.",
+        "list": [
+          {
+            "id":"1",
+            "title": "SB-Template Nuxt",
+            "description": "A fast, ready-to-use Nuxt template designed to kickstart modern projects effortlessly.",
+            "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
+            "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
+            "langIcons" : ["logos:nuxt-icon"]
+          },
+          {
+            "id":"2",
+            "title": "SB-Template Flutter",
+            "description": "A clean Flutter template built exclusively for mobile—iOS and Android—to kickstart your native app projects with modern tooling and automation.",
+            "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
+            "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
+            "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
+          }
+        ],
         "linkToCta": "Use this template",
         "comingSoonCard": {
           "title": "Coming Soon",
