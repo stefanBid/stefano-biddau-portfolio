@@ -18,7 +18,7 @@ useSeoMeta({
 
 // State
 const openSkillsDialog = ref<boolean>(false)
-const skillsPreset = ref<SkillsFilterPreset | undefined>(undefined)
+const filterTypes = ref<SkillType[]>([])
 
 const ICONS = {
   frontend: [
@@ -51,34 +51,16 @@ const ICONS = {
 const onOpenSkillsDialog = (filterPresetType?: 'frontend' | 'backend' | 'design') => {
   switch (filterPresetType) {
     case 'frontend':
-      skillsPreset.value = {
-        key: '',
-        filters: [
-          'feLang',
-          'feFramework',
-        ],
-      }
+      filterTypes.value = ['feLang', 'feFramework']
       break
     case 'backend':
-      skillsPreset.value = {
-        key: '',
-        filters: [
-          'beLang',
-          'beFramework',
-          'database',
-        ],
-      }
+      filterTypes.value = ['beLang', 'beFramework', 'database']
       break
     case 'design':
-      skillsPreset.value = {
-        key: '',
-        filters: [
-          'tool',
-        ],
-      }
+      filterTypes.value = ['tool']
       break
     default:
-      skillsPreset.value = undefined
+      filterTypes.value = []
       break
   }
   openSkillsDialog.value = true
@@ -208,7 +190,7 @@ const onCloseSkillsDialog = () => {
       </BaseCard>
     </section>
     <CustomSkillsDialog
-      :filter-preset="skillsPreset"
+      :filter-types="filterTypes"
       :open-dialog="openSkillsDialog"
       @close-dialog="onCloseSkillsDialog"
     />

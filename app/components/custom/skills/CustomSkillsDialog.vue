@@ -1,23 +1,18 @@
 <script setup lang="ts">
+import useSkills from '~/composables/data/useSkills'
+
 interface CustomSkillsDialogProps {
   openDialog: boolean
-  filterPreset?: SkillsFilterPreset
+  filterTypes?: SkillType[]
 }
 // Dependencies
 const { t } = useI18n()
-const { error } = useNotification()
 
-const {
-  data: skills,
-  pending,
-  fetchSkills,
-  error: fetchError,
-  pagination,
-} = useSkills()
+const { filters, skills, pagination } = useSkills()
 
 // Input / Output
 const props = withDefaults(defineProps<CustomSkillsDialogProps>(), {
-  filterPreset: undefined,
+  filterTypes: () => [],
 })
 
 const emits = defineEmits<{
@@ -26,7 +21,6 @@ const emits = defineEmits<{
 }>()
 
 // State
-const isFromPreset = ref<boolean>(false)
 const skillsKey = ref<string>('')
 const skillsTypes = ref<SkillType[]>([])
 const debounceHandle = ref<ReturnType<typeof setTimeout> | null>(null)
@@ -41,83 +35,56 @@ const typesItems = computed<{ label: string, value: SkillType }[]>(() => [
   { label: t('pages.skills.skillsDialog.filterOptions.other'), value: 'other' },
 ])
 
-const currentPage = computed(() => pagination.value?.page ?? 1)
-const totalPages = computed(() => pagination.value?.pageCount ?? 1)
-const totalSkills = computed(() => pagination.value?.total ?? 0)
+const currentPage = computed(() => pagination.value.page)
+const totalPages = computed(() => pagination.value.pageCount)
+const totalSkills = computed(() => pagination.value.total)
 
 // Events
 const onCloseDialog = () => {
   emits('closeDialog', false)
 }
 
-const onGoToPrevPage = async () => {
-  if (pending.value) {
-    return
-  }
+const onGoToPrevPage = () => {
   if (currentPage.value > 1) {
-    await _triggerFetch(currentPage.value - 1)
+    filters.value.page = currentPage.value - 1
   }
 }
-const onGoToNextPage = async () => {
-  if (pending.value) {
-    return
-  }
+
+const onGoToNextPage = () => {
   if (currentPage.value < totalPages.value) {
-    await _triggerFetch(currentPage.value + 1)
+    filters.value.page = currentPage.value + 1
   }
 }
 
 watch(
   () => props.openDialog,
-  async (isOpen) => {
+  (isOpen) => {
     if (!isOpen) {
-      isFromPreset.value = false
       const timeout = setTimeout(() => {
         clearTimeout(timeout)
         skillsKey.value = ''
         skillsTypes.value = []
+        filters.value.name = ''
+        filters.value.types = []
+        filters.value.page = 1
       }, 300)
       return
     }
 
-    const hasPreset
-      = !!props.filterPreset
-        && ((props.filterPreset.key && props.filterPreset.key.length > 0)
-          || (props.filterPreset.filters && props.filterPreset.filters.length > 0))
-
-    if (hasPreset) {
-      isFromPreset.value = true
-      skillsKey.value = props.filterPreset!.key || ''
-      skillsTypes.value = props.filterPreset!.filters || []
-    }
-
-    await _triggerFetch(1)
+    // Apply filter types from prop
+    skillsTypes.value = props.filterTypes || []
+    filters.value.types = props.filterTypes || []
+    filters.value.page = 1
   },
 )
 
-watch([skillsKey, skillsTypes], async () => {
+watch([skillsKey, skillsTypes], () => {
   if (!props.openDialog) {
     return
   }
 
-  if (isFromPreset.value) {
-    isFromPreset.value = false
-    return
-  }
-
-  await _debouncedFetch()
+  _debouncedFilterUpdate()
 })
-
-watch(fetchError, (newError) => {
-  if (newError && import.meta.client) {
-    error({
-      title: t('pages.skills.skillsDialog.skillsError.title'),
-      message: t('pages.skills.skillsDialog.skillsError.message'),
-      autoClose: true,
-      dismissible: true,
-    })
-  }
-}, { immediate: true })
 
 onBeforeUnmount(() => {
   if (debounceHandle.value) {
@@ -126,20 +93,14 @@ onBeforeUnmount(() => {
 })
 
 // Private methods
-const _triggerFetch = async (page?: number) => {
-  await fetchSkills({
-    name: skillsKey.value,
-    types: skillsTypes.value,
-    page: page ?? currentPage.value,
-  })
-}
-
-const _debouncedFetch = async () => {
+const _debouncedFilterUpdate = () => {
   if (debounceHandle.value) {
     clearTimeout(debounceHandle.value)
   }
-  debounceHandle.value = setTimeout(async () => {
-    await _triggerFetch(1)
+  debounceHandle.value = setTimeout(() => {
+    filters.value.name = skillsKey.value
+    filters.value.types = skillsTypes.value
+    filters.value.page = 1
   }, 400)
 }
 </script>
@@ -176,14 +137,7 @@ const _debouncedFetch = async () => {
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 auto-rows-fr items-stretch u-sb-soft-transition"
     >
-      <template v-if="pending">
-        <CustomSkillsSkeleton
-          v-for="index in 12"
-          :key="`skill-skeleton-${index}`"
-          class="h-20 md:h-24 "
-        />
-      </template>
-      <template v-else-if="skills && skills.length > 0">
+      <template v-if="skills.length > 0">
         <CustomSkillsCard
           v-for="skill in skills"
           :key="skill.id"
@@ -199,14 +153,6 @@ const _debouncedFetch = async () => {
         class="col-span-1 sm:col-span-2 lg:col-span-3"
       >
         <BaseEmptyBox
-          v-if="fetchError"
-          dimension="small"
-          icon="solar:danger-triangle-bold-duotone"
-          :message="t('pages.skills.skillsDialog.skillsError.message')"
-          :title="t('pages.skills.skillsDialog.skillsError.title')"
-        />
-        <BaseEmptyBox
-          v-else
           dimension="small"
           icon="solar:shield-warning-bold-duotone"
           :message="t('pages.skills.skillsDialog.noResults.message')"
@@ -222,7 +168,7 @@ const _debouncedFetch = async () => {
         <div class="flex items-center gap-4">
           <BaseButton
             class="p-2!"
-            :is-disabled="pending || currentPage === 1 || totalPages === 0"
+            :is-disabled="currentPage === 1 || totalPages === 0"
             variant="secondary"
             @click="onGoToPrevPage"
           >
@@ -233,7 +179,7 @@ const _debouncedFetch = async () => {
           </span>
           <BaseButton
             class="p-2!"
-            :is-disabled="pending || currentPage === totalPages || totalPages === 0"
+            :is-disabled="currentPage === totalPages || totalPages === 0"
             variant="secondary"
             @click="onGoToNextPage"
           >

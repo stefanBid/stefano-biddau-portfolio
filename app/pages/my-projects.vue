@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import useProjects from '~/composables/data/useProjects'
+import useTemplates from '~/composables/data/useTemplates'
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
@@ -16,12 +19,8 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const { fetchProjects } = useProjects()
-const { error } = useNotification()
-const { data: projects, pending, error: fetchError } = fetchProjects()
-
-// Templates - fetch on demand
-const { data: templates, pending: templatesPending, error: templatesError, fetchTemplates } = useTemplates()
+const { projects } = useProjects()
+const { templates } = useTemplates()
 
 // State
 const tabs = [
@@ -30,13 +29,6 @@ const tabs = [
 ]
 const expandedProjectIds = ref<Set<string>>(new Set())
 const currentTabId = ref<string>('personalProjects')
-
-// Watch tab change to fetch templates on demand
-watch(currentTabId, async (newTab) => {
-  if (newTab === 'templateProject' && !templates.value) {
-    await fetchTemplates()
-  }
-})
 
 // Events
 
@@ -66,29 +58,6 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
   else { set.delete(projectId) }
   expandedProjectIds.value = set
 }
-
-// Watch for fetch errors - SSR-safe (useNotification handles client-only internally)
-watch(fetchError, (newError) => {
-  if (newError && import.meta.client) {
-    error({
-      title: t('pages.projects.projectError.title'),
-      message: t('pages.projects.projectError.message'),
-      autoClose: true,
-      dismissible: true,
-    })
-  }
-}, { immediate: true })
-
-watch(templatesError, (newError) => {
-  if (newError && import.meta.client) {
-    error({
-      title: t('pages.projects.templatesError.title'),
-      message: t('pages.projects.templatesError.message'),
-      autoClose: true,
-      dismissible: true,
-    })
-  }
-}, { immediate: true })
 </script>
 
 <template>
@@ -116,19 +85,7 @@ watch(templatesError, (newError) => {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 u-sb-soft-transition">
-          <template v-if="pending">
-            <CustomProjectsSkeleton v-for="n in 4" :key="n" />
-          </template>
-          <template v-else-if="fetchError">
-            <div class="col-span-2">
-              <BaseEmptyBox
-                icon="solar:danger-triangle-bold-duotone"
-                :message="t('pages.projects.projectError.message')"
-                :title="t('pages.projects.projectError.title')"
-              />
-            </div>
-          </template>
-          <template v-else-if="!projects || projects.length === 0">
+          <template v-if="!projects || projects.length === 0">
             <div class="col-span-2">
               <BaseEmptyBox
                 icon="solar:laptop-minimalistic-bold-duotone"
@@ -166,7 +123,7 @@ watch(templatesError, (newError) => {
                 fetchpriority="high"
                 height="187"
                 loading="eager"
-                src="/images/sbt-logo.webp"
+                src="/images/sbt-logos/sbt-logo.webp"
                 width="160"
               />
             </div>
@@ -180,45 +137,31 @@ watch(templatesError, (newError) => {
         </div>
 
         <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
-          <template v-if="templatesPending">
-            <CustomSbTemplatesSkeleton v-for="n in 3" :key="n" />
-          </template>
-          <template v-else-if="templatesError">
-            <div class="col-span-full">
-              <BaseEmptyBox
-                icon="solar:danger-triangle-bold-duotone"
-                :message="t('pages.projects.templatesError.message')"
-                :title="t('pages.projects.templatesError.title')"
-              />
-            </div>
+          <template v-if="templates && templates.length > 0">
+            <CustomSbTemplatesCard
+              v-for="template in templates"
+              :id="template.id"
+              :key="template.id"
+              :codebase-url="template.codebaseUrl"
+              :description="template.description"
+              :icons="template.langIcons"
+              :image-src="template.logoSrc"
+              :title="template.title"
+            />
+            <CustomSbTemplatesCard
+              :id="1"
+              :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+              :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
+            />
           </template>
           <template v-else>
-            <template v-if="templates && templates.length > 0">
-              <CustomSbTemplatesCard
-                v-for="template in templates"
-                :id="template.id"
-                :key="template.id"
-                :codebase-url="template.codebaseUrl"
-                :description="template.description"
-                :icons="template.langIcons"
-                :image-src="template.logoSrc"
-                :title="template.title"
-              />
-              <CustomSbTemplatesCard
-                :id="1"
-                :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
-                :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
-              />
-            </template>
-            <template v-else>
-              <CustomSbTemplatesCard
-                v-for="n in 3"
-                :id="n"
-                :key="n"
-                :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
-                :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
-              />
-            </template>
+            <CustomSbTemplatesCard
+              v-for="n in 3"
+              :id="n"
+              :key="n"
+              :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
+              :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
+            />
           </template>
         </div>
       </div>

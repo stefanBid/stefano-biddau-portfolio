@@ -118,9 +118,10 @@ const onSelect = () => {
           class="bg-white p-3 md:p-4 shadow-lg max-w-sm w-full u-sb-soft-transition"
         >
           <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden u-sb-soft-transition  ">
-            <NuxtImg
+            <img
               :alt="props.imageAlt || props.title"
               class="w-full h-full object-cover"
+              loading="eager"
               :src="props.imageSrc"
             />
           </div>

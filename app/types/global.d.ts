@@ -28,22 +28,13 @@ declare global {
     duration?: number
   }
 
-  interface SkillsFilterPreset {
-    key: string
-    filters: SkillType[]
+  interface Pagination {
+    page: number
+    pageSize: number
+    pageCount: number
+    total: number
   }
 
-  interface StrapiResponse<T> {
-    data: T
-    meta: {
-      pagination: {
-        page: number
-        pageSize: number
-        pageCount: number
-        total: number
-      }
-    }
-  }
   // Rich Text Blocks types
   interface RichBlockText {
     type: 'text'
