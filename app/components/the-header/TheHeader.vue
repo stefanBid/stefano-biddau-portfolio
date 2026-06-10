@@ -22,6 +22,14 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
 const currentRoute = useRoute()
+const getRouteBaseName = useRouteBaseName()
+
+const isActiveRoute = (r: RouteItem) => {
+  if (r.disabled) {
+    return false
+  }
+  return r.routeName ? getRouteBaseName(currentRoute) === r.routeName : currentRoute.path === r.path
+}
 
 // Data
 
@@ -119,9 +127,8 @@ watch(isMdUp, (newVal) => {
                 v-if="!r.disabled"
                 class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
                 :class="{
-                  'text-sb-contrast/80 hover:text-sb-contrast font-normal!': currentRoute.path !== r.path && !r.disabled,
-                  'text-sb-accent font-bold!': currentRoute.path === r.path && !r.disabled,
-                  'opacity-50 cursor-not-allowed text-sb-contrast/80': r.disabled,
+                  'text-sb-contrast/80 hover:text-sb-contrast font-normal!': !isActiveRoute(r),
+                  'text-sb-accent font-bold!': isActiveRoute(r),
                 }"
                 :to="r.path"
               >

@@ -17,10 +17,10 @@ const { notifications, removeNotification } = useNotification()
 // State
 
 const routes = computed(() => [
-  { name: t('nav.home'), path: localePath('index') },
-  { name: t('nav.about-me'), path: localePath('about-me') },
-  { name: t('nav.my-skills'), path: localePath('my-skills') },
-  { name: t('nav.my-projects'), path: localePath('my-projects') },
+  { name: t('nav.home'), path: localePath('index'), routeName: 'index' },
+  { name: t('nav.about-me'), path: localePath('about-me'), routeName: 'about-me' },
+  { name: t('nav.my-skills'), path: localePath('my-skills'), routeName: 'my-skills' },
+  { name: t('nav.my-projects'), path: localePath('my-projects'), routeName: 'my-projects' },
 ] as Array<RouteItem>)
 
 const langs = [
