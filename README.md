@@ -3,10 +3,10 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-1.4.5-blue)
+  ![Version](https://img.shields.io/badge/version-1.5.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.4.6-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.34-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.35-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
