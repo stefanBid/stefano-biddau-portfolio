@@ -15,6 +15,7 @@ declare global {
     name: string
     path: string
     disabled?: true
+    routeName?: string
   }
 
   interface NotificationItem {
