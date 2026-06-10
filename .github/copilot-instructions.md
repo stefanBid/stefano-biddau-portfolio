@@ -2,7 +2,7 @@
 
 ## App context
 
-This is Stefano Biddau's personal portfolio — a production Nuxt 4 SSG/SSR application deployed on Netlify. It showcases professional experience, projects, skills and a contact form. Content is served via a Strapi CMS backend; all data fetching goes through a Nitro proxy layer (`server/api/`) to avoid CORS issues and enable server-side caching. The app is always dark-themed (no light/dark toggle).
+This is Stefano Biddau's personal portfolio — a production Nuxt 4 SSG/SSR application deployed on Netlify. It showcases professional experience, projects, skills and a contact form. The app is always dark-themed (no light/dark toggle).
 
 ---
 
@@ -29,7 +29,6 @@ This is Stefano Biddau's personal portfolio — a production Nuxt 4 SSG/SSR appl
 - **zod** — runtime form validation
 - **ESLint** with `@nuxt/eslint` — linting + stylistic formatting
 - **TypeScript** — strict typing throughout
-- **Strapi CMS** — headless CMS backend (never called directly from client — always via Nitro proxy)
 - Deployment target: **Netlify** (Nitro preset)
 
 ---
@@ -45,7 +44,6 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
 | `.github/instructions/pages-layouts.instructions.md` | `**/pages/**,**/layouts/**` | Nuxt 4 file-based routing, page template, SEO, i18n, data fetching, layout system |
 | `.github/instructions/composables-utils.instructions.md` | `**/composables/**,**/utils/**,**/types/**` | All composables (data, email, UI), utils, global TypeScript types, SSR-safe patterns |
 | `.github/instructions/project-config.instructions.md` | `nuxt.config.ts,package.json` | Complete `nuxt.config.ts` key reference, `package.json` scripts and dependencies, env vars, `routeRules`, modules |
-| `.github/instructions/server-api.instructions.md` | `**/server/**` | Nitro proxy layer rules, endpoint catalogue, caching strategy, Strapi integration patterns |
 
 ---
 
@@ -61,13 +59,6 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
      locales/
        en.json              ← English translations
        it.json              ← Italian translations
-── server/                  ← Nitro server (proxy layer between frontend and Strapi)
-     api/
-       _health.get.ts       ← health check endpoint
-       sb-milestones.get.ts ← proxy → Strapi milestones (cached, locale-aware)
-       sb-projects.get.ts   ← proxy → Strapi projects (cached, locale-aware)
-       sb-skills.get.ts     ← proxy → Strapi skills (filters + pagination)
-       sb-templates.get.ts  ← proxy → Strapi sb-templates
 ── app/                     ← Nuxt 4 app directory (all runtime code lives here)
      app.vue               ← root app entry (NuxtLayout + NuxtPage)
      error.vue             ← global error page
@@ -109,12 +100,8 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
        useEmailJs.ts        ← EmailJS integration (sends admin email + reply-to-user)
        useFloatingUi.ts
        useLockScroll.ts
-       useMilestones.ts     ← fetches milestones via Nitro proxy (useFetch, locale-aware)
        useNotification.ts   ← global notification system (success/warning/error/info)
-       useProjects.ts       ← fetches projects via Nitro proxy (useFetch, locale-aware)
        useSanitize.ts
-       useSkills.ts         ← fetches skills with filters + pagination ($fetch, manual)
-       useTemplates.ts      ← fetches sb-templates via Nitro proxy ($fetch)
        useTypedText.ts      ← typed.js wrapper for animated typewriter text
      layouts/
        default.vue         ← main layout: TheHeader + <slot> + TheFooter + notifications
@@ -128,11 +115,12 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
      plugins/
        scrollToTop.client.ts
      types/
-       global.d.ts         ← global TS interfaces (MenuItem, RouteItem, NotificationItem, StrapiResponse, SkillType, RichBlock*)
+       global.d.ts         ← global TS interfaces (MenuItem, RouteItem, NotificationItem, SkillType, RichBlock*)
      utils/
        blocksToHtml.ts
        downloadFile.ts      ← triggers browser file download (client-side only)
        generateUuid.ts
+       markdownToBlocks.ts  ← Markdown → RichBlock[] converter
 ```
 
 ---
@@ -144,15 +132,13 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
 | Directory | kebab-case | `my-feature/`, `icon-button/` |
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue`, `CustomSkillsCard.vue` |
 | Composable file | camelCase + `use` prefix | `useNotification.ts`, `useSkills.ts` |
-| Server API file | kebab-case + HTTP method | `sb-skills.get.ts` |
 | Utility / type file | camelCase | `generateUuid.ts`, `global.d.ts` |
 | CSS utility class | `ty-sb-*` (typography), `u-sb-*` (utilities) | `ty-sb-title`, `u-sb-soft-transition` |
 | CSS variable | `--color-sb-*`, `--font-*` | `--color-sb-accent`, `--font-bebas-neue` |
 
-- **Base components** (`Base` prefix): fully reusable, zero business logic, no direct API/composable data calls.
-- **Custom components** (`Custom` prefix): portfolio-specific, may use data composables and business logic, live in `app/components/custom/`.
+- **Base components** (`Base` prefix): fully reusable, zero business logic, no direct data calls.
+- **Custom components** (`Custom` prefix): portfolio-specific, may use composables and business logic, live in `app/components/custom/`.
 - **The components** (`The` prefix): singletons used once per layout (header, footer, notifications, page hero).
-- Never add business logic or Strapi data fetching into `Base` components.
 
 ---
 
@@ -173,7 +159,6 @@ Each file covers a specific area of the codebase. Read the relevant file with `r
 - Nuxt auto-imports apply to: composables, utils, components, Vue APIs (`ref`, `computed`, `watch`, …), Nuxt composables (`useRoute`, `useI18n`, `useHead`, …). **No manual imports needed** for any of these.
 - **`useRuntimeConfig()`** to access env variables — never read `process.env` directly in components.
 - Data fetching: prefer **`useFetch`** / **`useAsyncData`** over `$fetch` in components to leverage SSR hydration.
-- Server-only logic goes in `server/` (Nitro); never import server utilities in client components.
 - **`<ClientOnly>`** wrapper for components that rely on browser-only APIs.
 
 ### `<script setup>` — structure and organisation
@@ -338,8 +323,7 @@ If no file is open in the editor and the request is ambiguous, **before answerin
 | Page or layout | `.github/instructions/pages-layouts.instructions.md` |
 | Composable, utility or TypeScript type | `.github/instructions/composables-utils.instructions.md` |
 | Project configuration (`nuxt.config.ts`, modules, env vars, dependencies) | `.github/instructions/project-config.instructions.md` |
-| Server API endpoint or Nitro proxy / Strapi integration | `.github/instructions/server-api.instructions.md` |
 
-**Skip the question** when the intent is already clear from the request — e.g. "create a new button component" → load `components`, "add a page" → load `pages-layouts`, "new composable" → load `composables-utils`, "what token should I use for this colour" → load `design-system`, "add a new module" or "configure the image provider" → load `project-config`, "add a new Strapi endpoint" or "fix the proxy" → load `server-api`.
+**Skip the question** when the intent is already clear from the request — e.g. "create a new button component" → load `components`, "add a page" → load `pages-layouts`, "new composable" → load `composables-utils`, "what token should I use for this colour" → load `design-system`, "add a new module" or "configure the image provider" → load `project-config`.
 
 For requests that span multiple areas (e.g. "create a page with a new component"), load all relevant instruction files before answering.

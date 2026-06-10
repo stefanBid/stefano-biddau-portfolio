@@ -39,7 +39,6 @@ export default defineNuxtConfig({
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
-      strapiUrl: process.env.NUXT_PUBLIC_STRAPI_URL,
     },
   },
 
@@ -116,17 +115,6 @@ export default defineNuxtConfig({
   },
   image: {
     provider: 'ipx',
-    providers: {
-      cloudinary: {
-        name: 'cloudinary',
-        options: {
-          baseURL: process.env.NUXT_PUBLIC_CLOUDINARY_BASE,
-        },
-      },
-    },
-    domains: [
-      process.env.NUXT_PUBLIC_STRAPI_URL || '',
-    ],
     quality: 80,
     format: ['webp', 'avif', 'png'],
     screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
