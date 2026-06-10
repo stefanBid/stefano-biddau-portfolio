@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.5.0...v1.5.1) (2026-06-10)
+
+
+### Bug Fixes
+
+* add routeName to RouteItem interface and implement isActiveRoute function for improved navigation handling ([#126](https://github.com/stefanBid/stefano-biddau-portfolio/issues/126)) ([011aa4c](https://github.com/stefanBid/stefano-biddau-portfolio/commit/011aa4c20562f7d9f4405456f5abcef26de1f7ac))
+
 ## [1.5.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.4.6...v1.5.0) (2026-06-10)
 
 
