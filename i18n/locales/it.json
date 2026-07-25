@@ -211,44 +211,71 @@
         "description": "In questa sezione trovi una raccolta di progetti che raccontano il mio percorso di crescita come sviluppatore. Alcuni sono stati creati per sperimentare nuove tecnologie e affinare le mie competenze; altri sono lavori professionali realizzati per clienti che hanno scelto di affidarmi lo sviluppo delle loro piattaforme. Dove possibile è disponibile il prodotto finale online, mentre il codice rimane privato per tutelare la riservatezza dei committenti. Ogni progetto riflette il mio modo di lavorare: attenzione ai dettagli, cura dell’esperienza utente e la volontà di trasformare un’idea in qualcosa di concreto.",
         "list": [
           {
-            "id": "1",
+            "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
+            "title": "Sfrigola Project",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
+              { "code": "https://github.com/stefanBid/sfrigola-app", "label": "Sfrigola App" }
+            ],
+            "coverImageSrc": "/images/projects/sfrigola-project-banner.webp",
+            "coverImageAlt": "Sfrigola Project cover",
+            "content": "**Sfrigola** è un progetto personale nato per reimmaginare il modo in cui chi cucina in casa scopre, salva e segue le ricette — un ricettario completamente digitale costruito da zero come un piccolo ecosistema di applicazioni collegate tra loro.\n\nAl centro c'è **Sfrigola Core**, una REST API realizzata in **Spring Boot** che orchestra ogni dominio della piattaforma: ricette, ingredienti, categorie e tag — tutti multilingua e ricercabili — oltre a valutazioni, preferiti e un flusso di pubblicazione completo (dalla bozza alla pubblicazione) con accessi differenziati per utenti, contributor e admin.\n\n**Sfrigola App** è il prodotto vero e proprio: un'applicazione mobile in **Flutter** per iOS e Android dove chi cucina può esplorare feed di ricette curati, cercare per categoria e migliorare le proprie competenze in cucina, tra piatti veloci di tutti i giorni e ricette più elaborate. È costruita su un'architettura feature-based, con un design system personalizzato e routing type-safe.\n\nCi sono altri due tasselli ancora in lavorazione. **Sfrigola Manager**, un gestionale in **React**, permetterà agli admin di gestire ricette, ingredienti e categorie che alimentano i contenuti dell'app. **Sfrigola AI** aggiungerà invece un chatbot in grado di consultare il database delle ricette e, in base agli ingredienti e ai ricettari coinvolti, suggerire le ricette giuste direttamente dai dati della piattaforma.\n\nSfrigola è il progetto dove sperimento la costruzione e la connessione di un intero ecosistema prodotto, end to end — dal design delle API e dalla UX mobile fino a (presto) un pannello di amministrazione e un assistente basato su AI."
+          },
+          {
+            "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
             "title": "Comparazione algoritmi di Machine Learning per la classificazione di immagini",
-            "codebaseUrl": "https://github.com/stefanBid/Classificazione-Immagini",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
+            ],
             "coverImageSrc": "/images/projects/image-classification-cover.webp",
             "coverImageAlt": "Image Classification project cover",
             "content": "**L'Intelligenza Artificiale** si sta diffondendo in numerosi ambiti e offre un'ampia varietà di contesti applicativi.\n\nIl riconoscimento e la classificazione delle immagini rappresentano uno dei settori che consentono di ottenere alcuni dei risultati più significativi.\n\nLo scopo di questa ricerca è analizzare i più noti algoritmi di classificazione, come **K-Nearest Neighbors (KNN)**, **Decision Tree**, **Random Forest**, **Support Vector Machine (SVM)** e **Reti Neurali Artificiali (ANN)**.\n\nL'obiettivo è valutarne l'efficienza nella classificazione delle immagini campione contenute nei dataset **MNIST** e **Fashion-MNIST (F-MNIST)**.\n\nLo studio è stato condotto utilizzando librerie **Python**, in particolare **Scikit-learn**.\n\nQueste librerie forniscono implementazioni degli algoritmi e consentono di ottimizzarne i parametri.\n\nCiò permette di identificare quali parametri influenzano maggiormente la capacità di apprendimento e di migliorare l'accuratezza della classificazione quando i modelli vengono addestrati sui dataset forniti.\n\nIl comportamento degli algoritmi ha contribuito a chiarire le ragioni del passaggio da **MNIST** — oggi considerato datato e ampiamente sfruttato — al suo successore, **Fashion-MNIST**.\n\nA parità di configurazione dei parametri, gli algoritmi analizzati mostrano una precisione di classificazione inferiore su **F-MNIST** rispetto a **MNIST**.\n\nQuesto evidenzia come **F-MNIST** rappresenti una sfida maggiore e richieda quindi una valutazione più attenta delle caratteristiche degli algoritmi per raggiungere livelli elevati di accuratezza.\n\nNonostante questa maggiore complessità, gli algoritmi continuano a ottenere risultati molto positivi quando vengono addestrati su **F-MNIST**.\n\nCiò conferma la loro capacità di generalizzare e di fornire prestazioni efficaci anche su altri dataset esistenti."
           },
           {
-            "id": "2",
+            "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
             "title": "Studio Legale Romano (Website)",
-            "deployUrl": "https://studiodiavvocatiromano.com/",
+            "deploymentUrls": [
+              { "code": "https://studiodiavvocatiromano.com/", "label": "Demo Live" }
+            ],
             "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
             "coverImageAlt": "Romano Law Firm - Website project cover",
             "content": "Il sito dello **Studio Legale Romano** è un progetto che mi è stato commissionato dagli avvocati Romano con l’obiettivo di creare una vetrina digitale moderna e professionale.\n\nDoveva rappresentare al meglio l’identità dello studio e offrire ai visitatori un punto di riferimento chiaro, elegante e credibile.\n\nHo curato ogni dettaglio dell’interfaccia, scegliendo uno stile pulito e contemporaneo, adatto al settore legale.\n\nL’esperienza di navigazione è stata progettata per essere semplice e immediata, così da accompagnare l’utente nella scoperta dei contenuti più importanti.\n\nAll’interno del sito è presente una sezione dedicata alla storia dello studio, al percorso dei professionisti e ai valori che guidano il loro lavoro.\n\nOgni avvocato dispone di un profilo completo, costruito per mettere in risalto competenze e specializzazioni.\n\nHo realizzato anche un’area dedicata ai servizi offerti, dove le principali prestazioni vengono presentate in modo chiaro e intuitivo.\n\nQuesto permette agli utenti di individuare rapidamente l’ambito di interesse e comprendere come lo studio può supportarli.\n\nNon mancano le informazioni di contatto, sempre ben visibili e facilmente accessibili da qualsiasi pagina del sito.\n\nInoltre, ho integrato un sistema per mostrare in tempo reale gli orari di apertura dello studio, così da migliorare la comunicazione con i clienti.\n\nIl risultato è un sito vetrina che unisce cura estetica, funzionalità e professionalità.\n\nUn progetto costruito su misura per lo Studio Legale Romano, pensato per valorizzare la loro immagine e rendere più efficace il rapporto con i visitatori."
           },
           {
-            "id": "3",
+            "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
             "title": "Guess My Number",
-            "codebaseUrl": "https://github.com/stefanBid/Guess-My-Number",
-            "deployUrl": "https://stefanbid.github.io/Guess-My-Number/",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/Guess-My-Number", "label": "GitHub" }
+            ],
+            "deploymentUrls": [
+              { "code": "https://stefanbid.github.io/Guess-My-Number/", "label": "Demo Live" }
+            ],
             "coverImageSrc": "/images/projects/guess-my-number.webp",
             "coverImageAlt": "Guess My Number project cover",
             "content": "Il gioco segue un sistema di progressione a livelli: ogni partita inizia con **cinque vite** e l'obiettivo è indovinare un numero generato casualmente tra **1 e 20** prima di esaurire tutti i tentativi.\n\nOgni partita comincia con cinque vite e il tuo scopo è trovare il numero corretto entro questo limite.\n\nOgni **cinque livelli** si sblocca un **livello bonus**, nel quale dovrai individuare il numero corretto tra tre possibili scelte.\n\n**Prova a superare il tuo record personale!**"
           },
           {
-            "id": "4",
+            "id": "70fa96e9-9283-4a48-8ac6-e1576e2949ce",
             "title": "Pig Game",
-            "codebaseUrl": "https://github.com/stefanBid/Pig-Game",
-            "deployUrl": "https://stefanbid.github.io/Pig-Game/",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/Pig-Game", "label": "GitHub" }
+            ],
+            "deploymentUrls": [
+              { "code": "https://stefanbid.github.io/Pig-Game/", "label": "Demo Live" }
+            ],
             "coverImageSrc": "/images/projects/pig-game.webp",
             "coverImageAlt": "Pig Game project cover",
             "content": "Il gioco è una **sfida 1 contro 1** tra due giocatori, configurata all'inizio di ogni nuova partita.\n\nIl giocatore attivo inizia il proprio turno lanciando un dado. Il valore ottenuto può essere salvato e aggiunto al punteggio totale, oppure il giocatore può scegliere di rilanciare per cercare di accumulare ancora più punti.\n\nAttenzione però a sfidare troppo la fortuna: se il dado mostra **1**, il giocatore perde tutti i punti accumulati durante quel turno e non ancora salvati, e il turno passa immediatamente all'avversario.\n\nLa partita termina quando uno dei due giocatori raggiunge per primo **esattamente 100 punti**."
           },
           {
-            "id": "5",
+            "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
             "title": "sb-floating-panel-vue",
-            "codebaseUrl": "https://github.com/stefanBid/sb-floating-panel-vue",
-            "deployUrl": "https://www.npmjs.com/package/sb-floating-panel-vue",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
+            ],
+            "deploymentUrls": [
+              { "code": "https://www.npmjs.com/package/sb-floating-panel-vue", "label": "Pacchetto NPM" }
+            ],
             "coverImageSrc": "/images/projects/sb-floating-panel-vue.webp",
             "coverImageAlt": "sb-floating-panel-vue project cover",
             "content": "Un sistema di **floating panel per Vue 3**, flessibile e leggero, basato su **{'@'}floating-ui/vue**.\n\nInclude hook composable e componenti plug-and-play con supporto per **frecce** e **ridimensionamento**."
@@ -267,7 +294,7 @@
         "description": "SB Templates nasce con un obiettivo molto semplice: eliminare la parte noiosa e ripetitiva dell’avvio di un progetto e permettere allo sviluppatore di concentrarsi subito sulla costruzione dell’applicazione. Ho raccolto in diverse repository pubbliche su GitHub una serie di template pronti all’uso — per web e mobile — progettati per offrire una struttura solida e già configurata con tutto ciò che serve: architettura pulita, strumenti di build, regole di formattazione, linting e un ambiente iniziale curato nei dettagli. L’idea è duplice: fornire un punto di partenza moderno e affidabile e ridurre drasticamente i tempi di setup. Tutto è completamente open source e totalmente personalizzabile, così ogni sviluppatore può adattare il template al proprio stile e al proprio flusso di lavoro. In sintesi, SB Templates vuole essere un alleato: una base veloce, comoda e flessibile che permette di concentrarsi su ciò che conta davvero — costruire.",
         "list": [
           {
-            "id":"1",
+            "id":"454b54e4-aaec-4b41-b03b-d39d5c0b7455",
             "title": "SB-Template Nuxt",
             "description": "Template Nuxt rapido e pronto all’uso, progettato per lanciare progetti moderni senza complicazioni.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
@@ -275,7 +302,7 @@
             "langIcons" : ["logos:nuxt-icon"]
           },
           {
-            "id":"2",
+            "id":"2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
             "title": "SB-Template Flutter",
             "description": "Un template Flutter pulito e pronto all'uso, progettato esclusivamente per mobile iOS e Android per avviare rapidamente i tuoi progetti di app native con strumenti moderni e automazione.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",

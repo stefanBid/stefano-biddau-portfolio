@@ -5,8 +5,8 @@ interface CustomProjectsCardProps {
   content: RichBlock[]
   imageSrc?: string
   imageAlt?: string
-  codebaseUrl?: string
-  deploymentUrl?: string
+  codebaseUrls?: Array<MenuItem>
+  deploymentUrls?: Array<MenuItem>
 }
 
 // Input / Output
@@ -45,11 +45,46 @@ const getContentPreview = computed(() => {
   return props.content
 })
 
+interface UrlGroup {
+  key: string
+  urls: MenuItem[]
+  icon: string
+  ariaLabel: string
+}
+
+const urlGroups = computed<UrlGroup[]>(() => {
+  const groups: UrlGroup[] = []
+
+  if (props.codebaseUrls?.length) {
+    groups.push({
+      key: 'codebase',
+      urls: props.codebaseUrls,
+      icon: 'solar:code-2-line-duotone',
+      ariaLabel: 'Open link to project codebase',
+    })
+  }
+
+  if (props.deploymentUrls?.length) {
+    groups.push({
+      key: 'deployment',
+      urls: props.deploymentUrls,
+      icon: 'solar:global-line-duotone',
+      ariaLabel: 'Open link to deployed project',
+    })
+  }
+
+  return groups
+})
+
 // Events
 const onTriggerDescription = (event: Event) => {
   (event.currentTarget as HTMLElement)?.blur()
   isDescriptionExpanded.value = !isDescriptionExpanded.value
   emits('toggleDescription', isDescriptionExpanded.value)
+}
+
+const onSelectUrl = (url: string) => {
+  window.open(url, '_blank', 'noopener,noreferrer')
 }
 </script>
 
@@ -78,32 +113,44 @@ const onTriggerDescription = (event: Event) => {
           <div class="relative z-10 flex flex-col justify-between h-full p-4 md:p-6 u-sb-soft-transition">
             <!-- Top row: actions -->
             <div class="flex  items-center gap-2 self-end u-sb-soft-transition">
-              <BaseButton
-                v-if="props.codebaseUrl"
-                aria-label="Open link to project codebase"
-                class="p-2! shrink-0"
-                :to="props.codebaseUrl"
-                type="link"
-                variant="primary"
-              >
-                <Icon
-                  class="size-4 md:size-6"
-                  name="solar:code-2-line-duotone"
-                />
-              </BaseButton>
-              <BaseButton
-                v-if="props.deploymentUrl"
-                aria-label="Open link to deployed project"
-                class="p-2! shrink-0"
-                :to="props.deploymentUrl"
-                type="link"
-                variant="primary"
-              >
-                <Icon
-                  class="size-4 md:size-6"
-                  name="solar:global-line-duotone"
-                />
-              </BaseButton>
+              <template v-for="group in urlGroups" :key="group.key">
+                <BaseButton
+                  v-if="group.urls.length === 1"
+                  :aria-label="group.ariaLabel"
+                  class="p-2! shrink-0"
+                  :to="group.urls[0]!.code"
+                  type="link"
+                  variant="primary"
+                >
+                  <Icon
+                    class="size-4 md:size-6"
+                    :name="group.icon"
+                  />
+                </BaseButton>
+                <BaseIconMenu
+                  v-else
+                  :icon="group.icon"
+                  :items="group.urls"
+                  @select="onSelectUrl"
+                >
+                  <template #trigger="{ isOpen, toggle }">
+                    <BaseButton
+                      :aria-expanded="isOpen ? 'true' : 'false'"
+                      aria-haspopup="menu"
+                      :aria-label="group.ariaLabel"
+                      class="p-2! shrink-0"
+                      type="button"
+                      variant="primary"
+                      @click="toggle(!isOpen)"
+                    >
+                      <Icon
+                        class="size-4 md:size-6"
+                        :name="group.icon"
+                      />
+                    </BaseButton>
+                  </template>
+                </BaseIconMenu>
+              </template>
             </div>
 
             <!-- Bottom row: title - absolute positioned -->

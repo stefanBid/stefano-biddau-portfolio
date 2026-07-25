@@ -3,10 +3,10 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-1.5.2-blue)
+  ![Version](https://img.shields.io/badge/version-1.6.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.11.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.39-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Vue](https://img.shields.io/badge/vue-3.5.40-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
@@ -16,6 +16,11 @@
   [stefanobiddau.com](https://stefanobiddau.com)
 
 </div>
+
+---
+
+> **⚠️ `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump.**
+> `nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#35831](https://github.com/nuxt/nuxt/issues/35831) (our report, with minimal reproduction) — related: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (Windows-specific variant of the same bug). Remove the pin once a fixed Nuxt 4.5.x patch ships.
 
 ---
 

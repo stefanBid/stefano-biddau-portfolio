@@ -71,13 +71,19 @@ watch(open, (newVal) => {
   <div class="relative inline-block">
     <!-- Trigger -->
     <div ref="reference">
-      <BaseIconButton
-        :aria-expanded="open ? 'true' : 'false'"
-        aria-haspopup="menu"
-        :icon="props.icon"
-        :is-active="open"
-        @click="toggleFloating(!open)"
-      />
+      <slot
+        :is-open="open"
+        name="trigger"
+        :toggle="toggleFloating"
+      >
+        <BaseIconButton
+          :aria-expanded="open ? 'true' : 'false'"
+          aria-haspopup="menu"
+          :icon="props.icon"
+          :is-active="open"
+          @click="toggleFloating(!open)"
+        />
+      </slot>
     </div>
 
     <!-- Menu -->
@@ -107,17 +113,19 @@ watch(open, (newVal) => {
                 @click="onSelect(item.code)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
-                <Icon
-                  v-if="item.iconType === 'nuxt-icon'"
-                  class="size-4 shrink-0"
-                  :name="item.icon"
-                />
-                <NuxtImg
-                  v-else-if="item.iconType === 'custom'"
-                  alt=""
-                  class="size-4 shrink-0"
-                  :src="item.icon"
-                />
+                <template v-if="item.icon && item.iconType ">
+                  <Icon
+                    v-if="item.iconType === 'nuxt-icon'"
+                    class="size-4 shrink-0"
+                    :name="item.icon"
+                  />
+                  <NuxtImg
+                    v-else-if="item.iconType === 'custom'"
+                    alt=""
+                    class="size-4 shrink-0"
+                    :src="item.icon"
+                  />
+                </template>
               </button>
             </li>
           </ul>
