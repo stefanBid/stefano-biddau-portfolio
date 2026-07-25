@@ -636,11 +636,66 @@ Client / SSR → /api/sb-* (Nitro) → Strapi CMS
 - Never call Strapi from Vue components — always through `/api/sb-*`
 - Never expose Strapi URL in client-side code
 
+### Endpoint anatomy — locale-aware pattern (milestones / projects / templates)
+```ts
+// server/api/sb-<resource>.get.ts
+export default cachedEventHandler(async (event) => {
+  const config = useRuntimeConfig()
+  const query = getQuery(event)
+  const baseUrl = config.public.strapiUrl
+
+  if (!baseUrl) {
+    throw createError({ statusCode: 500, statusMessage: 'STRAPI_URL_NOT_CONFIGURED' })
+  }
+
+  const locale = typeof query.locale === 'string' ? query.locale : 'en'
+
+  try {
+    return await $fetch(`${baseUrl}/api/sb-<resource>`, {
+      params: { locale, sort: 'date:asc', populate: '*', 'pagination[pageSize]': 100 },
+      timeout: 30000,
+    })
+  }
+  catch {
+    return { data: [] }
+  }
+}, {
+  maxAge: 60 * 60 * 6,
+  swr: true,
+  getKey: (event) => {
+    const query = getQuery(event)
+    const locale = typeof query.locale === 'string' ? query.locale : 'en'
+    return `sb-<resource>-${locale}`
+  },
+})
+```
+
+### Endpoint anatomy — dynamic filters/pagination pattern (skills)
+Use `defineEventHandler` (no cache) — caching would serve stale filtered results. Sanitise every param before forwarding (never pass raw `event.query`); build a `params` record, add optional filters conditionally, catch with a graceful empty `{ data: [], meta: { pagination: { page: 1, pageSize: 12, pageCount: 0, total: 0 } } }`.
+
+### Caching strategy
+| Setting | Value | Effect |
+|---|---|---|
+| `maxAge` | `60 * 60 * 6` (6h) | Server cache lifetime |
+| `swr` | `true` | Serves stale cache instantly while revalidating in background |
+| `getKey` | locale or serialised query | Separate cache bucket per language/filter combo |
+
+Netlify serverless functions don't share warm instances across invocations — `swr: true` avoids users waiting on a cold Strapi call.
+
 ### Adding a new endpoint
 1. `server/api/sb-<resource>.get.ts`
 2. Add composable `app/composables/use<Resource>.ts`
 3. Consume in relevant page or `Custom*` component
 4. Add `*Skeleton.vue` for loading state
+
+### Strapi data model conventions
+Frontend interfaces live **inside the composable file** (not `global.d.ts`) — tightly coupled to the endpoint:
+```ts
+// In useMyResource.ts
+interface MyResource { id: string, title: string /* clean frontend shape */ }
+interface MyResourceBE { id: number, documentId: string /* raw Strapi shape */ }
+```
+The Nitro proxy never transforms data — `BE` → frontend mapping happens in the composable (`useFetch` `transform` option, or manually after `$fetch`).
 
 ---
 
@@ -678,10 +733,53 @@ Client / SSR → /api/sb-* (Nitro) → Strapi CMS
 - Adding a collection: `npm install @iconify-json/<collection>`
 - **Do not install `@iconify-json/lucide`**
 
-### Image config
-- Default provider: `ipx` (local). For remote: pass `provider="cloudinary"` to `<NuxtImg>`
-- External domains → add to `domains[]`
-- Global defaults: `quality: 80`, formats: `['webp', 'avif', 'png']`
+### Icon config (full)
+- `mode: 'svg'`, `serverBundle: 'local'`, `fallbackToApi: false`
+- `clientBundle: { scan: true, includeCustomCollections: true, sizeLimitKb: 256 }`
+- Installed: `@iconify-json/logos`, `@iconify-json/mdi`, `@iconify-json/solar`, `@iconify-json/flagpack`
+- Adding a collection: `npm install @iconify-json/<collection>`
+- **Do not install `@iconify-json/lucide`**
+
+### Image config (full)
+- Default provider: `ipx` (local). Cloudinary provider configured via `options.baseURL: NUXT_PUBLIC_CLOUDINARY_BASE` — pass `provider="cloudinary"` to `<NuxtImg>` for remote images
+- External domains → add to `domains[]` (empty by default)
+- Global defaults: `quality: 80`, formats: `['webp', 'avif', 'png']`, `screens: { sm: 640, md: 768, lg: 1024, xl: 1280, '2xl': 1536 }`
+
+### `app.head` — global HTML head (all pages, merged/overridden by page-level `useSeoMeta()`)
+| Meta | Value | Purpose |
+|---|---|---|
+| `viewport` | `width=device-width, initial-scale=1` | Mobile responsiveness |
+| `format-detection` | `telephone=no` | Disable iOS phone number detection |
+| `theme-color` | `#0f0f20` | Mobile browser bar colour (`sb-main`) |
+| `og:type` | `website` | Open Graph type |
+| `og:site_name` | `Stefano Biddau` | Site name |
+| `og:image` | `https://www.stefanobiddau.com/images/card-logo.jpg` | OG image (1200×630px) |
+| `twitter:card` | `summary` | Twitter card type |
+| `twitter:image` | `https://www.stefanobiddau.com/images/card-logo.jpg` | Twitter image |
+| `link[favicon]` | `/favicon.ico` | Browser tab icon |
+
+### `i18n` module config
+- `baseUrl: 'https://www.stefanobiddau.com'` — needed for canonical + alternate `<link>` tags
+- `strategy: 'prefix_except_default'`, `defaultLocale: 'en'`, `detectBrowserLanguage: false` (intentional — no unexpected redirects)
+- `locales`: `{ code: 'en', iso: 'en-US' }`, `{ code: 'it', iso: 'it-IT' }`, `langDir: 'locales/'`
+
+### `tsconfig.json`
+Fully delegated to auto-generated `.nuxt/tsconfig.app.json` / `.nuxt/tsconfig.server.json` (strict mode, path aliases, Vue types). Never manually add `compilerOptions` — run `nuxt prepare` to regenerate after config changes.
+
+---
+
+## `package.json` scripts
+
+| Script | Command | Use |
+|---|---|---|
+| `dev` | `nuxt dev` | Local development server |
+| `build` | `nuxt build` | SSR production build |
+| `generate` | `nuxt generate` | Full static site generation |
+| `preview` | `nuxt preview` | Preview the production build locally |
+| `postinstall` | `nuxt prepare` | Generates `.nuxt/` types after install |
+| `lint` | `eslint .` | Check for lint errors |
+| `lint:fix` | `eslint . --fix` | Auto-fix lint errors |
+| `si` | branch-aware install | `npm ci` on `main`, `npm install` elsewhere |
 
 ---
 
@@ -689,6 +787,47 @@ Client / SSR → /api/sb-* (Nitro) → Strapi CMS
 - `aria-label` on all icon-only interactive elements
 - `aria-describedby` for form hints/errors
 - `aria-invalid` on inputs with errors
+
+---
+
+## Maintenance workflows
+
+On request, run these checks. Report results in the same language the user asked in.
+
+### Dependency check
+1. Read `package.json`, run `npm outdated`.
+2. Classify each outdated package: **safe** (latest has same major as declared constraint) vs **needs attention** (major bump, or changelog reveals a breaking concern for `nuxt`/`vue`/`vite` peer deps — check release notes before trusting a minor/patch bump).
+3. Apply safe updates by editing `package.json` version constraints directly (not `npm update`, which only touches the lockfile), then run `npm run si`.
+4. Run `npm fund` (informational), `npm audit`, then `npm audit fix`.
+5. **Never run `npm audit fix --force`** — it bypasses semver and can silently introduce breaking major bumps. If a vulnerability needs it, stop and report (package, advisory, severity) instead.
+6. Report: auto-updated packages, packages needing attention (with reason), vulnerabilities fixed vs remaining (direct vs transitive).
+
+### Lint check
+1. `npm run lint:fix`, note files touched.
+2. `npm run lint`, categorise remaining diagnostics as warnings (non-blocking) vs errors (blocking).
+3. **Never silence with `// eslint-disable`** — fix in code.
+4. Report files auto-fixed, remaining warnings, remaining errors (file:line, rule, description).
+
+### Build check
+1. `npx nuxt typecheck` — collect TypeScript errors (file, line, error code, description).
+2. `npm run build` — collect build errors (`Vite error`, `Nitro error`, `Module not found`, `SSR error`, `Other`) and warnings.
+3. Report categorised results; build errors are blocking, type errors and warnings are not necessarily.
+
+### SEO / GSC readiness check
+Verify against `nuxt.config.ts` (`i18n.baseUrl` must be `https://www.stefanobiddau.com`, `routeRules`, `app.head.meta`):
+- `public/robots.txt`: `User-Agent: *`, `Allow: /`, `Sitemap:` directive pointing at the production domain.
+- `public/sitemap.xml`: valid `urlset` + `xmlns:xhtml`, all `<loc>` on the production domain, `<lastmod>`/`<changefreq>`/`<priority>` present, `<xhtml:link>` alternates per locale, correct `x-default`, all prerendered routes represented.
+- Global meta tags match the `app.head` table above.
+- Every page in `app/pages/**/*.vue`: has `useSeoMeta()`/`useHead()`, sets `title`, `description`/`ogDescription`, `ogTitle`, `ogImage` (own or inherited), all strings via `t()`/`$t()`, no placeholder values. Flag pages with no call at all (they only inherit globals).
+
+### Full checkup
+Run dependency check → SEO check → build check → lint check in order. If any blocking errors surface (build errors, unfixable lint errors), stop and report them — do not proceed to docs update. Otherwise decide whether `README.md` needs updating per the sync rule below, and summarise all four results plus the doc decision.
+
+### Update documentation (`README.md`)
+1. Read `README.md`, `package.json`, `nuxt.config.ts`, this file, and the full `app/` tree in parallel.
+2. Diff documented state vs actual codebase: outdated sections, missing components/composables/pages, wrong versions, broken links.
+3. Rewrite only the affected sections (full rewrite only if explicitly asked). Required chapters: Overview, Getting Started, Project Structure, Design System, Components, Pages & Routing, Server API, Composables & Utils, i18n, Deployment, Dependencies — Server API and Deployment sections are mandatory, never omit them.
+4. Don't invent unverifiable information — omit or mark `TBD`.
 
 ---
 

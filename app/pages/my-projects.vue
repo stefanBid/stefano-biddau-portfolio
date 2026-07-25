@@ -5,6 +5,7 @@ import useTemplates from '~/composables/data/useTemplates'
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
+const router = useRouter()
 
 useSeoMeta({
   // LOCALIZED
@@ -23,12 +24,31 @@ const { projects } = useProjects()
 const { templates } = useTemplates()
 
 // State
-const tabs = [
+const TAB_IDS = ['personalProjects', 'templateProject'] as const
+type TabType = typeof TAB_IDS[number]
+const DEFAULT_TAB_ID: TabType = 'personalProjects'
+
+const tabs: { id: TabType, icon: string, label: string }[] = [
   { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
   { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.sbTemplatesProject.tabLabel') },
 ]
 const expandedProjectIds = ref<Set<string>>(new Set())
-const currentTabId = ref<string>('personalProjects')
+
+const _isTabType = (value: unknown): value is TabType => typeof value === 'string' && TAB_IDS.includes(value as TabType)
+
+const currentTabId = computed<TabType>({
+  get() {
+    const rawSection = route.query.section
+    const section = Array.isArray(rawSection) ? rawSection[0] : rawSection
+    return _isTabType(section) ? section : DEFAULT_TAB_ID
+  },
+  set(value) {
+    if (value === currentTabId.value) {
+      return
+    }
+    router.replace({ query: { ...route.query, section: value } })
+  },
+})
 
 // Events
 
