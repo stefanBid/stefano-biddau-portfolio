@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.5.2...v1.6.0) (2026-07-25)
+
+
+### Features
+
+* monthly update ([#131](https://github.com/stefanBid/stefano-biddau-portfolio/issues/131)) ([393e8ac](https://github.com/stefanBid/stefano-biddau-portfolio/commit/393e8ac5285225b2aec312870ed017710f0eff07))
+
 ## [1.5.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.5.1...v1.5.2) (2026-06-28)
 
 
