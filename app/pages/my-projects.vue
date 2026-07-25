@@ -46,9 +46,16 @@ const currentTabId = computed<TabType>({
     if (value === currentTabId.value) {
       return
     }
-    router.replace({ query: { ...route.query, section: value } })
+    router.replace({ query: { section: value } })
   },
 })
+
+const rawSectionQuery = route.query.section
+const sectionQueryValue = Array.isArray(rawSectionQuery) ? rawSectionQuery[0] : rawSectionQuery
+const canonicalQuery = _isTabType(sectionQueryValue) ? { section: sectionQueryValue } : {}
+if (JSON.stringify(route.query) !== JSON.stringify(canonicalQuery)) {
+  await navigateTo({ query: canonicalQuery }, { replace: true })
+}
 
 // Events
 
