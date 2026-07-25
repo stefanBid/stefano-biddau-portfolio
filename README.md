@@ -34,7 +34,7 @@
 6. [Pages & Routing](#6-pages--routing)
 7. [Composables & Utils](#7-composables--utils)
 8. [i18n](#8-i18n)
-9. [AI Tooling — Prompts & Instructions](#9-ai-tooling--prompts--instructions)
+9. [AI Tooling — Claude Code Context](#9-ai-tooling--claude-code-context)
 10. [Deployment](#10-deployment)
 11. [Dependencies](#11-dependencies)
 
@@ -786,40 +786,30 @@ const label = t('nav.home')
 
 ---
 
-## 9. AI Tooling — Prompts & Instructions
+## 9. AI Tooling — Claude Code Context
 
-The project ships with pre-configured [GitHub Copilot](https://github.com/features/copilot) context under `.github/`. All configuration is versioned alongside the code.
+The project ships with a single root [`CLAUDE.md`](./CLAUDE.md), versioned alongside the code. It's the project's context file for [Claude Code](https://claude.com/claude-code) — loaded automatically into every session opened in this repo, no manual setup or per-file-type config needed.
 
-### How GitHub Copilot is configured
+### What `CLAUDE.md` covers
 
-| File / folder | Purpose |
+One file, all context: stack, npm install policy, project structure, naming rules, code conventions (Vue/Nuxt patterns, TypeScript, styling, i18n, ESLint), the full design system (colours, typography, utilities, animations, icons), the component API catalogue, pages, composables, utils, global types, server API conventions, and `nuxt.config.ts` reference.
+
+### Maintenance workflows
+
+Ask Claude Code in plain language (English or Italian) to run any of these — defined in `CLAUDE.md`'s "Maintenance workflows" section:
+
+| Workflow | What it does |
 |---|---|
-| `.github/copilot-instructions.md` | Global rules: app context, response language, stack, naming conventions |
-| `.github/instructions/*.instructions.md` | Scoped rules loaded automatically per file type (`applyTo` patterns) |
-| `.github/prompts/*.prompt.md` | Reusable Agent-mode workflows triggered by a phrase |
+| Dependency check | Runs `npm outdated`, classifies safe vs needs-attention updates, applies safe ones, runs `npm audit` / `npm audit fix` |
+| Lint check | Runs `eslint --fix`, reports remaining warnings/errors |
+| Build check | Runs `nuxt typecheck` + `nuxt build`, categorises errors |
+| SEO / GSC readiness check | Validates `sitemap.xml`, `robots.txt`, and per-page SEO meta against `nuxt.config.ts` |
+| Full checkup | Runs dependency → SEO → build → lint checks in order, stops on blocking errors, then decides if docs need updating |
+| Update documentation | Diffs `README.md` against the actual codebase and rewrites only the affected sections |
 
-### Available prompts
+### Documentation sync rule
 
-To run a prompt, type the trigger phrase in **Agent mode** (`#` or `@agent`).
-
-| Prompt file | Trigger phrases | What it does |
-|---|---|---|
-| `update-docs.prompt.md` | "Aggiorna la documentazione" · "Aggiorna il README" | Reads the full project and rewrites `README.md` |
-| `check-lint.prompt.md` | "Check del lint" · "Il progetto è pulito?" | Runs `eslint --fix`, reports remaining errors |
-| `check-build.prompt.md` | "Check del build" · "Il progetto builda?" | Runs `nuxt typecheck` + `nuxt build` |
-| `check-dependencies.prompt.md` | "Verifichiamo le dipendenze" · "Aggiorna le dipendenze" | Checks outdated packages, runs `npm audit fix` |
-| `check-gsc.prompt.md` | "Check GSC" · "Verifica la SEO" · "Il progetto è pronto per GSC?" | Validates `sitemap.xml`, `robots.txt`, meta tags across all pages |
-| `full-checkup.prompt.md` | "Checkup completo" · "Full checkup" · "Controlla tutto" | Orchestrates dependencies, SEO, build and lint checks; optionally updates docs |
-
-### Instruction files
-
-| File | Applies to | Governs |
-|---|---|---|
-| `design-system.instructions.md` | `**/*.vue` | CSS tokens, colours, typography, utilities, animations, icons |
-| `components.instructions.md` | `**/components/**` | Full API catalogue for `Base*`, `Custom*`, `The*` components |
-| `pages-layouts.instructions.md` | `**/pages/**`, `**/layouts/**` | Nuxt 4 routing, page template, SEO, i18n, data fetching |
-| `composables-utils.instructions.md` | `**/composables/**`, `**/utils/**` | All composables, utils, global TypeScript types |
-| `project-config.instructions.md` | `nuxt.config.ts`, `package.json` | `nuxt.config.ts` reference, scripts, dependencies, env vars |
+`CLAUDE.md` enforces that any change creating a discrepancy with `README.md` (new/removed/renamed components, pages, composables, utils, dependencies, `nuxt.config.ts` changes) must be followed by a targeted doc update in the same session.
 
 ---
 
