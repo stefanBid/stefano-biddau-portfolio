@@ -4,8 +4,8 @@ interface Project {
   content: RichBlock[]
   coverImageSrc?: string
   coverImageAlt?: string
-  codebaseUrl?: string
-  deployUrl?: string
+  codebaseUrls?: MenuItem[]
+  deploymentUrls?: MenuItem[]
 }
 
 export default function useProjects() {
@@ -20,14 +20,27 @@ export default function useProjects() {
       return []
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const _mapUrls = (rawUrls: any): MenuItem[] | undefined => {
+      if (!Array.isArray(rawUrls) || rawUrls.length === 0) {
+        return undefined
+      }
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return rawUrls.map((url: any) => ({
+        code: _rt(url.code || ''),
+        label: _rt(url.label || ''),
+      } as MenuItem))
+    }
+
     return rawProjects.map(item => ({
       id: _rt(item.id || ''),
       title: _rt(item.title || ''),
       content: markdownToRichBlocks(_rt(item.content || '')),
       coverImageSrc: item.coverImageSrc ? _rt(item.coverImageSrc) : undefined,
       coverImageAlt: item.coverImageAlt ? _rt(item.coverImageAlt) : undefined,
-      codebaseUrl: item.codebaseUrl ? _rt(item.codebaseUrl) : undefined,
-      deployUrl: item.deployUrl ? _rt(item.deployUrl) : undefined,
+      codebaseUrls: _mapUrls(item.codebaseUrls),
+      deploymentUrls: _mapUrls(item.deploymentUrls),
     } as Project))
   })
 
