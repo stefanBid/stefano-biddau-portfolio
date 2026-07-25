@@ -19,6 +19,11 @@
 
 ---
 
+> **⚠️ `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump.**
+> `nuxt@4.5.0` ships a regression in `@nuxt/vite-builder` that breaks the dev server: local `css:` entries in `nuxt.config.ts` 404 (`Failed to resolve import ".../main.css" from "virtual:nuxt:.nuxt%2Fcss.mjs"`), caused by inconsistent `@fs/` path prefixing in generated `<link>` tags. Reproduced independently of the Vite version (forcing `vite@8.1.0` via `overrides` does not fix it). Confirmed with a minimal `nuxi init` repro, unrelated to this project's config. Tracked upstream: [nuxt/nuxt#34766](https://github.com/nuxt/nuxt/issues/34766) (related, Windows-specific variant of the same bug). Remove the pin once a fixed Nuxt 4.5.x patch ships.
+
+---
+
 ## Table of Contents
 
 1. [Overview](#1-overview)
