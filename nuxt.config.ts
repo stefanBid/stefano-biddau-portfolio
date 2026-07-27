@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ['./app/assets/css/main.css'],
+  css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
       emailjsPublicKey: process.env.NUXT_EMAILJS_PUBLIC_KEY,
