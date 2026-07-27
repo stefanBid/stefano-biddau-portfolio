@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.0...v1.6.1) (2026-07-27)
+
+
+### Bug Fixes
+
+* import css bug ([#134](https://github.com/stefanBid/stefano-biddau-portfolio/issues/134)) ([e7e1a3d](https://github.com/stefanBid/stefano-biddau-portfolio/commit/e7e1a3d8cc42c87a9dc3b55e431ca46406f56c55))
+
 ## [1.6.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.5.2...v1.6.0) (2026-07-25)
 
 
