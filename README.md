@@ -5,8 +5,8 @@
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
   ![Version](https://img.shields.io/badge/version-1.6.2-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.4.8-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.40-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.41-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
@@ -23,13 +23,17 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
-### ⚠️ Active — `nuxt` pinned to `4.4.8` (exact, no caret) — do not bump
+### ✅ Resolved — `nuxt` upgraded to `4.5.2` (exact, no caret)
 
-`4.5.0` bundles Vite 8, unhead v3 (type-narrowing on `useHead`, breaking for looser v2 typings) and unctx v3 — several major upgrades landing in a single minor release. Re-test on a feature branch (`npm install`, not `npm ci`) with `npx nuxt typecheck` + `npm run build` before merging to `main`. Remove the pin once the branch test is clean.
+`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
-Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` (current pinned version) — if it resurfaces after a future version bump, treat it as a regression tied to that version rather than a project config issue.
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` — not yet re-verified on the current `4.5.2` pin. If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
+
+### ✅ Resolved — `@nuxt/image` `ipx` provider 500s on Netlify
+
+Images went through `/_ipx/...` returned `500` in production while working fine in `nuxt dev`. Root cause: `ipx` gets bundled into the Netlify serverless function via node-file-trace, which unreliably traces sharp's native `.node` binary and the source images under `public/` — either miss causes the function to crash at runtime. `nuxt dev` runs unbundled (direct `node_modules` + `public/` filesystem access), so the bug never surfaces locally. Fixed by overriding the image provider to `'netlify'` under `$production` in `nuxt.config.ts` (dev keeps `ipx`), offloading transforms to Netlify's built-in Image CDN — no bundling, no native binary involved. Paired with a long-lived `Cache-Control` header on `/.netlify/images/*` in `netlify.toml` (URL+params are immutable per image, safe to cache aggressively).
 
 ---
 
@@ -42,10 +46,11 @@ Build/dev warning `Plugin .../check-if-page-unused.js has no default export and 
 5. [Components](#5-components)
 6. [Pages & Routing](#6-pages--routing)
 7. [Composables & Utils](#7-composables--utils)
-8. [i18n](#8-i18n)
-9. [AI Tooling — Claude Code Context](#9-ai-tooling--claude-code-context)
-10. [Deployment](#10-deployment)
-11. [Dependencies](#11-dependencies)
+8. [Server API](#8-server-api)
+9. [i18n](#9-i18n)
+10. [AI Tooling — Claude Code Context](#10-ai-tooling--claude-code-context)
+11. [Deployment](#11-deployment)
+12. [Dependencies](#12-dependencies)
 
 ---
 
@@ -68,7 +73,7 @@ Key design principles:
 
 ### Prerequisites
 
-- **Node.js** ≥ 24.11.0 (see `.nvmrc`)
+- **Node.js** ≥ 24.19.0 (see `.nvmrc`)
 - **npm**
 - **EmailJS** account (required for the contact form)
 
@@ -98,6 +103,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 |---|---|
 | `npm run dev` | Start development server at `http://localhost:3000` |
 | `npm run build` | Build for production (outputs to `.output/`) |
+| `npm run analyze` | Build and open the Nuxt bundle analyzer (`nuxi analyze`) |
 | `npm run generate` | Generate static site |
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Check code quality with ESLint |
@@ -113,7 +119,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 ── package.json             ← dependencies and npm scripts
 ── tsconfig.json            ← TypeScript config — extends .nuxt/tsconfig.app.json
 ── eslint.config.mjs        ← ESLint flat config (extends @nuxt/eslint, stylistic rules)
-── .nvmrc                   ← pinned Node.js version (24.11.0)
+── .nvmrc                   ← pinned Node.js version (24.19.0)
 ── i18n/
      locales/
        en.json              ← English translations (source of truth)
@@ -136,6 +142,11 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        the-notification/   TheNotificationBanner.vue, TheNotificationBox.vue
        the-page-hero/      ThePageHero.vue
      composables/
+       data/                ← content-source composables (i18n- or local-data-backed)
+         useMilestones.ts   ← reads pages.about.milestones from i18n
+         useProjects.ts     ← reads pages.projects.personalProjects.list from i18n
+         useSkills.ts       ← hardcoded local skills list + filtering/pagination
+         useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
        useFloatingUi.ts     ← @floating-ui/vue wrapper
        useLockScroll.ts     ← scroll lock with multi-caller safety
@@ -152,7 +163,8 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        privacy-policy.vue   ← /privacy-policy
        terms-and-conditions.vue ← /terms-and-conditions
      plugins/
-       scrollToTop.client.ts
+       pageTransition.client.ts ← skips the page fade when only the locale prefix changed
+     router.options.ts     ← custom scrollBehavior, waits for page transition to finish
      types/
        global.d.ts         ← global TS interfaces
      utils/
@@ -160,6 +172,9 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        downloadFile.ts     ← browser file download trigger (client-side only)
        generateUuid.ts     ← UUID v4 generator
        markdownToBlocks.ts ← Markdown → RichBlock[] converter
+── server/
+     routes/
+       robots.txt.ts       ← per-request robots.txt, varies by Netlify deploy context
 ```
 
 ---
@@ -393,18 +408,6 @@ Emits: `chip-click` (only when `clickable: true`)
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header`, `footer`
 Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
-
-### `BaseAccordion`
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `id` | `string` | — | Required |
-| `title` | `string` | — | Required |
-| `icon` | `string` | `undefined` | Iconify name |
-| `isOpen` | `boolean` | `undefined` | If omitted, accordion manages state internally |
-
-Emits: `toggle` (only when `isOpen` is controlled externally)
-Slot: `default`
 
 ### `BaseIconButton`
 
@@ -732,6 +735,47 @@ Server-side: skips DOMPurify. Client-side: full sanitisation. Use only via `Base
 
 ---
 
+### Content-source composables (`app/composables/data/`)
+
+No backend/CMS — these read from i18n translation files or a local hardcoded list instead of a server. See [Server API](#8-server-api).
+
+### `useMilestones()`
+
+```ts
+const { milestones } = useMilestones()
+```
+
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+
+### `useProjects()`
+
+```ts
+const { projects } = useProjects()
+```
+
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`.
+
+### `useTemplates()`
+
+```ts
+const { templates } = useTemplates()
+```
+
+Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`.
+
+### `useSkills()`
+
+```ts
+const { filters, skills, pagination } = useSkills()
+filters.value.name = 'vue'
+filters.value.types = ['feFramework']
+filters.value.page = 1
+```
+
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+
+---
+
 ### Utils
 
 | Function | Signature | Description |
@@ -758,7 +802,22 @@ All interfaces are declared globally — no import needed
 
 ---
 
-## 8. i18n
+## 8. Server API
+
+No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file.
+
+### `server/routes/robots.txt.ts`
+
+Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, since it must run per-request to read `CONTEXT`.
+
+### Adding new server code
+
+- `server/routes/<name>.ts` → served at `/<name>`
+- `server/api/<name>.ts` → served at `/api/<name>`
+
+---
+
+## 9. i18n
 
 The app uses `@nuxtjs/i18n` with the `prefix_except_default` strategy. English (`en`) is the default locale — no URL prefix. Italian (`it`) uses the `/it/` prefix.
 
@@ -795,7 +854,7 @@ const label = t('nav.home')
 
 ---
 
-## 9. AI Tooling — Claude Code Context
+## 10. AI Tooling — Claude Code Context
 
 The project ships with a single root [`CLAUDE.md`](./CLAUDE.md), versioned alongside the code. It's the project's context file for [Claude Code](https://claude.com/claude-code) — loaded automatically into every session opened in this repo, no manual setup or per-file-type config needed.
 
@@ -822,7 +881,7 @@ Ask Claude Code in plain language (English or Italian) to run any of these — d
 
 ---
 
-## 10. Deployment
+## 11. Deployment
 
 The project is pre-configured for **Netlify** (Nitro preset `netlify`).
 
@@ -834,11 +893,15 @@ Connect the GitHub repository to Netlify with:
 
 - **Build command:** `npm run build`
 - **Publish directory:** `.output/public`
-- **Node version:** `24.11.0`
+- **Node version:** `24.19.0`
 
 ### Changing the deployment target
 
 Edit `nuxt.config.ts → nitro.preset`. See [Nitro deploy presets](https://nitro.unjs.io/deploy) for all options (Vercel, Cloudflare, AWS Lambda, etc.).
+
+### Image optimisation — `netlify` provider in production
+
+`nuxt.config.ts → $production.image.provider` is set to `'netlify'` (dev keeps `'ipx'`). The `ipx` provider gets bundled into the Netlify serverless function via node-file-trace, which unreliably traces sharp's native `.node` binary and the `public/` source images — either miss crashes the function (`500` on every `/_ipx/*` request). The `netlify` provider offloads transforms to Netlify's built-in Image CDN instead — no bundling, no native binary. `netlify.toml` also sets a long-lived `Cache-Control` header on `/.netlify/images/*` (URL + params are immutable per image, safe to cache aggressively). See [Developer Notes](#developer-notes) for the full root cause.
 
 ### Environment variables
 
@@ -858,40 +921,43 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 
 ---
 
-## 11. Dependencies
+## 12. Dependencies
 
 ### Runtime dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `nuxt` | `^4.4.2` | Core framework |
-| `vue` | `^3.5.32` | UI framework |
-| `vue-router` | `^5.0.4` | Routing |
-| `tailwindcss` | `^4.2.2` | Utility-first CSS |
-| `@tailwindcss/vite` | `^4.2.2` | Tailwind v4 Vite plugin |
-| `@nuxt/eslint` | `^1.15.2` | ESLint + stylistic rules |
-| `@nuxt/icon` | `^2.2.1` | SVG icon system |
-| `@nuxt/image` | `^2.0.0` | Image optimisation |
-| `@nuxtjs/i18n` | `^10.2.4` | Multi-language support (EN + IT) |
-| `@vueuse/core` | `^14.2.1` | Vue composition utilities |
-| `@vueuse/nuxt` | `^14.2.1` | Nuxt integration for VueUse |
-| `@floating-ui/vue` | `^1.1.11` | Floating element positioning |
-| `isomorphic-dompurify` | `^3.7.1` | XSS-safe HTML sanitisation |
+| `nuxt` | `4.5.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
+| `vue` | `^3.5.41` | UI framework |
+| `vue-router` | `^5.2.0` | Routing |
+| `tailwindcss` | `^4.3.3` | Utility-first CSS |
+| `@tailwindcss/vite` | `^4.3.3` | Tailwind v4 Vite plugin |
+| `@nuxt/eslint` | `^1.17.0` | ESLint + stylistic rules |
+| `@nuxt/fonts` | `^0.14.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) |
+| `@nuxt/icon` | `^2.5.1` | SVG icon system |
+| `@nuxt/image` | `^2.1.0` | Image optimisation |
+| `@nuxtjs/color-mode` | `^4.0.1` | Centralised colour-mode config, fixed to dark |
+| `@nuxtjs/i18n` | `^10.6.0` | Multi-language support (EN + IT) |
+| `@vueuse/core` | `^14.4.0` | Vue composition utilities |
+| `@vueuse/nuxt` | `^14.4.0` | Nuxt integration for VueUse |
+| `@floating-ui/vue` | `^2.0.1` | Floating element positioning |
+| `isomorphic-dompurify` | `^3.23.0` | XSS-safe HTML sanitisation |
 | `@emailjs/browser` | `^4.4.1` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |
-| `zod` | `^4.3.6` | Runtime form validation |
-| `eslint` | `^10.1.0` | Linter |
+| `zod` | `^4.4.3` | Runtime form validation |
+| `eslint` | `^10.9.1` | Linter |
 
 ### Dev dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `@iconify-json/solar` | `^1.2.5` | Solar icon set |
+| `@iconify-json/solar` | `^1.2.9` | Solar icon set |
 | `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
-| `@iconify-json/logos` | `^1.2.11` | Brand/tech logo icons |
-| `@iconify-json/flagpack` | `^1.2.7` | Flag icons |
-| `@types/node` | `^25.5.2` | Node.js type definitions |
-| `vue-tsc` | `^3.2.6` | Vue TypeScript type checking |
+| `@iconify-json/logos` | `^1.2.13` | Brand/tech logo icons |
+| `@iconify-json/flagpack` | `^1.2.8` | Flag icons |
+| `@types/node` | `^26.3.0` | Node.js type definitions |
+| `typescript` | `^6.0.3` | TypeScript compiler |
+| `vue-tsc` | `^3.3.11` | Vue TypeScript type checking |
 
 ---
 
