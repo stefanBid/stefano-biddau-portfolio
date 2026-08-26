@@ -10,6 +10,8 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — SVG mode; collections: `logos`, `mdi`, `solar`, `flagpack`
 - **@nuxt/image** — `ipx` local + Cloudinary provider
+- **@nuxt/fonts** — self-hosts Bebas Neue + Space Mono from Google, no external `fonts.googleapis.com` request
+- **@nuxtjs/color-mode** — `preference`/`fallback` fixed to `'dark'`, no `'system'` — app has no light theme and no toggle, module exists only for a centralized config point
 - **@nuxtjs/i18n** — `en` (default, no prefix) + `it` (`/it/...`); `prefix_except_default`
 - **@vueuse/nuxt** — Vue composition utilities
 - **@floating-ui/vue** — dropdowns, menus
@@ -20,7 +22,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **ESLint** with `@nuxt/eslint` + stylistic rules
 - **TypeScript** strict mode
 - Deployment: **Netlify** (Nitro preset)
-- Node.js: **24.11.0** (`.nvmrc`)
+- Node.js: **24.19.0** (`.nvmrc`)
 
 ---
 

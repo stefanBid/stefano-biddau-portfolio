@@ -2,10 +2,32 @@
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineNuxtConfig({
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n'],
+  // ---------------------------------------------------------------------------
+  // Modules
+  // ---------------------------------------------------------------------------
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n', '@nuxt/fonts', '@nuxtjs/color-mode'],
+
+  // ---------------------------------------------------------------------------
+  // Environment overrides — merged in based on the actual Nuxt CLI command
+  // (`nuxt dev` → $development, `nuxt build`/`generate` → $production), not `process.env.NODE_ENV`
+  // ---------------------------------------------------------------------------
+  $development: {
+    devtools: { enabled: true },
+  },
+  $production: {
+    devtools: { enabled: false },
+  },
+
+  // ---------------------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------------------
   ssr: true,
-  devtools: { enabled: process.env.NODE_ENV !== 'production' },
+
+  // ---------------------------------------------------------------------------
+  // App & Head
+  // ---------------------------------------------------------------------------
   app: {
+    pageTransition: { name: 'page', mode: 'out-in' },
     head: {
       meta: [
         // Mobile responsiveness
@@ -33,6 +55,16 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  colorMode: {
+    classSuffix: '',
+    // Fixed, no OS-following and no toggle — this app is always dark (see CLAUDE.md)
+    preference: 'dark',
+    fallback: 'dark',
+  },
+
+  // ---------------------------------------------------------------------------
+  // Runtime config & routing
+  // ---------------------------------------------------------------------------
   runtimeConfig: {
     public: {
       siteUrl: 'https://stefanobiddau.com',
@@ -42,7 +74,6 @@ export default defineNuxtConfig({
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
     },
   },
-
   routeRules: {
     // EN
     '/': { prerender: true },
@@ -63,6 +94,10 @@ export default defineNuxtConfig({
     // Dynamic, must run per-request — never prerender
     '/robots.txt': { prerender: false },
   },
+
+  // ---------------------------------------------------------------------------
+  // Build & server
+  // ---------------------------------------------------------------------------
   sourcemap: {
     client: false,
     server: false,
@@ -89,11 +124,32 @@ export default defineNuxtConfig({
       ],
     },
   },
+  hooks: {
+    'build:before': () => {
+      const requiredEnvVars = [
+        'NUXT_EMAILJS_PUBLIC_KEY',
+        'NUXT_EMAILJS_SERVICE_ID',
+        'NUXT_EMAILJS_TEMPLATE_ADMIN_ID',
+        'NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID',
+      ]
+
+      const missing = requiredEnvVars.filter(key => !process.env[key])
+
+      if (missing.length > 0) {
+        throw new Error(`Missing required EmailJS environment variable(s): ${missing.join(', ')}. Set them before building — the contact form depends on them.`)
+      }
+    },
+  },
   eslint: {
     config: {
       stylistic: true,
-
     },
+  },
+  fonts: {
+    families: [
+      { name: 'Bebas Neue', provider: 'google', weights: [400] },
+      { name: 'Space Mono', provider: 'google', weights: [400, 700] },
+    ],
   },
   i18n: {
     baseUrl: 'https://stefanobiddau.com',
