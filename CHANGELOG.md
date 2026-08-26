@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.2...v1.6.3) (2026-08-26)
+
+
+### Bug Fixes
+
+* update page transition handling and version number ([#138](https://github.com/stefanBid/stefano-biddau-portfolio/issues/138)) ([ffaf21b](https://github.com/stefanBid/stefano-biddau-portfolio/commit/ffaf21b50d6ca07f07cd3911816326cc7fe44426))
+
 ## [1.6.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.1...v1.6.2) (2026-08-26)
 
 
