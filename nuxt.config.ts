@@ -35,6 +35,7 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css'],
   runtimeConfig: {
     public: {
+      siteUrl: 'https://stefanobiddau.com',
       emailjsPublicKey: process.env.NUXT_EMAILJS_PUBLIC_KEY,
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
@@ -58,6 +59,9 @@ export default defineNuxtConfig({
     '/it/my-projects': { prerender: true },
     '/it/privacy-policy': { prerender: true },
     '/it/terms-and-conditions': { prerender: true },
+
+    // Dynamic, must run per-request — never prerender
+    '/robots.txt': { prerender: false },
   },
   sourcemap: {
     client: false,
