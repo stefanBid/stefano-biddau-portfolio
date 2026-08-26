@@ -32,11 +32,11 @@ const { t } = useI18n()
       <template #card-header>
         <div class="flex items-center justify-center p-4 bg-sb-surface-2 w-full rounded-xl u-sb-soft-transition">
           <div class="logo-container size-28 md:size-32 flex items-center justify-center rounded-2xl bg-sb-contrast shadow-[0_8px_30px_var(--color-sb-shadow)] ring-1 ring-white/5 u-sb-soft-transition transition-transform">
-            <img
+            <NuxtImg
               v-if="props.imageSrc"
               :alt="`${props.title} logo`"
               class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
-              loading="eager"
+              loading="lazy"
               :src="props.imageSrc"
             />
             <Icon

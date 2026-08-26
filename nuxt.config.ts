@@ -126,6 +126,13 @@ export default defineNuxtConfig({
   },
   hooks: {
     'build:before': () => {
+      // `build:before` also fires during `nuxt prepare` (the postinstall script,
+      // so on every `npm ci`) — guard on Netlify's real production context only,
+      // otherwise CI and a fresh `npm install` without a local .env always fail.
+      if (process.env.CONTEXT !== 'production') {
+        return
+      }
+
       const requiredEnvVars = [
         'NUXT_EMAILJS_PUBLIC_KEY',
         'NUXT_EMAILJS_SERVICE_ID',

@@ -144,7 +144,7 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
         <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
           <div class="flex items-center justify-center mb-4 md:mb-6 ">
             <div class="w-33 md:w-52 h-auto bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] u-sb-soft-transition flex items-center justify-center">
-              <img
+              <NuxtImg
                 alt="SBT Logo"
                 class="w-full h-auto u-sb-soft-transition"
                 fetchpriority="high"
