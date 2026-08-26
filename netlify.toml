@@ -3,7 +3,7 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "24.11.0"
+  NODE_VERSION = "24.19.0"
 
 # Skip deploy for release-please PRs
 [context.deploy-preview]
