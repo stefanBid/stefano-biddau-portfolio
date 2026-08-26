@@ -16,6 +16,7 @@ export default defineNuxtConfig({
   },
   $production: {
     devtools: { enabled: false },
+    image: { provider: 'netlify' },
   },
 
   // ---------------------------------------------------------------------------
