@@ -189,7 +189,7 @@ const onCloseSkillsDialog = () => {
         </div>
       </BaseCard>
     </section>
-    <CustomSkillsDialog
+    <LazyCustomSkillsDialog
       :filter-types="filterTypes"
       :open-dialog="openSkillsDialog"
       @close-dialog="onCloseSkillsDialog"

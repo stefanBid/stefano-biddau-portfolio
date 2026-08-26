@@ -104,7 +104,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       </div>
     </section>
     <!-- Contact Form -->
-    <CustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
+    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>
 

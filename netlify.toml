@@ -3,8 +3,15 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "24.11.0"
+  NODE_VERSION = "24.19.0"
 
 # Skip deploy for release-please PRs
 [context.deploy-preview]
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF . || [ \"$HEAD\" != \"${HEAD#release-please--}\" ]"
+
+# Long-lived browser cache for Netlify Image CDN transforms — URL+params are
+# immutable per image, safe to cache aggressively
+[[headers]]
+  for = "/.netlify/images/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
