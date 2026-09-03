@@ -23,6 +23,11 @@ const routes = computed(() => [
   { name: t('nav.my-projects'), path: localePath('my-projects'), routeName: 'my-projects' },
 ] as Array<RouteItem>)
 
+const footerLinks = computed(() => [
+  ...routes.value,
+  { name: t('nav.sb-templates'), path: localePath('/my-projects/sb-templates') },
+] as Array<RouteItem>)
+
 const langs = [
   { code: 'en', label: 'English', iconType: 'nuxt-icon', icon: 'flagpack:gb-ukm' },
   { code: 'it', label: 'Italiano', iconType: 'nuxt-icon', icon: 'flagpack:it' },
@@ -73,7 +78,7 @@ const onCloseNotification = (id: string) => {
       instagram-url="https://www.instagram.com/stefano_bid/"
       linkedin-url="https://www.linkedin.com/in/stefano-biddau/"
       phone="+39 3297247711"
-      :quick-links="routes"
+      :quick-links="footerLinks"
     />
     <ClientOnly>
       <TheNotificationBox>

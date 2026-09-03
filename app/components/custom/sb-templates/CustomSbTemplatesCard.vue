@@ -4,6 +4,8 @@ interface CustomSbTemplatesCardProps {
   title: string
   description: string
   imageSrc?: string
+  imageWidth?: number
+  imageHeight?: number
   icons?: string[]
   codebaseUrl?: string
 }
@@ -13,6 +15,8 @@ const props = withDefaults(
   defineProps<CustomSbTemplatesCardProps>(),
   {
     imageSrc: undefined,
+    imageWidth: undefined,
+    imageHeight: undefined,
     icons: undefined,
     deploymentUrl: undefined,
   },
@@ -20,6 +24,13 @@ const props = withDefaults(
 
 // Dependencies
 const { t } = useI18n()
+
+// State
+const DEFAULT_IMAGE_WIDTH = 400 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
+const DEFAULT_IMAGE_HEIGHT = 400
+
+const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
+const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
 </script>
 
 <template>
@@ -36,8 +47,9 @@ const { t } = useI18n()
               v-if="props.imageSrc"
               :alt="`${props.title} logo`"
               class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
-              loading="lazy"
+              :height="imageHeight"
               :src="props.imageSrc"
+              :width="imageWidth"
             />
             <Icon
               v-else
@@ -55,21 +67,18 @@ const { t } = useI18n()
           {{ props.title }}
         </h3>
 
-        <!-- Description -->
-        <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
-          {{ props.description }}
-        </p>
-
         <!-- Technologies -->
         <div
           v-if="props.icons && props.icons.length > 0"
           class="flex items-center justify-center gap-2 mt-6 u-sb-soft-transition"
         >
           <template v-for="(icon, index) in props.icons" :key="index">
-            <Icon
-              class="size-6 md:size-7 text-sb-accent u-sb-soft-transition"
-              :name="icon"
-            />
+            <div class="flex items-center justify-center p-2 rounded-md bg-sb-contrast h-10 md:h-12">
+              <Icon
+                class="size-6 md:size-7 text-sb-accent u-sb-soft-transition"
+                :name="icon"
+              />
+            </div>
             <span
               v-if="index < props.icons.length - 1"
               class="ty-sb-subtitle text-sb-muted"
@@ -78,6 +87,11 @@ const { t } = useI18n()
             </span>
           </template>
         </div>
+
+        <!-- Description -->
+        <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
+          {{ props.description }}
+        </p>
       </template>
 
       <!-- Card Footer: CTA -->

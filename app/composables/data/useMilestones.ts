@@ -4,6 +4,8 @@ interface Milestone {
   content: RichBlock[]
   subtitle?: string
   imageSrc?: string
+  imageWidth?: number
+  imageHeight?: number
   imageCaption?: string
   date?: string
 }
@@ -27,6 +29,8 @@ export default function useMilestones() {
       content: markdownToRichBlocks(_rt(item.content || '')),
       subtitle: item.subtitle ? _rt(item.subtitle) : undefined,
       imageSrc: item.imageSrc ? _rt(item.imageSrc) : undefined,
+      imageWidth: item.imageWidth,
+      imageHeight: item.imageHeight,
       imageCaption: item.imageCaption ? _rt(item.imageCaption) : undefined,
       date: item.date ? _rt(item.date) : undefined,
     } as Milestone))

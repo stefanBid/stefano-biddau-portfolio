@@ -10,6 +10,7 @@
     "about-me": "About Me",
     "my-skills": "Skills",
     "my-projects": "Projects",
+    "sb-templates": "SB Templates",
     "terms-and-conditions": "Terms and Conditions",
     "privacy-policy": "Privacy Policy"
   },
@@ -29,6 +30,10 @@
     "projects": {
       "title": "Web Projects {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Explore a selection of my web projects: modern, responsive, and user-focused solutions. Each project reflects my approach to design and development."
+    },
+    "sbTemplates": {
+      "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Open-source, ready-to-use project templates for web and mobile — clean architecture, modern tooling, zero setup. Start building today."
     },
     "privacy": {
       "title": "Privacy Policy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -125,6 +130,8 @@
           "subtitle": "UNISA - Computer Science (Fisciano)",
           "date": "09/09/2018",
           "imageSrc": "/images/milestones/unisa.webp",
+          "imageWidth": 2652,
+          "imageHeight": 3976,
           "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
           "content": "My academic journey at UNISA was much more than a traditional course of study: it was the place where I truly learned what it means to build solutions, tackle complexity, grow through challenges, and mature both as a developer and as a person.\n\nI began in 2018 with curiosity and only a few certainties, and over the years I built a solid foundation based on theory, practice, and a clearer understanding of what I wanted to become.\n\nI developed strong skills in **object-oriented programming with Java**, explored **distributed programming through Java EE**, and strengthened my abilities in **web development using HTML, CSS, and JavaScript**. Alongside these technical areas, I studied **mathematics and statistics** and applied them directly through **Python** for data analysis and experimentation.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, was one of the most significant challenges of my university years. Working with the **Fashion-MNIST** dataset, I compared different classification models and discovered the depth, rigor, and potential of machine learning when applied to real-world problems.\n\nBeyond theory, I completed several practical projects, including an e-commerce platform for automotive products. This experience taught me what it truly means to design and implement a fully functional application—from concept to execution—integrating both front-end and back-end logic.\n\nYet the most valuable part of those years was not only the technical knowledge I gained: it was the experience of working in teams, developing leadership when needed, and becoming a reliable reference point for other students. These soft skills shaped my collaborative mindset and the way I approach complex challenges today.\n\nWhen I graduated in December 2022, I felt that I was closing an important chapter—while carrying with me all the tools, knowledge, and self-awareness needed to begin a new one."
         },
@@ -141,6 +148,8 @@
           "subtitle": "Full Stack Developer",
           "date": "03/01/2023",
           "imageSrc": "/images/milestones/workstation.webp",
+          "imageWidth": 2316,
+          "imageHeight": 3088,
           "imageCaption": "Me at my remote workstation, surrounded by screens and code as I bring new features to life.",
           "content": "My transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
         }
@@ -298,6 +307,8 @@
             "description": "A fast, ready-to-use Nuxt template designed to kickstart modern projects effortlessly.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
             "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
             "langIcons" : ["logos:nuxt-icon"]
           },
           {
@@ -306,7 +317,19 @@
             "description": "A clean Flutter template built exclusively for mobile—iOS and Android—to kickstart your native app projects with modern tooling and automation.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
             "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
             "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
+          },
+          {
+            "id":"9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "title": "SB-Template Astro",
+            "description": "A lightweight, content-focused Astro template designed to kickstart fast, SEO-friendly static sites with minimal setup.",
+            "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
+            "logoSrc": "/images/sbt-logos/sb-template-astro.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
+            "langIcons" : ["logos:astro-icon"]
           }
         ],
         "linkToCta": "Use this template",

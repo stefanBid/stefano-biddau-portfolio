@@ -28,7 +28,11 @@ const isActiveRoute = (r: RouteItem) => {
   if (r.disabled) {
     return false
   }
-  return r.routeName ? getRouteBaseName(currentRoute) === r.routeName : currentRoute.path === r.path
+  if (!r.routeName) {
+    return currentRoute.path === r.path
+  }
+  const baseName = String(getRouteBaseName(currentRoute) ?? '')
+  return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
 }
 
 // Data
@@ -188,8 +192,8 @@ watch(isMdUp, (newVal) => {
               v-if="!r.disabled"
               class="rounded-xl p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
               :class="{
-                'hover:bg-sb-surface-2': currentRoute.path !== r.path,
-                'bg-sb-accent font-bold!': currentRoute.path === r.path,
+                'hover:bg-sb-surface-2': !isActiveRoute(r),
+                'bg-sb-accent font-bold!': isActiveRoute(r),
               }"
               :to="r.path"
               @click="onClose"
