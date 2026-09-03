@@ -6,6 +6,8 @@ interface CustomMilestoneProps {
   content: RichBlock[]
   subtitle?: string
   imageSrc?: string
+  imageWidth?: number
+  imageHeight?: number
   imageAlt?: string
   date?: string
 }
@@ -16,6 +18,8 @@ const props = withDefaults(
   {
     subtitle: undefined,
     imageSrc: undefined,
+    imageWidth: undefined,
+    imageHeight: undefined,
     imageAlt: undefined,
     date: undefined,
   },
@@ -31,6 +35,11 @@ const { t } = useI18n()
 
 // State
 const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
+const DEFAULT_IMAGE_WIDTH = 800 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
+const DEFAULT_IMAGE_HEIGHT = 1000
+
+const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
+const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
 
 const needsExpansion = computed(() => {
   const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
@@ -121,8 +130,10 @@ const onSelect = () => {
             <NuxtImg
               :alt="props.imageAlt || props.title"
               class="w-full h-full object-cover"
+              :height="imageHeight"
               loading="lazy"
               :src="props.imageSrc"
+              :width="imageWidth"
             />
           </div>
           <p

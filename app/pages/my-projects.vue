@@ -172,7 +172,9 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
               :codebase-url="template.codebaseUrl"
               :description="template.description"
               :icons="template.langIcons"
+              :image-height="template.logoHeight"
               :image-src="template.logoSrc"
+              :image-width="template.logoWidth"
               :title="template.title"
             />
             <CustomSbTemplatesCard

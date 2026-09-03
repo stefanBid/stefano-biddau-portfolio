@@ -125,6 +125,8 @@
           "subtitle": "UNISA - Informatica (Fisciano)",
           "date": "09/09/2018",
           "imageSrc": "/images/milestones/unisa.webp",
+          "imageWidth": 2652,
+          "imageHeight": 3976,
           "imageCaption": "Io durante la presentazione della mia tesi di laurea, mentre illustro il progetto dedicato alla comparazione di algoritmi di Machine Learning per la classificazione di immagini.",
           "content": "Il mio percorso accademico all’UNISA è stato molto più di un tradizionale cammino di studi: è stato il luogo in cui ho realmente imparato cosa significhi costruire soluzioni, affrontare la complessità, crescere attraverso le sfide e maturare sia come sviluppatore sia come persona.\n\nHo iniziato nel 2018 con curiosità e poche certezze, e negli anni ho costruito una base solida fatta di teoria, pratica e una comprensione più chiara di ciò che volevo diventare.\n\nHo sviluppato forti competenze nella **programmazione orientata agli oggetti con Java**, ho esplorato la **programmazione distribuita tramite Java EE** e ho consolidato le mie abilità nello **sviluppo web con HTML, CSS e JavaScript**. Accanto a queste aree tecniche, ho studiato **matematica e statistica** e le ho applicate direttamente tramite **Python** per analisi dei dati ed esperimenti.\n\nLa mia tesi, *“Confronto di Algoritmi di Machine Learning per la Classificazione di Immagini”*, è stata una delle sfide più significative degli anni universitari. Lavorando con il dataset **Fashion-MNIST**, ho confrontato diversi modelli di classificazione e ho scoperto la profondità, il rigore e il potenziale del machine learning applicato a problemi reali.\n\nOltre alla teoria, ho realizzato diversi progetti pratici, tra cui una piattaforma e-commerce per prodotti automobilistici. Questa esperienza mi ha insegnato cosa significhi davvero progettare e implementare un’applicazione completamente funzionale — dal concept all’esecuzione — integrando logiche front-end e back-end.\n\nEppure, la parte più preziosa di quegli anni non è stata solo la conoscenza tecnica: è stata l’esperienza di lavorare in team, sviluppare leadership quando necessario e diventare un punto di riferimento affidabile per altri studenti. Queste soft skill hanno formato la mia mentalità collaborativa e il modo in cui oggi affronto le sfide complesse.\n\nQuando mi sono laureato nel dicembre 2022, ho sentito che stavo chiudendo un capitolo importante — portando però con me tutti gli strumenti e la consapevolezza necessari per iniziarne uno nuovo."
         },
@@ -141,6 +143,8 @@
           "subtitle": "Sviluppatore Full Stack",
           "date": "03/01/2023",
           "imageSrc": "/images/milestones/workstation.webp",
+          "imageWidth": 2316,
+          "imageHeight": 3088,
           "imageCaption": "Io dalla mia postazione remota, immerso tra monitor e codice mentre do forma alle prossime funzionalità.",
           "content": "Con l’assunzione a tempo indeterminato è iniziata la fase più intensa del mio percorso in **SI2001**. Ho partecipato a più di cinque progetti come **sviluppatore front-end**, affinando le mie competenze in **Vue.js**, **Angular** e **Flutter**, e contribuendo alla costruzione di applicazioni moderne, modulari e performanti.\n\nIn questo periodo ho partecipato attivamente a tutte le **cerimonie Agile** — sprint, stand-up e retrospettive — maturando sia come tecnico sia come professionista capace di proporre soluzioni, collaborare in modo efficace e sostenere il team nei momenti chiave. Con il tempo sono diventato una presenza affidabile nei progetti, contribuendo non solo con codice, ma anche con metodo, visione e consapevolezza tecnica."
         }
@@ -299,6 +303,8 @@
             "description": "Template Nuxt rapido e pronto all’uso, progettato per lanciare progetti moderni senza complicazioni.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
             "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
             "langIcons" : ["logos:nuxt-icon"]
           },
           {
@@ -307,6 +313,8 @@
             "description": "Un template Flutter pulito e pronto all'uso, progettato esclusivamente per mobile iOS e Android per avviare rapidamente i tuoi progetti di app native con strumenti moderni e automazione.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
             "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
             "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
           }
         ],

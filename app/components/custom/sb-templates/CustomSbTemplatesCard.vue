@@ -4,6 +4,8 @@ interface CustomSbTemplatesCardProps {
   title: string
   description: string
   imageSrc?: string
+  imageWidth?: number
+  imageHeight?: number
   icons?: string[]
   codebaseUrl?: string
 }
@@ -13,6 +15,8 @@ const props = withDefaults(
   defineProps<CustomSbTemplatesCardProps>(),
   {
     imageSrc: undefined,
+    imageWidth: undefined,
+    imageHeight: undefined,
     icons: undefined,
     deploymentUrl: undefined,
   },
@@ -20,6 +24,13 @@ const props = withDefaults(
 
 // Dependencies
 const { t } = useI18n()
+
+// State
+const DEFAULT_IMAGE_WIDTH = 400 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
+const DEFAULT_IMAGE_HEIGHT = 400
+
+const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
+const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
 </script>
 
 <template>
@@ -36,8 +47,10 @@ const { t } = useI18n()
               v-if="props.imageSrc"
               :alt="`${props.title} logo`"
               class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
+              :height="imageHeight"
               loading="lazy"
               :src="props.imageSrc"
+              :width="imageWidth"
             />
             <Icon
               v-else

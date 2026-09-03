@@ -4,6 +4,8 @@ export interface SbTemplate {
   description: string
   codebaseUrl: string
   logoSrc?: string
+  logoWidth?: number
+  logoHeight?: number
   langIcons?: string[]
 }
 
@@ -25,6 +27,8 @@ export default function useTemplates() {
       description: _rt(item.description || ''),
       codebaseUrl: item.codebaseUrl ? _rt(item.codebaseUrl) : '',
       logoSrc: item.logoSrc ? _rt(item.logoSrc) : undefined,
+      logoWidth: item.logoWidth,
+      logoHeight: item.logoHeight,
       langIcons: Array.isArray(item.langIcons) ? item.langIcons.map((icon: string) => _rt(icon)) : undefined,
     } as SbTemplate))
   })
