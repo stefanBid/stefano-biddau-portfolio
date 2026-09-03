@@ -3,7 +3,7 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-1.6.4-blue)
+  ![Version](https://img.shields.io/badge/version-1.6.3-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.42-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -151,6 +151,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        useFloatingUi.ts     ← @floating-ui/vue wrapper
        useLockScroll.ts     ← scroll lock with multi-caller safety
        useNotification.ts   ← global notification system
+       usePageTransition.ts ← shared skip-transition state (page fade + tab fade)
        useSanitize.ts       ← XSS-safe HTML sanitisation
        useTypedText.ts      ← typed.js wrapper for typewriter animations
      layouts/
@@ -166,7 +167,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        privacy-policy.vue   ← /privacy-policy
        terms-and-conditions.vue ← /terms-and-conditions
      plugins/
-       pageTransition.client.ts ← skips the page fade when only the locale prefix changed
+       pageTransition.client.ts ← drives usePageTransition state on navigation (skips fades for locale-only/tab changes)
      router.options.ts     ← custom scrollBehavior, waits for page transition to finish
      types/
        global.d.ts         ← global TS interfaces
@@ -174,7 +175,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        blocksToHtml.ts     ← Rich text blocks → HTML
        downloadFile.ts     ← browser file download trigger (client-side only)
        generateUuid.ts     ← UUID v4 generator
-       markdownToBlocks.ts ← Markdown → RichBlock[] converter
+       markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`)
 ── server/
      routes/
        robots.txt.ts       ← per-request robots.txt, varies by Netlify deploy context
@@ -726,6 +727,17 @@ lock()    // adds scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
 ```
 
+### `usePageTransition(isSubPage?)`
+
+Shared skip-transition state, driven by `plugins/pageTransition.client.ts` on every navigation.
+
+```ts
+const { pageTransition } = usePageTransition() // app.vue — outer NuxtPage
+const { pageTransition } = usePageTransition(true) // my-projects.vue — inner NuxtPage (tabs)
+```
+
+Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
+
 ### `useSanitize()`
 
 XSS-safe HTML rendering via `isomorphic-dompurify`.
@@ -749,7 +761,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
 
 ### `useProjects()`
 
@@ -787,7 +799,7 @@ Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i1
 | `generateUuid` | `(): string` | Returns a random UUID v4 string |
 | `blocksToHtml` | `(blocks: RichBlock[]): string` | Converts `RichBlock[]` to HTML. Always pair with `useSanitize()` or use `BaseRichText` |
 | `downloadFile` | `(publicUrl: string, filename: string): void` | Triggers a browser file download. **Client-side only** |
-| `markdownToBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text to `RichBlock[]` structure |
+| `markdownToRichBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text to `RichBlock[]` structure |
 
 ---
 
@@ -932,8 +944,8 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | Package | Version | Purpose |
 |---|---|---|
 | `nuxt` | `4.5.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
-| `vue` | `^3.5.41` | UI framework |
-| `vue-router` | `^5.2.0` | Routing |
+| `vue` | `^3.5.42` | UI framework |
+| `vue-router` | `^5.3.1` | Routing |
 | `tailwindcss` | `^4.3.3` | Utility-first CSS |
 | `@tailwindcss/vite` | `^4.3.3` | Tailwind v4 Vite plugin |
 | `@nuxt/eslint` | `^1.17.0` | ESLint + stylistic rules |
@@ -945,21 +957,23 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | `@vueuse/core` | `^14.4.0` | Vue composition utilities |
 | `@vueuse/nuxt` | `^14.4.0` | Nuxt integration for VueUse |
 | `@floating-ui/vue` | `^2.0.1` | Floating element positioning |
-| `isomorphic-dompurify` | `^3.23.0` | XSS-safe HTML sanitisation |
+| `isomorphic-dompurify` | `^4.1.0` | XSS-safe HTML sanitisation |
 | `@emailjs/browser` | `^4.4.1` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |
-| `zod` | `^4.4.3` | Runtime form validation |
+| `zod` | `^4.5.4` | Runtime form validation |
 | `eslint` | `^10.9.1` | Linter |
+
+`esbuild` is pinned via `overrides` (`^0.28.0`) across all transient deps — dev-server CORS security fix (GHSA-67mh), see `package.json`.
 
 ### Dev dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `@iconify-json/solar` | `^1.2.9` | Solar icon set |
+| `@iconify-json/solar` | `^1.2.10` | Solar icon set |
 | `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
 | `@iconify-json/logos` | `^1.2.13` | Brand/tech logo icons |
 | `@iconify-json/flagpack` | `^1.2.8` | Flag icons |
-| `@types/node` | `^26.3.0` | Node.js type definitions |
+| `@types/node` | `^26.4.1` | Node.js type definitions |
 | `typescript` | `^6.0.3` | TypeScript compiler |
 | `vue-tsc` | `^3.3.11` | Vue TypeScript type checking |
 
