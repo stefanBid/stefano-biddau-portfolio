@@ -84,6 +84,7 @@ export default defineNuxtConfig({
     '/about-me': { prerender: true },
     '/my-skills': { prerender: true },
     '/my-projects': { prerender: true },
+    '/my-projects/sb-templates': { prerender: true },
     '/privacy-policy': { prerender: true },
     '/terms-and-conditions': { prerender: true },
 
@@ -92,6 +93,7 @@ export default defineNuxtConfig({
     '/it/about-me': { prerender: true },
     '/it/my-skills': { prerender: true },
     '/it/my-projects': { prerender: true },
+    '/it/my-projects/sb-templates': { prerender: true },
     '/it/privacy-policy': { prerender: true },
     '/it/terms-and-conditions': { prerender: true },
 

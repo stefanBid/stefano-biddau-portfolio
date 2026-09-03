@@ -1,32 +1,32 @@
 <script setup lang="ts">
 interface BaseTabsProps {
   tabs: Array<{ label: string, icon?: string, id: string | number }>
+  selectedTabId?: string | number
   variant?: 'primary' | 'secondary'
   align?: 'left' | 'center' | 'right'
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseTabsProps>(), {
+  selectedTabId: undefined,
   variant: 'primary',
   align: 'left',
 })
 
-const selectedTabId = defineModel<string | number>('selectedTabId')
+const emit = defineEmits<{
+  // eslint-disable-next-line no-unused-vars
+  (e: 'select', tabId: string | number): void
+}>()
 
 // Computed
-const safeSelectedTabId = computed({
-  get: () => selectedTabId.value ?? props.tabs[0]?.id ?? '',
-  set: (value: string | number) => {
-    selectedTabId.value = value
-  },
-})
+const safeSelectedTabId = computed(() => props.selectedTabId ?? props.tabs[0]?.id ?? '')
 
 // Events
 const onSelectTab = (tabId: string | number) => {
   if (safeSelectedTabId.value === tabId) {
     return
   }
-  safeSelectedTabId.value = tabId
+  emit('select', tabId)
 }
 </script>
 

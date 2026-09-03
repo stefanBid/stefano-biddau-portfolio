@@ -3,15 +3,13 @@ import type { RouterConfig } from '@nuxt/schema'
 export default <RouterConfig>{
   scrollBehavior(to, from, savedPosition) {
     const nuxtApp = useNuxtApp()
-    const { skipTransition } = usePageTransition()
+    const { pageSkipTransition } = usePageTransition()
 
-    // Same page, only the locale prefix changed — keep the scroll position
-    // instead of jumping to top. Checked explicitly here rather than relying
-    // on `page:transition:finish` never firing for a same-component nav:
-    // some pages (e.g. my-projects.vue) trigger their own internal
-    // `navigateTo` on mount, which fires a real transition cycle and would
-    // otherwise force an unwanted scroll-to-top.
-    if (skipTransition.value) {
+    // Same top-level page — either only the locale prefix changed, or it's
+    // an in-page tab switch (my-projects.vue's index.vue / sb-templates.vue)
+    // triggered via `navigateTo`, not a real page-to-page navigation — keep
+    // the scroll position instead of jumping to top.
+    if (pageSkipTransition.value) {
       return false
     }
 

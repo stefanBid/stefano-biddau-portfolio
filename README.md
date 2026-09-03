@@ -159,7 +159,10 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        index.vue            ← / — Homepage
        about-me.vue         ← /about-me — Career milestones
        my-skills.vue        ← /my-skills — Filterable skills grid
-       my-projects.vue      ← /my-projects — Projects showcase
+       my-projects.vue      ← nested-route parent — hero + BaseTabs + <NuxtPage/>
+       my-projects/
+         index.vue           ← /my-projects — Personal projects grid
+         sb-templates.vue    ← /my-projects/sb-templates — SB Templates showcase
        privacy-policy.vue   ← /privacy-policy
        terms-and-conditions.vue ← /terms-and-conditions
      plugins/
@@ -581,7 +584,8 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 | `index.vue` | `/` | `/it` | Hero + `CustomSolarSystem` + skills preview + contact form |
 | `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline |
 | `my-skills.vue` | `/my-skills` | `/it/my-skills` | Filterable skills grid with `BaseTabs` |
-| `my-projects.vue` | `/my-projects` | `/it/my-projects` | Projects showcase grid |
+| `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Personal projects showcase grid |
+| `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates showcase grid |
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` | Legal |
 

@@ -28,7 +28,11 @@ const isActiveRoute = (r: RouteItem) => {
   if (r.disabled) {
     return false
   }
-  return r.routeName ? getRouteBaseName(currentRoute) === r.routeName : currentRoute.path === r.path
+  if (!r.routeName) {
+    return currentRoute.path === r.path
+  }
+  const baseName = String(getRouteBaseName(currentRoute) ?? '')
+  return baseName === r.routeName || baseName.startsWith(`${r.routeName}-`)
 }
 
 // Data

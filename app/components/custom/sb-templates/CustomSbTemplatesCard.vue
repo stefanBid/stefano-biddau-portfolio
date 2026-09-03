@@ -48,7 +48,6 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
               :alt="`${props.title} logo`"
               class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
               :height="imageHeight"
-              loading="lazy"
               :src="props.imageSrc"
               :width="imageWidth"
             />

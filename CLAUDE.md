@@ -129,69 +129,16 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 ## Design system
 
 ### Colours (`--color-sb-*` / Tailwind `bg-sb-*`, `text-sb-*`, `border-sb-*`)
-
-| Token | Value | Usage |
-|---|---|---|
-| `sb-main` | `#0f0f20` | Page background |
-| `sb-surface` | `#1a1a2e` | Card / elevated surface |
-| `sb-surface-2` | `#232342` | Nested surfaces, inputs |
-| `sb-border` | `#2a2a44` | Default borders |
-| `sb-shadow` | `rgba(0,0,0,0.45)` | Shadows via `var()` only |
-| `sb-accent` | `#e95905` | Primary CTA, highlights |
-| `sb-accent-hover` | `#d24f05` | Hover on accent |
-| `sb-accent-border` | `#b34704` | Border on accent elements |
-| `sb-contrast` | `#f1f1f1` | Primary text |
-| `sb-muted` | `#9ca3af` | Secondary / placeholder text |
-| `sb-success` | `#22c55e` | Success |
-| `sb-warning` | `#fb923c` | Warning |
-| `sb-error` | `#ef4444` | Error |
-| `sb-info` | `#60a5fa` | Info |
-| `sb-success-bg` | `#14532d` | Success tint bg |
-| `sb-warning-bg` | `#78350f` | Warning tint bg |
-| `sb-error-bg` | `#7f1d1d` | Error tint bg |
-| `sb-info-bg` | `#1e3a8a` | Info tint bg |
-
-Opacity modifiers allowed: `bg-sb-main/80`.
+Token values and usage: `app/assets/css/theme.css` (`@theme` block). Opacity modifiers allowed: `bg-sb-main/80`.
 
 ### Typography (`ty-sb-*`)
-
-| Class | Font | Usage |
-|---|---|---|
-| `ty-sb-hero` | Bebas Neue, uppercase | Full-bleed hero (`text-6xl` → `text-[12rem]`) |
-| `ty-sb-impact` | Bebas Neue, uppercase | Large display (`text-5xl` → `text-9xl`) |
-| `ty-sb-title` | Bebas Neue | Section titles (`text-2xl` → `text-4xl`) |
-| `ty-sb-title-lg` | Bebas Neue | Large section titles (`text-3xl` → `text-6xl`) |
-| `ty-sb-title-xl` | Bebas Neue | XL titles (`text-4xl` → `text-7xl`) |
-| `ty-sb-subtitle` | Space Mono semibold | Sub-headings (`text-base` → `text-xl`) |
-| `ty-sb-subtitle-lg` | Space Mono semibold | Large sub-headings (`text-lg` → `text-2xl`) |
-| `ty-sb-subtitle-xl` | Space Mono semibold | XL sub-headings (`text-xl` → `text-3xl`) |
-| `ty-sb-paragraph` | Space Mono | Body text (`text-sm` → `text-lg`) |
-| `ty-sb-label` | Space Mono, uppercase, tracked | Form labels, tags |
-| `ty-sb-btn-label` | Space Mono bold, uppercase | Button text |
-| `ty-sb-caption` | Space Mono italic | Captions, secondary notes |
-
-- `font-bebas-neue` → all titles (`ty-sb-hero`, `ty-sb-impact`, `ty-sb-title*`)
-- `font-space-mono` → subtitles, body, labels, buttons
+Class definitions: `app/assets/css/typography.css`. `font-bebas-neue` → all titles (`ty-sb-hero`, `ty-sb-impact`, `ty-sb-title*`); `font-space-mono` → subtitles, body, labels, buttons.
 
 ### Utility classes (`u-sb-*`)
-
-| Class | Effect |
-|---|---|
-| `u-sb-soft-transition` | `transition-all duration-200 ease-in-out` |
-| `u-sb-hard-transition` | `transition-all duration-500 ease-in-out` |
-| `u-sb-focus` | `outline-none ring-sb-contrast focus-visible:ring-2` |
-| `u-sb-focus-within` | `outline-none ring-sb-contrast focus-within:ring-2` |
-| `u-sb-no-focus` | Removes all focus outlines |
-
-Always add `u-sb-soft-transition` to interactive elements.
+Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transition` to interactive elements.
 
 ### Animations (Vue `<Transition>`)
-
-| Name | Effect | Duration |
-|---|---|---|
-| `fade` | Opacity + slight Y offset | 800ms |
-| `slide-down` | Opacity + slides from top | 200ms |
-| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+Keyframe/duration definitions: `app/assets/css/animations.css` (`fade`, `slide-down`, `scale-fade`).
 
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
@@ -216,31 +163,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` |
 
-### Creating a new page
-1. Create `.vue` in `app/pages/`
-2. Add `useSeoMeta()` with translated meta tags
-3. Add translation keys to both `en.json` and `it.json`
-4. Add `prerender: true` for both EN and IT routes in `nuxt.config.ts`
-
-### Minimal page template
-```vue
-<script setup lang="ts">
-// Dependencies
-const { t } = useI18n()
-
-// SEO
-useSeoMeta({
-  title: t('pageName.meta.title'),
-  description: t('pageName.meta.description'),
-  ogTitle: t('pageName.meta.title'),
-  ogDescription: t('pageName.meta.description'),
-})
-</script>
-
-<template>
-  <!-- page content -->
-</template>
-```
+Creating a new page: see the `add-page` skill.
 
 ### Layout
 Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
