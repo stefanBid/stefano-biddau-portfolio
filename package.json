@@ -2,7 +2,7 @@
   "name": "stefano-biddau-portfolio",
   "type": "module",
   "private": true,
-  "version": "1.6.3",
+  "version": "1.6.4",
   "scripts": {
     "build": "nuxt build",
     "analyze": "nuxi analyze",
