@@ -69,6 +69,9 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       siteUrl: 'https://stefanobiddau.com',
+      // Netlify's CONTEXT env var is only set during the build, not at Function runtime —
+      // resolve it here (build time) and expose it via runtimeConfig so server routes can read it per-request.
+      isProduction: process.env.CONTEXT === 'production',
       emailjsPublicKey: process.env.NUXT_EMAILJS_PUBLIC_KEY,
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
