@@ -45,35 +45,37 @@ const { templates } = useTemplates()
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition">
-      <template v-if="templates && templates.length > 0">
-        <CustomSbTemplatesCard
-          v-for="template in templates"
-          :id="template.id"
-          :key="template.id"
-          :codebase-url="template.codebaseUrl"
-          :description="template.description"
-          :icons="template.langIcons"
-          :image-height="template.logoHeight"
-          :image-src="template.logoSrc"
-          :image-width="template.logoWidth"
-          :title="template.title"
-        />
-        <CustomSbTemplatesCard
-          :id="1"
-          :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
-          :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
-        />
-      </template>
-      <template v-else>
-        <CustomSbTemplatesCard
-          v-for="n in 3"
-          :id="n"
-          :key="n"
-          :description="t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph')"
-          :title="t('pages.projects.sbTemplatesProject.comingSoonCard.title')"
-        />
-      </template>
+    <div
+      v-if="templates && templates.length > 0"
+      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20 u-sb-soft-transition"
+    >
+      <CustomSbTemplatesCard
+        v-for="template in templates"
+        :id="template.id"
+        :key="template.id"
+        :codebase-url="template.codebaseUrl"
+        :description="template.description"
+        :icons="template.langIcons"
+        :image-height="template.logoHeight"
+        :image-src="template.logoSrc"
+        :image-width="template.logoWidth"
+        :title="template.title"
+      />
+    </div>
+    <div
+      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-xl border bg-sb-info-bg border-sb-info u-sb-soft-transition"
+    >
+      <div class="shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl bg-sb-surface text-sb-info u-sb-soft-transition">
+        <Icon class="size-5 md:size-6" name="solar:code-circle-bold-duotone" />
+      </div>
+      <div class="flex-1 min-w-0">
+        <h3 class="ty-sb-subtitle text-sb-contrast u-sb-soft-transition">
+          {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
+        </h3>
+        <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+          {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
+        </p>
+      </div>
     </div>
   </div>
 </template>

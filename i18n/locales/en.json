@@ -319,6 +319,16 @@
             "logoWidth": 1280,
             "logoHeight": 1496,
             "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
+          },
+          {
+            "id":"9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "title": "SB-Template Astro",
+            "description": "A lightweight, content-focused Astro template designed to kickstart fast, SEO-friendly static sites with minimal setup.",
+            "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
+            "logoSrc": "/images/sbt-logos/sb-template-astro.webp",
+            "logoWidth": 1280,
+            "logoHeight": 1496,
+            "langIcons" : ["logos:astro-icon"]
           }
         ],
         "linkToCta": "Use this template",

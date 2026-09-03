@@ -67,21 +67,18 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
           {{ props.title }}
         </h3>
 
-        <!-- Description -->
-        <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
-          {{ props.description }}
-        </p>
-
         <!-- Technologies -->
         <div
           v-if="props.icons && props.icons.length > 0"
           class="flex items-center justify-center gap-2 mt-6 u-sb-soft-transition"
         >
           <template v-for="(icon, index) in props.icons" :key="index">
-            <Icon
-              class="size-6 md:size-7 text-sb-accent u-sb-soft-transition"
-              :name="icon"
-            />
+            <div class="flex items-center justify-center p-2 rounded-md bg-sb-contrast h-10 md:h-12">
+              <Icon
+                class="size-6 md:size-7 text-sb-accent u-sb-soft-transition"
+                :name="icon"
+              />
+            </div>
             <span
               v-if="index < props.icons.length - 1"
               class="ty-sb-subtitle text-sb-muted"
@@ -90,6 +87,11 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
             </span>
           </template>
         </div>
+
+        <!-- Description -->
+        <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
+          {{ props.description }}
+        </p>
       </template>
 
       <!-- Card Footer: CTA -->
