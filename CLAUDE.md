@@ -42,7 +42,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue`, `CustomSkillsCard.vue` |
 | Composable | camelCase + `use` | `useNotification.ts` |
 | Utility / type | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-sb-*` / `u-sb-*` | `ty-sb-title`, `u-sb-soft-transition` |
+| CSS utility | `ty-sb-*` / `u-sb-*` | `ty-sb-h3`, `u-sb-soft-transition` |
 | CSS variable | `--color-sb-*` | `--color-sb-accent` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
@@ -132,7 +132,7 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 Token values and usage: `app/assets/css/theme.css` (`@theme` block). Opacity modifiers allowed: `bg-sb-main/80`.
 
 ### Typography (`ty-sb-*`)
-Class definitions: `app/assets/css/typography.css`. `font-bebas-neue` → all titles (`ty-sb-hero`, `ty-sb-impact`, `ty-sb-title*`); `font-space-mono` → subtitles, body, labels, buttons.
+Class definitions: `app/assets/css/typography.css`. Semantic hierarchy: `ty-sb-hero`, `ty-sb-impact`, `ty-sb-h1`–`ty-sb-h3` are Bebas Neue; `ty-sb-h4`, `ty-sb-p`, `ty-sb-span`, `ty-sb-label`, `ty-sb-btn-label`, `ty-sb-caption`, `ty-sb-code` are Space Mono. `h1`–`h4`, `p`, `span`, `label`, `small`, `code` tags get matching styles for free from `base.css` — no class needed unless the element isn't the matching tag.
 
 ### Utility classes (`u-sb-*`)
 Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transition` to interactive elements.

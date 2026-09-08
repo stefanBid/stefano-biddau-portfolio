@@ -17,10 +17,10 @@
 
             <!-- Bottom row: skeleton title -->
             <div class="space-y-2">
-              <div class="ty-sb-title bg-sb-muted/25 rounded animate-pulse w-3/4">
+              <div class="ty-sb-h3 bg-sb-muted/25 rounded animate-pulse w-3/4">
                 &nbsp;
               </div>
-              <div class="ty-sb-title bg-sb-muted/25 rounded animate-pulse w-1/2">
+              <div class="ty-sb-h3 bg-sb-muted/25 rounded animate-pulse w-1/2">
                 &nbsp;
               </div>
             </div>
@@ -31,13 +31,13 @@
       <!-- Card Body -->
       <template #card-body>
         <div class="space-y-2">
-          <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-full">
+          <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-full">
             &nbsp;
           </div>
-          <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-full">
+          <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-full">
             &nbsp;
           </div>
-          <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-5/6">
+          <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-5/6">
             &nbsp;
           </div>
         </div>

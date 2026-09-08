@@ -63,7 +63,7 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
       <!-- Card Body: Title, Description, Technologies -->
       <template #card-body>
         <!-- Title -->
-        <h3 class="ty-sb-title text-center text-sb-contrast u-sb-soft-transition">
+        <h3 class="ty-sb-h3 text-center text-sb-contrast u-sb-soft-transition">
           {{ props.title }}
         </h3>
 
@@ -81,7 +81,7 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
             </div>
             <span
               v-if="index < props.icons.length - 1"
-              class="ty-sb-subtitle text-sb-muted"
+              class="ty-sb-span text-sb-muted"
             >
               +
             </span>
@@ -89,7 +89,7 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
         </div>
 
         <!-- Description -->
-        <p class="ty-sb-paragraph text-center text-sb-muted mt-3 u-sb-soft-transition">
+        <p class="ty-sb-p text-center text-sb-muted mt-3 u-sb-soft-transition">
           {{ props.description }}
         </p>
       </template>

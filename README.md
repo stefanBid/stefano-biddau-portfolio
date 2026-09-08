@@ -215,22 +215,24 @@ Custom `@utility` classes defined in `typography.css`. Apply them as regular Tai
 | Class | Font | Usage |
 |---|---|---|
 | `ty-sb-hero` | Bebas Neue, uppercase | Full-bleed hero text |
-| `ty-sb-impact` | Bebas Neue, uppercase | Large display headings |
-| `ty-sb-title-xl` | Bebas Neue | Extra large titles (`text-4xl` → `text-7xl`) |
-| `ty-sb-title-lg` | Bebas Neue | Large section titles (`text-3xl` → `text-6xl`) |
-| `ty-sb-title` | Bebas Neue | Section titles (`text-2xl` → `text-4xl`) |
-| `ty-sb-subtitle-xl` | Space Mono semibold | Extra large sub-headings |
-| `ty-sb-subtitle-lg` | Space Mono semibold | Large sub-headings |
-| `ty-sb-subtitle` | Space Mono semibold | Sub-headings |
-| `ty-sb-paragraph` | Space Mono | Body text |
+| `ty-sb-impact` | Bebas Neue, uppercase | `ThePageHero` full-viewport opening title only (~1.75x `ty-sb-hero`) |
+| `ty-sb-h1` | Bebas Neue, uppercase | Page-level heading (matches `h1`) |
+| `ty-sb-h2` | Bebas Neue, uppercase | Section heading (matches `h2`) |
+| `ty-sb-h3` | Bebas Neue | Sub-section heading (matches `h3`) |
+| `ty-sb-h4` | Space Mono semibold | Smallest heading level (matches `h4`/`h5`/`h6`) |
+| `ty-sb-p` | Space Mono | Body text (matches `p`) |
+| `ty-sb-span` | Space Mono | Generic inline text (matches `span`) |
 | `ty-sb-label` | Space Mono, uppercase, tracked | Form labels, tags |
 | `ty-sb-btn-label` | Space Mono bold, uppercase | Button text |
 | `ty-sb-caption` | Space Mono italic | Captions, secondary notes |
+| `ty-sb-code` | Space Mono | Inline code snippets (matches `code`) |
 
 ```vue
-<h1 class="ty-sb-title text-sb-contrast">My Skills</h1>
-<p class="ty-sb-paragraph text-sb-muted">Some description.</p>
+<h1 class="ty-sb-h3 text-sb-contrast">My Skills</h1>
+<p class="ty-sb-p text-sb-muted">Some description.</p>
 ```
+
+Non-semantic tags need the matching `ty-sb-*` utility. Semantic tags (`h1`–`h4`, `p`, `span`, `label`, `small`, `code`) get the same look for free from `base.css` — no class needed.
 
 **Font families:**
 - `font-bebas-neue` — Bebas Neue: all titles and display text

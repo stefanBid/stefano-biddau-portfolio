@@ -74,7 +74,7 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-sb-subtitle text-sb-contrast u-sb-soft-transition"
+          class="ty-sb-h4 text-sb-contrast u-sb-soft-transition"
         >
           {{ props.title }}
         </h3>

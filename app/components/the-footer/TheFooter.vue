@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             class="object-contain size-7 sm:size-8 md:size-9 u-sb-soft-transition"
             src="/images/logo.webp"
           />
-          <span class="ty-sb-title">
+          <span class="ty-sb-h3">
             Stefano Biddau
           </span>
         </NuxtLink>

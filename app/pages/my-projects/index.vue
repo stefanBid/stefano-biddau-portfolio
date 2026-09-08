@@ -56,10 +56,10 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
 <template>
   <div class="flex flex-col gap-20 u-sb-soft-transition">
     <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
-      <h2 class="ty-sb-title-xl u-sb-soft-transition">
+      <h2 class="ty-sb-h1 u-sb-soft-transition">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+      <p class="ty-sb-p text-sb-muted u-sb-soft-transition">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
     </div>

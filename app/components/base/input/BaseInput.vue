@@ -53,7 +53,7 @@ const describedBy = computed(() => {
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
         :autocomplete="props.autocomplete"
-        class="w-full rounded-xl bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-xl bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
         :class="{
           'border-sb-error': props.error,
           'border-sb-border': !props.error,

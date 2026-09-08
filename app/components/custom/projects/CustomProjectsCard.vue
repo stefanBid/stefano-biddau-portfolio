@@ -156,7 +156,7 @@ const onSelectUrl = (url: string) => {
             <!-- Bottom row: title - absolute positioned -->
             <div>
               <h2
-                class="ty-sb-title text-white drop-shadow-lg u-sb-soft-transition"
+                class="ty-sb-h3 text-white drop-shadow-lg u-sb-soft-transition"
                 :class="{
                   'animate-pulse': isDescriptionExpanded,
                 }"

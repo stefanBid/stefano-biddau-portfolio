@@ -26,7 +26,7 @@ const htmlContent = computed(() => {
 <style scoped>
 /* Typography styles conformi al progetto */
 
-/* h1 = ty-sb-title-xl */
+/* h1 = ty-sb-h1 */
 .rich-text :deep(h1) {
   font-family: var(--font-bebas-neue);
   line-height: 1.375; /* leading-tight */
@@ -57,7 +57,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h2 = ty-sb-title-lg */
+/* h2 = ty-sb-h2 */
 .rich-text :deep(h2) {
   font-family: var(--font-bebas-neue);
   line-height: 1.375; /* leading-tight */
@@ -88,7 +88,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h3 = ty-sb-title */
+/* h3 = ty-sb-h3 */
 .rich-text :deep(h3) {
   font-family: var(--font-bebas-neue);
   line-height: 1.375; /* leading-tight */
@@ -113,7 +113,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* h4-h6 = ty-sb-subtitle */
+/* h4-h6 = ty-sb-h4 */
 .rich-text :deep(h4),
 .rich-text :deep(h5),
 .rich-text :deep(h6) {
@@ -147,7 +147,7 @@ const htmlContent = computed(() => {
   }
 }
 
-/* p, ul, ol = ty-sb-paragraph */
+/* p, ul, ol = ty-sb-p */
 .rich-text :deep(p) {
   font-family: var(--font-space-mono);
   line-height: 1.625; /* leading-relaxed */
@@ -204,7 +204,7 @@ const htmlContent = computed(() => {
   list-style-type: decimal;
 }
 
-/* blockquote = ty-sb-paragraph + italic */
+/* blockquote = ty-sb-p + italic */
 .rich-text :deep(blockquote) {
   font-family: var(--font-space-mono);
   line-height: 1.625; /* leading-relaxed */

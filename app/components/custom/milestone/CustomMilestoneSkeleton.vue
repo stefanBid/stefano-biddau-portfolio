@@ -15,7 +15,7 @@
       <!-- Header: Title + Date -->
       <div class="flex flex-col md:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4">
         <!-- Title Skeleton -->
-        <div class="ty-sb-title bg-sb-muted/20 rounded animate-pulse flex-1 w-full">
+        <div class="ty-sb-h3 bg-sb-muted/20 rounded animate-pulse flex-1 w-full">
           &nbsp;
         </div>
         <!-- Date Skeleton -->
@@ -25,19 +25,19 @@
       </div>
 
       <!-- Subtitle Skeleton -->
-      <div class="ty-sb-subtitle bg-sb-muted/15 rounded animate-pulse w-1/2 mt-1">
+      <div class="ty-sb-h4 bg-sb-muted/15 rounded animate-pulse w-1/2 mt-1">
         &nbsp;
       </div>
 
       <!-- Description Skeleton -->
       <div class="space-y-2 mt-3 md:mt-4">
-        <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-full">
+        <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-full">
           &nbsp;
         </div>
-        <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-full">
+        <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-full">
           &nbsp;
         </div>
-        <div class="ty-sb-paragraph bg-sb-muted/10 rounded animate-pulse w-2/3">
+        <div class="ty-sb-p bg-sb-muted/10 rounded animate-pulse w-2/3">
           &nbsp;
         </div>
       </div>

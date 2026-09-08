@@ -41,4 +41,57 @@
   --color-sb-warning-bg: #78350f;  /* dark amber background */
   --color-sb-error-bg: #7f1d1d;    /* dark red background */
   --color-sb-info-bg: #1e3a8a;     /* dark blue background */
+
+  /* =======================================
+     TYPOGRAPHIC SCALE — --fs-sb-*
+     =======================================
+     6 distinct sizes: h1 → h4 (headings), p (body), small
+     (everything tiny: label / caption / code / btn-label).
+
+     Single FIXED ratio (1.25, "major third") applied to a
+     fluid base — not a different ratio per breakpoint. Only
+     --fs-sb-p is a real clamp(); every other step is
+     calc(p * ratio^n), so the whole scale grows smoothly with
+     the viewport (no snapping at breakpoints) AND the
+     relationship between levels never drifts: h1 is always
+     ~2.44x p, at 320px and at 2560px alike. That's the fix for
+     the "sproporzionato" issue — before, h1/p went from 2.07x
+     on mobile to 3.17x on 2xl, so the hierarchy itself changed
+     shape across breakpoints, not just its absolute size.
+
+     step(n) = p * 1.25^n   —   n: p=0, h4=1, h3=2, h2=3, h1=4
+
+     --fs-sb-hero and --fs-sb-impact are intentionally OUTSIDE
+     this chain — they're not heading steps, they're special
+     "moment" sizes (page hero / full-viewport opener). But
+     instead of their own independent curve (which used to
+     drift out of proportion with h1 across breakpoints too),
+     they're now pinned to a fixed multiple of h1, so they
+     scale in lockstep with the rest of the hierarchy.
+     ======================================= */
+
+  /* static, non-fluid — legibility floor. Shared by label,
+     caption, code and btn-label: none of these are "headings",
+     they're all small UI/meta text, so they share one size. */
+  --fs-sb-small: 0.75rem;     /* 12px, base */
+  --fs-sb-small-lg: 0.875rem; /* 14px, md+ */
+}
+
+:root {
+  /* Fluid body: 16px @ 320px viewport → 18px @ 1536px viewport,
+     linear in between. Formula: clamp(min, min - slope*minVw/100 + slope*vw, max)
+     slope = (max-min)/(maxVw-minVw)*100 = (18-16)/(1536-320)*100 ≈ 0.1645 */
+  --fs-sb-p: clamp(1rem, 0.967rem + 0.1645vw, 1.125rem);
+
+  --fs-sb-h4: calc(var(--fs-sb-p) * 1.25);     /* ratio^1 */
+  --fs-sb-h3: calc(var(--fs-sb-p) * 1.5625);   /* ratio^2 */
+  --fs-sb-h2: calc(var(--fs-sb-p) * 1.9531);   /* ratio^3 */
+  --fs-sb-h1: calc(var(--fs-sb-p) * 2.4414);   /* ratio^4 */
+
+  --fs-sb-hero: calc(var(--fs-sb-h1) * 1.7);   /* ~66px → ~75px */
+  /* Direct fluid clamp, not a multiplier of h1: calc() can't mix
+     a unitless number with vw (invalid CSS, silently dropped —
+     that was the earlier bug). Same target as before: ~86px on
+     small screens, growing to ~120.7px on large screens. */
+  --fs-sb-impact: clamp(5.375rem, 4.804rem + 2.854vw, 7.545rem);
 }

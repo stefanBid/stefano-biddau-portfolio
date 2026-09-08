@@ -109,13 +109,13 @@ watch(isMdUp, (newVal) => {
     >
       <div class="h-full flex items-center max-w-350 mx-auto justify-between">
         <NuxtLink
-          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-title tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
+          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-h3 tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
           :to="props.routes[0]?.path || '/'"
           @click="onClose"
         >
           <NuxtImg
             alt="Logo"
-            class="object-contain size-8 sm:size-10 md:size-12 u-sb-soft-transition"
+            class="object-contain size-8 sm:size-10 md:size-12"
             fetchpriority="high"
             loading="eager"
             src="/images/logo.webp"
@@ -129,7 +129,7 @@ watch(isMdUp, (newVal) => {
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
-                class="ty-sb-btn-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
+                class="ty-sb-nav-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
                 :class="{
                   'text-sb-contrast/80 hover:text-sb-contrast font-normal!': !isActiveRoute(r),
                   'text-sb-accent font-bold!': isActiveRoute(r),
@@ -140,7 +140,8 @@ watch(isMdUp, (newVal) => {
               </NuxtLink>
               <span
                 v-else
-                class="ty-sb-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition rounded-md"
+                aria-disabled="true"
+                class="ty-sb-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-sb-contrast/80 rounded-md"
               >
                 {{ r.name }}
               </span>
@@ -168,7 +169,7 @@ watch(isMdUp, (newVal) => {
       <!-- overlay -->
       <div
         aria-hidden="true"
-        class="fixed inset-0 top-16 bg-sb-main/80 backdrop-blur-sm transition-opacity duration-200"
+        class="fixed inset-0 top-16 bg-sb-main/80 backdrop-blur-sm u-sb-soft-transition"
         :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
         @click="onClose"
       ></div>
@@ -176,21 +177,22 @@ watch(isMdUp, (newVal) => {
       <!-- drawer -->
       <aside
         id="mobile-drawer"
+        :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] transition-transform duration-300 will-change-transform"
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] transition-transform duration-200 ease-in-out will-change-transform"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
         <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">{{ t('header.routeSection') }}</span>
+          <span id="mobile-drawer-title" class="ty-label text-sb-muted font-semibold! u-sb-soft-transition">{{ t('header.routeSection') }}</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-xl p-3 ty-btn-label cursor-pointer u-sb-soft-transition u-sb-focus"
+              class="rounded-xl p-3 ty-sb-p cursor-pointer u-sb-soft-transition u-sb-focus"
               :class="{
                 'hover:bg-sb-surface-2': !isActiveRoute(r),
                 'bg-sb-accent font-bold!': isActiveRoute(r),
@@ -202,7 +204,8 @@ watch(isMdUp, (newVal) => {
             </NuxtLink>
             <span
               v-else
-              class="rounded-lg p-3 ty-btn-label cursor-not-allowed opacity-50 text-sb-contrast/80 u-sb-soft-transition"
+              aria-disabled="true"
+              class="rounded-lg p-3 ty-sb-p cursor-not-allowed opacity-50 text-sb-contrast/80"
             >
               {{ r.name }}
             </span>

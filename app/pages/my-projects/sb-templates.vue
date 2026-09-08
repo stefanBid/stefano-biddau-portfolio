@@ -37,10 +37,10 @@ const { templates } = useTemplates()
           />
         </div>
       </div>
-      <h2 class="ty-sb-title-xl u-sb-soft-transition">
+      <h2 class="ty-sb-h1 u-sb-soft-transition">
         {{ t('pages.projects.sbTemplatesProject.title') }}
       </h2>
-      <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+      <p class="ty-sb-p text-sb-muted u-sb-soft-transition">
         {{ t('pages.projects.sbTemplatesProject.description') }}
       </p>
     </div>
@@ -69,10 +69,10 @@ const { templates } = useTemplates()
         <Icon class="size-5 md:size-6" name="solar:code-circle-bold-duotone" />
       </div>
       <div class="flex-1 min-w-0">
-        <h3 class="ty-sb-subtitle text-sb-contrast u-sb-soft-transition">
+        <h3 class="ty-sb-h4 text-sb-contrast u-sb-soft-transition">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
         </h3>
-        <p class="ty-sb-paragraph text-sb-muted u-sb-soft-transition">
+        <p class="ty-sb-p text-sb-muted u-sb-soft-transition">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
         </p>
       </div>

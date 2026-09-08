@@ -54,7 +54,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
       :inert="!ready"
     >
-      <h2 class="ty-sb-title-xl text-center u-sb-soft-transition">
+      <h2 class="ty-sb-hero text-center u-sb-soft-transition">
         {{ t('pages.home.title') }}
       </h2>
       <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition min-h-16">

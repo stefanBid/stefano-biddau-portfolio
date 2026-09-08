@@ -200,7 +200,7 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
         :class="{
           'border-sb-error': props.error,
           'border-sb-border': !props.error,

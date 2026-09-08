@@ -95,7 +95,7 @@ const onSelect = () => {
     >
       <!-- Header: Title + Date -->
       <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4 u-sb-soft-transition">
-        <h2 class="ty-sb-title u-sb-soft-transition flex-1">
+        <h2 class="ty-sb-h3 u-sb-soft-transition flex-1">
           {{ props.title }}
         </h2>
         <time
@@ -108,7 +108,7 @@ const onSelect = () => {
       </div>
       <p
         v-if="props.subtitle"
-        class="ty-sb-subtitle text-sb-muted mt-1 u-sb-soft-transition"
+        class="ty-sb-h4 text-sb-muted mt-1 u-sb-soft-transition"
       >
         {{ props.subtitle }}
       </p>

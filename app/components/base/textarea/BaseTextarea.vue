@@ -50,7 +50,7 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
+      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
       :class="props.error ? 'border-sb-error' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
