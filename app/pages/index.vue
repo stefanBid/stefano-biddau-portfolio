@@ -54,10 +54,10 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
       :inert="!ready"
     >
-      <h2 class="ty-sb-hero text-center u-sb-soft-transition">
+      <h2 class="ty-sb-hero mb-0 text-center">
         {{ t('pages.home.title') }}
       </h2>
-      <p class="ty-sb-subtitle-xl font-space-mono text-center mt-2 u-sb-soft-transition min-h-16">
+      <p class="ty-sb-h4 text-center mt-6 min-h-16">
         {{ t('pages.home.subtitle.costant') }}
         <span
           ref="el"
@@ -66,7 +66,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           :style="elStyle"
         ></span>
       </p>
-      <div class="w-full mt-20 grid gap-10 md:gap-12 lg:gap-16 sm:grid-cols-1 lg:grid-cols-2 justify-items-center u-sb-soft-transition">
+      <div class="w-full mt-20 grid gap-10 md:gap-12 lg:gap-16 sm:grid-cols-1 lg:grid-cols-2 justify-items-center">
         <BaseCard
           align="center"
           class="max-w-xl"
@@ -76,7 +76,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:folder-with-files-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast" name="solar:folder-with-files-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="downloadFile(getFile.path, getFile.name)">
@@ -93,7 +93,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast u-sb-soft-transition" name="solar:letter-opened-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast" name="solar:letter-opened-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="contactFormIsOpen = true">

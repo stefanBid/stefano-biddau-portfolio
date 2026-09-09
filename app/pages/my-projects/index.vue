@@ -54,17 +54,17 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-20 u-sb-soft-transition">
-    <div class="flex flex-col gap-3 md:gap-4 u-sb-soft-transition">
-      <h2 class="ty-sb-h1 u-sb-soft-transition">
+  <div class="flex flex-col gap-20">
+    <div class="flex flex-col gap-3 md:gap-4">
+      <h2 class="ty-sb-h1 mb-0">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted u-sb-soft-transition">
+      <p class="ty-sb-p text-sb-muted">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20 u-sb-soft-transition">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
       <template v-if="!projects || projects.length === 0">
         <div class="col-span-2">
           <BaseEmptyBox

@@ -68,7 +68,7 @@ const getOrbitStyle = (index: number, total: number) => {
 
 <template>
   <div class="relative flex items-center justify-center w-full h-full">
-    <div class="relative w-[340px] h-[340px] overflow-visible">
+    <div class="relative w-85 h-85 overflow-visible">
       <!-- ☀️ SUN -->
       <div class="sun">
         <div class="sun-glow"></div>
