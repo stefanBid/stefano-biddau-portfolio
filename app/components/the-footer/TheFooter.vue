@@ -27,7 +27,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
   <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16 px-6 md:px-10">
     <div
       class="max-w-350 mx-auto grid gap-8 md:gap-10
-             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start u-sb-soft-transition py-10 md:py-12"
+             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start py-10 md:py-12"
     >
       <!-- 1) Logo + descrizione -->
       <section class="space-y-4">
@@ -37,7 +37,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         >
           <NuxtImg
             alt="Logo"
-            class="object-contain size-7 sm:size-8 md:size-9 u-sb-soft-transition"
+            class="object-contain size-7 sm:size-8 md:size-9"
             src="/images/logo.webp"
           />
           <span class="ty-sb-h3">
@@ -45,14 +45,14 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </span>
         </NuxtLink>
 
-        <p class="ty-sb-label normal-case! text-sb-muted max-w-md u-sb-soft-transition">
+        <p class="ty-sb-label normal-case! text-sb-muted max-w-md">
           {{ t('footer.tagline') }}
         </p>
       </section>
 
       <!-- 2) Link veloci -->
       <section class="space-y-3">
-        <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
+        <h2 class="ty-sb-nav-label text-sb-muted uppercase tracking-[0.22em] mb-0">
           {{ t('footer.routeSection') }}
         </h2>
 
@@ -68,7 +68,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
               </NuxtLink>
               <span
                 v-else
-                class="ty-sb-label normal-case! text-sb-contrast/40 cursor-not-allowed u-sb-soft-transition"
+                class="ty-sb-label normal-case! text-sb-contrast/40 cursor-not-allowed"
               >
                 {{ link.name }}
               </span>
@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </template>
           <p
             v-else
-            class="ty-sb-caption text-sb-muted/70 u-sb-soft-transition"
+            class="ty-sb-caption text-sb-muted/70"
           >
             {{ t('footer.routeFallback') }}
           </p>
@@ -85,14 +85,14 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
-        <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] u-sb-soft-transition">
+        <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] mb-0">
           {{ t('footer.contactSection') }}
         </h2>
 
         <div class="space-y-2">
           <span
             v-if="props.email"
-            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition flex items-center"
+            class="ty-sb-label normal-case! text-sb-contrast/85 flex items-center"
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:letter-opened-bold-duotone" />
             <a
@@ -105,7 +105,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
           <span
             v-if="props.phone"
-            class="ty-sb-label normal-case! text-sb-contrast/85 u-sb-soft-transition flex items-center"
+            class="ty-sb-label normal-case! text-sb-contrast/85 flex items-center"
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:smartphone-2-bold-duotone" />
             <a
@@ -161,10 +161,10 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     <!-- Bottom bar -->
     <div class="border-t border-sb-border bg-sb-main/98">
       <div
-        class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2 u-sb-soft-transition"
+        class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
       >
         <!-- Left side: credit + made with -->
-        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left u-sb-soft-transition">
+        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left [&>p]:mb-0">
           <p>
             {{ t('footer.creditSection', { year: new Date().getFullYear() }) }}
           </p>
@@ -175,7 +175,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         </div>
 
         <!-- Right side: legal links -->
-        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 ty-sb-caption text-sb-muted/80 not-italic text-center lg:text-right u-sb-soft-transition">
+        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 ty-sb-caption text-sb-muted/80 not-italic text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
             class="hover:text-sb-accent underline underline-offset-4 u-sb-focus rounded w-fit u-sb-soft-transition"

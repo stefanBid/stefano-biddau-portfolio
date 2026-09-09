@@ -1,11 +1,9 @@
 @utility u-sb-soft-transition {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
-  @apply duration-200 ease-in-out;
+  @apply transition-all duration-200 ease-in-out;
 }
 
 @utility u-sb-hard-transition {
-  transition-property: color, background-color, border-color, box-shadow, transform, opacity;
-  @apply duration-500 ease-in-out;
+  @apply transition-all duration-500 ease-in-out;
 }
 
 @utility u-sb-focus {

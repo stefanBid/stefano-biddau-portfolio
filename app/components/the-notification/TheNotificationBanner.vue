@@ -42,7 +42,7 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-4 md:p-6 rounded-xl border u-sb-soft-transition pointer-events-auto',
+      'w-full sm:w-lg p-4 md:p-6 rounded-xl border pointer-events-auto',
       'shadow-[0_4px_20px_var(--color-sb-shadow)]',
       {
         'bg-sb-success-bg border-sb-success': props.type === 'success',
@@ -53,12 +53,12 @@ onMounted(() => {
     ]"
     role="alert"
   >
-    <div class="flex items-start gap-3 md:gap-4 u-sb-soft-transition">
+    <div class="flex items-start gap-3 md:gap-4">
       <!-- Icon -->
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl u-sb-soft-transition',
+          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl',
           {
             'bg-sb-surface text-sb-success': props.type === 'success',
             'bg-sb-surface text-sb-warning': props.type === 'warning',
@@ -74,12 +74,12 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-sb-h4 text-sb-contrast u-sb-soft-transition"
+          class="ty-sb-h4 text-sb-contrast"
         >
           {{ props.title }}
         </h3>
         <p
-          class="ty-sb-label normal-case! text-sb-muted u-sb-soft-transition"
+          class="ty-sb-label normal-case! text-sb-muted"
         >
           {{ props.message }}
         </p>
