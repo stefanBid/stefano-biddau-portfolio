@@ -62,7 +62,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
         <span
           ref="el"
           aria-live="polite"
-          class="text-sb-accent"
+          class="text-sb-accent ty-sb-h4"
           :style="elStyle"
         ></span>
       </p>
