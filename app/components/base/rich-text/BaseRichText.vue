@@ -24,93 +24,36 @@ const htmlContent = computed(() => {
 </template>
 
 <style scoped>
-/* Typography styles conformi al progetto */
+/* Typography styles conformi al progetto — usa i token --fs-sb-* fluidi
+   invece di size fisse a scatti sui breakpoint, coerente con il resto
+   del design system (vedi theme.css). */
 
 /* h1 = ty-sb-h1 */
 .rich-text :deep(h1) {
   font-family: var(--font-bebas-neue);
-  line-height: 1.375; /* leading-tight */
-  font-size: 2.25rem; /* text-4xl */
-  margin-bottom: 1.5rem;
-  margin-top: 2rem;
-}
-
-.rich-text :deep(h1:first-child) {
-  margin-top: 0;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(h1) {
-    font-size: 3rem; /* sm:text-5xl */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(h1) {
-    font-size: 3.75rem; /* md:text-6xl */
-  }
-}
-
-@media (min-width: 1024px) {
-  .rich-text :deep(h1) {
-    font-size: 4.5rem; /* lg:text-7xl */
-  }
+  text-transform: uppercase;
+  letter-spacing: -0.025em; /* tracking-tight */
+  line-height: 1; /* leading-none */
+  font-size: var(--fs-sb-h1);
+  margin: 0 0 0.75em 0;
 }
 
 /* h2 = ty-sb-h2 */
 .rich-text :deep(h2) {
   font-family: var(--font-bebas-neue);
-  line-height: 1.375; /* leading-tight */
-  font-size: 1.875rem; /* text-3xl */
-  margin-bottom: 1.25rem;
-  margin-top: 1.75rem;
-}
-
-.rich-text :deep(h2:first-child) {
-  margin-top: 0;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(h2) {
-    font-size: 2.25rem; /* sm:text-4xl */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(h2) {
-    font-size: 3rem; /* md:text-5xl */
-  }
-}
-
-@media (min-width: 1024px) {
-  .rich-text :deep(h2) {
-    font-size: 3.75rem; /* lg:text-6xl */
-  }
+  text-transform: uppercase;
+  letter-spacing: -0.025em; /* tracking-tight */
+  line-height: 1.25; /* leading-tight */
+  font-size: var(--fs-sb-h2);
+  margin: 0 0 0.75em 0;
 }
 
 /* h3 = ty-sb-h3 */
 .rich-text :deep(h3) {
   font-family: var(--font-bebas-neue);
-  line-height: 1.375; /* leading-tight */
-  font-size: 1.5rem; /* text-2xl */
-  margin-bottom: 1rem;
-  margin-top: 1.5rem;
-}
-
-.rich-text :deep(h3:first-child) {
-  margin-top: 0;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(h3) {
-    font-size: 1.875rem; /* sm:text-3xl */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(h3) {
-    font-size: 2.25rem; /* md:text-4xl */
-  }
+  line-height: 1.25; /* leading-tight */
+  font-size: var(--fs-sb-h3);
+  margin: 0 0 0.75em 0;
 }
 
 /* h4-h6 = ty-sb-h4 */
@@ -120,79 +63,30 @@ const htmlContent = computed(() => {
   font-family: var(--font-space-mono);
   font-weight: 600; /* font-semibold */
   line-height: 1.375; /* leading-snug */
-  font-size: 1rem; /* text-base */
-  margin-bottom: 0.75rem;
-  margin-top: 1.25rem;
-}
-
-.rich-text :deep(h4:first-child),
-.rich-text :deep(h5:first-child),
-.rich-text :deep(h6:first-child) {
-  margin-top: 0;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(h4),
-  .rich-text :deep(h5),
-  .rich-text :deep(h6) {
-    font-size: 1.125rem; /* sm:text-lg */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(h4),
-  .rich-text :deep(h5),
-  .rich-text :deep(h6) {
-    font-size: 1.25rem; /* md:text-xl */
-  }
+  font-size: var(--fs-sb-h4);
+  margin: 0 0 0.75em 0;
 }
 
 /* p, ul, ol = ty-sb-p */
 .rich-text :deep(p) {
   font-family: var(--font-space-mono);
   line-height: 1.625; /* leading-relaxed */
-  font-size: 0.875rem; /* text-sm */
-  margin-bottom: 1rem;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(p) {
-    font-size: 1rem; /* sm:text-base */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(p) {
-    font-size: 1.125rem; /* md:text-lg */
-  }
+  font-size: var(--fs-sb-p);
+  margin: 0 0 0.75em 0;
 }
 
 .rich-text :deep(ul),
 .rich-text :deep(ol) {
   font-family: var(--font-space-mono);
   line-height: 1.625; /* leading-relaxed */
-  font-size: 0.875rem; /* text-sm */
-  margin-bottom: 1rem;
+  font-size: var(--fs-sb-p);
+  margin: 0 0 0.75em 0;
   padding-left: 2rem; /* Aumentato per dare spazio ai bullet */
   list-style-position: outside;
 }
 
-@media (min-width: 640px) {
-  .rich-text :deep(ul),
-  .rich-text :deep(ol) {
-    font-size: 1rem; /* sm:text-base */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(ul),
-  .rich-text :deep(ol) {
-    font-size: 1.125rem; /* md:text-lg */
-  }
-}
-
 .rich-text :deep(li) {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.5em;
   display: list-item;
 }
 
@@ -208,24 +102,12 @@ const htmlContent = computed(() => {
 .rich-text :deep(blockquote) {
   font-family: var(--font-space-mono);
   line-height: 1.625; /* leading-relaxed */
-  font-size: 0.875rem; /* text-sm */
+  font-size: var(--fs-sb-p);
   font-style: italic;
-  margin: 1.5rem 0;
+  margin: 0 0 0.75em 0;
   padding-left: 1rem;
   border-left: 4px solid var(--color-sb-accent);
   opacity: 0.8;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(blockquote) {
-    font-size: 1rem; /* sm:text-base */
-  }
-}
-
-@media (min-width: 768px) {
-  .rich-text :deep(blockquote) {
-    font-size: 1.125rem; /* md:text-lg */
-  }
 }
 
 .rich-text :deep(pre) {
@@ -243,18 +125,12 @@ const htmlContent = computed(() => {
 }
 
 .rich-text :deep(code) {
-  font-family: monospace;
-  font-size: 0.875rem;
+  font-family: var(--font-space-mono);
+  font-size: var(--fs-sb-small);
 }
 
 .rich-text :deep(pre code) {
-  font-size: 0.75rem;
-}
-
-@media (min-width: 640px) {
-  .rich-text :deep(pre code) {
-    font-size: 0.875rem;
-  }
+  font-size: var(--fs-sb-small);
 }
 
 .rich-text :deep(a) {

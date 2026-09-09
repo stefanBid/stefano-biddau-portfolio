@@ -44,7 +44,7 @@ const props = withDefaults(
       class="text-sb-muted text-center max-w-md u-sb-soft-transition"
       :class="{
         'ty-sb-p': props.dimension === 'normal',
-        'ty-sb-p text-sm!': props.dimension === 'small',
+        'text-sm!': props.dimension === 'small',
       }"
     >
       {{ props.message }}

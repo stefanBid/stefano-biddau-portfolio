@@ -114,13 +114,13 @@ watch(
             <div class="flex flex-col flex-1 min-w-0">
               <h2
                 id="sb-dialog-title"
-                class="ty-sb-h3 u-sb-soft-transition truncate"
+                class="mb-0 u-sb-soft-transition truncate"
               >
                 {{ props.title }}
               </h2>
               <p
                 v-if="props.subtitle"
-                class="ty-sb-h4 text-sb-muted mt-1 u-sb-soft-transition"
+                class="text-sb-muted mt-2 u-sb-soft-transition"
               >
                 {{ props.subtitle }}
               </p>

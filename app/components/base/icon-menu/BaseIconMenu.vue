@@ -97,7 +97,7 @@ watch(open, (newVal) => {
         >
           <ul
             ref="menu"
-            class="p-2 outline-none space-y-2"
+            class="p-2 outline-none space-y-2 mb-0"
             role="menu"
           >
             <li v-for="item in props.items" :key="item.code">
@@ -112,7 +112,7 @@ watch(open, (newVal) => {
                 type="button"
                 @click="onSelect(item.code)"
               >
-                <span class="truncate flex-1">{{ item.label }}</span>
+                <span class="ty-sb-label truncate flex-1">{{ item.label }}</span>
                 <template v-if="item.icon && item.iconType ">
                   <Icon
                     v-if="item.iconType === 'nuxt-icon'"
