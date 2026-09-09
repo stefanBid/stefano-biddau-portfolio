@@ -74,12 +74,12 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-sb-h4 text-sb-contrast"
+          class="ty-sb-h4 text-sb-contrast mb-2"
         >
           {{ props.title }}
         </h3>
         <p
-          class="ty-sb-label normal-case! text-sb-muted"
+          class="ty-sb-nav-label normal-case text-sb-contrast"
         >
           {{ props.message }}
         </p>

@@ -160,8 +160,8 @@ export default defineNuxtConfig({
   },
   fonts: {
     families: [
-      { name: 'Bebas Neue', provider: 'google', weights: [400] },
-      { name: 'Space Mono', provider: 'google', weights: [400, 700] },
+      { name: 'Bebas Neue', provider: 'google', weights: [400], preload: true },
+      { name: 'Space Mono', provider: 'google', weights: [400, 700], preload: true },
     ],
   },
   i18n: {
