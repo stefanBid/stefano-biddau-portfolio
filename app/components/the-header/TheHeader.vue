@@ -109,7 +109,7 @@ watch(isMdUp, (newVal) => {
     >
       <div class="h-full flex items-center max-w-350 mx-auto justify-between">
         <NuxtLink
-          class="inline-flex items-center gap-2 font-bebas-neue ty-sb-h3 tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
+          class="inline-flex items-center gap-2 ty-sb-h3 tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
           :to="props.routes[0]?.path || '/'"
           @click="onClose"
         >
@@ -179,7 +179,7 @@ watch(isMdUp, (newVal) => {
         id="mobile-drawer"
         :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] u-sb-soft-transition will-change-transform"
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] u-sb-hard-transition will-change-transform"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"

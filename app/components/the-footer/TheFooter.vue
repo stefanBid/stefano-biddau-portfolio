@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 2) Link veloci -->
       <section class="space-y-3">
-        <h2 class="ty-sb-nav-label text-sb-muted uppercase tracking-[0.22em] mb-0">
+        <h2 class="ty-sb-nav-label text-sb-muted tracking-[0.22em]">
           {{ t('footer.routeSection') }}
         </h2>
 
@@ -85,7 +85,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
-        <h2 class="ty-sb-label text-sb-muted uppercase tracking-[0.22em] mb-0">
+        <h2 class="ty-sb-nav-label text-sb-muted tracking-[0.22em]">
           {{ t('footer.contactSection') }}
         </h2>
 
@@ -164,12 +164,12 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
       >
         <!-- Left side: credit + made with -->
-        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 ty-sb-caption text-sb-muted text-center lg:text-left [&>p]:mb-0">
-          <p>
+        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 text-sb-muted text-center lg:text-left [&>p]:mb-0">
+          <p class="ty-sb-caption">
             {{ t('footer.creditSection', { year: new Date().getFullYear() }) }}
           </p>
 
-          <p class="text-sb-muted/80">
+          <p class="ty-sb-caption text-sb-muted/80">
             {{ t('footer.madeWith') }}
           </p>
         </div>
@@ -185,7 +185,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </NuxtLink>
 
           <!-- Separator -->
-          <span class="opacity-40 select-none">|</span>
+          <span class="ty-sb-caption not-italic opacity-40 select-none">|</span>
 
           <!-- Terms -->
           <NuxtLink

@@ -140,6 +140,13 @@ Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transit
 ### Animations (Vue `<Transition>`)
 Keyframe/duration definitions: `app/assets/css/animations.css` (`fade`, `slide-down`, `scale-fade`).
 
+### Proportions audit
+When asked to audit or refactor a file's typography/spacing/padding against the design system
+(dead `ty-sb-*`/`u-sb-*` classes, wrong heading tags, margins/padding not proportioned to the
+`--fs-sb-*` scale), use the `design-system-proportions-audit` skill. It re-reads the 5 CSS files
+fresh every time, covers the target file element by element (no sampling), always shows the full
+report before applying any fix, and never touches color tokens.
+
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
 - Collections: `solar` (bold duotone UI), `mdi` (general UI), `logos` (brand/tech), `flagpack` (flags)
@@ -307,7 +314,7 @@ Fully delegated to auto-generated `.nuxt/tsconfig.app.json` / `.nuxt/tsconfig.se
 
 ## Maintenance workflows
 
-On request, run these checks (`dependency-check`, `lint-check`, `build-check`, `seo-check`, `full-checkup`, `update-documentation` skills). Report results in the same language the user asked in.
+On request, run these checks (`dependency-check`, `lint-check`, `build-check`, `seo-check`, `full-checkup`, `update-documentation`, `design-system-proportions-audit` skills). Report results in the same language the user asked in.
 
 ---
 
