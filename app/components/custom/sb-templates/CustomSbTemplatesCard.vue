@@ -63,7 +63,7 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
       <!-- Card Body: Title, Description, Technologies -->
       <template #card-body>
         <!-- Title -->
-        <h3 class="ty-sb-h3 text-center text-sb-contrast u-sb-soft-transition">
+        <h3 class="ty-sb-h3 mb-0 text-center text-sb-contrast u-sb-soft-transition">
           {{ props.title }}
         </h3>
 

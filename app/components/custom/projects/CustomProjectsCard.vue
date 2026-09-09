@@ -156,7 +156,7 @@ const onSelectUrl = (url: string) => {
             <!-- Bottom row: title - absolute positioned -->
             <div>
               <h2
-                class="ty-sb-h3 text-white drop-shadow-lg u-sb-soft-transition"
+                class="ty-sb-h3 mb-0 text-white drop-shadow-lg u-sb-soft-transition"
                 :class="{
                   'animate-pulse': isDescriptionExpanded,
                 }"
@@ -181,10 +181,10 @@ const onSelectUrl = (url: string) => {
       <template #card-footer>
         <button
           v-if="needsExpansion"
-          class="inline-flex items-center gap-1.5 ty-sb-label px-2 py-1 text-sb-accent hover:text-sb-accent-hover cursor-pointer rounded u-sb-soft-transition u-sb-focus"
+          class="inline-flex items-center gap-1.5 ty-sb-nav-label px-2 py-1.5 text-sb-accent hover:text-sb-accent-hover cursor-pointer rounded u-sb-soft-transition u-sb-focus"
           @click="$event => onTriggerDescription($event)"
         >
-          <span>
+          <span class="ty-sb-nav-label">
             {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
           </span>
           <Icon

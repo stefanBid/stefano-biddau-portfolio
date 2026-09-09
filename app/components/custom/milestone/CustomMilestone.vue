@@ -95,7 +95,7 @@ const onSelect = () => {
     >
       <!-- Header: Title + Date -->
       <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4 u-sb-soft-transition">
-        <h2 class="ty-sb-h3 u-sb-soft-transition flex-1">
+        <h2 class="ty-sb-h3 mb-0 u-sb-soft-transition flex-1">
           {{ props.title }}
         </h2>
         <time
@@ -108,7 +108,7 @@ const onSelect = () => {
       </div>
       <p
         v-if="props.subtitle"
-        class="ty-sb-h4 text-sb-muted mt-1 u-sb-soft-transition"
+        class="ty-sb-h4 text-sb-muted mt-2 mb-0 u-sb-soft-transition"
       >
         {{ props.subtitle }}
       </p>
@@ -149,10 +149,10 @@ const onSelect = () => {
       <div class="flex justify-center md:justify-start">
         <button
           v-if="needsExpansion && !props.isActive"
-          class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
+          class="inline-flex cursor-pointer items-center gap-1.5 mt-2 ty-sb-nav-label text-sb-accent hover:text-sb-accent-hover u-sb-focus u-sb-soft-transition rounded px-2 py-1 w-fit"
           @click="onSelect"
         >
-          <span>{{ t('pages.about.milestoneCta') }}</span>
+          <span class="ty-sb-nav-label">{{ t('pages.about.milestoneCta') }}</span>
           <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
         </button>
       </div>
