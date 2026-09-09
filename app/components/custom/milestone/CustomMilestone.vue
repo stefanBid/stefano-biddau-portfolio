@@ -115,7 +115,7 @@ const onSelect = () => {
       <BaseRichText
         v-if="props.content.length > 0"
         :blocks="getContentPreview"
-        class="mt-3 md:mt-4 u-sb-soft-transition"
+        class="mt-5 md:mt-6 u-sb-soft-transition"
       />
 
       <!-- Polaroid Image (only when active) -->
