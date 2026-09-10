@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.4...v1.7.0) (2026-09-10)
+
+
+### Features
+
+* update css structure ([#142](https://github.com/stefanBid/stefano-biddau-portfolio/issues/142)) ([626abdc](https://github.com/stefanBid/stefano-biddau-portfolio/commit/626abdc143ac3693cfae2978a4fc70c9f46d54d6))
+
 ## [1.6.4](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.3...v1.6.4) (2026-09-03)
 
 
