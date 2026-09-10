@@ -1,65 +1,162 @@
-/* app/styles/utilities.css */
+/* app/styles/typography.css
+   ============================================================
+   Owns the entire typography domain: both the @layer base
+   defaults for raw text tags AND the ty-sb-* utilities that
+   override them when a non-semantic element needs the same
+   look. Same --fs-sb-* tokens drive both halves, so a utility
+   class always renders pixel-identical to its matching tag.
+   ============================================================ */
 
-/* ======================= TYPOGRAPHY UTILITIES ======================= */
+@layer base {
+  h1 {
+    font-family: var(--font-bebas-neue);
+    font-size: var(--fs-sb-h1);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+
+  h2 {
+    font-family: var(--font-bebas-neue);
+    font-size: var(--fs-sb-h2);
+    text-transform: uppercase;
+    letter-spacing: -0.01em;
+    line-height: 1.15;
+  }
+
+  h3 {
+    font-family: var(--font-bebas-neue);
+    font-size: var(--fs-sb-h3);
+    line-height: 1.2;
+  }
+
+  /* h5/h6 kept at the same visual level as h4 — no dedicated
+     size step (6 sizes total is the target), they only exist
+     so unexpected deeper markdown headings from BaseRichText
+     don't fall back to the browser default. */
+  h4, h5, h6 {
+    font-family: var(--font-space-mono);
+    font-weight: 600;
+    font-size: var(--fs-sb-h4);
+    line-height: 1.3;
+  }
+
+  p {
+    font-family: var(--font-space-mono);
+    font-size: var(--fs-sb-p);
+    line-height: 1.6;
+  }
+
+  span {
+    font-family: var(--font-space-mono);
+    font-size: var(--fs-sb-p);
+    line-height: 1.4;
+  }
+
+  label {
+    font-family: var(--font-space-mono);
+    font-size: var(--fs-sb-small);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+
+  small {
+    font-size: var(--fs-sb-small);
+  }
+
+  code {
+    font-family: var(--font-space-mono);
+    font-size: var(--fs-sb-small);
+    background-color: var(--color-sb-surface-2);
+    border-radius: 0.25rem;
+    padding: 0.125rem 0.375rem;
+  }
+
+  h1, h2, h3, h4, p, ul, ol, blockquote {
+    margin: 0 0 0.75em 0;
+  }
+
+  h1:last-child, h2:last-child, h3:last-child, h4:last-child, p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+/* =======================================
+   UTILITIES — same tokens, for elements that
+   aren't semantically the matching tag.
+   ======================================= */
 
 @utility ty-sb-hero {
   @apply font-bebas-neue uppercase tracking-tight leading-none text-center;
-  @apply text-6xl sm:text-8xl md:text-9xl lg:text-[10rem] xl:text-[12rem];
+  font-size: var(--fs-sb-hero);
 }
 
 @utility ty-sb-impact {
-  @apply font-bebas-neue tracking-tight leading-none uppercase;
-  @apply text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl;
+  @apply font-bebas-neue text-center tracking-tight leading-none uppercase;
+  font-size: var(--fs-sb-impact);
 }
 
-@utility ty-sb-title {
+@utility ty-sb-h1 {
+  @apply font-bebas-neue uppercase tracking-tight leading-none;
+  font-size: var(--fs-sb-h1);
+}
+
+@utility ty-sb-h2 {
+  @apply font-bebas-neue tracking-tight leading-tight uppercase;
+  font-size: var(--fs-sb-h2);
+}
+
+@utility ty-sb-h3 {
   @apply font-bebas-neue leading-tight;
-  @apply text-2xl sm:text-3xl md:text-4xl;
+  font-size: var(--fs-sb-h3);
 }
 
-/* === Title variants === */
-@utility ty-sb-title-lg {
-  @apply font-bebas-neue leading-tight;
-  @apply text-3xl sm:text-4xl md:text-5xl lg:text-6xl;
-}
-
-@utility ty-sb-title-xl {
-  @apply font-bebas-neue leading-tight;
-  @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
-}
-
-@utility ty-sb-subtitle {
+@utility ty-sb-h4 {
   @apply font-space-mono font-semibold leading-snug;
-  @apply text-base sm:text-lg md:text-xl;
+  font-size: var(--fs-sb-h4);
 }
 
-/* === Subtitle variants === */
-@utility ty-sb-subtitle-lg {
-  @apply font-space-mono font-semibold leading-snug;
-  @apply text-lg sm:text-xl md:text-2xl;
-}
-
-@utility ty-sb-subtitle-xl {
-  @apply font-space-mono font-semibold leading-snug;
-  @apply text-xl sm:text-2xl md:text-3xl;
-}
-
-@utility ty-sb-paragraph {
+@utility ty-sb-p {
   @apply font-space-mono leading-relaxed;
-  @apply text-sm sm:text-base md:text-lg;
+  font-size: var(--fs-sb-p);
+}
+
+@utility ty-sb-span {
+  @apply font-space-mono leading-normal;
+  font-size: var(--fs-sb-p);
 }
 
 @utility ty-sb-label {
   @apply font-space-mono uppercase tracking-wide;
-  @apply text-xs sm:text-sm;
-}
-
-@utility ty-sb-btn-label {
-  @apply font-space-mono font-bold uppercase tracking-wide;
-  @apply text-sm sm:text-base;
+  font-size: var(--fs-sb-small);
 }
 
 @utility ty-sb-caption {
   @apply font-space-mono italic;
-  @apply text-xs sm:text-sm;
+  font-size: var(--fs-sb-small);
+}
+
+@utility ty-sb-code {
+  @apply font-space-mono rounded-sm px-1 py-0.5;
+  font-size: var(--fs-sb-small);
+  background-color: var(--color-sb-surface-2);
+}
+
+/* Bumped to body size (was --fs-sb-small-lg/14px): bold +
+   uppercase + tracking already gave it presence, but at 14px
+   it read lighter than the nav next to it. Now sits level with
+   p, so bold+uppercase reads as genuinely heavier, not just
+   differently styled at a smaller size. */
+@utility ty-sb-btn-label {
+  @apply font-space-mono font-bold uppercase tracking-wide;
+  font-size: var(--fs-sb-p);
+}
+
+/* Shares btn-label's size tier (--fs-sb-small-lg) so nav and
+   buttons read as the same family of "interactive UI chrome" —
+   but font-medium instead of font-bold, so nav stays quieter
+   and doesn't compete visually with real CTAs. */
+@utility ty-sb-nav-label {
+  @apply font-space-mono font-medium uppercase tracking-wide;
+  font-size: var(--fs-sb-small-lg);
 }

@@ -42,7 +42,7 @@ const lengths = computed(() => ({
 <template>
   <div>
     <label
-      class="ty-sb-label block text-sb-muted u-sb-soft-transition mb-2 md:mb-3"
+      class="block text-sb-muted u-sb-soft-transition mb-2 md:mb-3"
       :for="props.id"
     >{{ props.label }}</label>
     <textarea
@@ -50,7 +50,7 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-1.5 md:px-4 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
+      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
       :class="props.error ? 'border-sb-error' : 'border-sb-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
@@ -60,7 +60,7 @@ const lengths = computed(() => ({
       v-if="props.maxLength"
       class="ty-sb-caption text-sb-muted u-sb-soft-transition text-right mt-1"
     >
-      <span :class="lengths.current > lengths.max ? 'text-sb-error!' : 'text-sb-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
+      <span class="ty-sb-caption" :class="lengths.current > lengths.max ? 'text-sb-error!' : 'text-sb-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
     </p>
     <!-- Hint -->
     <p

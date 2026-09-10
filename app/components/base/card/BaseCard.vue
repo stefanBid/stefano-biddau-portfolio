@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
         <template v-else>
           <h2
             v-if="props.title"
-            class="ty-sb-title u-sb-soft-transition"
+            class="ty-sb-h3 mb-0 u-sb-soft-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </h2>
           <p
             v-if="props.subtitle"
-            class="ty-sb-subtitle text-sb-muted mt-1 u-sb-soft-transition"
+            class="ty-sb-h4 text-sb-muted mt-2 mb-0 u-sb-soft-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </p>
           <p
             v-if="props.paragraph"
-            class="ty-sb-paragraph text-justify mt-3 md:mt-4 u-sb-soft-transition"
+            class="ty-sb-p text-justify mt-5 md:mt-6 u-sb-soft-transition"
           >
             {{ props.paragraph }}
           </p>

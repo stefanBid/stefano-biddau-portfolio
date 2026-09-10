@@ -169,7 +169,7 @@ watch(open, (newVal) => {
   <div>
     <label
       v-if="props.label"
-      class="ty-sb-label block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
+      class="block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
       :for="props.id"
     >
       {{ props.label }}
@@ -200,7 +200,7 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-1.5 md:pl-4 md:pr-11 md:py-2 text-sb-contrast ty-sb-paragraph focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
         :class="{
           'border-sb-error': props.error,
           'border-sb-border': !props.error,
@@ -248,7 +248,7 @@ watch(open, (newVal) => {
         >
           <ul
             ref="menu"
-            class="outline-none max-h-80 overflow-y-auto p-1"
+            class="outline-none max-h-80 overflow-y-auto p-1 mb-0"
             role="menu"
           >
             <li v-for="item in props.items" :key="item.label">
@@ -263,7 +263,7 @@ watch(open, (newVal) => {
                 type="button"
                 @click="onSelect(item.value)"
               >
-                <span class="truncate flex-1">{{ item.label }}</span>
+                <span class="ty-sb-label truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
                   class="size-5 text-sb-accent u-sb-soft-transition"

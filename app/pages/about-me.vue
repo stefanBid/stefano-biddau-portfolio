@@ -60,7 +60,7 @@ const onSelectMilestone = (id: string | number) => {
       :text="t('pages.about.hero')"
     />
     <!-- Timeline Section -->
-    <section aria-label="Professional Timeline" class="relative w-full py-20 u-sb-soft-transition">
+    <section aria-label="Professional Timeline" class="relative w-full py-20">
       <div
         class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
         :class="{
@@ -97,19 +97,3 @@ const onSelectMilestone = (id: string | number) => {
     </section>
   </div>
 </template>
-
-<style scoped>
-/* ===================== Animations ===================== */
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-.animate-fade-in {
-  animation: fade-in 1.2s ease-in-out;
-}
-</style>

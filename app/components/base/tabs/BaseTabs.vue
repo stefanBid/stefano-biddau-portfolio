@@ -43,7 +43,7 @@ const onSelectTab = (tabId: string | number) => {
       v-for="tab in props.tabs"
       :key="tab.id"
       :aria-selected="safeSelectedTabId === tab.id"
-      class="ty-sb-btn-label border gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-xl u-sb-soft-transition inline-flex items-center justify-center cursor-pointer u-sb-focus"
+      class="ty-sb-btn-label border gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center cursor-pointer u-sb-focus"
       :class="[
         // Primary variant
         props.variant === 'primary'

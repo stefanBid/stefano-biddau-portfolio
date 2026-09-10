@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
       <div class="flex flex-col flex-1">
         <!-- Skill Name -->
         <span
-          class="ty-sb-subtitle-lg font-bebas-neue! leading-tight! font-normal! text-sb-contrast u-sb-soft-transition"
+          class="text-(length:--fs-sb-h4) font-bebas-neue leading-tight font-normal text-sb-contrast u-sb-soft-transition"
         >
           {{ props.name }}
         </span>

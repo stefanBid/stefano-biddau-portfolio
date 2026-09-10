@@ -34,8 +34,8 @@ const props = withDefaults(
     <h3
       class="text-sb-contrast text-center u-sb-soft-transition"
       :class="{
-        'ty-sb-title mb-2': props.dimension === 'normal',
-        'ty-sb-subtitle mb-1.5': props.dimension === 'small',
+        'ty-sb-h3 mb-2': props.dimension === 'normal',
+        'ty-sb-h4 mb-1.5': props.dimension === 'small',
       }"
     >
       {{ props.title }}
@@ -43,8 +43,8 @@ const props = withDefaults(
     <p
       class="text-sb-muted text-center max-w-md u-sb-soft-transition"
       :class="{
-        'ty-sb-paragraph': props.dimension === 'normal',
-        'ty-sb-paragraph text-sm!': props.dimension === 'small',
+        'ty-sb-p': props.dimension === 'normal',
+        'text-sm!': props.dimension === 'small',
       }"
     >
       {{ props.message }}

@@ -127,7 +127,7 @@ onBeforeUnmount(() => {
     <div
       v-if="props.imageSrc"
       ref="heroImgWrap"
-      class="absolute w-60 sm:w-72 md:w-80 lg:w-96 h-auto left-1/2 -translate-x-1/2 transform pointer-events-none u-sb-soft-transition z-0"
+      class="absolute w-60 sm:w-72 md:w-80 lg:w-96 h-auto left-1/2 -translate-x-1/2 transform pointer-events-none z-0"
       :class="{
         'animate-scale-fade': !heroHasPlayed,
       }"
@@ -156,7 +156,7 @@ onBeforeUnmount(() => {
       ></div>
 
       <h1
-        class="ty-sb-hero bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] u-sb-soft-transition px-6 py-2"
+        class="ty-sb-impact bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] px-[0.4em] py-[0.3em]"
       >
         {{ props.text }}
       </h1>
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
     <transition name="fade">
       <Icon
         v-if="ready && atTop"
-        class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-sb-accent z-10 pointer-events-none u-sb-soft-transition"
+        class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-sb-accent z-10 pointer-events-none"
         name="solar:double-alt-arrow-down-bold-duotone"
       />
     </transition>

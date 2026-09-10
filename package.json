@@ -26,28 +26,28 @@
     "@tailwindcss/vite": "^4.3.3",
     "@vueuse/core": "^14.4.0",
     "@vueuse/nuxt": "^14.4.0",
-    "eslint": "^10.9.1",
-    "isomorphic-dompurify": "^4.1.0",
+    "eslint": "^10.10.0",
+    "isomorphic-dompurify": "^4.2.0",
     "nuxt": "4.5.2",
     "tailwindcss": "^4.3.3",
     "typed.js": "^3.0.0",
     "vue": "^3.5.42",
     "vue-router": "^5.3.1",
-    "zod": "^4.5.4"
+    "zod": "^4.6.1"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.8",
-    "@iconify-json/logos": "^1.2.13",
+    "@iconify-json/logos": "^1.2.14",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify-json/solar": "^1.2.10",
-    "@types/node": "^26.4.1",
+    "@types/node": "^26.5.1",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.11"
   },
   "engines": {
     "node": ">=24.19.0"
   },
-  "_comment_overrides": "esbuild pinned to ^0.28.0 (GHSA-67mh dev-server CORS fix) — transient dep of @nuxt/fonts, @nuxtjs/i18n, @tailwindcss/vite (vite), nuxt (nitropack/@unhead/bundler)",
+  "_comment_overrides": "esbuild pinned to ^0.28.0 for dedup only — GHSA-67mh is fixed upstream by all consumers now (@nuxt/fonts ^0.27.0, @nuxtjs/i18n's @intlify/bundle-utils ^0.25.4, nuxt's nitropack ^0.28.0); without this override npm would install two esbuild copies since the ^0.25.4 range doesn't overlap ^0.28.0",
   "overrides": {
     "esbuild": "^0.28.0"
   }
