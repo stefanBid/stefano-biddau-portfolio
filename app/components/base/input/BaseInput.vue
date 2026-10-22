@@ -9,6 +9,7 @@ interface BaseInputProps {
   error?: string | null
   autocomplete?: string
   prefixIcon?: string
+  hideLabelOnMobile?: boolean
 }
 // Input / Output
 const props = withDefaults(defineProps<BaseInputProps>(), {
@@ -20,6 +21,7 @@ const props = withDefaults(defineProps<BaseInputProps>(), {
   hint: undefined,
   error: null,
   prefixIcon: undefined,
+  hideLabelOnMobile: false,
 })
 
 const model = defineModel<string>('input')
@@ -41,6 +43,7 @@ const describedBy = computed(() => {
     <label
       v-if="props.label"
       class="block text-ink-muted mb-2 md:mb-3 sb-transition"
+      :class="{ 'max-md:sr-only': props.hideLabelOnMobile }"
       :for="props.id"
     >{{ props.label }}</label>
     <div class="relative">

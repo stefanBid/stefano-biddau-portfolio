@@ -7,6 +7,7 @@ interface BaseTextareaProps {
   hint?: string
   error?: string | null
   maxLength?: number
+  minLength?: number
 }
 
 // Input / Output
@@ -17,13 +18,14 @@ const props = withDefaults(defineProps<BaseTextareaProps>(), {
   hint: undefined,
   error: null,
   maxLength: undefined,
+  minLength: undefined,
 })
 
 const model = defineModel<string>('input')
 
 const describedBy = computed(() => {
   const ids: string[] = []
-  if (props.hint) {
+  if (props.hint && !props.error) {
     ids.push(`${props.id}-hint`)
   }
   if (props.error) {
@@ -32,11 +34,16 @@ const describedBy = computed(() => {
   return ids.length ? ids.join(' ') : undefined
 })
 
-const lengths = computed(() => ({
-  current: model.value?.length || 0,
-  max: props.maxLength || 0,
-}),
-)
+const lengths = computed(() => {
+  const current = model.value?.length || 0
+  // Below the minimum the counter tracks the minimum; past it, the maximum
+  const belowMin = !!props.minLength && current < props.minLength
+  return {
+    current,
+    target: belowMin ? props.minLength! : (props.maxLength || 0),
+    isOver: !!props.maxLength && current > props.maxLength,
+  }
+})
 </script>
 
 <template>
@@ -55,28 +62,29 @@ const lengths = computed(() => ({
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
     ></textarea>
-    <!-- Max Counter -->
-    <p
-      v-if="props.maxLength"
-      class="sb-small italic text-ink-muted sb-transition text-right mt-1"
-    >
-      <span class="sb-small italic" :class="lengths.current > lengths.max ? 'text-error!' : 'text-ink-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
-    </p>
-    <!-- Hint -->
-    <p
-      v-if="props.hint"
-      :id="`${props.id}-hint`"
-      class="sb-small text-ink-muted mt-1.5 sb-transition"
-    >
-      {{ props.hint }}
-    </p>
-    <!-- Error -->
-    <p
-      v-if="props.error"
-      :id="`${props.id}-error`"
-      class="sb-small text-error mt-1.5 sb-transition"
-    >
-      {{ props.error }}
-    </p>
+    <div class="flex items-start justify-between gap-4 mt-1.5">
+      <p
+        v-if="props.error"
+        :id="`${props.id}-error`"
+        class="sb-small text-error sb-transition"
+      >
+        {{ props.error }}
+      </p>
+      <p
+        v-else-if="props.hint"
+        :id="`${props.id}-hint`"
+        class="sb-small text-ink-muted sb-transition"
+      >
+        {{ props.hint }}
+      </p>
+      <p
+        v-if="props.maxLength || props.minLength"
+        aria-hidden="true"
+        class="ml-auto shrink-0 sb-small tabular-nums text-left"
+        :class="lengths.isOver ? 'text-error' : 'text-ink-muted'"
+      >
+        {{ lengths.current }} / {{ lengths.target }}
+      </p>
+    </div>
   </div>
 </template>

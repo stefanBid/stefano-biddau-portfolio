@@ -35,6 +35,8 @@ const typesItems = computed<{ label: string, value: SkillType }[]>(() => [
   { label: t('pages.skills.skillsDialog.filterOptions.other'), value: 'other' },
 ])
 
+const selectedTypeItems = computed(() => typesItems.value.filter(item => skillsTypes.value.includes(item.value)))
+
 const currentPage = computed(() => pagination.value.page)
 const totalPages = computed(() => pagination.value.pageCount)
 const totalSkills = computed(() => pagination.value.total)
@@ -42,6 +44,10 @@ const totalSkills = computed(() => pagination.value.total)
 // Events
 const onCloseDialog = () => {
   emits('closeDialog', false)
+}
+
+const onRemoveType = (type: SkillType) => {
+  skillsTypes.value = skillsTypes.value.filter(value => value !== type)
 }
 
 const onGoToPrevPage = () => {
@@ -114,11 +120,12 @@ const _debouncedFilterUpdate = () => {
     @close="onCloseDialog"
   >
     <template #header>
-      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+      <div class="flex flex-row gap-2 md:gap-4 items-end">
         <BaseInput
           id="skill-key"
           v-model:input="skillsKey"
-          class="w-full md:w-2/3 sb-transition"
+          class="flex-1 min-w-0 sb-transition"
+          hide-label-on-mobile
           :label="t('pages.skills.skillsDialog.filters.searchLabel')"
           :placeholder="t('pages.skills.skillsDialog.filters.searchPlaceholder')"
           prefix-icon="solar:card-search-bold-duotone"
@@ -127,14 +134,31 @@ const _debouncedFilterUpdate = () => {
         <BaseCombobox
           id="skill-level"
           v-model:input="skillsTypes"
-          class="w-full md:w-1/3 sb-transition"
+          class="w-48 md:w-1/3 shrink-0 sb-transition"
+          hide-label-on-mobile
           :items="typesItems"
           :label="t('pages.skills.skillsDialog.filters.typeLabel')"
           :placeholder="t('pages.skills.skillsDialog.filters.typePlaceholder')"
-          prefix-icon="solar:filter-bold-duotone"
           type="multiple"
         />
       </div>
+      <ul
+        v-if="selectedTypeItems.length"
+        class="flex flex-wrap gap-2 mt-3 mb-0 p-0 list-none"
+      >
+        <li v-for="item in selectedTypeItems" :key="item.value">
+          <BaseButton
+            :aria-label="t('a11y.removeFilter', { name: item.label })"
+            class="normal-case"
+            size="sm"
+            variant="secondary"
+            @click="onRemoveType(item.value)"
+          >
+            {{ item.label }}
+            <Icon aria-hidden="true" class="size-4" name="solar:close-circle-line-duotone" />
+          </BaseButton>
+        </li>
+      </ul>
     </template>
     <div
       class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 auto-rows-fr items-stretch sb-transition"
@@ -167,7 +191,7 @@ const _debouncedFilterUpdate = () => {
         <div aria-live="polite" class="text-ink-muted sb-small sb-transition">
           {{ t('pages.skills.skillsDialog.total', { tot: totalSkills }) }}
         </div>
-        <div class="flex items-center gap-4">
+        <div v-if="totalPages > 1" class="flex items-center gap-4">
           <BaseButton
             :aria-label="t('a11y.previousPage')"
             icon-only

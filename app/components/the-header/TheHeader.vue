@@ -19,8 +19,10 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
+const rootRef = ref<HTMLElement | null>(null)
 const drawerRef = ref<HTMLElement | null>(null)
-const { activate, deactivate } = useFocusTrap(drawerRef)
+// The trap spans header + panel so the close toggle stays reachable with Tab
+const { activate, deactivate } = useFocusTrap(rootRef)
 const { navigatingFromMenu } = usePageTransition()
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
@@ -61,20 +63,24 @@ const onToggle = (newOpenValue: boolean) => {
   }
 }
 
-const onClose = () => {
+const onClose = (restoreFocus = true) => {
   if (!open.value) {
     return
   }
   open.value = false
   unlock()
-  deactivate()
+  deactivate(false)
+  if (restoreFocus) {
+    nextTick(() => rootRef.value?.querySelector<HTMLElement>('[aria-controls="mobile-drawer"]')?.focus())
+  }
 }
 
 const onNavigateFromMenu = (r: RouteItem) => {
   if (!isActiveRoute(r)) {
     navigatingFromMenu.value = true
   }
-  onClose()
+  // Focus goes to the new page (route announcer / main), not back to the toggle
+  onClose(false)
 }
 
 const onSelectLang = (langCode: string) => {
@@ -114,7 +120,7 @@ watch(isMdUp, (newVal) => {
 </script>
 
 <template>
-  <div class="relative z-50">
+  <div ref="rootRef" class="relative z-50">
     <!-- HEADER FIXED -->
     <header
       class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur  px-6 md:px-10 sb-transition"
@@ -127,7 +133,7 @@ watch(isMdUp, (newVal) => {
         <NuxtLink
           class="inline-flex items-center gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
           :to="props.routes[0]?.path || '/'"
-          @click="onClose"
+          @click="onClose(false)"
         >
           <NuxtImg
             alt=""

@@ -57,7 +57,9 @@
     "timelineSection": "Professional timeline",
     "skillLevel": "Level {level} of 5",
     "newTab": "opens in a new tab",
-    "selectedCount": "{count} selected"
+    "selectedCount": "{count} selected",
+    "skipToContent": "Skip to content",
+    "removeFilter": "Remove filter: {name}"
   },
   "errorPage": {
     "notFoundTitle": "Page not found",
@@ -80,7 +82,7 @@
           "Front End Developer",
           "Back End Developer",
           "Web Designer",
-          "UI/ UX Enthusiast"
+          "UI/UX Enthusiast"
         ]
       },
       "cvCard": {
@@ -208,8 +210,8 @@
         "title": "My Development Toolkit",
         "subtitle": "The technologies that power my work.",
         "filters": {
-          "searchPlaceholder": "Search skills by name",
-          "typePlaceholder": "Filter skills by type",
+          "searchPlaceholder": "Search…",
+          "typePlaceholder": "Category",
           "searchLabel": "Search",
           "typeLabel": "Category"
         },
@@ -234,7 +236,6 @@
         "code": "Code",
         "live": "Live site"
       },
-      "hero": "Projects",
       "personalProjects": {
         "tabLabel": "Projects",
         "title": "Client work & personal projects",
@@ -242,6 +243,7 @@
          "list": [
           {
             "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
+            "meta": "Personal project · 2026 · Spring Boot + Flutter",
             "title": "Sfrigola Project",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
@@ -253,6 +255,7 @@
           },
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
+            "meta": "Bachelor's thesis · 2022 · Python",
             "title": "Comparing Machine Learning Algorithms for Image Classification",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
@@ -263,6 +266,7 @@
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
+            "meta": "Client website · 2025 · Nuxt",
             "title": "Studio Legale Romano (Website)",
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Live Demo" }
@@ -273,6 +277,7 @@
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
+            "meta": "Course exercise · 2022 · JavaScript",
             "title": "Guess My Number",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Guess-My-Number", "label": "GitHub" }
@@ -286,6 +291,7 @@
           },
           {
             "id": "70fa96e9-9283-4a48-8ac6-e1576e2949ce",
+            "meta": "Course exercise · 2022 · JavaScript",
             "title": "Pig Game",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Pig-Game", "label": "GitHub" }
@@ -299,6 +305,7 @@
           },
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
+            "meta": "Open-source library · 2025 · Vue 3",
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -483,7 +490,6 @@
     "routeSection": "Quick Links",
     "routeFallback": "Navigation coming soon",
     "contactSection": "Contacts & Social",
-    "creditSection": "© { year } Stefano Biddau - All rights reserved.",
-    "madeWith": "Designed and developed with ❤ by Stefano Biddau"
+    "creditSection": "© { year } Stefano Biddau - All rights reserved."
   }
 }

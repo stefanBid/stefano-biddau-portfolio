@@ -26,7 +26,7 @@ const onClick = () => {
 
 <template>
   <BaseButton
-    :aria-label="props.ariaLabel"
+    :aria-label="props.text ? `${props.text} – ${props.ariaLabel}` : props.ariaLabel"
     class="border border-border"
     :icon-only="!props.text"
     :is-active="props.isActive"

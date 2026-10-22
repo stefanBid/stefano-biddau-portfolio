@@ -24,7 +24,7 @@
   --text-*: initial;
   --text-shadow-*: initial;
 
-  --text-hero: clamp(5.5rem, 3.5rem + 5vw, 7.5rem); /* 88 → 120 */
+  --text-hero: clamp(3.5rem, -0.5rem + 10vw, 7.5rem); /* 56 → 120 */
   --text-hero--line-height: 1;            /* unitless: follows the size */
   --text-hero--font-weight: 400;
   --text-hero--letter-spacing: -0.025em;
@@ -149,6 +149,11 @@
   p, li, blockquote {
     text-align: justify;
     hyphens: auto;
+  }
+
+  /* Inside a centered container (text-center, lg:text-left, …) running text follows the container */
+  [class*="text-center"] :is(p, li, blockquote) {
+    text-align: inherit;
   }
   label { @apply sb-label; }
   small { @apply sb-small; }

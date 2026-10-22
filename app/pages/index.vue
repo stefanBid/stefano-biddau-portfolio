@@ -124,7 +124,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
 
     <section aria-labelledby="selected-work-title" class="pb-24">
       <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
-        <h2 id="selected-work-title" class="mb-0">
+        <h2 id="selected-work-title" class="mb-0 scroll-mt-24">
           {{ t('pages.home.selectedWork.title') }}
         </h2>
         <NuxtLink
@@ -157,7 +157,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
               <h3 class="sb-h4 mb-1 text-balance">
                 {{ item.title }}
               </h3>
-              <p class="sb-small text-ink-muted mb-0">
+              <p class="sb-small text-ink-muted text-left mb-0">
                 {{ item.meta }}
               </p>
             </div>

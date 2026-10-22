@@ -212,7 +212,7 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 
 Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities).
+`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`.
 
 ### Shapes and shadows
 
@@ -232,7 +232,7 @@ One utility per role, defined in `typography.css`; each carries family, size, li
 
 | Class | Font | Size (mobile → desktop) | Usage |
 |---|---|---|---|
-| `sb-hero` | Bebas Neue | 88 → 120px (fluid) | `ThePageHero` title only |
+| `sb-hero` | Bebas Neue | 56 → 120px (fluid) | `ThePageHero` title, 404 code |
 | `sb-display` | Bebas Neue | 66 → 75px | Big page titles (legal pages, error, home) |
 | `sb-h1` | Bebas Neue | 39 → 44px | Page-level heading (`h1`) |
 | `sb-h2` | Bebas Neue | 31 → 35px | Section heading (`h2`) |
@@ -323,7 +323,7 @@ Every **action** (submit, download, open, "Read more", links styled as buttons, 
 | `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = text only |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | `sm` 36px (hit area extended to 44px), `md` 44px, `lg` 52px |
 | `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
-| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab and announce it |
+| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab, show an ↗ icon and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | Required with `iconOnly` |
 | `isDisabled` | `boolean` | `false` | |
@@ -387,6 +387,7 @@ Model: `defineModel<string>('input')`
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `maxLength` | `number` | `undefined` | Shows character counter when set |
+| `minLength` | `number` | `undefined` | Below it, the counter tracks the minimum (`4 / 10`), then the maximum. The hint is replaced by the error when there is one |
 
 Model: `defineModel<string>('input')`
 
@@ -419,6 +420,7 @@ Generic component (`generic="T"`).
 | `prefixIcon` | `string` | `undefined` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
+`hideLabelOnMobile` (`boolean`, default `false`) keeps the label for screen readers but hides it below `md` (compact filter rows).
 Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode); with more than one value the input reads "N selected" (`a11y.selectedCount`) instead of a truncated list; Enter/Space/↓ open, ↑/↓ move between options, Escape closes only the list and returns focus to the input.
 
 ### `BaseChip`
@@ -537,6 +539,7 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 |---|---|---|
 | `id` | `string \| number` | Required. Renders the article as `#project-<id>` (deep-link target) |
 | `title` | `string` | Required |
+| `meta` | `string` | Optional `type · year · stack` line under the title (from `pages.projects.personalProjects.list[].meta`) |
 | `content` | `RichBlock[]` | Rich text rendered via `BaseRichText`; first block as preview, "Read more" expands in place |
 | `imageSrc` | `string` | Optional project cover |
 | `imageAlt` | `string` | Optional alt text |
@@ -596,7 +599,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Compact page opener for inner pages (About, Skills, Projects): `min-h-[40dvh]`, the page `h1` in `sb-hero`, entering with `animate-rise-in`. Props: `id`, `text`, `bordered` (default `true`; `false` on `my-projects.vue`, where the tab bar already draws the divider). The home page has its own first screen (name, role, CTAs, avatar, selected work) and does not use it.
+Page opener for About and Skills: the page `h1` in `sb-hero` (fluid 56 → 120px), entering with `animate-rise-in`, closed by a bottom border. Props: `id`, `text`. Projects does not use it: the tab bar comes first and each tab's heading is the page `h1`. The home page has its own first screen (name, role, CTAs, avatar, selected work).
 
 ---
 
@@ -668,6 +671,8 @@ useSeoMeta({
 ```
 
 ### Layouts
+
+`default.vue` also renders a "Skip to content" link (first focusable element, visible on focus) targeting `<main id="main">`; `app.vue` mounts `<NuxtRouteAnnouncer />` so client-side page changes are announced.
 
 The only layout is `default.vue`. Structure: `TheHeader` → `<slot>` → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`. A `useLocaleHead()` call injects the correct `hreflang` alternate links on every page automatically.
 
@@ -774,7 +779,7 @@ unlock()  // removes it only when no other caller holds a lock
 
 ### `useFocusTrap(container)`
 
-Keeps Tab / Shift+Tab inside `container` while active and restores focus to the previously focused element on deactivate. Used by `BaseDialog` and the mobile drawer in `TheHeader`. Client-side only.
+Keeps Tab / Shift+Tab inside `container` while active and restores focus to the previously focused element on deactivate. `deactivate(false)` skips the restore (used when a navigation moves focus elsewhere). Used by `BaseDialog` and the mobile drawer in `TheHeader`. Client-side only.
 
 ```ts
 const panel = ref<HTMLElement | null>(null)

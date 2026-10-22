@@ -1,6 +1,7 @@
 interface Project {
   id: string
   title: string
+  meta?: string
   content: RichBlock[]
   coverImageSrc?: string
   coverImageAlt?: string
@@ -36,6 +37,7 @@ export default function useProjects() {
     return rawProjects.map(item => ({
       id: _rt(item.id || ''),
       title: _rt(item.title || ''),
+      meta: item.meta ? _rt(item.meta) : undefined,
       content: markdownToRichBlocks(_rt(item.content || '')),
       coverImageSrc: item.coverImageSrc ? _rt(item.coverImageSrc) : undefined,
       coverImageAlt: item.coverImageAlt ? _rt(item.coverImageAlt) : undefined,

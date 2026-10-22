@@ -66,6 +66,7 @@ const onKeydown = (e: KeyboardEvent, index: number) => {
   >
     <button
       v-for="(tab, index) in props.tabs"
+      :id="props.panelId ? `${props.panelId}-tab-${tab.id}` : undefined"
       :key="tab.id"
       :aria-controls="props.panelId"
       :aria-selected="safeSelectedTabId === tab.id"

@@ -28,7 +28,7 @@ const lastUpdate = computed(() => {
 </script>
 
 <template>
-  <article class="space-y-8 sm:space-y-10 md:space-y-12 pt-16">
+  <article class="space-y-8 sm:space-y-10 md:space-y-12 pt-16 [&_li]:max-w-[75ch] [&_p]:max-w-[75ch]">
     <!-- Header -->
     <header class="space-y-4 sm:space-y-5 md:space-y-6 text-center">
       <h1 class="sb-display mb-0">

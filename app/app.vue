@@ -3,6 +3,7 @@ const { pageTransition } = usePageTransition()
 </script>
 
 <template>
+  <NuxtRouteAnnouncer />
   <NuxtLayout>
     <NuxtPage :transition="pageTransition" />
   </NuxtLayout>

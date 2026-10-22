@@ -2,6 +2,7 @@
 interface CustomProjectsCardProps {
   id: number | string
   title: string
+  meta?: string
   content: RichBlock[]
   imageSrc?: string
   imageAlt?: string
@@ -16,6 +17,7 @@ const props = withDefaults(
   {
     imageSrc: undefined,
     imageAlt: undefined,
+    meta: undefined,
     initiallyExpanded: false,
   },
 )
@@ -172,10 +174,18 @@ const onSelectUrl = (url: string) => {
             <!-- Bottom row: title - absolute positioned -->
             <div>
               <h2
-                class="sb-h3 mb-0 text-ink drop-shadow-md sb-transition"
+                :id="`project-title-${props.id}`"
+                class="sb-h3 mb-0 text-ink drop-shadow-md outline-none sb-transition"
+                tabindex="-1"
               >
                 {{ props.title }}
               </h2>
+              <p
+                v-if="props.meta"
+                class="sb-small text-ink/80 text-left mt-1 mb-0"
+              >
+                {{ props.meta }}
+              </p>
             </div>
           </div>
         </div>

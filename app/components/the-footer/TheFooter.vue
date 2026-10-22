@@ -168,10 +168,6 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <p class="sb-small italic">
             {{ t('footer.creditSection', { year: new Date().getFullYear() }) }}
           </p>
-
-          <p class="sb-small italic text-ink-muted/80">
-            {{ t('footer.madeWith') }}
-          </p>
         </div>
 
         <!-- Right side: legal links -->

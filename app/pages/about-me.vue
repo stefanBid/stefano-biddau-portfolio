@@ -18,7 +18,9 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const { milestones } = useMilestones()
+const { milestones: milestonesByDate } = useMilestones()
+// Most recent first: the current role is what a visitor needs to see
+const milestones = computed(() => [...milestonesByDate.value].reverse())
 
 // State
 const userSelectedId = ref<string | null>(null)

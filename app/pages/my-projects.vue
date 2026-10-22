@@ -23,13 +23,8 @@ const onSelectTab = (tabId: string | number) => {
 
 <template>
   <div>
-    <ThePageHero
-      id="my-projects"
-      :bordered="false"
-      :text="currentTabId === 'templateProject' ? t('nav.sb-templates') : t('pages.projects.hero')"
-    />
     <BaseTabs
-      class="mt-8 md:mt-20"
+      class="pt-8 md:pt-16"
       panel-id="projects-panel"
       :selected-tab-id="currentTabId"
       :tabs="tabs"
@@ -38,6 +33,7 @@ const onSelectTab = (tabId: string | number) => {
 
     <section
       id="projects-panel"
+      :aria-labelledby="`projects-panel-tab-${currentTabId}`"
       class="pt-10 pb-20"
       role="tabpanel"
     >

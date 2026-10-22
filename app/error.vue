@@ -38,10 +38,10 @@ const onBackHome = () => {
         <h2 class="sb-h3 mb-0">
           {{ is404 ? t('errorPage.notFoundTitle') : t('errorPage.genericTitle') }}
         </h2>
-        <p class="text-ink-muted">
+        <p class="text-ink-muted text-center">
           {{ is404 ? t('errorPage.notFoundMessage') : t('errorPage.genericMessage') }}
         </p>
-        <p class="text-ink-muted">
+        <p class="text-ink-muted text-center">
           {{ t('errorPage.hint') }}
         </p>
 

@@ -2,7 +2,7 @@ import type { Ref } from 'vue'
 
 interface UseFocusTrapReturn {
   activate: () => void
-  deactivate: () => void
+  deactivate: (_restoreFocus?: boolean) => void
 }
 
 const FOCUSABLE = [
@@ -59,7 +59,7 @@ export default function useFocusTrap(container: Ref<HTMLElement | null>): UseFoc
     document.addEventListener('keydown', _onKeydown)
   }
 
-  const deactivate = () => {
+  const deactivate = (restoreFocus = true) => {
     if (!import.meta.client || !_active) {
       return
     }
@@ -67,7 +67,7 @@ export default function useFocusTrap(container: Ref<HTMLElement | null>): UseFoc
     document.removeEventListener('keydown', _onKeydown)
     const target = _previouslyFocused
     _previouslyFocused = null
-    if (target && document.contains(target)) {
+    if (restoreFocus && target && document.contains(target)) {
       requestAnimationFrame(() => target.focus())
     }
   }

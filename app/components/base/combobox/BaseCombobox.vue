@@ -12,6 +12,7 @@ interface BaseComboboxProps {
   hint?: string
   error?: string | null
   prefixIcon?: string
+  hideLabelOnMobile?: boolean
 }
 
 // Input / Output
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<BaseComboboxProps>(), {
   hint: undefined,
   error: null,
   prefixIcon: undefined,
+  hideLabelOnMobile: false,
 })
 
 const model = defineModel<T[]>('input', {
@@ -192,6 +194,7 @@ watch(open, (newVal) => {
     <label
       v-if="props.label"
       class="block text-ink-muted mb-2 md:mb-3 sb-transition"
+      :class="{ 'max-md:sr-only': props.hideLabelOnMobile }"
       :for="props.id"
     >
       {{ props.label }}

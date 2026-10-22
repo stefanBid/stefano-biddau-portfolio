@@ -66,13 +66,23 @@ const onCloseNotification = (id: string) => {
 
 <template>
   <div>
+    <a
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-400 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ink focus:text-bg sb-label"
+      href="#main"
+    >
+      {{ t('a11y.skipToContent') }}
+    </a>
     <TheHeader
       :langs="langs"
       :routes="routes"
       :selected-lang-id="locale"
       @change-lang="langCode => onChangeLang(langCode)"
     />
-    <main class="pt-16 px-6 md:px-10">
+    <main
+      id="main"
+      class="pt-16 px-6 md:px-10 outline-none"
+      tabindex="-1"
+    >
       <div class="w-full max-w-350 mx-auto">
         <slot></slot>
       </div>

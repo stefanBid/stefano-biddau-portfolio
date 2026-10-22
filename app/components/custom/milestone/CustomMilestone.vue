@@ -158,6 +158,7 @@ watch(() => props.isActive, (isActive) => {
           :id="`milestone-body-${props.id}`"
           :blocks="getContentPreview"
           class="sb-transition"
+          :class="{ 'max-w-[75ch]': !(props.isActive && props.imageSrc) }"
         />
 
         <!-- Polaroid Image (only when active) -->

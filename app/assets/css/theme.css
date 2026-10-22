@@ -56,6 +56,37 @@
   --sb-gold-800: #4a3210;
   --sb-gold-900: #3a280e;
 
+  /* Solar system illustration (Skills page): raw-only, no Tailwind mapping */
+  --sb-sun-100: #fff9c4;
+  --sb-sun-200: #fde68a;
+  --sb-sun-250: #fde047;
+  --sb-sun-300: #fbbf24;
+  --sb-sun-350: #facc15;
+  --sb-sun-400: #f59e0b;
+  --sb-sun-500: #f97316;
+  --sb-sun-corona-inner: #ffbf78;
+  --sb-sun-corona-mid: #ff8822;
+  --sb-sun-corona-outer: #ff5e00;
+  --sb-orbit: #94a3b8;
+  --sb-planet-shadow: #0f172a;
+  --sb-moon-100: #e5e7eb;
+  --sb-planet-1: #b6b6b6;
+  --sb-planet-2: #d8c18f;
+  --sb-planet-3: #3c82f6;
+  --sb-planet-4: #c1440e;
+  --sb-planet-5: #d9a066;
+  --sb-planet-6: #e7d9a4;
+  --sb-planet-7: #7dd3fc;
+  --sb-planet-8: #2563eb;
+  --sb-planet-atmo-1: #e5e7eb;
+  --sb-planet-atmo-2: #f5e7c4;
+  --sb-planet-atmo-3: #93c5fd;
+  --sb-planet-atmo-4: #f9735b;
+  --sb-planet-atmo-5: #f2c58b;
+  --sb-planet-atmo-6: #f8f5d4;
+  --sb-planet-atmo-7: #bae6fd;
+  --sb-planet-atmo-8: #60a5fa;
+
   /* Selection and scrollbar: darkened primary */
   --sb-selection: color-mix(in oklab, var(--sb-primary) 50%, #000 70%);
   --sb-scrollbar: color-mix(in oklab, var(--sb-primary) 70%, #000 65%);

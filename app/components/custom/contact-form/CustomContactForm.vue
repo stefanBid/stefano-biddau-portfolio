@@ -230,6 +230,7 @@ watch(
             :hint="t('pages.home.contactForm.fields.message.hint')"
             :label="t('pages.home.contactForm.fields.message.label')"
             :max-length="MESSAGE_MAX_LENGTH"
+            :min-length="MESSAGE_MIN_LENGTH"
             :placeholder="t('pages.home.contactForm.fields.message.placeholder')"
           />
         </div>
@@ -247,8 +248,7 @@ watch(
           target="_blank"
           :to="localePath('privacy-policy')"
         >
-          {{ t('nav.privacy-policy') }}
-          <span class="sr-only">({{ t('a11y.newTab') }})</span>
+          {{ t('nav.privacy-policy') }}<span class="sr-only"> ({{ t('a11y.newTab') }})</span>
         </NuxtLink>,
         <NuxtLink
           class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
@@ -256,8 +256,7 @@ watch(
           target="_blank"
           :to="localePath('terms-and-conditions')"
         >
-          {{ t('nav.terms-and-conditions') }}
-          <span class="sr-only">({{ t('a11y.newTab') }})</span>
+          {{ t('nav.terms-and-conditions') }}<span class="sr-only"> ({{ t('a11y.newTab') }})</span>
         </NuxtLink>
       </BaseCheckbox>
       <div

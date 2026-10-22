@@ -95,6 +95,12 @@ const classes = computed(() => {
     :target="isExternal ? '_blank' : undefined"
   >
     <slot></slot>
+    <Icon
+      v-if="isExternal && !props.iconOnly"
+      aria-hidden="true"
+      class="size-4 shrink-0"
+      name="solar:arrow-right-up-linear"
+    />
     <span v-if="isExternal" class="sr-only">({{ t('a11y.newTab') }})</span>
   </a>
   <button
