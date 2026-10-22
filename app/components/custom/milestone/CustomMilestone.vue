@@ -127,36 +127,41 @@ const onSelect = () => {
       >
         {{ props.subtitle }}
       </p>
-      <BaseRichText
-        v-if="props.content.length > 0"
-        :blocks="getContentPreview"
-        class="mt-5 md:mt-6 sb-transition"
-      />
-
-      <!-- Polaroid Image (only when active) -->
       <div
-        v-if="props.isActive && props.imageSrc"
-        class="mt-6 md:mt-8 flex justify-center sb-transition"
+        class="mt-5 md:mt-6"
+        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12 lg:items-start': props.isActive && props.imageSrc }"
       >
+        <BaseRichText
+          v-if="props.content.length > 0"
+          :blocks="getContentPreview"
+          class="sb-transition"
+        />
+
+        <!-- Polaroid Image (only when active) -->
         <div
-          class="bg-ink p-3 md:p-4 shadow-md max-w-sm w-full sb-transition"
+          v-if="props.isActive && props.imageSrc"
+          class="mt-6 md:mt-8 lg:mt-0 lg:sticky lg:top-24 flex justify-center sb-transition"
         >
-          <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden sb-transition  ">
-            <NuxtImg
-              :alt="props.imageAlt || props.title"
-              class="w-full h-full object-cover"
-              :height="imageHeight"
-              loading="lazy"
-              :src="props.imageSrc"
-              :width="imageWidth"
-            />
-          </div>
-          <p
-            v-if="props.imageAlt"
-            class="text-center text-bg mt-3 sb-small italic sb-transition"
+          <div
+            class="bg-ink p-3 md:p-4 shadow-md max-w-sm w-full sb-transition"
           >
-            {{ props.imageAlt }}
-          </p>
+            <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden sb-transition  ">
+              <NuxtImg
+                :alt="props.imageAlt || props.title"
+                class="w-full h-full object-cover"
+                :height="imageHeight"
+                loading="lazy"
+                :src="props.imageSrc"
+                :width="imageWidth"
+              />
+            </div>
+            <p
+              v-if="props.imageAlt"
+              class="text-center text-bg mt-3 sb-small italic sb-transition"
+            >
+              {{ props.imageAlt }}
+            </p>
+          </div>
         </div>
       </div>
 

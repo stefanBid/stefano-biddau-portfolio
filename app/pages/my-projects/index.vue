@@ -55,11 +55,11 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
 
 <template>
   <div class="flex flex-col gap-20">
-    <div class="flex flex-col gap-3 md:gap-4">
+    <div class="grid gap-3 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-x-12 lg:items-start">
       <h2 class="sb-h1 mb-0">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="sb-body text-ink-muted max-w-prose">
+      <p class="sb-body text-ink-muted">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
     </div>

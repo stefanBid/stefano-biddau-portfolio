@@ -23,8 +23,8 @@ const { templates } = useTemplates()
 
 <template>
   <div class="flex flex-col gap-20">
-    <div class="flex flex-col gap-3 md:gap-4">
-      <div class="flex items-center justify-center mb-4 md:mb-6 ">
+    <div class="grid gap-3 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-x-12 lg:items-start">
+      <div class="flex items-center justify-center mb-4 md:mb-6 lg:col-span-2">
         <div class="w-33 md:w-52 h-auto bg-ink rounded-lg p-4 md:p-6 shadow-md flex items-center justify-center">
           <NuxtImg
             alt="SBT Logo"
@@ -40,7 +40,7 @@ const { templates } = useTemplates()
       <h2 class="sb-h1 mb-0">
         {{ t('pages.projects.sbTemplatesProject.title') }}
       </h2>
-      <p class="sb-body text-ink-muted max-w-prose">
+      <p class="sb-body text-ink-muted">
         {{ t('pages.projects.sbTemplatesProject.description') }}
       </p>
     </div>
@@ -72,7 +72,7 @@ const { templates } = useTemplates()
         <h3 class="sb-h4 text-ink">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
         </h3>
-        <p class="sb-body text-ink-muted max-w-prose">
+        <p class="sb-body text-ink-muted">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
         </p>
       </div>

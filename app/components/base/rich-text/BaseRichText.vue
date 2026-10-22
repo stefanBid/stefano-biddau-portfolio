@@ -50,14 +50,12 @@ const htmlContent = computed(() => {
 
 .rich-text :deep(p) {
   @apply sb-body;
-  max-width: 65ch;
   margin: 0 0 0.75em 0;
 }
 
 .rich-text :deep(ul),
 .rich-text :deep(ol) {
   @apply sb-body;
-  max-width: 65ch;
   margin: 0 0 0.75em 0;
   padding-left: 2rem;
   list-style-position: outside;
