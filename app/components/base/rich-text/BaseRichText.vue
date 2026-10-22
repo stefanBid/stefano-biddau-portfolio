@@ -50,12 +50,14 @@ const htmlContent = computed(() => {
 
 .rich-text :deep(p) {
   @apply sb-body;
+  max-width: 65ch;
   margin: 0 0 0.75em 0;
 }
 
 .rich-text :deep(ul),
 .rich-text :deep(ol) {
   @apply sb-body;
+  max-width: 65ch;
   margin: 0 0 0.75em 0;
   padding-left: 2rem;
   list-style-position: outside;
@@ -79,7 +81,7 @@ const htmlContent = computed(() => {
   font-style: italic;
   margin: 0 0 0.75em 0;
   padding-left: 1rem;
-  border-left: 4px solid var(--color-primary);
+  border-left: 2px solid var(--color-border-strong);
   opacity: 0.8;
 }
 

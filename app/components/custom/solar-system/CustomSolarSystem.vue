@@ -67,7 +67,7 @@ const getOrbitStyle = (index: number, total: number) => {
 </script>
 
 <template>
-  <div class="relative flex items-center justify-center w-full h-full">
+  <div aria-hidden="true" class="solar-system relative flex items-center justify-center w-full h-full">
     <div class="relative w-85 h-85 overflow-visible">
       <!-- ☀️ SUN -->
       <div class="sun">
@@ -114,8 +114,8 @@ const getOrbitStyle = (index: number, total: number) => {
   transform: translate(-50%, -50%);
   pointer-events: none;
   animation: sunPulse 4s ease-in-out infinite;
-  z-index: 10;              /* <-- sempre sopra tutto */
-  will-change: transform;   /* <-- hint GPU */
+  z-index: 10;
+  will-change: transform;
 }
 
 @keyframes sunPulse {
@@ -127,7 +127,7 @@ const getOrbitStyle = (index: number, total: number) => {
   }
 }
 
-/* glow esterno */
+/* outer glow */
 .sun-glow {
   position: absolute;
   inset: 0;
@@ -137,7 +137,7 @@ const getOrbitStyle = (index: number, total: number) => {
   opacity: 0.95;
 }
 
-/* corona con pulsazione luminosa */
+/* pulsing corona */
 .sun-corona {
   position: absolute;
   inset: 12px;
@@ -167,7 +167,7 @@ const getOrbitStyle = (index: number, total: number) => {
   }
 }
 
-/* core del sole */
+/* sun core */
 .sun-core {
   position: absolute;
   inset: 34px;
@@ -178,7 +178,7 @@ const getOrbitStyle = (index: number, total: number) => {
     0 0 64px rgba(249, 115, 22, 0.8);
 }
 
-/* flare che ruota */
+/* rotating flare */
 .sun-flare {
   position: absolute;
   inset: 26px;
@@ -215,8 +215,8 @@ const getOrbitStyle = (index: number, total: number) => {
   border: 1px solid rgba(148, 163, 184, 0.28);
   animation: orbit-spin var(--orbit-duration) linear infinite;
   animation-delay: var(--orbit-delay);
-  z-index: 1;               /* <-- sotto il sole */
-  will-change: transform;   /* <-- hint GPU su rotazione */
+  z-index: 1;
+  will-change: transform;
 }
 
 .orbit--reverse {
@@ -242,7 +242,7 @@ const getOrbitStyle = (index: number, total: number) => {
   transform: translateY(-50%);
   width: 40px;
   height: 40px;
-  z-index: 5; /* sopra le orbite, sotto il sole (se si sovrapponesse mai) */
+  z-index: 5;
 }
 
 .planet-body {
@@ -259,7 +259,7 @@ const getOrbitStyle = (index: number, total: number) => {
     0 0 18px rgba(15, 23, 42, 0.3);
   transform: rotate(var(--planet-tilt));
   animation: planetTilt 9s ease-in-out infinite;
-  will-change: transform; /* tilt animato → hint GPU */
+  will-change: transform;
 }
 
 @keyframes planetTilt {
@@ -267,7 +267,7 @@ const getOrbitStyle = (index: number, total: number) => {
   50%     { transform: rotate(calc(var(--planet-tilt) + 2deg)); }
 }
 
-/* atmosfera del pianeta */
+/* planet atmosphere */
 .planet-body::before {
   content: "";
   position: absolute;
@@ -288,7 +288,7 @@ const getOrbitStyle = (index: number, total: number) => {
   50%      { opacity: 1; transform: scale(1.04); }
 }
 
-/* icona sopra il pianeta */
+/* planet icon */
 .planet-icon {
   position: relative;
   z-index: 1;
@@ -325,5 +325,13 @@ const getOrbitStyle = (index: number, total: number) => {
 @keyframes moonOrbit {
   0%   { transform: translate(-50%, -50%) rotate(0deg); }
   100% { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .solar-system *,
+  .solar-system *::before,
+  .solar-system *::after {
+    animation-play-state: paused !important;
+  }
 }
 </style>

@@ -49,7 +49,7 @@ interface UrlGroup {
   key: string
   urls: MenuItem[]
   icon: string
-  ariaLabel: string
+  label: string
 }
 
 const urlGroups = computed<UrlGroup[]>(() => {
@@ -60,7 +60,7 @@ const urlGroups = computed<UrlGroup[]>(() => {
       key: 'codebase',
       urls: props.codebaseUrls,
       icon: 'solar:code-2-line-duotone',
-      ariaLabel: 'Open link to project codebase',
+      label: t('pages.projects.links.code'),
     })
   }
 
@@ -69,7 +69,7 @@ const urlGroups = computed<UrlGroup[]>(() => {
       key: 'deployment',
       urls: props.deploymentUrls,
       icon: 'solar:global-line-duotone',
-      ariaLabel: 'Open link to deployed project',
+      label: t('pages.projects.links.live'),
     })
   }
 
@@ -92,7 +92,7 @@ const onSelectUrl = (url: string) => {
   <article :data-project-id="props.id">
     <BaseCard
       class="h-full"
-      :variant="isDescriptionExpanded ? 'light' : 'dark-hover'"
+      :variant="isDescriptionExpanded ? 'light' : 'dark'"
     >
       <!-- Card Header -->
       <template #card-header>
@@ -116,37 +116,40 @@ const onSelectUrl = (url: string) => {
               <template v-for="group in urlGroups" :key="group.key">
                 <BaseButton
                   v-if="group.urls.length === 1"
-                  :aria-label="group.ariaLabel"
-                  class="p-2! shrink-0"
+                  class="px-3! py-2! gap-2 shrink-0"
                   :to="group.urls[0]!.code"
                   type="link"
                   variant="primary"
                 >
                   <Icon
-                    class="size-4 md:size-6"
+                    aria-hidden="true"
+                    class="size-5"
                     :name="group.icon"
                   />
+                  <span class="sb-label normal-case">{{ group.label }}</span>
                 </BaseButton>
                 <BaseIconMenu
                   v-else
                   :icon="group.icon"
                   :items="group.urls"
+                  :label="group.label"
                   @select="onSelectUrl"
                 >
                   <template #trigger="{ isOpen, toggle }">
                     <BaseButton
                       :aria-expanded="isOpen ? 'true' : 'false'"
                       aria-haspopup="menu"
-                      :aria-label="group.ariaLabel"
-                      class="p-2! shrink-0"
+                      class="px-3! py-2! gap-2 shrink-0"
                       type="button"
                       variant="primary"
                       @click="toggle(!isOpen)"
                     >
                       <Icon
-                        class="size-4 md:size-6"
+                        aria-hidden="true"
+                        class="size-5"
                         :name="group.icon"
                       />
+                      <span class="sb-label normal-case">{{ group.label }}</span>
                     </BaseButton>
                   </template>
                 </BaseIconMenu>

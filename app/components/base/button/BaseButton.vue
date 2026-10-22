@@ -18,6 +18,8 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   isLoading: false,
 })
 
+const isExternal = computed(() => /^https?:\/\//.test(props.to ?? ''))
+
 const isInteractive = computed(() => {
   return !props.isDisabled && !props.isLoading
 })
@@ -43,8 +45,8 @@ const isInteractive = computed(() => {
         : '',
     ]"
     :href="props.to"
-    rel="noopener noreferrer"
-    target="_blank"
+    :rel="isExternal ? 'noopener noreferrer' : undefined"
+    :target="isExternal ? '_blank' : undefined"
   >
     <slot></slot>
   </a>

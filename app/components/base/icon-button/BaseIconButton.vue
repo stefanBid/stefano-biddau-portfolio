@@ -25,7 +25,7 @@ const onClick = () => {
 <template>
   <button
     :aria-label="props.ariaLabel"
-    class="group relative inline-flex items-center justify-center rounded-md border border-border sb-transition sb-focus cursor-pointer size-7 md:size-8"
+    class="group relative inline-flex items-center justify-center rounded-md border border-border sb-transition sb-focus cursor-pointer size-10 md:size-9"
     :class="{
       'bg-surface-2': props.isActive,
       'bg-surface border hover:bg-surface-2': !props.isActive,
@@ -34,7 +34,8 @@ const onClick = () => {
     @click="onClick"
   >
     <Icon
-      class="size-4.5 md:size-5"
+      aria-hidden="true"
+      class="size-5"
       :class="{
         'text-ink': props.isActive,
         'text-ink-muted group-hover:text-ink': !props.isActive,

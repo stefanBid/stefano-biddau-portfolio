@@ -44,13 +44,34 @@
       "description": "Termini e condizioni per l'utilizzo di stefanobiddau.com - Regole e linee guida per i visitatori del sito."
     }
   },
+  "a11y": {
+    "closeDialog": "Chiudi",
+    "dismissNotification": "Chiudi notifica",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "changeLanguage": "Cambia lingua",
+    "previousPage": "Pagina precedente",
+    "nextPage": "Pagina successiva",
+    "showMilestone": "Mostra tappa: {title}",
+    "skillsSection": "Competenze e tecnologie",
+    "timelineSection": "Percorso professionale",
+    "skillLevel": "Livello {level} su 5"
+  },
+  "errorPage": {
+    "notFoundTitle": "Pagina non trovata",
+    "genericTitle": "Qualcosa è andato storto",
+    "notFoundMessage": "La pagina che cerchi non esiste o è stata spostata.",
+    "genericMessage": "Si è verificato un errore imprevisto. Riprova tra un momento.",
+    "hint": "Controlla l'indirizzo, oppure torna alla home.",
+    "backHome": "Torna alla home",
+    "technicalDetails": "Dettagli tecnici"
+  },
   "header": {
     "routeSection": "Menu",
     "settingsSection": "Impostazioni"
   },
   "pages": {
     "home": {
-      "hero": "Bentornato",
       "title": "Ciao, sono Stefano Biddau",
       "subtitle": {
         "costant": "E sono un",
@@ -72,6 +93,10 @@
         "subtitle": "Parliamo dei tuoi progetti",
         "paragraph": "Se hai bisogno di supporto tecnico o vuoi discutere una possibile collaborazione, sarò felice di ascoltare le tue idee e trovare insieme la soluzione migliore.",
         "buttonText": "Mettiti in contatto"
+      },
+      "selectedWork": {
+        "title": "Lavori selezionati",
+        "viewAll": "Tutti i progetti"
       },
       "contactForm": {
         "title": "Contattami",
@@ -96,7 +121,7 @@
             "errorMaxlength": "Il messaggio è troppo lungo"
           },
           "consentGiven": {
-            "label": "Acconsento al trattamento dei dati forniti esclusivamente per finalità di contatto. I dati non verranno memorizzati né condivisi con terzi.",
+            "label": "Acconsento al trattamento dei miei dati al solo scopo di rispondere a questo messaggio. Vengono inviati tramite EmailJS e cancellati quando non servono più. Riceverai una copia del messaggio via email.",
             "extra": "Leggi",
             "errorRequired": "Devi acconsentire al trattamento dei tuoi dati"
           },
@@ -115,7 +140,7 @@
           },
           "error": {
             "title": "Errore di Invio",
-            "message": "Si è verificato un errore durante l'invio del tuo messaggio. Per favore, riprova più tardi."
+            "message": "Non è stato possibile inviare il messaggio. Quello che hai scritto è ancora qui: riprova tra un momento."
           }
         }
       }
@@ -185,7 +210,9 @@
         "subtitle": "Le tecnologie che guidano il mio lavoro.",
         "filters": {
           "searchPlaceholder": "Cerca competenze per nome",
-          "typePlaceholder": "Filtra competenze per tipo"
+          "typePlaceholder": "Filtra competenze per tipo",
+          "searchLabel": "Cerca",
+          "typeLabel": "Categoria"
         },
         "filterOptions": {
           "all": "Tutte le Competenze",
@@ -213,6 +240,10 @@
       }
     },
     "projects": {
+      "links": {
+        "code": "Codice",
+        "live": "Sito online"
+      },
       "hero": "I miei progetti",
       "personalProjects": {
         "tabLabel": "Progetti Personali",

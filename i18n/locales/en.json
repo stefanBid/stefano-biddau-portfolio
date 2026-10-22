@@ -44,13 +44,34 @@
       "description": "Terms and conditions for using stefanobiddau.com - Rules and guidelines for website visitors."
     }
   },
+  "a11y": {
+    "closeDialog": "Close",
+    "dismissNotification": "Dismiss notification",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "changeLanguage": "Change language",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "showMilestone": "Show milestone: {title}",
+    "skillsSection": "Skills and technologies",
+    "timelineSection": "Professional timeline",
+    "skillLevel": "Level {level} of 5"
+  },
+  "errorPage": {
+    "notFoundTitle": "Page not found",
+    "genericTitle": "Something went wrong",
+    "notFoundMessage": "The page you're looking for doesn't exist or has moved.",
+    "genericMessage": "An unexpected error occurred. Try again in a moment.",
+    "hint": "Check the address for typos, or go back to the homepage.",
+    "backHome": "Back to home",
+    "technicalDetails": "Technical details"
+  },
   "header": {
     "routeSection": "Menu",
     "settingsSection": "Settings"
   },
   "pages": {
     "home": {
-      "hero": "Welcome Back",
       "title": "Hello, I'm Stefano Biddau",
       "subtitle": {
         "costant": "And I'm a",
@@ -72,6 +93,10 @@
         "subtitle": "Let's talk about your projects",
         "paragraph": "If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together.",
         "buttonText": "Get in Touch"
+      },
+      "selectedWork": {
+        "title": "Selected work",
+        "viewAll": "All projects"
       },
       "contactForm": {
         "title": "Contact Me",
@@ -96,7 +121,7 @@
             "errorMaxlength": "Message is too long"
           },
           "consentGiven": {
-            "label": "I agree to the processing of the data provided exclusively for contact purposes. The data will not be stored or shared with third parties.",
+            "label": "I agree to the processing of my data solely to reply to this message. It is delivered through EmailJS and deleted once no longer needed. You'll receive a copy of your message by email.",
             "extra": "Read",
             "errorRequired": "You must agree to the processing of your data"
           },
@@ -115,7 +140,7 @@
           },
           "error": {
             "title": "Sending Error",
-            "message": "An error occurred while sending your message. Please try again later."
+            "message": "Your message couldn't be sent. Everything you wrote is still here: try again in a moment."
           }
         }
       }
@@ -185,7 +210,9 @@
         "subtitle": "The technologies that power my work.",
         "filters": {
           "searchPlaceholder": "Search skills by name",
-          "typePlaceholder": "Filter skills by type"
+          "typePlaceholder": "Filter skills by type",
+          "searchLabel": "Search",
+          "typeLabel": "Category"
         },
         "filterOptions": {
           "feLang": "Frontend Languages",
@@ -212,6 +239,10 @@
       }
     },
     "projects": {
+      "links": {
+        "code": "Code",
+        "live": "Live site"
+      },
       "hero": "My Web Projects",
       "personalProjects": {
         "tabLabel": "Personal Projects",
@@ -231,7 +262,7 @@
           },
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
-            "title": "Comparazione algoritmi di Machine Learning per la classificazione di immagini",
+            "title": "Comparing Machine Learning Algorithms for Image Classification",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
             ],

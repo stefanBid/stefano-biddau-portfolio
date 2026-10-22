@@ -53,10 +53,10 @@ const describedBy = computed(() => {
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
         :autocomplete="props.autocomplete"
-        class="w-full rounded-lg bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary truncate"
+        class="w-full rounded-lg bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring truncate"
         :class="{
           'border-error': props.error,
-          'border-border': !props.error,
+          'border-border-strong': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }
         "
@@ -69,7 +69,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-ink-muted mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -78,7 +78,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-error mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

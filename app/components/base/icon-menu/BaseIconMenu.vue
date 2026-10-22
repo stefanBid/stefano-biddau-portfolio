@@ -1,6 +1,7 @@
 <script setup lang="ts">
 interface BaseIconMenuProps {
   icon: string
+  label: string
   items: Array<MenuItem>
   selectedItemId?: string | null
 }
@@ -31,15 +32,37 @@ const onSelect = (itemId: string) => {
   toggleFloating(false)
 }
 
-// Click outside: chiudi se clicchi fuori dal menu, ignorando il trigger
 onClickOutside(floating, () => {
   toggleFloating(false)
 }, { ignore: [reference] })
 
+const _items = () => Array.from(menu.value?.querySelectorAll<HTMLElement>('[role="menuitemradio"]') ?? [])
+
+const _focusTrigger = () => {
+  reference.value?.querySelector<HTMLElement>('button')?.focus()
+}
+
+// Capture phase + stopPropagation: Escape closes only this menu, not an enclosing dialog or drawer
 const onKeydown = (e: KeyboardEvent) => {
+  if (!open.value) {
+    return
+  }
   if (e.key === 'Escape') {
     e.preventDefault()
+    e.stopPropagation()
     toggleFloating(false)
+    _focusTrigger()
+    return
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    const items = _items()
+    if (!items.length) {
+      return
+    }
+    e.preventDefault()
+    const index = items.indexOf(document.activeElement as HTMLElement)
+    const step = e.key === 'ArrowDown' ? 1 : -1
+    items[(index + step + items.length) % items.length]?.focus()
   }
 }
 
@@ -47,21 +70,22 @@ onMounted(() => {
   if (!import.meta.client) {
     return
   }
-  window.addEventListener('keydown', onKeydown)
+  window.addEventListener('keydown', onKeydown, true)
 })
 
 onBeforeUnmount(() => {
   if (!import.meta.client) {
     return
   }
-  window.removeEventListener('keydown', onKeydown)
+  window.removeEventListener('keydown', onKeydown, true)
 })
 
 watch(open, (newVal) => {
   if (newVal) {
     nextTick(() => {
-      const first = menu.value?.querySelector<HTMLElement>('[role="menuitem"]')
-      first?.focus()
+      const items = _items()
+      const selected = items.find(el => el.getAttribute('aria-checked') === 'true')
+      ;(selected ?? items[0])?.focus()
     })
   }
 })
@@ -79,6 +103,7 @@ watch(open, (newVal) => {
         <BaseIconButton
           :aria-expanded="open ? 'true' : 'false'"
           aria-haspopup="menu"
+          :aria-label="props.label"
           :icon="props.icon"
           :is-active="open"
           @click="toggleFloating(!open)"
@@ -97,22 +122,23 @@ watch(open, (newVal) => {
         >
           <ul
             ref="menu"
+            :aria-label="props.label"
             class="p-2 outline-none space-y-2 mb-0"
             role="menu"
           >
-            <li v-for="item in props.items" :key="item.code">
+            <li v-for="item in props.items" :key="item.code" role="none">
               <button
-                :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-lg px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-ink sb-overline normal-case! sb-focus sb-transition"
+                :aria-checked="item.code === props.selectedItemId ? 'true' : 'false'"
+                class="group inline-flex w-full text-left rounded-lg px-3 py-2 md:px-3.5 md:py-2.5 gap-2 text-ink sb-label sb-focus sb-transition"
                 :class="{
                   'bg-surface-2': props.selectedItemId === item.code,
                   'hover:bg-surface-2 cursor-pointer': props.selectedItemId !== item.code,
                 }"
-                role="menuitem"
+                role="menuitemradio"
                 type="button"
                 @click="onSelect(item.code)"
               >
-                <span class="sb-overline truncate flex-1">{{ item.label }}</span>
+                <span class="truncate flex-1">{{ item.label }}</span>
                 <template v-if="item.icon && item.iconType ">
                   <Icon
                     v-if="item.iconType === 'nuxt-icon'"

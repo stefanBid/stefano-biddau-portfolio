@@ -1,5 +1,3 @@
-<!-- app/components/the-header/TheHeader.vue -->
-
 <script setup lang="ts">
 interface TheHeaderProps {
   routes: Array<RouteItem>
@@ -21,6 +19,8 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
+const drawerRef = ref<HTMLElement | null>(null)
+const { activate, deactivate } = useFocusTrap(drawerRef)
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
 
@@ -40,7 +40,7 @@ const isActiveRoute = (r: RouteItem) => {
 // Events
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
+  if (e.key === 'Escape' && open.value) {
     e.preventDefault()
     onClose()
   }
@@ -50,15 +50,22 @@ const onToggle = (newOpenValue: boolean) => {
   open.value = newOpenValue
   if (open.value) {
     lock()
+    activate()
+    nextTick(() => drawerRef.value?.querySelector<HTMLElement>('a[href]')?.focus())
   }
   else {
     unlock()
+    deactivate()
   }
 }
 
 const onClose = () => {
+  if (!open.value) {
+    return
+  }
   open.value = false
   unlock()
+  deactivate()
 }
 
 const onSelectLang = (langCode: string) => {
@@ -129,10 +136,11 @@ watch(isMdUp, (newVal) => {
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
-                class="sb-label uppercase normal-case! cursor-pointer sb-transition sb-focus rounded-sm"
+                :aria-current="isActiveRoute(r) ? 'page' : undefined"
+                class="sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
                 :class="{
-                  'text-ink/80 hover:text-ink font-normal!': !isActiveRoute(r),
-                  'text-primary font-bold!': isActiveRoute(r),
+                  'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
+                  'text-ink font-bold after:scale-x-100': isActiveRoute(r),
                 }"
                 :to="r.path"
               >
@@ -141,7 +149,7 @@ watch(isMdUp, (newVal) => {
               <span
                 v-else
                 aria-disabled="true"
-                class="sb-body-strong uppercase normal-case! font-normal! cursor-not-allowed opacity-50 text-ink/80 rounded-md"
+                class="sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
               >
                 {{ r.name }}
               </span>
@@ -151,6 +159,7 @@ watch(isMdUp, (newVal) => {
             <BaseIconMenu
               icon="solar:globus-bold-duotone"
               :items="props.langs"
+              :label="t('a11y.changeLanguage')"
               :selected-item-id="props.selectedLangId"
               @select="itemId => onSelectLang(itemId)"
             />
@@ -177,14 +186,15 @@ watch(isMdUp, (newVal) => {
       <!-- drawer -->
       <aside
         id="mobile-drawer"
+        ref="drawerRef"
         :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-surface border-r border-border shadow-lg sb-transition-slow will-change-transform"
-        :class="open ? 'translate-x-0' : '-translate-x-full'"
+        class="fixed right-0 top-16 h-[calc(100dvh-4rem)] w-72 max-w-[85vw] flex flex-col bg-surface border-l border-border shadow-lg sb-transition-slow will-change-transform"
+        :class="open ? 'translate-x-0' : 'translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
-        <div class="flex items-center justify-between px-6 py-3 border-b border-border">
+        <div class="mt-auto flex items-center justify-between px-6 py-3 border-y border-border">
           <span id="mobile-drawer-title" class="sb-overline text-ink-muted font-bold!">{{ t('header.routeSection') }}</span>
         </div>
 
@@ -192,10 +202,11 @@ watch(isMdUp, (newVal) => {
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
+              :aria-current="isActiveRoute(r) ? 'page' : undefined"
               class="rounded-lg p-3 sb-body cursor-pointer sb-transition sb-focus"
               :class="{
                 'hover:bg-surface-2': !isActiveRoute(r),
-                'bg-primary font-bold!': isActiveRoute(r),
+                'bg-primary text-on-primary sb-body-strong': isActiveRoute(r),
               }"
               :to="r.path"
               @click="onClose"
@@ -212,12 +223,13 @@ watch(isMdUp, (newVal) => {
           </template>
         </nav>
         <div class="flex items-center justify-between px-6 py-3 border-y border-border">
-          <span class="sb-overline text-ink-muted font-bold">{{ t('header.settingsSection') }}</span>
+          <span class="sb-overline text-ink-muted font-bold!">{{ t('header.settingsSection') }}</span>
         </div>
         <div class="p-6">
           <BaseIconMenu
             icon="solar:globus-bold-duotone"
             :items="props.langs"
+            :label="t('a11y.changeLanguage')"
             :selected-item-id="props.selectedLangId"
             @select="itemId => onSelectLang(itemId)"
           />

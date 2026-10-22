@@ -8,6 +8,7 @@ interface BaseDialogProps {
 
 // Dependencies
 const { lock, unlock } = useLockScroll()
+const { t } = useI18n()
 
 // Input / Output
 const props = withDefaults(defineProps<BaseDialogProps>(), {
@@ -22,6 +23,7 @@ const emit = defineEmits<{
 
 // Data
 const dialogRef = ref<HTMLElement | null>(null)
+const { activate, deactivate } = useFocusTrap(dialogRef)
 
 // Events
 const onClose = () => {
@@ -59,6 +61,7 @@ watch(
     if (value) {
       // Disable scroll when dialog opens
       lock()
+      activate()
 
       // Use requestAnimationFrame to avoid forced reflow
       nextTick(() => {
@@ -72,6 +75,7 @@ watch(
     else {
       // Re-enable scroll when dialog closes
       unlock()
+      deactivate()
     }
   },
   { immediate: true, flush: 'post' },
@@ -128,6 +132,7 @@ watch(
 
             <BaseCloseButton
               class="shrink-0"
+              :label="t('a11y.closeDialog')"
               @close="onClose"
             />
           </header>

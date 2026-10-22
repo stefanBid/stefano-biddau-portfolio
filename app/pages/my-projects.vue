@@ -8,10 +8,10 @@ const route = useRoute()
 // Data
 type TabType = 'personalProjects' | 'templateProject'
 
-const tabs: { id: TabType, icon: string, label: string }[] = [
+const tabs = computed<{ id: TabType, icon: string, label: string }[]>(() => [
   { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
   { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.sbTemplatesProject.tabLabel') },
-]
+])
 
 const currentTabId = computed<TabType>(() => route.path.includes('/sb-templates') ? 'templateProject' : 'personalProjects')
 
@@ -29,12 +29,17 @@ const onSelectTab = (tabId: string | number) => {
     />
     <BaseTabs
       class="mt-20"
+      panel-id="projects-panel"
       :selected-tab-id="currentTabId"
       :tabs="tabs"
       @select="onSelectTab"
     />
 
-    <section class="pt-10 pb-20">
+    <section
+      id="projects-panel"
+      class="pt-10 pb-20"
+      role="tabpanel"
+    >
       <NuxtPage :transition="pageTransition" />
     </section>
   </div>

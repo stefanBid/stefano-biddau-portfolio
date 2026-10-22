@@ -59,7 +59,7 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
       <h2 class="sb-h1 mb-0">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="sb-body text-ink-muted">
+      <p class="sb-body text-ink-muted max-w-prose">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
     </div>

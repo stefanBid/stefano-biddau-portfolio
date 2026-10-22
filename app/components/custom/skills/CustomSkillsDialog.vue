@@ -114,11 +114,12 @@ const _debouncedFilterUpdate = () => {
     @close="onCloseDialog"
   >
     <template #header>
-      <div class="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+      <div class="flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
         <BaseInput
           id="skill-key"
           v-model:input="skillsKey"
           class="w-full md:w-2/3 sb-transition"
+          :label="t('pages.skills.skillsDialog.filters.searchLabel')"
           :placeholder="t('pages.skills.skillsDialog.filters.searchPlaceholder')"
           prefix-icon="solar:card-search-bold-duotone"
           type="search"
@@ -128,6 +129,7 @@ const _debouncedFilterUpdate = () => {
           v-model:input="skillsTypes"
           class="w-full md:w-1/3 sb-transition"
           :items="typesItems"
+          :label="t('pages.skills.skillsDialog.filters.typeLabel')"
           :placeholder="t('pages.skills.skillsDialog.filters.typePlaceholder')"
           prefix-icon="solar:filter-bold-duotone"
           type="multiple"
@@ -162,28 +164,30 @@ const _debouncedFilterUpdate = () => {
     </div>
     <template #footer>
       <div class="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 w-full">
-        <div class="text-primary sb-small italic sb-transition">
+        <div aria-live="polite" class="text-ink-muted sb-small sb-transition">
           {{ t('pages.skills.skillsDialog.total', { tot: totalSkills }) }}
         </div>
         <div class="flex items-center gap-4">
           <BaseButton
+            :aria-label="t('a11y.previousPage')"
             class="p-2!"
             :is-disabled="currentPage === 1 || totalPages === 0"
             variant="secondary"
             @click="onGoToPrevPage"
           >
-            <Icon name="solar:map-arrow-left-bold-duotone" />
+            <Icon aria-hidden="true" name="solar:map-arrow-left-bold-duotone" />
           </BaseButton>
-          <span class=" text-primary sb-small italic sb-transition">
+          <span class="text-ink-muted sb-small tabular-nums sb-transition">
             {{ currentPage }} / {{ totalPages === 0 ? 1 : totalPages }}
           </span>
           <BaseButton
+            :aria-label="t('a11y.nextPage')"
             class="p-2!"
             :is-disabled="currentPage === totalPages || totalPages === 0"
             variant="secondary"
             @click="onGoToNextPage"
           >
-            <Icon name="solar:map-arrow-right-bold-duotone" />
+            <Icon aria-hidden="true" name="solar:map-arrow-right-bold-duotone" />
           </BaseButton>
         </div>
       </div>

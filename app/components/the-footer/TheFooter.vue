@@ -45,7 +45,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </span>
         </NuxtLink>
 
-        <p class="sb-overline normal-case! text-ink-muted max-w-md">
+        <p class="sb-label text-ink-muted max-w-md">
           {{ t('footer.tagline') }}
         </p>
       </section>
@@ -61,14 +61,14 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit sb-overline normal-case! text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
+                class="w-fit sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
                 :to="link.path"
               >
                 {{ link.name }}
               </NuxtLink>
               <span
                 v-else
-                class="sb-overline normal-case! text-ink/40 cursor-not-allowed"
+                class="sb-label text-ink/40 cursor-not-allowed"
               >
                 {{ link.name }}
               </span>
@@ -92,7 +92,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <div class="space-y-2">
           <span
             v-if="props.email"
-            class="sb-overline normal-case! text-ink/85 flex items-center"
+            class="sb-label text-ink/85 flex items-center"
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:letter-opened-bold-duotone" />
             <a
@@ -105,7 +105,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
           <span
             v-if="props.phone"
-            class="sb-overline normal-case! text-ink/85 flex items-center"
+            class="sb-label text-ink/85 flex items-center"
           >
             <Icon class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:smartphone-2-bold-duotone" />
             <a
@@ -161,7 +161,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     <!-- Bottom bar -->
     <div class="border-t border-border bg-bg/98">
       <div
-        class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
+        class="max-w-350 mx-auto py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
       >
         <!-- Left side: credit + made with -->
         <div class="flex flex-col flex-1 items-center lg:items-start gap-1 text-ink-muted text-center lg:text-left [&>p]:mb-0">

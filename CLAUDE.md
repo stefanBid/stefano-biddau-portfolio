@@ -132,16 +132,16 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 Four files in `app/assets/css/`, prefix `sb`, structure maintained by the sb-design plugin (`/sb-design:check`, `/sb-design:align`): `main.css` (entry, page base styles), `theme.css`, `typography.css`, `animation.css`. Values and full tables: README §4.
 
 ### Colours (`theme.css`)
-Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Avoid `text-primary` on `bg-surface-2` (below AA).
+Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `border-strong` (inputs, ≥ 3:1), `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Avoid `text-primary` on `bg-surface-2` (below AA). `--sb-gold-100…900` are raw-only illustration colours for the gold skill cards.
 
 ### Shapes and shadows (`theme.css`)
 `rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
 
 ### Typography (`sb-*`, `typography.css`)
-One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-overline`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
+One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-label`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
 ### Motion and focus (`animation.css`)
-Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin|bounce`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance`.
+Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance`.
 
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
@@ -236,6 +236,12 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 const { lock, unlock, isLocked } = useLockScroll()
 ```
 SSR-safe, multiple concurrent owners safe.
+
+### `useFocusTrap(container)`
+```ts
+const { activate, deactivate } = useFocusTrap(panelRef)
+```
+Traps Tab inside `panelRef` while active, restores focus on deactivate. Use for every modal surface (dialog, drawer). Client-side only.
 
 ### `useSanitize()`
 ```ts

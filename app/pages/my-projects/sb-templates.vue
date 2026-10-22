@@ -40,7 +40,7 @@ const { templates } = useTemplates()
       <h2 class="sb-h1 mb-0">
         {{ t('pages.projects.sbTemplatesProject.title') }}
       </h2>
-      <p class="sb-body text-ink-muted">
+      <p class="sb-body text-ink-muted max-w-prose">
         {{ t('pages.projects.sbTemplatesProject.description') }}
       </p>
     </div>
@@ -63,16 +63,16 @@ const { templates } = useTemplates()
       />
     </div>
     <div
-      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-lg border bg-info-soft border-info"
+      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-lg border border-border bg-surface"
     >
-      <div class="shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg bg-surface text-info">
-        <Icon class="size-5 md:size-6" name="solar:code-circle-bold-duotone" />
+      <div class="shrink-0 flex items-center justify-center size-10 rounded-lg bg-surface-2 text-primary">
+        <Icon aria-hidden="true" class="size-6" name="solar:code-circle-bold-duotone" />
       </div>
       <div class="flex-1 min-w-0">
         <h3 class="sb-h4 text-ink">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
         </h3>
-        <p class="sb-body text-ink-muted">
+        <p class="sb-body text-ink-muted max-w-prose">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
         </p>
       </div>

@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </p>
           <p
             v-if="props.paragraph"
-            class="sb-body text-justify mt-5 md:mt-6 sb-transition"
+            class="sb-body mt-5 md:mt-6 sb-transition"
           >
             {{ props.paragraph }}
           </p>

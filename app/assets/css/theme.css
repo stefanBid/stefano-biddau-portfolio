@@ -19,6 +19,7 @@
 
   /* Borders */
   --sb-border: #2a2a44;        /* dividers, outlines (decorative) */
+  --sb-border-strong: #6e7299; /* input and control borders: 3.26:1 on surface-2 */
 
   /* Text */
   --sb-ink: #f1f1f1;
@@ -41,6 +42,17 @@
   --sb-info-soft: #1e3a8a;
 
   --sb-focus-ring: var(--sb-ink);
+
+  /* Gold tier: top-level skill cards only (illustrative, no Tailwind mapping) */
+  --sb-gold-100: #f3e29b;
+  --sb-gold-200: #f0d58c;
+  --sb-gold-300: #d4af37;
+  --sb-gold-400: #b3861a;
+  --sb-gold-500: #8b6b1f;
+  --sb-gold-600: #7a5a1f;
+  --sb-gold-700: #5a4216;
+  --sb-gold-800: #4a3210;
+  --sb-gold-900: #3a280e;
 
   /* Selection and scrollbar: darkened primary */
   --sb-selection: color-mix(in oklab, var(--sb-primary) 50%, #000 70%);
@@ -73,6 +85,7 @@
   --color-surface: var(--sb-surface);
   --color-surface-2: var(--sb-surface-2);
   --color-border: var(--sb-border);
+  --color-border-strong: var(--sb-border-strong);
   --color-ink: var(--sb-ink);
   --color-ink-muted: var(--sb-ink-muted);
   --color-primary: var(--sb-primary);

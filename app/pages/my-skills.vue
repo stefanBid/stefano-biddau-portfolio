@@ -77,7 +77,7 @@ const onCloseSkillsDialog = () => {
       id="my-skills"
       :text="t('pages.skills.hero')"
     />
-    <section aria-label="Skills and Technologies" class=" w-full py-20 flex flex-col gap-20">
+    <section :aria-label="t('a11y.skillsSection')" class=" w-full py-20 flex flex-col gap-20">
       <!-- CARD FRONTEND SKILLS -->
       <BaseCard
         class="p-0!"
@@ -92,7 +92,7 @@ const onCloseSkillsDialog = () => {
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.frontendCard.title') }}
               </h2>
-              <p class="sb-body text-justify mt-3 md:mt-4 mb-0">
+              <p class="sb-body mt-3 md:mt-4 mb-0">
                 {{ t('pages.skills.frontendCard.paragraph') }}
               </p>
               <div class="mt-6 md:mt-8">
@@ -129,7 +129,7 @@ const onCloseSkillsDialog = () => {
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.backendCard.title') }}
               </h2>
-              <p class="sb-body text-justify mt-3 md:mt-4 mb-0">
+              <p class="sb-body mt-3 md:mt-4 mb-0">
                 {{ t('pages.skills.backendCard.paragraph') }}
               </p>
               <div class="mt-6 md:mt-8">
@@ -166,7 +166,7 @@ const onCloseSkillsDialog = () => {
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.designCard.title') }}
               </h2>
-              <p class="sb-body text-justify mt-3 md:mt-4 mb-0">
+              <p class="sb-body mt-3 md:mt-4 mb-0">
                 {{ t('pages.skills.designCard.paragraph') }}
               </p>
               <div class="mt-6 md:mt-8">

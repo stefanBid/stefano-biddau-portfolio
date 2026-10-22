@@ -31,12 +31,27 @@ const emits = defineEmits<{
 }>()
 
 // Dependencies
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 // State
 const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
 const DEFAULT_IMAGE_WIDTH = 800 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
 const DEFAULT_IMAGE_HEIGHT = 1000
+
+// Locale files store dates as MM/DD/YYYY
+const parsedDate = computed(() => {
+  const [month, day, year] = (props.date ?? '').split('/').map(Number)
+  if (!month || !day || !year) {
+    return null
+  }
+  return new Date(Date.UTC(year, month - 1, day))
+})
+
+const isoDate = computed(() => parsedDate.value?.toISOString().slice(0, 10))
+
+const displayDate = computed(() => parsedDate.value
+  ? new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(parsedDate.value)
+  : props.date)
 
 const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
 const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
@@ -78,7 +93,7 @@ const onSelect = () => {
       ></div>
       <!-- Clickable Point -->
       <button
-        :aria-label="`View milestone ${props.id}`"
+        :aria-label="t('a11y.showMilestone', { title: props.title })"
         :aria-pressed="props.isActive"
         class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover sb-focus cursor-pointer sb-transition pointer-events-auto z-10"
         @click="onSelect"
@@ -101,9 +116,9 @@ const onSelect = () => {
         <time
           v-if="props.date"
           class="sb-overline text-primary whitespace-nowrap sb-transition"
-          :datetime="props.date"
+          :datetime="isoDate"
         >
-          {{ props.date }}
+          {{ displayDate }}
         </time>
       </div>
       <p

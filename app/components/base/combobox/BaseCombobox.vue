@@ -106,10 +106,29 @@ onClickOutside(
   { ignore: [reference] },
 )
 
+const _options = () => Array.from(menu.value?.querySelectorAll<HTMLElement>('[role="option"]') ?? [])
+
+// Capture phase + stopPropagation: Escape closes only the list, not the dialog around it
 const onKeydown = (e: KeyboardEvent) => {
+  if (!open.value) {
+    return
+  }
   if (e.key === 'Escape') {
     e.preventDefault()
+    e.stopPropagation()
     toggleFloating(false)
+    ;(reference.value as HTMLElement | null)?.focus()
+    return
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    const options = _options()
+    if (!options.length) {
+      return
+    }
+    e.preventDefault()
+    const index = options.indexOf(document.activeElement as HTMLElement)
+    const step = e.key === 'ArrowDown' ? 1 : -1
+    options[(index + step + options.length) % options.length]?.focus()
   }
 }
 
@@ -130,7 +149,7 @@ onMounted(() => {
   if (!import.meta.client) {
     return
   }
-  window.addEventListener('keydown', onKeydown)
+  window.addEventListener('keydown', onKeydown, true)
   window.addEventListener('resize', onResize)
   // Initial width sync (in case the menu opens immediately)
   updateMenuWidth()
@@ -140,7 +159,7 @@ onBeforeUnmount(() => {
   if (!import.meta.client) {
     return
   }
-  window.removeEventListener('keydown', onKeydown)
+  window.removeEventListener('keydown', onKeydown, true)
   window.removeEventListener('resize', onResize)
   if (resizeRafId.value !== null) {
     cancelAnimationFrame(resizeRafId.value)
@@ -157,9 +176,7 @@ watch(open, (newVal) => {
     nextTick(() => {
       updateMenuWidth()
 
-      // Focus the first menu item
-      const first = menu.value?.querySelector<HTMLElement>('[role="menuitem"]')
-      first?.focus()
+      _options()[0]?.focus()
     })
   }
 })
@@ -198,21 +215,27 @@ watch(open, (newVal) => {
       <input
         :id="props.id"
         ref="reference"
+        :aria-controls="`${props.id}-listbox`"
         :aria-describedby="describedBy"
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-haspopup="listbox"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-lg bg-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary truncate"
+        class="w-full rounded-lg bg-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring truncate"
         :class="{
           'border-error': props.error,
-          'border-border': !props.error,
+          'border-border-strong': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }"
         :name="props.name || `${props.id}-name`"
         :placeholder="props.placeholder"
         readonly
+        role="combobox"
         type="text"
         :value="valuesWithCommas"
         @click="toggleFloating(!open)"
+        @keydown.down.prevent="toggleFloating(true)"
         @keydown.enter.prevent="toggleFloating(!open)"
+        @keydown.space.prevent="toggleFloating(!open)"
       />
     </div>
 
@@ -220,7 +243,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-ink-muted mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -229,7 +252,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-error mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}
@@ -247,25 +270,29 @@ watch(open, (newVal) => {
           ]"
         >
           <ul
+            :id="`${props.id}-listbox`"
             ref="menu"
+            :aria-label="props.label"
+            :aria-multiselectable="props.type === 'multiple' ? 'true' : undefined"
             class="outline-none max-h-80 overflow-y-auto p-1 mb-0"
-            role="menu"
+            role="listbox"
           >
-            <li v-for="item in props.items" :key="item.label">
+            <li v-for="item in props.items" :key="item.label" role="none">
               <button
-                :aria-current="model.includes(item.value) ? 'true' : 'false'"
-                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-ink cursor-pointer sb-overline normal-case! sb-focus sb-transition"
+                :aria-selected="model.includes(item.value) ? 'true' : 'false'"
+                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-2 text-ink cursor-pointer sb-label sb-focus sb-transition"
                 :class="{
                   'bg-border': model.includes(item.value),
                   'hover:bg-surface-2': !model.includes(item.value),
                 }"
-                role="menuitem"
+                role="option"
                 type="button"
                 @click="onSelect(item.value)"
               >
-                <span class="sb-overline truncate flex-1">{{ item.label }}</span>
+                <span class="truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
+                  aria-hidden="true"
                   class="size-5 text-primary sb-transition"
                   name="solar:check-circle-bold-duotone"
                 />

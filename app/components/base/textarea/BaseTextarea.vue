@@ -50,8 +50,8 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-md bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary resize-y min-h-38"
-      :class="props.error ? 'border-error' : 'border-border'"
+      class="w-full rounded-lg bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring resize-y min-h-38"
+      :class="props.error ? 'border-error' : 'border-border-strong'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
     ></textarea>
@@ -66,7 +66,7 @@ const lengths = computed(() => ({
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-ink-muted mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -74,7 +74,7 @@ const lengths = computed(() => ({
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
+      class="sb-small text-error mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

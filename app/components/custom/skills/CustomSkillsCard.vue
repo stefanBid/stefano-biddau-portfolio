@@ -6,6 +6,9 @@ interface CustomSkillCardProps {
   gold?: boolean
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<CustomSkillCardProps>(), {
   gold: false,
@@ -28,6 +31,7 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
         :class="props.gold ? 'gold-icon' : ''"
       >
         <Icon
+          aria-hidden="true"
           class="size-7 sm:size-8 md:size-9 text-ink sb-transition"
           :name="props.icon"
         />
@@ -42,7 +46,11 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
         </span>
 
         <!-- Level (0–5) -->
-        <div class="flex gap-1 mt-1">
+        <div
+          :aria-label="t('a11y.skillLevel', { level: props.gold ? 5 : props.level })"
+          class="flex gap-1 mt-1"
+          role="img"
+        >
           <div
             v-for="n in 5"
             :key="n"
@@ -61,14 +69,12 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
 
 <style scoped>
 .gold-card {
-  /* only the “gold bar” effect, the rest (shadow, radius, ring) is handled by Tailwind */
   background:
-    radial-gradient(circle at 10% 0%, #7a5a1f 0, #3a280e 35%),
-    linear-gradient(145deg, #d4af37 0%, #8b6b1f 35%, #f0d58c 60%, #5a4216 100%);
+    radial-gradient(circle at 10% 0%, var(--sb-gold-600) 0, var(--sb-gold-900) 35%),
+    linear-gradient(145deg, var(--sb-gold-300) 0%, var(--sb-gold-500) 35%, var(--sb-gold-200) 60%, var(--sb-gold-700) 100%);
   background-blend-mode: multiply;
 }
 
-/* “gold bar” highlight */
 .gold-card::before {
   content: "";
   position: absolute;
@@ -85,28 +91,25 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
   pointer-events: none;
 }
 
-/* keep content above the overlay */
 .gold-card > * {
   position: relative;
   z-index: 1;
 }
 
-/* icon container in gold mode, on top of the base Tailwind elevation */
 .gold-icon {
-  background: radial-gradient(circle at 30% 0%, #f3e29b 0, #b3861a 45%, #4a3210 100%);
+  background: radial-gradient(circle at 30% 0%, var(--sb-gold-100) 0, var(--sb-gold-400) 45%, var(--sb-gold-800) 100%);
   box-shadow:
     0 4px 10px rgba(0, 0, 0, 0.65),
     inset 0 1px 2px rgba(255, 255, 255, 0.35);
   border: 1px solid rgba(255, 255, 255, 0.16);
 }
 
-/* “mini gold bar” level dots (used only when gold is true) */
 .gold-level-on {
   background: linear-gradient(
     135deg,
-    #f3e29b 0%,
-    #d4af37 45%,
-    #8b6b1f 100%
+    var(--sb-gold-100) 0%,
+    var(--sb-gold-300) 45%,
+    var(--sb-gold-500) 100%
   );
   box-shadow:
     0 1px 2px rgba(0, 0, 0, 0.7),

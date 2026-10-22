@@ -8,6 +8,9 @@ interface TheNotificationBannerProps {
   autoClose?: boolean
   duration?: number
 }
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<TheNotificationBannerProps>(), {
   type: 'info',
@@ -40,7 +43,6 @@ onMounted(() => {
 
 <template>
   <div
-    :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
       'w-full sm:w-lg p-4 md:p-6 rounded-lg border pointer-events-auto',
       'shadow-sm',
@@ -51,7 +53,7 @@ onMounted(() => {
         'bg-info-soft border-info': props.type === 'info',
       },
     ]"
-    role="alert"
+    :role="props.type === 'error' ? 'alert' : 'status'"
   >
     <div class="flex items-start gap-3 md:gap-4">
       <!-- Icon -->
@@ -67,7 +69,7 @@ onMounted(() => {
           },
         ]"
       >
-        <Icon class="size-5 md:size-6" :name="props.icon" />
+        <Icon aria-hidden="true" class="size-5 md:size-6" :name="props.icon" />
       </div>
 
       <!-- Text Content -->
@@ -79,7 +81,7 @@ onMounted(() => {
           {{ props.title }}
         </h3>
         <p
-          class="sb-label uppercase normal-case text-ink"
+          class="sb-label text-ink"
         >
           {{ props.message }}
         </p>
@@ -89,6 +91,7 @@ onMounted(() => {
       <BaseCloseButton
         v-if="props.dismissible"
         class="shrink-0 -mt-1 -mr-1"
+        :label="t('a11y.dismissNotification')"
         @close="onClose()"
       />
     </div>

@@ -9,7 +9,7 @@ interface CustomContactFormProps {
 const { sendReplyToUser, sendContactEmailAdmin } = useEmailJs()
 const { t } = useI18n()
 const localePath = useLocalePath()
-const { success, error } = useNotification()
+const { success } = useNotification()
 
 // Input / Output
 const props = defineProps<CustomContactFormProps>()
@@ -25,20 +25,28 @@ const emailController = ref<string>('')
 const messageController = ref<string>('')
 const consentGivenController = ref<boolean>(false)
 
-// Form validation Schema using Zod
-
 const MESSAGE_MIN_LENGTH = 10
 const MESSAGE_MAX_LENGTH = 800
+const FIELD_ORDER = ['name', 'email', 'message', 'consentGiven'] as const
+type ContactField = typeof FIELD_ORDER[number]
+const FIELD_IDS: Record<ContactField, string> = {
+  name: 'name',
+  email: 'email',
+  message: 'message',
+  consentGiven: 'consent',
+}
+
+// Messages are i18n keys, resolved at render time so they follow a locale switch
 const contactValidationSchema = z.object({
-  name: z.string().min(1, t('pages.home.contactForm.fields.name.errorRequired')).max(100, t('pages.home.contactForm.fields.name.errorMaxlength')),
-  email: z.email(t('pages.home.contactForm.fields.email.errorInvalid')),
-  message: z.string().min(MESSAGE_MIN_LENGTH, t('pages.home.contactForm.fields.message.errorMinlength')).max(MESSAGE_MAX_LENGTH, t('pages.home.contactForm.fields.message.errorMaxlength')),
+  name: z.string().trim().min(1, 'pages.home.contactForm.fields.name.errorRequired').max(100, 'pages.home.contactForm.fields.name.errorMaxlength'),
+  email: z.email('pages.home.contactForm.fields.email.errorInvalid'),
+  message: z.string().trim().min(1, 'pages.home.contactForm.fields.message.errorRequired').min(MESSAGE_MIN_LENGTH, 'pages.home.contactForm.fields.message.errorMinlength').max(MESSAGE_MAX_LENGTH, 'pages.home.contactForm.fields.message.errorMaxlength'),
   consentGiven: z.boolean().refine(val => val === true, {
-    message: t('pages.home.contactForm.fields.consentGiven.errorRequired'),
+    message: 'pages.home.contactForm.fields.consentGiven.errorRequired',
   }),
 })
 
-const errors = ref<Record<string, string | null>>({
+const errors = ref<Record<ContactField, string | null>>({
   name: null,
   email: null,
   message: null,
@@ -46,6 +54,7 @@ const errors = ref<Record<string, string | null>>({
 })
 
 const emailIsSending = ref<boolean>(false)
+const sendFailed = ref<boolean>(false)
 
 const formIsChanged = computed(() => {
   return (
@@ -56,6 +65,11 @@ const formIsChanged = computed(() => {
   )
 })
 
+const errorMessage = (field: ContactField) => {
+  const key = errors.value[field]
+  return key ? t(key) : null
+}
+
 // events
 const closeForm = () => {
   if (props.openForm) {
@@ -64,7 +78,7 @@ const closeForm = () => {
 }
 
 const onSendMessage = async () => {
-  // Validate Form Data
+  sendFailed.value = false
   const validationResult = contactValidationSchema.safeParse({
     name: nameController.value,
     email: emailController.value,
@@ -73,56 +87,56 @@ const onSendMessage = async () => {
   })
 
   if (!validationResult.success) {
-    // Reset errors
     onResetErrors()
-    // Map errors
     validationResult.error.issues.forEach((issue) => {
-      if (issue.path.length > 0) {
-        const field = issue.path[0] as keyof typeof errors.value
+      const field = issue.path[0] as ContactField | undefined
+      if (field && !errors.value[field]) {
         errors.value[field] = issue.message
       }
     })
+    const firstInvalid = FIELD_ORDER.find(field => errors.value[field])
+    if (firstInvalid) {
+      await nextTick()
+      document.getElementById(FIELD_IDS[firstInvalid])?.focus()
+    }
     return
   }
-  // Prepare Message Data
+
   const completeMessage = `${messageController.value} \n User's Consent Given: ${consentGivenController.value ? 'Yes' : 'No'}`
   emailIsSending.value = true
 
-  const resultFirst = await sendContactEmailAdmin({
+  const adminResult = await sendContactEmailAdmin({
     from_name: nameController.value,
     from_email: emailController.value,
     message: completeMessage,
     agree_time: new Date().toLocaleTimeString(),
     year: new Date().getFullYear().toString(),
   })
-  const resultSecond = await sendReplyToUser({
+
+  if (!adminResult.success) {
+    emailIsSending.value = false
+    sendFailed.value = true
+    return
+  }
+
+  // The copy to the sender is a courtesy: the message already reached the inbox, so its failure is not a send failure
+  await sendReplyToUser({
     user_name: nameController.value,
     to_email: emailController.value,
     message: messageController.value,
     year: new Date().getFullYear().toString(),
   })
 
-  if (resultFirst.success && resultSecond.success) {
-    success({
-      title: t('pages.home.contactForm.notifications.success.title'),
-      message: t('pages.home.contactForm.notifications.success.message'),
-      icon: 'solar:mailbox-bold-duotone',
-      autoClose: true,
-      dismissible: true,
-      duration: 7000,
-    })
-  }
-  else {
-    error({
-      title: t('pages.home.contactForm.notifications.error.title'),
-      message: t('pages.home.contactForm.notifications.error.message'),
-      icon: 'solar:folder-error-bold-duotone',
-      autoClose: true,
-      dismissible: true,
-      duration: 7000,
-    })
-  }
   emailIsSending.value = false
+  success({
+    title: t('pages.home.contactForm.notifications.success.title'),
+    message: t('pages.home.contactForm.notifications.success.message'),
+    icon: 'solar:mailbox-bold-duotone',
+    autoClose: true,
+    dismissible: true,
+    duration: 12000,
+  })
+  onResetForm()
   closeForm()
 }
 
@@ -131,6 +145,8 @@ const onResetForm = () => {
   emailController.value = ''
   messageController.value = ''
   consentGivenController.value = false
+  sendFailed.value = false
+  onResetErrors()
 }
 
 const onResetErrors = () => {
@@ -142,12 +158,25 @@ const onResetErrors = () => {
   }
 }
 
+watch(nameController, () => {
+  errors.value.name = null
+})
+watch(emailController, () => {
+  errors.value.email = null
+})
+watch(messageController, () => {
+  errors.value.message = null
+})
+watch(consentGivenController, () => {
+  errors.value.consentGiven = null
+})
+
 watch(
   () => props.openForm,
   (newVal) => {
     if (!newVal) {
-      onResetForm()
       onResetErrors()
+      sendFailed.value = false
     }
   },
 )
@@ -168,7 +197,7 @@ watch(
             id="name"
             v-model:input="nameController"
             autocomplete="name"
-            :error="errors.name"
+            :error="errorMessage('name')"
             :label="t('pages.home.contactForm.fields.name.label')"
             :placeholder="t('pages.home.contactForm.fields.name.placeholder')"
             type="text"
@@ -177,17 +206,17 @@ watch(
             id="email"
             v-model:input="emailController"
             autocomplete="email"
-            :error="errors.email"
+            :error="errorMessage('email')"
             :label="t('pages.home.contactForm.fields.email.label')"
             :placeholder="t('pages.home.contactForm.fields.email.placeholder')"
             type="email"
           />
         </div>
-        <div class="w-full md:w-[55%] border-l-none md:border-l border-border pl-0 md:pl-6">
+        <div class="w-full md:w-[55%] md:border-l border-border pl-0 md:pl-6">
           <BaseTextarea
             id="message"
             v-model:input="messageController"
-            :error="errors.message"
+            :error="errorMessage('message')"
             :label="t('pages.home.contactForm.fields.message.label')"
             :max-length="MESSAGE_MAX_LENGTH"
             :placeholder="t('pages.home.contactForm.fields.message.placeholder')"
@@ -197,7 +226,7 @@ watch(
       <BaseCheckbox
         id="consent"
         v-model:input="consentGivenController"
-        :error="errors.consentGiven"
+        :error="errorMessage('consentGiven')"
       >
         {{ t('pages.home.contactForm.fields.consentGiven.label') }}
         {{ t('pages.home.contactForm.fields.consentGiven.extra') }}
@@ -208,8 +237,7 @@ watch(
           :to="localePath('privacy-policy')"
         >
           {{ t('nav.privacy-policy') }}
-        </NuxtLink>
-        ,
+        </NuxtLink>,
         <NuxtLink
           class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           rel="noopener noreferrer"
@@ -219,7 +247,22 @@ watch(
           {{ t('nav.terms-and-conditions') }}
         </NuxtLink>
       </BaseCheckbox>
-      <div class="w-full flex justify-end items-center mt-4 gap-4">
+      <div
+        v-if="sendFailed"
+        class="flex items-start gap-3 rounded-md bg-error-soft text-error px-4 py-3"
+        role="alert"
+      >
+        <Icon class="size-6 shrink-0" name="solar:danger-triangle-bold-duotone" />
+        <div>
+          <p class="sb-body-strong mb-1">
+            {{ t('pages.home.contactForm.notifications.error.title') }}
+          </p>
+          <p class="sb-label normal-case">
+            {{ t('pages.home.contactForm.notifications.error.message') }}
+          </p>
+        </div>
+      </div>
+      <div class="w-full flex flex-wrap justify-end items-center mt-4 gap-4">
         <BaseButton
           :is-disabled="!formIsChanged || emailIsSending"
           type="reset"

@@ -197,6 +197,7 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 | `--sb-surface` | `bg-surface` | `#1a1a2e` | Card / elevated surface |
 | `--sb-surface-2` | `bg-surface-2` | `#232342` | Nested surfaces, inputs |
 | `--sb-border` | `border-border` | `#2a2a44` | Default (decorative) borders |
+| `--sb-border-strong` | `border-border-strong` | `#6e7299` | Input and control borders (3.26:1 on `surface-2`) |
 | `--sb-ink` | `text-ink` | `#f1f1f1` | Primary text |
 | `--sb-ink-muted` | `text-ink-muted` | `#9ca3af` | Secondary / placeholder text |
 | `--sb-primary` | `bg-primary` / `text-primary` | `#e95905` | CTA, links, highlights |
@@ -209,7 +210,7 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 
 Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-Avoid `text-primary` on `bg-surface-2` (4.24:1, below WCAG AA).
+Avoid `text-primary` on `bg-surface-2` (4.24:1, below WCAG AA). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities).
 
 ### Shapes and shadows
 
@@ -229,7 +230,7 @@ One utility per role, defined in `typography.css`; each carries family, size, li
 
 | Class | Font | Size (mobile → desktop) | Usage |
 |---|---|---|---|
-| `sb-hero` | Bebas Neue | 88 → 120px (fluid) | `ThePageHero` full-viewport title only |
+| `sb-hero` | Bebas Neue | 88 → 120px (fluid) | `ThePageHero` title only |
 | `sb-display` | Bebas Neue | 66 → 75px | Big page titles (legal pages, error, home) |
 | `sb-h1` | Bebas Neue | 39 → 44px | Page-level heading (`h1`) |
 | `sb-h2` | Bebas Neue | 31 → 35px | Section heading (`h2`) |
@@ -263,7 +264,7 @@ Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the
 
 Always add `sb-transition` to interactive elements. It does not animate width/height — avoid animating layout properties.
 
-Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`, `animate-bounce`. Under `prefers-reduced-motion`, `--sb-motion-distance` drops to 0, removing all movement while keeping opacity and colour changes.
+Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`. Under `prefers-reduced-motion`, `--sb-motion-distance` drops to 0, removing all movement while keeping opacity and colour changes.
 
 ### Animations — Vue `<Transition>`
 
@@ -383,10 +384,10 @@ Model: `defineModel<string>('input')`
 | `id` | `string` | — | Required |
 | `name` | `string` | `undefined` | |
 | `label` | `string` | `undefined` | Shown if no `default` slot |
-| `error` | `string \| null` | `null` | |
+| `error` | `string \| null` | `null` | Rendered below as `role="alert"`, linked via `aria-describedby` |
 
 Model: `defineModel<boolean>('input')`
-Slot: `default` (custom label content)
+Slot: `default` (custom label content, rendered inside a `<label for>` so the text toggles the box)
 
 ### `BaseCombobox`
 
@@ -405,6 +406,7 @@ Generic component (`generic="T"`).
 | `prefixIcon` | `string` | `undefined` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
+Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode); Enter/Space/↓ open, ↑/↓ move between options, Escape closes only the list and returns focus to the input.
 
 ### `BaseChip`
 
@@ -429,7 +431,7 @@ Emits: `chip-click` (only when `clickable: true`)
 
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header`, `footer`
-Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+Behaviour: closes on `Escape`, locks scroll, traps Tab inside and restores focus on close (`useFocusTrap`), uses `<Teleport to="body">`.
 
 ### `BaseIconButton`
 
@@ -446,14 +448,20 @@ Emits: `(e: 'click'): void`
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `icon` | `string` | — | Required. Trigger icon |
+| `label` | `string` | — | Required. Accessible name of the trigger and the menu |
 | `items` | `MenuItem[]` | — | Required |
-| `selectedItemId` | `string \| null` | `null` | Highlighted item |
+| `selectedItemId` | `string \| null` | `null` | Checked item (`menuitemradio`) |
 
 Emits: `(e: 'select', itemId: string): void`
+Slot: `trigger` (`{ isOpen, toggle }`). ↑/↓ move between items; Escape closes only the menu and returns focus to the trigger.
 
 ### `BaseCloseButton`
 
-No props. Emits: `(e: 'close', value: false): void`. Renders a `mdi:close` icon button.
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Required. Accessible name (`aria-label`) |
+
+Emits: `(e: 'close', value: false): void`. Renders a `solar:close-circle-bold-duotone` icon button (`type="button"`).
 
 ### `BaseTabs`
 
@@ -462,8 +470,10 @@ No props. Emits: `(e: 'close', value: false): void`. Renders a `mdi:close` icon 
 | `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required |
 | `variant` | `'primary' \| 'secondary'` | `'primary'` | `primary` = accent fill; `secondary` = surface fill |
 | `align` | `'left' \| 'center' \| 'right'` | `'left'` | |
+| `selectedTabId` | `string \| number` | first tab | |
+| `panelId` | `string` | `undefined` | `id` of the `role="tabpanel"` the tabs control |
 
-Model: `defineModel<string | number>('selectedTabId')`
+Emits: `(e: 'select', tabId: string | number): void`. Roving tabindex; ←/→/↑/↓/Home/End move and select.
 
 ### `BaseEmptyBox`
 
@@ -569,7 +579,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Full-screen entry animation. After the animation ends it emits `hero-animations-ended` — use this to reveal page content.
+Compact page opener for inner pages (About, Skills, Projects): `min-h-[40dvh]`, the page `h1` in `sb-hero`, entering with `animate-rise-in`. Props: `id`, `text`. The home page has its own first screen (name, role, CTAs, avatar, selected work) and does not use it.
 
 ---
 
@@ -743,6 +753,15 @@ Prevents page scroll. Multi-caller safe — each instance holds its own owner ID
 const { lock, unlock, isLocked } = useLockScroll()
 lock()    // adds scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
+```
+
+### `useFocusTrap(container)`
+
+Keeps Tab / Shift+Tab inside `container` while active and restores focus to the previously focused element on deactivate. Used by `BaseDialog` and the mobile drawer in `TheHeader`. Client-side only.
+
+```ts
+const panel = ref<HTMLElement | null>(null)
+const { activate, deactivate } = useFocusTrap(panel)
 ```
 
 ### `usePageTransition(isSubPage?)`

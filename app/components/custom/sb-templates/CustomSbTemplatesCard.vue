@@ -97,7 +97,6 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
       <!-- Card Footer: CTA -->
       <template #card-footer>
         <BaseButton
-          aria-label="Use template"
           class="w-full cta-button transition-transform"
           :is-disabled="!props.codebaseUrl"
           :to="props.codebaseUrl"

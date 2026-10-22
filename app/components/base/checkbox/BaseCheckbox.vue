@@ -17,47 +17,52 @@ const model = defineModel<boolean>('input')
 </script>
 
 <template>
-  <div class="inline-flex h-fit items-center gap-2">
-    <input
-      :id="props.id"
-      v-model="model"
-      :aria-invalid="props.error ? 'true' : 'false'"
-      autocomplete="on"
-      class="
-      relative
-      peer size-4.5 md:size-5 shrink-0 rounded-md border
-      sb-transition cursor-pointer
-      appearance-none
-      outline-none
-      bg-surface-2
-      checked:bg-primary-hover
-      checked:border-ink
-      focus-visible:ring-2
-      focus-visible:ring-primary
-      before:absolute
-      before:left-1/2 before:top-1/2
-      before:-translate-x-1/2 before:-translate-y-1/2
-      before:flex before:items-center before:justify-center
-      before:text-ink before:sb-body
-      before:content-['✓'] before:opacity-0
-      checked:before:opacity-100
-    "
-      :class="props.error ? 'border-error' : 'border-border'"
-      :name="props.name || `${props.id}-name`"
-      type="checkbox"
-    />
+  <div>
+    <div class="flex h-fit items-start gap-3">
+      <input
+        :id="props.id"
+        v-model="model"
+        :aria-describedby="props.error ? `${props.id}-error` : undefined"
+        :aria-invalid="props.error ? 'true' : 'false'"
+        class="
+        relative
+        peer size-5 mt-0.5 shrink-0 rounded-md border
+        sb-transition cursor-pointer
+        appearance-none
+        outline-none
+        bg-surface-2
+        checked:bg-primary
+        checked:border-primary
+        focus-visible:ring-2
+        focus-visible:ring-focus-ring
+        before:absolute
+        before:left-1/2 before:top-1/2
+        before:-translate-x-1/2 before:-translate-y-1/2
+        before:flex before:items-center before:justify-center
+        before:text-on-primary before:sb-body-strong
+        before:content-['✓'] before:opacity-0
+        checked:before:opacity-100
+      "
+        :class="props.error ? 'border-error' : 'border-border-strong'"
+        :name="props.name || `${props.id}-name`"
+        type="checkbox"
+      />
 
-    <span
-      v-if="!$slots.default"
-      class="sb-small italic text-ink sb-transition"
+      <label
+        class="sb-label normal-case text-ink cursor-pointer sb-transition"
+        :for="props.id"
+      >
+        <slot>{{ props.label }}</slot>
+      </label>
+    </div>
+
+    <p
+      v-if="props.error"
+      :id="`${props.id}-error`"
+      class="sb-small text-error mt-2 pl-8 sb-transition"
+      role="alert"
     >
-      {{ props.label }}
-    </span>
-    <span
-      v-else
-      class="sb-small italic text-ink sb-transition"
-    >
-      <slot></slot>
-    </span>
+      {{ props.error }}
+    </p>
   </div>
 </template>
