@@ -3,7 +3,7 @@ import type { RouterConfig } from '@nuxt/schema'
 export default <RouterConfig>{
   scrollBehavior(to, from, savedPosition) {
     const nuxtApp = useNuxtApp()
-    const { pageSkipTransition } = usePageTransition()
+    const { pageSkipTransition, menuSkipTransition } = usePageTransition()
 
     // Same top-level page — either only the locale prefix changed, or it's
     // an in-page tab switch (my-projects.vue's index.vue / sb-templates.vue)
@@ -11,6 +11,12 @@ export default <RouterConfig>{
     // the scroll position instead of jumping to top.
     if (pageSkipTransition.value) {
       return false
+    }
+
+    // Navigation from the mobile menu has no page transition, so there is no
+    // transition end to wait for: jump straight to the target.
+    if (menuSkipTransition.value) {
+      return savedPosition ? { ...savedPosition, behavior: 'instant' } : { top: 0, behavior: 'instant' }
     }
 
     // Wait for the page transition to finish before scrolling —

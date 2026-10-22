@@ -189,7 +189,7 @@ The design system lives entirely in `app/assets/css/`, in four files (`main.css`
 
 ### Colours
 
-Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to Tailwind roles with `@theme inline`. `@nuxtjs/color-mode` writes `data-theme="dark"` on `<html>`; the palette is the same for every theme.
+Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to Tailwind roles with `@theme inline`. `@nuxtjs/color-mode` writes `data-theme="dark"` on `<html>`; the palette is the same for every theme. The default layout forces `dark` (`data-color-mode-forced` + `colorMode.preference = 'dark'`), overriding any stale preference saved in `localStorage`.
 
 | Raw variable | Tailwind utility | Value | Usage |
 |---|---|---|---|
@@ -250,7 +250,7 @@ One utility per role, defined in `typography.css`; each carries family, size, li
 <p class="text-ink-muted">Some description.</p>
 ```
 
-Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
+Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`); use `text-center`/`text-left` to opt out. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
 **Font families:** `font-display` (Bebas Neue, 400) · `font-body` / `font-mono` (Space Mono, 400 and 700). Weights: `font-normal`, `font-bold` only.
 
@@ -584,7 +584,7 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ### `TheHeader` / `TheHeaderMenuToggle`
 
-Top navigation bar. Renders `RouteItem[]` links and a language switcher (`BaseIconMenu`). `TheHeaderMenuToggle` is the hamburger button on mobile.
+Top navigation bar. Desktop: the `RouteItem[]` links sit in four equal-width columns (sized to the longest label in any locale, so the bar keeps its width on a language switch) plus the language menu (`BaseIconMenu`, showing `EN`/`IT`). Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
 
 ### `TheFooter`
 
@@ -790,7 +790,7 @@ const { pageTransition } = usePageTransition() // app.vue — outer NuxtPage
 const { pageTransition } = usePageTransition(true) // my-projects.vue — inner NuxtPage (tabs)
 ```
 
-Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
+Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). A third flag, `menuSkipTransition`, skips the transition for any navigation started from the full-screen mobile menu: `TheHeader` sets `navigatingFromMenu` on the link click and the plugin turns it into `menuSkipTransition` for that navigation only; `router.options.ts` then scrolls to the top immediately instead of waiting for the transition end. Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
 
 ### `useSanitize()`
 

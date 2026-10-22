@@ -5,10 +5,15 @@ const i18nHead = useLocaleHead({
 })
 
 useHead(() => ({
-  htmlAttrs: i18nHead.value.htmlAttrs,
+  // Dark-only app: forcing the mode ignores any stale preference left in localStorage
+  htmlAttrs: { ...i18nHead.value.htmlAttrs, 'data-color-mode-forced': 'dark' },
   meta: i18nHead.value.meta,
   link: i18nHead.value.link,
 }))
+
+const colorMode = useColorMode()
+// Dark-only app: overwrite any stale preference (e.g. "light" saved by an older version) on every load
+colorMode.preference = 'dark'
 
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()

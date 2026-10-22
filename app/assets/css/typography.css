@@ -143,6 +143,13 @@
   h3 { @apply sb-h3; }
   h4, h5, h6 { @apply sb-h4; }
   p { @apply sb-body; }
+
+  /* Running text is justified site-wide; hyphenation (from <html lang>) keeps narrow monospace lines without rivers.
+     Centered or single-line copy opts out with text-center / text-left. */
+  p, li, blockquote {
+    text-align: justify;
+    hyphens: auto;
+  }
   label { @apply sb-label; }
   small { @apply sb-small; }
 

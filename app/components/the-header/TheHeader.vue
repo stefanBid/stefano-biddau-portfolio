@@ -21,6 +21,7 @@ const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
 const drawerRef = ref<HTMLElement | null>(null)
 const { activate, deactivate } = useFocusTrap(drawerRef)
+const { navigatingFromMenu } = usePageTransition()
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
 
@@ -51,7 +52,8 @@ const onToggle = (newOpenValue: boolean) => {
   if (open.value) {
     lock()
     activate()
-    nextTick(() => drawerRef.value?.querySelector<HTMLElement>('a[href]')?.focus())
+    // Focus the panel itself: moving it onto the first link would flash a focus ring on open
+    nextTick(() => drawerRef.value?.focus())
   }
   else {
     unlock()
@@ -66,6 +68,13 @@ const onClose = () => {
   open.value = false
   unlock()
   deactivate()
+}
+
+const onNavigateFromMenu = (r: RouteItem) => {
+  if (!isActiveRoute(r)) {
+    navigatingFromMenu.value = true
+  }
+  onClose()
 }
 
 const onSelectLang = (langCode: string) => {
@@ -132,12 +141,13 @@ watch(isMdUp, (newVal) => {
 
         <!-- Desktop nav -->
         <div class="flex items-center">
-          <nav class="hidden md:flex items-center gap-6 bg-surface-2 rounded-lg px-4 py-2">
+          <!-- Equal columns sized to the longest label in any locale: the bar keeps its width on a language switch -->
+          <nav class="hidden md:grid grid-cols-4 gap-1 bg-surface-2 rounded-lg px-2 py-2">
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
                 :aria-current="isActiveRoute(r) ? 'page' : undefined"
-                class="sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
+                class="w-24 inline-flex justify-center sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
                 :class="{
                   'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
                   'text-ink font-bold after:scale-x-100': isActiveRoute(r),
@@ -149,7 +159,7 @@ watch(isMdUp, (newVal) => {
               <span
                 v-else
                 aria-disabled="true"
-                class="sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
+                class="w-24 inline-flex justify-center py-1 sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
               >
                 {{ r.name }}
               </span>
@@ -173,68 +183,66 @@ watch(isMdUp, (newVal) => {
         />
       </div>
     </header>
-    <!-- OVERLAY + DRAWER -->
-    <div class="md:hidden">
-      <!-- overlay -->
-      <div
-        aria-hidden="true"
-        class="fixed inset-0 top-16 bg-bg/80 backdrop-blur-sm sb-transition"
-        :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
-        @click="onClose"
-      ></div>
-
-      <!-- drawer -->
-      <aside
-        id="mobile-drawer"
-        ref="drawerRef"
-        :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
-        :aria-modal="open ? 'true' : undefined"
-        class="fixed right-0 top-16 h-[calc(100dvh-4rem)] w-72 max-w-[85vw] flex flex-col bg-surface border-l border-border shadow-lg sb-transition-slow will-change-transform"
-        :class="open ? 'translate-x-0' : 'translate-x-full'"
-        :inert="!open"
-        :role="open ? 'dialog' : undefined"
-      >
-        <div class="mt-auto flex items-center justify-between px-6 py-3 border-y border-border">
-          <span id="mobile-drawer-title" class="sb-overline text-ink-muted font-bold!">{{ t('header.routeSection') }}</span>
-        </div>
-
-        <nav class="flex flex-col gap-2 p-6">
+    <!-- Mobile full-screen menu -->
+    <div
+      id="mobile-drawer"
+      ref="drawerRef"
+      :aria-label="t('header.routeSection')"
+      :aria-modal="open ? 'true' : undefined"
+      class="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain bg-bg outline-none sb-transition-slow"
+      :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 motion-reduce:translate-y-0 pointer-events-none'"
+      :inert="!open"
+      :role="open ? 'dialog' : undefined"
+      tabindex="-1"
+    >
+      <div class="min-h-full flex flex-col justify-end gap-10 px-6 pt-10 pb-10">
+        <nav class="flex flex-col">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
               :aria-current="isActiveRoute(r) ? 'page' : undefined"
-              class="rounded-lg p-3 sb-body cursor-pointer sb-transition sb-focus"
-              :class="{
-                'hover:bg-surface-2': !isActiveRoute(r),
-                'bg-primary text-on-primary sb-body-strong': isActiveRoute(r),
-              }"
+              class="relative flex items-center min-h-14 sb-h2 uppercase cursor-pointer rounded-sm sb-transition sb-focus"
+              :class="isActiveRoute(r) ? 'text-ink' : 'text-ink-muted hover:text-ink'"
               :to="r.path"
-              @click="onClose"
+              @click="onNavigateFromMenu(r)"
             >
-              {{ r.name }}
+              <span
+                aria-hidden="true"
+                class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 rounded-full bg-primary sb-transition"
+                :class="isActiveRoute(r) ? 'w-6' : 'w-0'"
+              ></span>
+              <span class="sb-transition" :class="{ 'translate-x-9': isActiveRoute(r) }">{{ r.name }}</span>
             </NuxtLink>
             <span
               v-else
               aria-disabled="true"
-              class="rounded-md p-3 sb-body cursor-not-allowed opacity-50 text-ink/80"
+              class="flex items-center min-h-14 sb-h2 uppercase cursor-not-allowed opacity-50 text-ink-muted"
             >
               {{ r.name }}
             </span>
           </template>
         </nav>
-        <div class="flex items-center justify-between px-6 py-3 border-y border-border">
-          <span class="sb-overline text-ink-muted font-bold!">{{ t('header.settingsSection') }}</span>
+
+        <div
+          :aria-label="t('a11y.changeLanguage')"
+          class="flex gap-2 pt-6 border-t border-border"
+          role="group"
+        >
+          <BaseButton
+            v-for="lang in props.langs"
+            :key="lang.code"
+            :aria-label="lang.label"
+            :aria-pressed="lang.code === props.selectedLangId ? 'true' : 'false'"
+            class="border border-border uppercase"
+            :is-active="lang.code === props.selectedLangId"
+            size="sm"
+            variant="ghost"
+            @click="onSelectLang(lang.code)"
+          >
+            {{ lang.code }}
+          </BaseButton>
         </div>
-        <div class="p-6">
-          <BaseIconMenu
-            icon="solar:globus-bold-duotone"
-            :items="props.langs"
-            :label="t('a11y.changeLanguage')"
-            :selected-item-id="props.selectedLangId"
-            @select="itemId => onSelectLang(itemId)"
-          />
-        </div>
-      </aside>
+      </div>
     </div>
   </div>
 </template>

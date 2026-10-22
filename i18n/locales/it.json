@@ -69,8 +69,7 @@
     "technicalDetails": "Dettagli tecnici"
   },
   "header": {
-    "routeSection": "Menu",
-    "settingsSection": "Impostazioni"
+    "routeSection": "Menu"
   },
   "pages": {
     "home": {
