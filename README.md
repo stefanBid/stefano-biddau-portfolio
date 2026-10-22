@@ -587,7 +587,7 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ### `TheHeader` / `TheHeaderMenuToggle`
 
-Top navigation bar. Desktop: the `RouteItem[]` links sit in four equal-width columns (sized to the longest label in any locale, so the bar keeps its width on a language switch) plus the language menu (`BaseIconMenu`, showing `EN`/`IT`). Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
+Top navigation bar. Desktop: logo left; nav and language menu (`BaseIconMenu`, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
 
 ### `TheFooter`
 

@@ -129,7 +129,7 @@ watch(isMdUp, (newVal) => {
         'supports-backdrop-filter:bg-bg/60 bg-bg/80': !open,
       }"
     >
-      <div class="h-full flex items-center max-w-350 mx-auto justify-between">
+      <div class="h-full flex items-center gap-4 max-w-350 mx-auto">
         <NuxtLink
           class="inline-flex items-center gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
           :to="props.routes[0]?.path || '/'"
@@ -145,45 +145,44 @@ watch(isMdUp, (newVal) => {
           Stefano Biddau
         </NuxtLink>
 
-        <!-- Desktop nav -->
-        <div class="flex items-center">
-          <!-- Equal columns sized to the longest label in any locale: the bar keeps its width on a language switch -->
-          <nav class="hidden md:grid grid-cols-4 gap-1 bg-surface-2 rounded-lg px-2 py-2">
-            <template v-for="r in routes" :key="r.path">
-              <NuxtLink
-                v-if="!r.disabled"
-                :aria-current="isActiveRoute(r) ? 'page' : undefined"
-                class="w-24 inline-flex justify-center sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-3 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
-                :class="{
-                  'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
-                  'text-ink font-bold after:scale-x-100': isActiveRoute(r),
-                }"
-                :to="r.path"
-              >
-                {{ r.name }}
-              </NuxtLink>
-              <span
-                v-else
-                aria-disabled="true"
-                class="w-24 inline-flex justify-center py-1 sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
-              >
-                {{ r.name }}
-              </span>
-            </template>
-          </nav>
-          <div class="ml-0 md:ml-4 hidden! md:inline-block!">
-            <BaseIconMenu
-              icon="solar:globus-bold-duotone"
-              :items="props.langs"
-              :label="t('a11y.changeLanguage')"
-              :selected-item-id="props.selectedLangId"
-              @select="itemId => onSelectLang(itemId)"
-            />
-          </div>
+        <!-- Desktop nav: fixed width (fits the longest locale) with labels spread evenly, so it never resizes on a language switch -->
+        <nav class="hidden md:flex md:ml-auto w-100 items-center justify-between bg-surface-2 rounded-lg px-6 py-2">
+          <template v-for="r in routes" :key="r.path">
+            <NuxtLink
+              v-if="!r.disabled"
+              :aria-current="isActiveRoute(r) ? 'page' : undefined"
+              class="sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
+              :class="{
+                'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
+                'text-ink font-bold after:scale-x-100': isActiveRoute(r),
+              }"
+              :to="r.path"
+            >
+              {{ r.name }}
+            </NuxtLink>
+            <span
+              v-else
+              aria-disabled="true"
+              class="py-1 sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
+            >
+              {{ r.name }}
+            </span>
+          </template>
+        </nav>
+
+        <div class="hidden md:flex">
+          <BaseIconMenu
+            icon="solar:globus-bold-duotone"
+            :items="props.langs"
+            :label="t('a11y.changeLanguage')"
+            :selected-item-id="props.selectedLangId"
+            @select="itemId => onSelectLang(itemId)"
+          />
         </div>
+
         <!-- Mobile: hamburger -->
         <TheHeaderMenuToggle
-          class="md:hidden"
+          class="ml-auto md:hidden"
           :open="open"
           @toggle="newOpenValue => onToggle(newOpenValue)"
         />
