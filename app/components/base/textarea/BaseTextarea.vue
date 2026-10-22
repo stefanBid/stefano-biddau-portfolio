@@ -42,7 +42,7 @@ const lengths = computed(() => ({
 <template>
   <div>
     <label
-      class="block text-sb-muted u-sb-soft-transition mb-2 md:mb-3"
+      class="block text-ink-muted sb-transition mb-2 md:mb-3"
       :for="props.id"
     >{{ props.label }}</label>
     <textarea
@@ -50,23 +50,23 @@ const lengths = computed(() => ({
       v-model="model"
       :aria-describedby="describedBy"
       :aria-invalid="props.error ? 'true' : 'false'"
-      class="w-full rounded-lg bg-sb-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent resize-y min-h-38"
-      :class="props.error ? 'border-sb-error' : 'border-sb-border'"
+      class="w-full rounded-md bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary resize-y min-h-38"
+      :class="props.error ? 'border-error' : 'border-border'"
       :name="props.name || `${props.id}-name`"
       :placeholder="props.placeholder"
     ></textarea>
     <!-- Max Counter -->
     <p
       v-if="props.maxLength"
-      class="ty-sb-caption text-sb-muted u-sb-soft-transition text-right mt-1"
+      class="sb-small italic text-ink-muted sb-transition text-right mt-1"
     >
-      <span class="ty-sb-caption" :class="lengths.current > lengths.max ? 'text-sb-error!' : 'text-sb-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
+      <span class="sb-small italic" :class="lengths.current > lengths.max ? 'text-error!' : 'text-ink-muted!'">{{ lengths.current }} </span> / {{ lengths.max }}
     </p>
     <!-- Hint -->
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-sb-label normal-case! text-sb-muted mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -74,7 +74,7 @@ const lengths = computed(() => ({
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-sb-error mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

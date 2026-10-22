@@ -54,15 +54,15 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
       :inert="!ready"
     >
-      <h2 class="ty-sb-hero mb-0 text-center">
+      <h2 class="sb-display mb-0 text-center">
         {{ t('pages.home.title') }}
       </h2>
-      <p class="ty-sb-h4 text-center mt-6 min-h-16">
+      <p class="sb-h4 text-center mt-6 min-h-16">
         {{ t('pages.home.subtitle.costant') }}
         <span
           ref="el"
           aria-live="polite"
-          class="text-sb-accent ty-sb-h4"
+          class="text-primary sb-h4"
           :style="elStyle"
         ></span>
       </p>
@@ -76,7 +76,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast" name="solar:folder-with-files-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-ink" name="solar:folder-with-files-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="downloadFile(getFile.path, getFile.name)">
@@ -93,7 +93,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           variant="dark-hover"
         >
           <template #card-header>
-            <Icon class="size-10 sm:size-12 md:size-14 text-sb-contrast" name="solar:letter-opened-bold-duotone" />
+            <Icon class="size-10 sm:size-12 md:size-14 text-ink" name="solar:letter-opened-bold-duotone" />
           </template>
           <template #card-footer>
             <BaseButton variant="primary" @click.stop="contactFormIsOpen = true">

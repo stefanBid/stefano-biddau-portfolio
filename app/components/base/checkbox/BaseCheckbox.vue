@@ -26,36 +26,36 @@ const model = defineModel<boolean>('input')
       class="
       relative
       peer size-4.5 md:size-5 shrink-0 rounded-md border
-      u-sb-soft-transition cursor-pointer
+      sb-transition cursor-pointer
       appearance-none
       outline-none
-      bg-sb-surface-2
-      checked:bg-sb-accent-hover
-      checked:border-sb-contrast
+      bg-surface-2
+      checked:bg-primary-hover
+      checked:border-ink
       focus-visible:ring-2
-      focus-visible:ring-sb-accent
+      focus-visible:ring-primary
       before:absolute
       before:left-1/2 before:top-1/2
       before:-translate-x-1/2 before:-translate-y-1/2
       before:flex before:items-center before:justify-center
-      before:text-sb-contrast before:text-lg
+      before:text-ink before:sb-body
       before:content-['✓'] before:opacity-0
       checked:before:opacity-100
     "
-      :class="props.error ? 'border-sb-error' : 'border-sb-border'"
+      :class="props.error ? 'border-error' : 'border-border'"
       :name="props.name || `${props.id}-name`"
       type="checkbox"
     />
 
     <span
       v-if="!$slots.default"
-      class="ty-sb-caption text-sb-contrast u-sb-soft-transition"
+      class="sb-small italic text-ink sb-transition"
     >
       {{ props.label }}
     </span>
     <span
       v-else
-      class="ty-sb-caption text-sb-contrast u-sb-soft-transition"
+      class="sb-small italic text-ink sb-transition"
     >
       <slot></slot>
     </span>

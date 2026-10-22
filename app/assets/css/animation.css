@@ -32,12 +32,17 @@
   --animate-rise-in: rise-in var(--sb-duration-state) var(--ease-out) both;
   --animate-slide-in-right: slide-in-right var(--sb-duration-layout) var(--ease-out) both;
   --animate-spin: spin 0.8s linear infinite;    /* loading indicators only */
+  --animate-bounce: bounce 1s infinite;         /* scroll hint; motionless under reduced motion */
 
   @keyframes fade-in        { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fade-out       { from { opacity: 1; } to { opacity: 0; } }
   @keyframes rise-in        { from { opacity: 0; transform: translateY(var(--sb-motion-distance)); } to { opacity: 1; transform: none; } }
   @keyframes slide-in-right { from { opacity: 0; transform: translateX(calc(var(--sb-motion-distance) * 3)); } to { opacity: 1; transform: none; } }
   @keyframes spin           { to { transform: rotate(360deg); } }
+  @keyframes bounce {
+    0%, 100% { transform: translateY(calc(var(--sb-motion-distance) * -3)); animation-timing-function: var(--ease-in); }
+    50%      { transform: none; animation-timing-function: var(--ease-out); }
+  }
 }
 
 /* --------------------------------------------------------------------------

@@ -56,10 +56,10 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
 <template>
   <div class="flex flex-col gap-20">
     <div class="flex flex-col gap-3 md:gap-4">
-      <h2 class="ty-sb-h1 mb-0">
+      <h2 class="sb-h1 mb-0">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted">
+      <p class="sb-body text-ink-muted">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
     </div>

@@ -169,7 +169,7 @@ watch(open, (newVal) => {
   <div>
     <label
       v-if="props.label"
-      class="block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
+      class="block text-ink-muted mb-2 md:mb-3 sb-transition"
       :for="props.id"
     >
       {{ props.label }}
@@ -178,14 +178,14 @@ watch(open, (newVal) => {
     <div class="relative">
       <span
         v-if="props.prefixIcon"
-        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition pointer-events-none"
+        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-ink-muted sb-transition pointer-events-none"
       >
         <Icon class="size-5" :name="props.prefixIcon" />
       </span>
 
-      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-sb-contrast u-sb-soft-transition pointer-events-none">
+      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-ink sb-transition pointer-events-none">
         <Icon
-          class="size-6 u-sb-soft-transition"
+          class="size-6 sb-transition"
           :class="{
             'rotate-0': !open,
             'rotate-180': open,
@@ -200,10 +200,10 @@ watch(open, (newVal) => {
         ref="reference"
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-lg bg-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary truncate"
         :class="{
-          'border-sb-error': props.error,
-          'border-sb-border': !props.error,
+          'border-error': props.error,
+          'border-border': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }"
         :name="props.name || `${props.id}-name`"
@@ -220,7 +220,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-sb-label normal-case! text-sb-muted mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -229,7 +229,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-red-500 mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}
@@ -240,7 +240,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-300 rounded-xl border border-sb-border/60 bg-sb-surface shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-lg border border-border/60 bg-surface shadow-md"
           :style="[
             floatingStyles,
             { width: menuWidth ? menuWidth : 'auto' },
@@ -254,19 +254,19 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.label">
               <button
                 :aria-current="model.includes(item.value) ? 'true' : 'false'"
-                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-sb-contrast cursor-pointer ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
+                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-ink cursor-pointer sb-overline normal-case! sb-focus sb-transition"
                 :class="{
-                  'bg-sb-border': model.includes(item.value),
-                  'hover:bg-sb-surface-2': !model.includes(item.value),
+                  'bg-border': model.includes(item.value),
+                  'hover:bg-surface-2': !model.includes(item.value),
                 }"
                 role="menuitem"
                 type="button"
                 @click="onSelect(item.value)"
               >
-                <span class="ty-sb-label truncate flex-1">{{ item.label }}</span>
+                <span class="sb-overline truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
-                  class="size-5 text-sb-accent u-sb-soft-transition"
+                  class="size-5 text-primary sb-transition"
                   name="solar:check-circle-bold-duotone"
                 />
               </button>

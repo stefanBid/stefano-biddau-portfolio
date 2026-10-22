@@ -40,11 +40,11 @@ const describedBy = computed(() => {
   <div>
     <label
       v-if="props.label"
-      class="block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
+      class="block text-ink-muted mb-2 md:mb-3 sb-transition"
       :for="props.id"
     >{{ props.label }}</label>
     <div class="relative">
-      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition pointer-events-none">
+      <span v-if="props.prefixIcon" class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-ink-muted sb-transition pointer-events-none">
         <Icon class="size-5" :name="props.prefixIcon" />
       </span>
       <input
@@ -53,10 +53,10 @@ const describedBy = computed(() => {
         :aria-describedby="describedBy"
         :aria-invalid="props.error ? 'true' : 'false'"
         :autocomplete="props.autocomplete"
-        class="w-full rounded-xl bg-sb-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-lg bg-surface-2 border px-3 py-2 md:px-4 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-primary truncate"
         :class="{
-          'border-sb-error': props.error,
-          'border-sb-border': !props.error,
+          'border-error': props.error,
+          'border-border': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }
         "
@@ -69,7 +69,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-sb-label normal-case! text-sb-muted mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-ink-muted mt-1 md:mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -78,7 +78,7 @@ const describedBy = computed(() => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-sb-error mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-overline normal-case! text-error mt-1 md:mt-1.5 sb-transition"
       role="alert"
     >
       {{ props.error }}

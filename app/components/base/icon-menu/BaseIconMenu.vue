@@ -92,7 +92,7 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-300 rounded-xl border border-sb-border/60 bg-sb-surface w-fit shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-lg border border-border/60 bg-surface w-fit shadow-md"
           :style="floatingStyles"
         >
           <ul
@@ -103,16 +103,16 @@ watch(open, (newVal) => {
             <li v-for="item in props.items" :key="item.code">
               <button
                 :aria-current="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-xl px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-sb-contrast ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
+                class="group inline-flex w-full text-left rounded-lg px-3 py-2 md:px-3.5 md:py-2.5 gap-1 text-ink sb-overline normal-case! sb-focus sb-transition"
                 :class="{
-                  'bg-sb-surface-2': props.selectedItemId === item.code,
-                  'hover:bg-sb-surface-2 cursor-pointer': props.selectedItemId !== item.code,
+                  'bg-surface-2': props.selectedItemId === item.code,
+                  'hover:bg-surface-2 cursor-pointer': props.selectedItemId !== item.code,
                 }"
                 role="menuitem"
                 type="button"
                 @click="onSelect(item.code)"
               >
-                <span class="ty-sb-label truncate flex-1">{{ item.label }}</span>
+                <span class="sb-overline truncate flex-1">{{ item.label }}</span>
                 <template v-if="item.icon && item.iconType ">
                   <Icon
                     v-if="item.iconType === 'nuxt-icon'"

@@ -120,6 +120,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 ── tsconfig.json            ← TypeScript config — extends .nuxt/tsconfig.app.json
 ── eslint.config.mjs        ← ESLint flat config (extends @nuxt/eslint, stylistic rules)
 ── .nvmrc                   ← pinned Node.js version (24.19.0)
+── .sb-context/             ← sb-context-fe Claude Code plugin state (project profile + settings)
 ── i18n/
      locales/
        en.json              ← English translations (source of truth)
@@ -129,11 +130,10 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
      error.vue             ← global error page
      assets/
        css/
-         main.css          ← entry point: imports all CSS layers in order
-         theme.css         ← @theme block: CSS custom properties (always dark)
-         typography.css    ← @utility ty-sb-* classes
-         utilities.css     ← @utility u-sb-* classes
-         animations.css    ← Vue transition classes (fade, slide-down, scale-fade)
+         main.css          ← entry point: imports Tailwind + the 3 files below, page-level base styles
+         theme.css         ← colours (raw --sb-* per theme + @theme inline), shadows, radii, breakpoints
+         typography.css    ← font families, --text-* role scale, sb-* type utilities, tag styles
+         animation.css     ← durations, easings, keyframes, sb-transition/sb-focus, Vue transitions, reduced motion
      components/
        base/               ← reusable design-system components (zero business logic)
        custom/             ← portfolio-specific components (data fetching + business logic)
@@ -185,78 +185,94 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 
 ## 4. Design System
 
-The design system lives entirely in `app/assets/css/`. It provides a single source of truth for colours, typography, spacing and transitions. The app is **always dark** — no `dark:` Tailwind variants are ever needed.
+The design system lives entirely in `app/assets/css/`, in four files (`main.css`, `theme.css`, `typography.css`, `animation.css`). It is a **closed** Tailwind v4 theme: the default palette, text sizes, weights, radii, shadows, easings, animations and breakpoints are reset, so only the tokens below generate utilities. The app is **always dark** — no `dark:` Tailwind variants are ever needed. Prefix: `sb`.
 
-### Colours — `--color-sb-*`
+### Colours
 
-All colours are CSS custom properties defined inside an `@theme` block in `theme.css`, auto-mapped to Tailwind utilities.
+Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to Tailwind roles with `@theme inline`. `@nuxtjs/color-mode` writes `data-theme="dark"` on `<html>`; the palette is the same for every theme.
 
-| Token | Tailwind utility | Value | Usage |
+| Raw variable | Tailwind utility | Value | Usage |
 |---|---|---|---|
-| `--color-sb-main` | `bg-sb-main` | `#0f0f20` | Page background |
-| `--color-sb-surface` | `bg-sb-surface` | `#1a1a2e` | Card / elevated surface |
-| `--color-sb-surface-2` | `bg-sb-surface-2` | `#232342` | Nested surfaces, inputs |
-| `--color-sb-border` | `border-sb-border` | `#2a2a44` | Default borders |
-| `--color-sb-shadow` | `shadow-[0_4px_20px_var(--color-sb-shadow)]` | `rgba(0,0,0,0.45)` | Shadows (always via `var()`) |
-| `--color-sb-accent` | `bg-sb-accent / text-sb-accent` | `#e95905` | Primary CTA, highlights |
-| `--color-sb-accent-hover` | `hover:bg-sb-accent-hover` | `#d24f05` | Hover state of accent |
-| `--color-sb-accent-border` | `border-sb-accent-border` | `#b34704` | Border on accent elements |
-| `--color-sb-contrast` | `text-sb-contrast` | `#f1f1f1` | Primary text |
-| `--color-sb-muted` | `text-sb-muted` | `#9ca3af` | Secondary / placeholder text |
-| `--color-sb-success/warning/error/info` | `text-sb-success` etc. | — | Status colours |
-| `--color-sb-*-bg` | `bg-sb-success-bg` etc. | — | Status background tints |
+| `--sb-bg` | `bg-bg` | `#0f0f20` | Page background |
+| `--sb-surface` | `bg-surface` | `#1a1a2e` | Card / elevated surface |
+| `--sb-surface-2` | `bg-surface-2` | `#232342` | Nested surfaces, inputs |
+| `--sb-border` | `border-border` | `#2a2a44` | Default (decorative) borders |
+| `--sb-ink` | `text-ink` | `#f1f1f1` | Primary text |
+| `--sb-ink-muted` | `text-ink-muted` | `#9ca3af` | Secondary / placeholder text |
+| `--sb-primary` | `bg-primary` / `text-primary` | `#e95905` | CTA, links, highlights |
+| `--sb-primary-hover` | `hover:bg-primary-hover` | `#f06a1c` | Hover state of primary |
+| `--sb-primary-border` | `border-primary-border` | `#b34704` | Border on primary elements |
+| `--sb-on-primary` | `text-on-primary` | `#0f0f20` | Text on a primary fill |
+| `--sb-success/warning/error/info` | `text-success` etc. | — | Status colours (text) |
+| `--sb-*-soft` | `bg-success-soft` etc. | — | Status background tints |
+| `--sb-focus-ring` | `ring-focus-ring` | = ink | Focus ring |
 
-Tailwind opacity modifiers are allowed: `bg-sb-main/80`, `text-sb-muted/70`.
+Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-### Typography — `ty-sb-*`
+Avoid `text-primary` on `bg-surface-2` (4.24:1, below WCAG AA).
 
-Custom `@utility` classes defined in `typography.css`. Apply them as regular Tailwind classes.
+### Shapes and shadows
 
-| Class | Font | Usage |
+| Token | Value | Usage |
 |---|---|---|
-| `ty-sb-hero` | Bebas Neue, uppercase | Full-bleed hero text |
-| `ty-sb-impact` | Bebas Neue, uppercase | `ThePageHero` full-viewport opening title only (~1.75x `ty-sb-hero`) |
-| `ty-sb-h1` | Bebas Neue, uppercase | Page-level heading (matches `h1`) |
-| `ty-sb-h2` | Bebas Neue, uppercase | Section heading (matches `h2`) |
-| `ty-sb-h3` | Bebas Neue | Sub-section heading (matches `h3`) |
-| `ty-sb-h4` | Space Mono semibold | Smallest heading level (matches `h4`/`h5`/`h6`) |
-| `ty-sb-p` | Space Mono | Body text (matches `p`) |
-| `ty-sb-span` | Space Mono | Generic inline text (matches `span`) |
-| `ty-sb-label` | Space Mono, uppercase, tracked | Form labels, tags |
-| `ty-sb-btn-label` | Space Mono bold, uppercase | Button text |
-| `ty-sb-caption` | Space Mono italic | Captions, secondary notes |
-| `ty-sb-code` | Space Mono | Inline code snippets (matches `code`) |
+| `rounded-sm` / `md` / `lg` / `xl` | 4 / 8 / 12 / 16px | code & links / buttons & inputs / cards & dialogs / logo blocks |
+| `shadow-sm` | `0 4px 20px` | Cards, banners |
+| `shadow-md` | `0 12px 32px` | Menus, logo blocks |
+| `shadow-lg` | `0 20px 60px` | Dialogs, side menu |
+| `drop-shadow-md` | `0 0 10px` | Text over images |
+
+All shadows use `--sb-shadow-color` (`rgba(0,0,0,0.45)`). Breakpoints: `sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 (no `2xl`).
+
+### Typography — `sb-*`
+
+One utility per role, defined in `typography.css`; each carries family, size, line height, weight and tracking (never colour). Only `sb-display`, `sb-h1`, `sb-h2` change size, in one step at `lg`; `sb-hero` scales fluidly with `clamp()`.
+
+| Class | Font | Size (mobile → desktop) | Usage |
+|---|---|---|---|
+| `sb-hero` | Bebas Neue | 88 → 120px (fluid) | `ThePageHero` full-viewport title only |
+| `sb-display` | Bebas Neue | 66 → 75px | Big page titles (legal pages, error, home) |
+| `sb-h1` | Bebas Neue | 39 → 44px | Page-level heading (`h1`) |
+| `sb-h2` | Bebas Neue | 31 → 35px | Section heading (`h2`) |
+| `sb-h3` | Bebas Neue | 27px | Sub-section / card title (`h3`) |
+| `sb-h4` | Bebas Neue | 21px | Smallest heading (`h4`–`h6`) |
+| `sb-lead` | Space Mono | 19px | Intro paragraph below a title |
+| `sb-body` | Space Mono | 17px | Body text (`p`, `body`, inputs) |
+| `sb-body-strong` | Space Mono bold | 17px | Emphasis, button text (add `uppercase` for buttons) |
+| `sb-label` | Space Mono | 14px | Nav items, chips, tabs (add `uppercase` for nav) |
+| `sb-small` | Space Mono | 12px | Captions, help, metadata (add `italic` for captions) |
+| `sb-overline` | Space Mono, uppercase, tracked | 12px | Labels (`label`), tags, badges |
 
 ```vue
-<h1 class="ty-sb-h3 text-sb-contrast">My Skills</h1>
-<p class="ty-sb-p text-sb-muted">Some description.</p>
+<h2 class="sb-h3 text-ink">My Skills</h2>
+<p class="text-ink-muted">Some description.</p>
 ```
 
-Non-semantic tags need the matching `ty-sb-*` utility. Semantic tags (`h1`–`h4`, `p`, `span`, `label`, `small`, `code`) get the same look for free from `base.css` — no class needed.
+Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
-**Font families:**
-- `font-bebas-neue` — Bebas Neue: all titles and display text
-- `font-space-mono` — Space Mono: body, UI text, buttons
+**Font families:** `font-display` (Bebas Neue, 400) · `font-body` / `font-mono` (Space Mono, 400 and 700). Weights: `font-normal`, `font-bold` only.
 
-### Utility classes — `u-sb-*`
+### Motion and focus — `sb-*`
 
-| Class | Effect |
+| Class / token | Effect |
 |---|---|
-| `u-sb-soft-transition` | `transition-all duration-200 ease-in-out` |
-| `u-sb-hard-transition` | `transition-all duration-500 ease-in-out` |
-| `u-sb-focus` | `outline-none ring-sb-contrast focus-visible:ring-2` |
-| `u-sb-focus-within` | `outline-none ring-sb-contrast focus-within:ring-2` |
-| `u-sb-no-focus` | Removes all focus outlines (use only on elements with custom focus handling) |
+| `sb-transition` | colour, background, border, outline, shadow, opacity, transform · `--sb-duration-feedback` (150ms) |
+| `sb-transition-slow` | same properties · `--sb-duration-layout` (400ms) |
+| `sb-focus` | `outline-none focus-visible:ring-2 ring-focus-ring` |
+| `sb-focus-within` | same, on `focus-within` |
+| `sb-no-focus` | Removes focus ring (only with custom focus handling) |
 
-Always add `u-sb-soft-transition` to interactive elements.
+Always add `sb-transition` to interactive elements. It does not animate width/height — avoid animating layout properties.
+
+Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`, `animate-bounce`. Under `prefers-reduced-motion`, `--sb-motion-distance` drops to 0, removing all movement while keeping opacity and colour changes.
 
 ### Animations — Vue `<Transition>`
 
-| Name | Effect | Duration |
+| Name | Effect | Enter / leave |
 |---|---|---|
-| `fade` | Opacity + slight Y offset | 800ms |
-| `slide-down` | Opacity + slides from top | 200ms |
-| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+| `fade` | Opacity + slight Y offset | 800ms / 150ms |
+| `slide-down` | Opacity + slides from top | 200ms / 150ms |
+| `scale-fade` | Opacity + scale from 0.95 | 200ms / 150ms |
+| `page` | Opacity + blur (page change) | 400ms / 150ms |
 
 ```vue
 <Transition name="scale-fade">
@@ -276,7 +292,7 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 | `flagpack` | Country flags |
 
 ```vue
-<Icon name="solar:box-minimalistic-bold-duotone" class="size-5 text-sb-accent" />
+<Icon name="solar:box-minimalistic-bold-duotone" class="size-5 text-primary" />
 <Icon name="logos:vue" class="size-5" />
 <Icon name="flagpack:it" class="size-5" />
 ```

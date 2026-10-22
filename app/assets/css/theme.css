@@ -46,11 +46,12 @@
   --sb-selection: color-mix(in oklab, var(--sb-primary) 50%, #000 70%);
   --sb-scrollbar: color-mix(in oklab, var(--sb-primary) 70%, #000 65%);
 
-  /* Shadows: provisional, one shadow color */
+  /* Shadows: soft and wide, one shadow color */
   --sb-shadow-color: rgba(0, 0, 0, 0.45);
-  --sb-shadow-sm: 0 1px 3px 0 var(--sb-shadow-color), 0 1px 2px -1px var(--sb-shadow-color);
-  --sb-shadow-md: 0 4px 6px -1px var(--sb-shadow-color), 0 2px 4px -2px var(--sb-shadow-color);
-  --sb-shadow-lg: 0 10px 15px -3px var(--sb-shadow-color), 0 4px 6px -4px var(--sb-shadow-color);
+  --sb-shadow-sm: 0 4px 20px var(--sb-shadow-color);   /* cards, banners */
+  --sb-shadow-md: 0 12px 32px var(--sb-shadow-color);  /* menus, logo blocks */
+  --sb-shadow-lg: 0 20px 60px var(--sb-shadow-color);  /* dialogs, side menu */
+  --sb-drop-shadow-md: 0 0 10px var(--sb-shadow-color); /* text over images */
 }
 
 [data-theme="dark"] {
@@ -91,6 +92,8 @@
   --shadow-sm: var(--sb-shadow-sm);
   --shadow-md: var(--sb-shadow-md);
   --shadow-lg: var(--sb-shadow-lg);
+
+  --drop-shadow-md: var(--sb-drop-shadow-md);
 }
 
 /* --------------------------------------------------------------------------

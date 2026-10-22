@@ -14,21 +14,21 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
 
 <template>
   <BaseCard
-    class="relative overflow-hidden rounded-2xl shadow-[0_12px_24px_rgba(0,0,0,0.7)] ring-1 ring-white/5"
-    :class="props.gold ? 'gold-card border-sb-contrast/50!' : ''"
+    class="relative overflow-hidden rounded-xl shadow-md ring-1 ring-ink/5"
+    :class="props.gold ? 'gold-card border-ink/50!' : ''"
     full-custom-content
     variant="dark"
   >
-    <div class="flex items-center gap-4 md:gap-6 u-sb-soft-transition">
+    <div class="flex items-center gap-4 md:gap-6 sb-transition">
       <!-- Icon -->
       <div
-        class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-xl
-               bg-sb-surface-2 shadow-[0_6px_14px_rgba(0,0,0,0.65)]
-               ring-1 ring-white/15 z-10 shrink-0 u-sb-soft-transition"
+        class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-lg
+               bg-surface-2 shadow-sm
+               ring-1 ring-ink/15 z-10 shrink-0 sb-transition"
         :class="props.gold ? 'gold-icon' : ''"
       >
         <Icon
-          class="size-7 sm:size-8 md:size-9 text-sb-contrast u-sb-soft-transition"
+          class="size-7 sm:size-8 md:size-9 text-ink sb-transition"
           :name="props.icon"
         />
       </div>
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
       <div class="flex flex-col flex-1">
         <!-- Skill Name -->
         <span
-          class="text-(length:--fs-sb-h4) font-bebas-neue leading-tight font-normal text-sb-contrast u-sb-soft-transition"
+          class="sb-h4 text-ink sb-transition"
         >
           {{ props.name }}
         </span>
@@ -46,11 +46,11 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
           <div
             v-for="n in 5"
             :key="n"
-            class="size-3.5 rounded-sm u-sb-soft-transition"
+            class="size-3.5 rounded-sm sb-transition"
             :class="
               props.gold
                 ? 'gold-level-on'
-                : (n <= props.level ? 'bg-sb-accent' : 'bg-sb-muted/40')
+                : (n <= props.level ? 'bg-primary' : 'bg-ink-muted/40')
             "
           ></div>
         </div>

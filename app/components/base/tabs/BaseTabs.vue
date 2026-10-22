@@ -32,7 +32,7 @@ const onSelectTab = (tabId: string | number) => {
 
 <template>
   <div
-    class="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center md:gap-4 pb-4 md:pb-6 border-b border-sb-border u-sb-soft-transition"
+    class="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center md:gap-4 pb-4 md:pb-6 border-b border-border sb-transition"
     :class="{
       'sm:justify-start': props.align === 'left',
       'sm:justify-end': props.align === 'right',
@@ -43,20 +43,20 @@ const onSelectTab = (tabId: string | number) => {
       v-for="tab in props.tabs"
       :key="tab.id"
       :aria-selected="safeSelectedTabId === tab.id"
-      class="ty-sb-btn-label border gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center cursor-pointer u-sb-focus"
+      class="sb-body-strong uppercase border gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-lg sb-transition inline-flex items-center justify-center cursor-pointer sb-focus"
       :class="[
         // Primary variant
         props.variant === 'primary'
           ? safeSelectedTabId === tab.id
-            ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
-            : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
+            ? 'bg-primary hover:bg-primary-hover border-primary-border text-ink'
+            : 'bg-transparent hover:bg-surface-2 border-border text-ink hover:text-ink'
           : '',
 
         // Secondary variant
         props.variant === 'secondary'
           ? safeSelectedTabId === tab.id
-            ? 'bg-sb-surface-2 hover:bg-sb-surface border-sb-border text-sb-contrast'
-            : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
+            ? 'bg-surface-2 hover:bg-surface border-border text-ink'
+            : 'bg-transparent hover:bg-surface-2 border-border text-ink hover:text-ink'
           : '',
 
       ]"

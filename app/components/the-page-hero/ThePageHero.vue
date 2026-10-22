@@ -152,11 +152,11 @@ onBeforeUnmount(() => {
     >
       <!-- overlay only behind the text -->
       <div
-        class="absolute inset-0 -z-10 rounded-2xl bg-linear-to-r from-sb-main/80 via-sb-main/50 to-sb-main/80 blur-sm"
+        class="absolute inset-0 -z-10 rounded-xl bg-linear-to-r from-bg/80 via-bg/50 to-bg/80 blur-sm"
       ></div>
 
       <h1
-        class="ty-sb-impact bg-linear-to-r from-sb-accent to-sb-contrast bg-clip-text text-transparent drop-shadow-[0_0_10px_rgba(0,0,0,0.6)] px-[0.4em] py-[0.3em]"
+        class="sb-hero bg-linear-to-r from-primary to-ink bg-clip-text text-transparent drop-shadow-md px-[0.4em] py-[0.3em]"
       >
         {{ props.text }}
       </h1>
@@ -164,7 +164,7 @@ onBeforeUnmount(() => {
     <transition name="fade">
       <Icon
         v-if="ready && atTop"
-        class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-sb-accent z-10 pointer-events-none"
+        class="absolute size-14 md:size-16 lg:size-20  bottom-6 animate-bounce text-primary z-10 pointer-events-none"
         name="solar:double-alt-arrow-down-bold-duotone"
       />
     </transition>

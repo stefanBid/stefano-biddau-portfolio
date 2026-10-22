@@ -101,15 +101,15 @@ watch(isMdUp, (newVal) => {
   <div class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border backdrop-blur  px-6 md:px-10 u-sb-soft-transition"
+      class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur  px-6 md:px-10 sb-transition"
       :class="{
-        'bg-sb-main': open,
-        'supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80': !open,
+        'bg-bg': open,
+        'supports-backdrop-filter:bg-bg/60 bg-bg/80': !open,
       }"
     >
       <div class="h-full flex items-center max-w-350 mx-auto justify-between">
         <NuxtLink
-          class="inline-flex items-center gap-2 ty-sb-h3 tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
+          class="inline-flex items-center gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
           :to="props.routes[0]?.path || '/'"
           @click="onClose"
         >
@@ -125,14 +125,14 @@ watch(isMdUp, (newVal) => {
 
         <!-- Desktop nav -->
         <div class="flex items-center">
-          <nav class="hidden md:flex items-center gap-6 bg-sb-surface-2 rounded-xl px-4 py-2">
+          <nav class="hidden md:flex items-center gap-6 bg-surface-2 rounded-lg px-4 py-2">
             <template v-for="r in routes" :key="r.path">
               <NuxtLink
                 v-if="!r.disabled"
-                class="ty-sb-nav-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
+                class="sb-label uppercase normal-case! cursor-pointer sb-transition sb-focus rounded-sm"
                 :class="{
-                  'text-sb-contrast/80 hover:text-sb-contrast font-normal!': !isActiveRoute(r),
-                  'text-sb-accent font-bold!': isActiveRoute(r),
+                  'text-ink/80 hover:text-ink font-normal!': !isActiveRoute(r),
+                  'text-primary font-bold!': isActiveRoute(r),
                 }"
                 :to="r.path"
               >
@@ -141,7 +141,7 @@ watch(isMdUp, (newVal) => {
               <span
                 v-else
                 aria-disabled="true"
-                class="ty-sb-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-sb-contrast/80 rounded-md"
+                class="sb-body-strong uppercase normal-case! font-normal! cursor-not-allowed opacity-50 text-ink/80 rounded-md"
               >
                 {{ r.name }}
               </span>
@@ -169,7 +169,7 @@ watch(isMdUp, (newVal) => {
       <!-- overlay -->
       <div
         aria-hidden="true"
-        class="fixed inset-0 top-16 bg-sb-main/80 backdrop-blur-sm u-sb-soft-transition"
+        class="fixed inset-0 top-16 bg-bg/80 backdrop-blur-sm sb-transition"
         :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
         @click="onClose"
       ></div>
@@ -179,23 +179,23 @@ watch(isMdUp, (newVal) => {
         id="mobile-drawer"
         :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
         :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] u-sb-hard-transition will-change-transform"
+        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-surface border-r border-border shadow-lg sb-transition-slow will-change-transform"
         :class="open ? 'translate-x-0' : '-translate-x-full'"
         :inert="!open"
         :role="open ? 'dialog' : undefined"
       >
-        <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span id="mobile-drawer-title" class="ty-sb-label text-sb-muted font-semibold!">{{ t('header.routeSection') }}</span>
+        <div class="flex items-center justify-between px-6 py-3 border-b border-border">
+          <span id="mobile-drawer-title" class="sb-overline text-ink-muted font-bold!">{{ t('header.routeSection') }}</span>
         </div>
 
         <nav class="flex flex-col gap-2 p-6">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-xl p-3 ty-sb-p cursor-pointer u-sb-soft-transition u-sb-focus"
+              class="rounded-lg p-3 sb-body cursor-pointer sb-transition sb-focus"
               :class="{
-                'hover:bg-sb-surface-2': !isActiveRoute(r),
-                'bg-sb-accent font-bold!': isActiveRoute(r),
+                'hover:bg-surface-2': !isActiveRoute(r),
+                'bg-primary font-bold!': isActiveRoute(r),
               }"
               :to="r.path"
               @click="onClose"
@@ -205,14 +205,14 @@ watch(isMdUp, (newVal) => {
             <span
               v-else
               aria-disabled="true"
-              class="rounded-lg p-3 ty-sb-p cursor-not-allowed opacity-50 text-sb-contrast/80"
+              class="rounded-md p-3 sb-body cursor-not-allowed opacity-50 text-ink/80"
             >
               {{ r.name }}
             </span>
           </template>
         </nav>
-        <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
-          <span class="ty-sb-label text-sb-muted font-semibold">{{ t('header.settingsSection') }}</span>
+        <div class="flex items-center justify-between px-6 py-3 border-y border-border">
+          <span class="sb-overline text-ink-muted font-bold">{{ t('header.settingsSection') }}</span>
         </div>
         <div class="p-6">
           <BaseIconMenu

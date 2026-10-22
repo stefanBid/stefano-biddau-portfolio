@@ -161,7 +161,7 @@ watch(
     :title="t('pages.home.contactForm.title')"
     @close="closeForm"
   >
-    <form class="flex flex-col gap-6 my-4 md:my-6 u-sb-soft-transition" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
+    <form class="flex flex-col gap-6 my-4 md:my-6 sb-transition" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
       <div class="flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput
@@ -183,7 +183,7 @@ watch(
             type="email"
           />
         </div>
-        <div class="w-full md:w-[55%] border-l-none md:border-l border-sb-border pl-0 md:pl-6">
+        <div class="w-full md:w-[55%] border-l-none md:border-l border-border pl-0 md:pl-6">
           <BaseTextarea
             id="message"
             v-model:input="messageController"
@@ -202,7 +202,7 @@ watch(
         {{ t('pages.home.contactForm.fields.consentGiven.label') }}
         {{ t('pages.home.contactForm.fields.consentGiven.extra') }}
         <NuxtLink
-          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           rel="noopener noreferrer"
           target="_blank"
           :to="localePath('privacy-policy')"
@@ -211,7 +211,7 @@ watch(
         </NuxtLink>
         ,
         <NuxtLink
-          class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+          class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           rel="noopener noreferrer"
           target="_blank"
           :to="localePath('terms-and-conditions')"

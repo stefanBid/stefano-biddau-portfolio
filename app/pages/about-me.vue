@@ -62,9 +62,9 @@ const onSelectMilestone = (id: string | number) => {
     <!-- Timeline Section -->
     <section aria-label="Professional Timeline" class="relative w-full py-20">
       <div
-        class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
+        class="relative flex w-full flex-col gap-10 sb-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': milestones.length,
+          'border-l-2 border-ink/30 pl-6 md:pl-10 ': milestones.length,
         }"
       >
         <!-- Milestones -->

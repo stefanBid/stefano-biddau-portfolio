@@ -27,19 +27,19 @@ const isInteractive = computed(() => {
   <a
     v-if="props.type === 'link'"
     :aria-label="props.ariaLabel"
-    class="ty-sb-btn-label border px-5 py-2.5 md:px-7 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center u-sb-focus"
+    class="sb-body-strong uppercase border px-5 py-2.5 md:px-7 md:py-3 rounded-lg sb-transition inline-flex items-center justify-center sb-focus"
     :class="[
       // Variants
       props.variant === 'primary'
-        ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
+        ? 'bg-primary hover:bg-primary-hover border-primary-border text-on-primary'
         : '',
 
       props.variant === 'secondary'
-        ? 'bg-sb-surface hover:bg-sb-surface-2 border-sb-border text-sb-contrast'
+        ? 'bg-surface hover:bg-surface-2 border-border text-ink'
         : '',
 
       props.variant === 'outline'
-        ? 'bg-transparent border-sb-accent text-sb-accent hover:bg-sb-accent hover:text-sb-main'
+        ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
         : '',
     ]"
     :href="props.to"
@@ -51,7 +51,7 @@ const isInteractive = computed(() => {
   <button
     v-else
     :aria-label="props.ariaLabel"
-    class="ty-sb-btn-label border px-5 py-2.5 md:px-7 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center u-sb-focus"
+    class="sb-body-strong uppercase border px-5 py-2.5 md:px-7 md:py-3 rounded-lg sb-transition inline-flex items-center justify-center sb-focus"
 
     :class="[
       // General state
@@ -60,20 +60,20 @@ const isInteractive = computed(() => {
       // Variants
       props.variant === 'primary'
         ? isInteractive
-          ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
-          : 'bg-sb-accent border-sb-accent-border text-sb-contrast'
+          ? 'bg-primary hover:bg-primary-hover border-primary-border text-on-primary'
+          : 'bg-primary border-primary-border text-on-primary'
         : '',
 
       props.variant === 'secondary'
         ? isInteractive
-          ? 'bg-sb-surface hover:bg-sb-surface-2 border-sb-border text-sb-contrast'
-          : 'bg-sb-surface border-sb-border text-sb-contrast'
+          ? 'bg-surface hover:bg-surface-2 border-border text-ink'
+          : 'bg-surface border-border text-ink'
         : '',
 
       props.variant === 'outline'
         ? isInteractive
-          ? 'bg-transparent border-sb-accent text-sb-accent hover:bg-sb-accent hover:text-sb-main'
-          : 'bg-transparent border-sb-accent text-sb-accent'
+          ? 'bg-transparent border-primary text-primary hover:bg-primary hover:text-on-primary'
+          : 'bg-transparent border-primary text-primary'
         : '',
     ]"
     :disabled="props.isDisabled || props.isLoading"

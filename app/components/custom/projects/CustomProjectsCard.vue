@@ -96,9 +96,9 @@ const onSelectUrl = (url: string) => {
     >
       <!-- Card Header -->
       <template #card-header>
-        <div class="relative w-full h-72 md:h-80 rounded-t-xl u-sb-soft-transition">
+        <div class="relative w-full h-72 md:h-80 rounded-t-lg sb-transition">
           <!-- Background image layer: clipped by overflow-hidden -->
-          <div class="absolute inset-0 overflow-hidden rounded-t-xl">
+          <div class="absolute inset-0 overflow-hidden rounded-t-lg">
             <div class="w-full h-full">
               <NuxtImg
                 :alt="props.imageAlt || props.title"
@@ -106,13 +106,13 @@ const onSelectUrl = (url: string) => {
                 :src="props.imageSrc"
               />
             </div>
-            <div class="absolute inset-0 bg-black/50"></div>
+            <div class="absolute inset-0 bg-bg/50"></div>
           </div>
 
           <!-- Content wrapper -->
-          <div class="relative z-10 flex flex-col justify-between h-full p-4 md:p-6 u-sb-soft-transition">
+          <div class="relative z-10 flex flex-col justify-between h-full p-4 md:p-6 sb-transition">
             <!-- Top row: actions -->
-            <div class="flex  items-center gap-2 self-end u-sb-soft-transition">
+            <div class="flex  items-center gap-2 self-end sb-transition">
               <template v-for="group in urlGroups" :key="group.key">
                 <BaseButton
                   v-if="group.urls.length === 1"
@@ -156,10 +156,7 @@ const onSelectUrl = (url: string) => {
             <!-- Bottom row: title - absolute positioned -->
             <div>
               <h2
-                class="ty-sb-h3 mb-0 text-white drop-shadow-lg u-sb-soft-transition"
-                :class="{
-                  'animate-pulse': isDescriptionExpanded,
-                }"
+                class="sb-h3 mb-0 text-ink drop-shadow-md sb-transition"
               >
                 {{ props.title }}
               </h2>
@@ -173,7 +170,7 @@ const onSelectUrl = (url: string) => {
         <BaseRichText
           v-if="props.content.length > 0"
           :blocks="getContentPreview"
-          class="u-sb-soft-transition"
+          class="sb-transition"
         />
       </template>
 
@@ -181,10 +178,10 @@ const onSelectUrl = (url: string) => {
       <template #card-footer>
         <button
           v-if="needsExpansion"
-          class="inline-flex items-center gap-1.5 ty-sb-nav-label px-2 py-1.5 text-sb-accent hover:text-sb-accent-hover cursor-pointer rounded u-sb-soft-transition u-sb-focus"
+          class="inline-flex items-center gap-1.5 sb-label uppercase px-2 py-1.5 text-primary hover:text-primary-hover cursor-pointer rounded-sm sb-transition sb-focus"
           @click="$event => onTriggerDescription($event)"
         >
-          <span class="ty-sb-nav-label">
+          <span class="sb-label uppercase">
             {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
           </span>
           <Icon

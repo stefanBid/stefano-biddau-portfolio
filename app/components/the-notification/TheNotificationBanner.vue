@@ -42,13 +42,13 @@ onMounted(() => {
   <div
     :aria-live="props.type === 'error' ? 'assertive' : 'polite'"
     :class="[
-      'w-full sm:w-lg p-4 md:p-6 rounded-xl border pointer-events-auto',
-      'shadow-[0_4px_20px_var(--color-sb-shadow)]',
+      'w-full sm:w-lg p-4 md:p-6 rounded-lg border pointer-events-auto',
+      'shadow-sm',
       {
-        'bg-sb-success-bg border-sb-success': props.type === 'success',
-        'bg-sb-warning-bg border-sb-warning': props.type === 'warning',
-        'bg-sb-error-bg border-sb-error': props.type === 'error',
-        'bg-sb-info-bg border-sb-info': props.type === 'info',
+        'bg-success-soft border-success': props.type === 'success',
+        'bg-warning-soft border-warning': props.type === 'warning',
+        'bg-error-soft border-error': props.type === 'error',
+        'bg-info-soft border-info': props.type === 'info',
       },
     ]"
     role="alert"
@@ -58,12 +58,12 @@ onMounted(() => {
       <div
         v-if="props.icon"
         :class="[
-          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl',
+          'shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-lg',
           {
-            'bg-sb-surface text-sb-success': props.type === 'success',
-            'bg-sb-surface text-sb-warning': props.type === 'warning',
-            'bg-sb-surface text-sb-error': props.type === 'error',
-            'bg-sb-surface text-sb-info': props.type === 'info',
+            'bg-surface text-success': props.type === 'success',
+            'bg-surface text-warning': props.type === 'warning',
+            'bg-surface text-error': props.type === 'error',
+            'bg-surface text-info': props.type === 'info',
           },
         ]"
       >
@@ -74,12 +74,12 @@ onMounted(() => {
       <div class="flex-1 min-w-0">
         <h3
           v-if="props.title"
-          class="ty-sb-h4 text-sb-contrast mb-2"
+          class="sb-h4 text-ink mb-2"
         >
           {{ props.title }}
         </h3>
         <p
-          class="ty-sb-nav-label normal-case text-sb-contrast"
+          class="sb-label uppercase normal-case text-ink"
         >
           {{ props.message }}
         </p>

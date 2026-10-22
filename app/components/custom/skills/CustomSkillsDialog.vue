@@ -118,7 +118,7 @@ const _debouncedFilterUpdate = () => {
         <BaseInput
           id="skill-key"
           v-model:input="skillsKey"
-          class="w-full md:w-2/3 u-sb-soft-transition"
+          class="w-full md:w-2/3 sb-transition"
           :placeholder="t('pages.skills.skillsDialog.filters.searchPlaceholder')"
           prefix-icon="solar:card-search-bold-duotone"
           type="search"
@@ -126,7 +126,7 @@ const _debouncedFilterUpdate = () => {
         <BaseCombobox
           id="skill-level"
           v-model:input="skillsTypes"
-          class="w-full md:w-1/3 u-sb-soft-transition"
+          class="w-full md:w-1/3 sb-transition"
           :items="typesItems"
           :placeholder="t('pages.skills.skillsDialog.filters.typePlaceholder')"
           prefix-icon="solar:filter-bold-duotone"
@@ -135,7 +135,7 @@ const _debouncedFilterUpdate = () => {
       </div>
     </template>
     <div
-      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 auto-rows-fr items-stretch u-sb-soft-transition"
+      class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 lg:gap-10 auto-rows-fr items-stretch sb-transition"
     >
       <template v-if="skills.length > 0">
         <CustomSkillsCard
@@ -162,7 +162,7 @@ const _debouncedFilterUpdate = () => {
     </div>
     <template #footer>
       <div class="flex flex-col md:flex-row items-center justify-center md:justify-between gap-4 w-full">
-        <div class="text-sb-accent ty-sb-caption u-sb-soft-transition">
+        <div class="text-primary sb-small italic sb-transition">
           {{ t('pages.skills.skillsDialog.total', { tot: totalSkills }) }}
         </div>
         <div class="flex items-center gap-4">
@@ -174,7 +174,7 @@ const _debouncedFilterUpdate = () => {
           >
             <Icon name="solar:map-arrow-left-bold-duotone" />
           </BaseButton>
-          <span class=" text-sb-accent ty-sb-caption u-sb-soft-transition">
+          <span class=" text-primary sb-small italic sb-transition">
             {{ currentPage }} / {{ totalPages === 0 ? 1 : totalPages }}
           </span>
           <BaseButton

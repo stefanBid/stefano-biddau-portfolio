@@ -31,25 +31,25 @@ const lastUpdate = computed(() => {
   <article class="space-y-8 sm:space-y-10 md:space-y-12 pt-16">
     <!-- Header -->
     <header class="space-y-4 sm:space-y-5 md:space-y-6 text-center">
-      <h1 class="ty-sb-hero mb-0">
+      <h1 class="sb-display mb-0">
         {{ t('pages.privacy.title') }}
       </h1>
-      <p class="ty-sb-h4 text-sb-muted">
+      <p class="sb-h4 text-ink-muted">
         {{ t('pages.privacy.subtitle') }}
       </p>
-      <p class="ty-sb-label text-sb-muted/70">
+      <p class="sb-overline text-ink-muted/70">
         {{ t('pages.privacy.lastUpdate') }}: {{ lastUpdate }}
       </p>
     </header>
 
-    <hr class="border-sb-border" />
+    <hr class="border-border" />
 
     <!-- Introduction -->
     <section class="space-y-4 md:space-y-5">
-      <h2 class="ty-sb-h1">
+      <h2 class="sb-h1">
         {{ t('pages.privacy.intro.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted leading-relaxed">
+      <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.privacy.intro.content') }}
       </p>
     </section>
@@ -57,17 +57,17 @@ const lastUpdate = computed(() => {
     <!-- Section 1: Data Controller -->
     <BaseCard full-custom-content variant="dark">
       <div class="space-y-4 md:space-y-5">
-        <h2 class="ty-sb-h3">
+        <h2 class="sb-h3">
           {{ t('pages.privacy.dataController.title') }}
         </h2>
         <div class="space-y-3 md:space-y-4">
-          <p class="ty-sb-p text-sb-muted leading-relaxed">
-            {{ t('pages.privacy.dataController.name') }}: <span class="text-sb-contrast">Stefano Biddau</span>
+          <p class="sb-body text-ink-muted leading-relaxed">
+            {{ t('pages.privacy.dataController.name') }}: <span class="text-ink">Stefano Biddau</span>
           </p>
-          <p class="ty-sb-p text-sb-muted leading-relaxed">
+          <p class="sb-body text-ink-muted leading-relaxed">
             {{ t('pages.privacy.dataController.email') }}:
             <a
-              class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+              class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
               href="mailto:biddau.stefano99@gmail.com"
             >
               biddau.stefano99@gmail.com
@@ -79,24 +79,24 @@ const lastUpdate = computed(() => {
 
     <!-- Section 2: Data Collected -->
     <section class="space-y-4 md:space-y-5">
-      <h2 class="ty-sb-h3">
+      <h2 class="sb-h3">
         {{ t('pages.privacy.dataCollected.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted leading-relaxed">
+      <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.privacy.dataCollected.intro') }}
       </p>
       <ul class="space-y-3 md:space-y-4 ml-4 md:ml-6">
-        <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-          <span class="text-sb-accent shrink-0">•</span>
-          <span><strong class="text-sb-contrast">{{ t('pages.privacy.dataCollected.name') }}:</strong> {{ t('pages.privacy.dataCollected.nameDesc') }}</span>
+        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+          <span class="text-primary shrink-0">•</span>
+          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.name') }}:</strong> {{ t('pages.privacy.dataCollected.nameDesc') }}</span>
         </li>
-        <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-          <span class="text-sb-accent shrink-0">•</span>
-          <span><strong class="text-sb-contrast">{{ t('pages.privacy.dataCollected.email') }}:</strong> {{ t('pages.privacy.dataCollected.emailDesc') }}</span>
+        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+          <span class="text-primary shrink-0">•</span>
+          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.email') }}:</strong> {{ t('pages.privacy.dataCollected.emailDesc') }}</span>
         </li>
-        <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-          <span class="text-sb-accent shrink-0">•</span>
-          <span><strong class="text-sb-contrast">{{ t('pages.privacy.dataCollected.message') }}:</strong> {{ t('pages.privacy.dataCollected.messageDesc') }}</span>
+        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+          <span class="text-primary shrink-0">•</span>
+          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.message') }}:</strong> {{ t('pages.privacy.dataCollected.messageDesc') }}</span>
         </li>
       </ul>
     </section>
@@ -104,10 +104,10 @@ const lastUpdate = computed(() => {
     <!-- Section 3: Purpose -->
     <BaseCard full-custom-content variant="light">
       <div class="space-y-4 md:space-y-5">
-        <h2 class="ty-sb-h3">
+        <h2 class="sb-h3">
           {{ t('pages.privacy.purpose.title') }}
         </h2>
-        <p class="ty-sb-p text-sb-muted leading-relaxed">
+        <p class="sb-body text-ink-muted leading-relaxed">
           {{ t('pages.privacy.purpose.content') }}
         </p>
       </div>
@@ -115,10 +115,10 @@ const lastUpdate = computed(() => {
 
     <!-- Section 4: Legal Basis -->
     <section class="space-y-4 md:space-y-5">
-      <h2 class="ty-sb-h3">
+      <h2 class="sb-h3">
         {{ t('pages.privacy.legalBasis.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted leading-relaxed">
+      <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.privacy.legalBasis.content') }}
       </p>
     </section>
@@ -126,20 +126,20 @@ const lastUpdate = computed(() => {
     <!-- Section 5: Third Parties -->
     <BaseCard full-custom-content variant="dark">
       <div class="space-y-4 md:space-y-5">
-        <h2 class="ty-sb-h3">
+        <h2 class="sb-h3">
           {{ t('pages.privacy.thirdParties.title') }}
         </h2>
-        <p class="ty-sb-p text-sb-muted leading-relaxed">
+        <p class="sb-body text-ink-muted leading-relaxed">
           {{ t('pages.privacy.thirdParties.intro') }}
         </p>
         <div class="space-y-2 md:space-y-3">
-          <p class="ty-sb-p text-sb-muted leading-relaxed">
-            <strong class="text-sb-contrast">EmailJS</strong> - {{ t('pages.privacy.thirdParties.emailjs') }}
+          <p class="sb-body text-ink-muted leading-relaxed">
+            <strong class="text-ink">EmailJS</strong> - {{ t('pages.privacy.thirdParties.emailjs') }}
           </p>
-          <p class="ty-sb-label text-sb-muted/70">
+          <p class="sb-overline text-ink-muted/70">
             {{ t('pages.privacy.thirdParties.privacyPolicy') }}:
             <a
-              class="text-sb-accent hover:text-sb-accent-hover wrap-break-word underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+              class="text-primary hover:text-primary-hover wrap-break-word underline underline-offset-4 sb-transition sb-focus rounded-sm"
               href="https://www.emailjs.com/legal/privacy-policy/"
               rel="noopener noreferrer"
               target="_blank"
@@ -153,10 +153,10 @@ const lastUpdate = computed(() => {
 
     <!-- Section 6: Data Retention -->
     <section class="space-y-4 md:space-y-5">
-      <h2 class="ty-sb-h3">
+      <h2 class="sb-h3">
         {{ t('pages.privacy.dataRetention.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted leading-relaxed">
+      <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.privacy.dataRetention.content') }}
       </p>
     </section>
@@ -164,42 +164,42 @@ const lastUpdate = computed(() => {
     <!-- Section 7: Your Rights -->
     <BaseCard full-custom-content variant="light">
       <div class="space-y-4 md:space-y-5">
-        <h2 class="ty-sb-h3">
+        <h2 class="sb-h3">
           {{ t('pages.privacy.yourRights.title') }}
         </h2>
-        <p class="ty-sb-p text-sb-muted leading-relaxed">
+        <p class="sb-body text-ink-muted leading-relaxed">
           {{ t('pages.privacy.yourRights.intro') }}
         </p>
         <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.access') }}</span>
           </li>
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.rectification') }}</span>
           </li>
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.erasure') }}</span>
           </li>
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.restriction') }}</span>
           </li>
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.portability') }}</span>
           </li>
-          <li class="ty-sb-p text-sb-muted leading-relaxed flex gap-3">
-            <span class="text-sb-accent shrink-0">•</span>
+          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
+            <span class="text-primary shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.objection') }}</span>
           </li>
         </ul>
-        <p class="ty-sb-p text-sb-muted leading-relaxed">
+        <p class="sb-body text-ink-muted leading-relaxed">
           {{ t('pages.privacy.yourRights.contact') }}:
           <a
-            class="text-sb-accent hover:text-sb-accent-hover underline underline-offset-4 u-sb-soft-transition u-sb-focus rounded"
+            class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
             href="mailto:biddau.stefano99@gmail.com"
           >
             biddau.stefano99@gmail.com
@@ -210,10 +210,10 @@ const lastUpdate = computed(() => {
 
     <!-- Section 8: Changes -->
     <section class="space-y-4 md:space-y-5">
-      <h2 class="ty-sb-h3">
+      <h2 class="sb-h3">
         {{ t('pages.privacy.changes.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted leading-relaxed">
+      <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.privacy.changes.content') }}
       </p>
     </section>
