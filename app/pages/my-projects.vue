@@ -25,10 +25,11 @@ const onSelectTab = (tabId: string | number) => {
   <div>
     <ThePageHero
       id="my-projects"
-      :text="t('pages.projects.hero')"
+      :bordered="false"
+      :text="currentTabId === 'templateProject' ? t('nav.sb-templates') : t('pages.projects.hero')"
     />
     <BaseTabs
-      class="mt-20"
+      class="mt-8 md:mt-20"
       panel-id="projects-panel"
       :selected-tab-id="currentTabId"
       :tabs="tabs"

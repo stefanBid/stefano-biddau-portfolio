@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           :to="props.quickLinks[0]?.path || '/'"
         >
           <NuxtImg
-            alt="Logo"
+            alt=""
             class="object-contain size-7 sm:size-8 md:size-9"
             src="/images/logo.webp"
           />
@@ -56,12 +56,12 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           {{ t('footer.routeSection') }}
         </h2>
 
-        <nav class="flex flex-col gap-2">
+        <nav class="flex flex-col">
           <template v-if="props.quickLinks.length">
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
+                class="w-fit inline-flex items-center min-h-10 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
                 :to="link.path"
               >
                 {{ link.name }}
@@ -94,9 +94,9 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             v-if="props.email"
             class="sb-label text-ink/85 flex items-center"
           >
-            <Icon class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:letter-opened-bold-duotone" />
+            <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:letter-opened-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-primary sb-transition sb-focus rounded-sm"
+              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`mailto:${props.email}`"
             >
               {{ props.email }}
@@ -107,9 +107,9 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             v-if="props.phone"
             class="sb-label text-ink/85 flex items-center"
           >
-            <Icon class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:smartphone-2-bold-duotone" />
+            <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:smartphone-2-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-primary sb-transition sb-focus rounded-sm"
+              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`tel:${props.phone}`"
             >
               {{ props.phone }}
@@ -178,7 +178,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 not-italic text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
-            class="hover:text-primary underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('privacy-policy')"
           >
             {{ t('nav.privacy-policy') }}
@@ -189,7 +189,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
           <!-- Terms -->
           <NuxtLink
-            class="hover:text-primary underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('terms-and-conditions')"
           >
             {{ t('nav.terms-and-conditions') }}

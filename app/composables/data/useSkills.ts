@@ -396,9 +396,13 @@ export default function useSkills() {
     }
   })
 
+  const countByTypes = (types: SkillType[]): number =>
+    SKILLS_DATA.filter(skill => skill.category && types.includes(skill.category)).length
+
   return {
     filters,
     skills,
     pagination,
+    countByTypes,
   }
 }

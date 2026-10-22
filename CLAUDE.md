@@ -46,6 +46,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
+- **Never write a native `<button>`**: use `BaseButton` (variants `primary`, `secondary`, `outline`, `ghost`, `tab`, `bare`; props `iconOnly`, `block`, `isActive`, `tone`). Base components that need a button are built on it too
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 
@@ -132,7 +133,7 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 Four files in `app/assets/css/`, prefix `sb`, structure maintained by the sb-design plugin (`/sb-design:check`, `/sb-design:align`): `main.css` (entry, page base styles), `theme.css`, `typography.css`, `animation.css`. Values and full tables: README §4.
 
 ### Colours (`theme.css`)
-Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `border-strong` (inputs, ≥ 3:1), `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Avoid `text-primary` on `bg-surface-2` (below AA). `--sb-gold-100…900` are raw-only illustration colours for the gold skill cards.
+Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `border-strong` (inputs, ≥ 3:1), `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `primary-ink` / `primary-ink-hover` (orange as text), `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Orange text is always `text-primary-ink`, never `text-primary` (fails AA on `surface-2`). `--sb-gold-100…900` are raw-only illustration colours for the gold skill cards.
 
 ### Shapes and shadows (`theme.css`)
 `rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
@@ -147,7 +148,7 @@ Always add `sb-transition` to interactive elements (colour, background, border, 
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
 - Collections: `solar` (bold duotone UI), `mdi` (general UI), `logos` (brand/tech), `flagpack` (flags)
 - Size via Tailwind: `size-4` to `size-7`
-- Colour via token: `text-ink`, `text-ink-muted`, `text-primary`
+- Colour via token: `text-ink`, `text-ink-muted`, `text-primary-ink`
 - Always `aria-label` on icon-only interactive elements
 - **Do not use `lucide`** — not installed
 
@@ -204,12 +205,12 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination } = useSkills()
+const { filters, skills, pagination, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs).
 
 ### `useTemplates()`
 ```ts

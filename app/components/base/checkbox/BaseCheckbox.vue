@@ -60,7 +60,6 @@ const model = defineModel<boolean>('input')
       v-if="props.error"
       :id="`${props.id}-error`"
       class="sb-small text-error mt-2 pl-8 sb-transition"
-      role="alert"
     >
       {{ props.error }}
     </p>

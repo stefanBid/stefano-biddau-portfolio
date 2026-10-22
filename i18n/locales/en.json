@@ -55,7 +55,9 @@
     "showMilestone": "Show milestone: {title}",
     "skillsSection": "Skills and technologies",
     "timelineSection": "Professional timeline",
-    "skillLevel": "Level {level} of 5"
+    "skillLevel": "Level {level} of 5",
+    "newTab": "opens in a new tab",
+    "selectedCount": "{count} selected"
   },
   "errorPage": {
     "notFoundTitle": "Page not found",
@@ -83,24 +85,24 @@
         ]
       },
       "cvCard": {
-        "title": "Download My CV",
-        "subtitle": "Discover my professional journey",
-        "paragraph": "A comprehensive overview of my skills, work experiences, and key projects. The document is updated and optimized for quick consultation.",
         "buttonText": "Download CV"
       },
       "contactCard": {
-        "title": "Contact Me",
-        "subtitle": "Let's talk about your projects",
-        "paragraph": "If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together.",
         "buttonText": "Get in Touch"
       },
       "selectedWork": {
         "title": "Selected work",
-        "viewAll": "All projects"
+        "viewAll": "All projects",
+        "meta": {
+          "romano": "Client website · 2025 · Nuxt",
+          "sbTemplates": "Open-source templates · since 2025 · Nuxt, Astro, Flutter",
+          "floatingPanel": "Open-source library · 2025 · Vue 3"
+        }
       },
       "contactForm": {
         "title": "Contact Me",
-        "subtitle": "Fill out the form to send me a message. I’ll get back to you as soon as possible.",
+        "subtitle": "Write to me about a project or a role. I'll reply by email.",
+        "errorSummary": "One field needs attention | {count} fields need attention",
         "fields": {
           "name": {
             "label": "Name",
@@ -111,13 +113,15 @@
           "email": {
             "label": "Email",
             "placeholder": "Enter your email",
-            "errorInvalid": "Invalid email address"
+            "errorInvalid": "Invalid email address",
+            "errorRequired": "Email is required"
           },
           "message": {
             "label": "Message",
             "placeholder": "Write your message here...",
             "errorRequired": "Message is required",
             "errorMinlength": "Message is too short",
+            "hint": "At least 10 characters.",
             "errorMaxlength": "Message is too long"
           },
           "consentGiven": {
@@ -130,7 +134,7 @@
             "loadingText": "Sending"
           },
           "resetButton": {
-            "text": "Reset"
+            "text": "Clear form"
           }
         },
         "notifications": {
@@ -146,7 +150,7 @@
       }
     },
     "about": {
-      "hero": "Who am I?",
+      "hero": "About me",
       "milestoneCta": "Read More",
       "milestones": [
         {
@@ -179,31 +183,27 @@
           "content": "My transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
         }
       ],
-      "milestoneError": {
-        "title": "Error Loading Milestones",
-        "message": "An error occurred while loading the milestones. Please try again later."
-      },
       "noMilestones": {
         "title": "No Milestones Yet",
         "message": "There are no milestones to display at the moment. Check back soon!"
       }
     },
     "skills": {
-      "hero": "Get to know me!",
+      "hero": "Skills & Technologies",
       "frontendCard": {
-        "title": "Frontend That Dominates the Stage",
-        "paragraph": "This is where I thrive: crafting interfaces that feel sharp, alive, and impossible to ignore. I bring ideas to life with clarity, speed, and a level of polish that makes users feel like everything is exactly where it should be. Smooth interactions, bold visuals, and experiences that hit hard from the very first click — that’s the standard I work with. If you’re looking for someone who can turn a simple concept into a front-end experience that actually sticks with people, you’re in the right place.",
-        "buttonText": "See My Frontend Power"
+        "title": "Frontend",
+        "paragraph": "My main focus. I build interfaces in Vue, Nuxt and Angular with TypeScript and Tailwind CSS, from component libraries to complete sites like this one: accessible, responsive and quick to load.",
+        "buttonText": "Frontend stack · {count}"
       },
       "backendCard": {
-        "title": "The Backbone You Can Actually Trust",
-        "paragraph": "A great product isn’t just a pretty interface — it needs a backend that can take the pressure, keep things moving, and never crack under real traffic. I focus on building foundations that are clean, predictable, and ready to scale without drama. Solid architecture, stable processes, and integrations that don’t fight you every step of the way. When the engine behind your product is reliable and consistent, the whole team moves faster and everything just works.",
-        "buttonText": "Discover My Backend Approach"
+        "title": "Backend",
+        "paragraph": "Java with Spring and Hibernate, Node.js, and SQL databases such as PostgreSQL and MySQL. I design APIs and data models that stay readable as the product grows.",
+        "buttonText": "Backend stack · {count}"
       },
       "designCard": {
-        "title": "Design That Feels Right Instantly",
-        "paragraph": "Good design isn’t about decoration — it’s about guiding people effortlessly through an experience. I bring structure, clarity, and intention to every layout I touch, working closely with designers to amplify their vision and turn it into something users immediately understand. It’s not about flashy visuals, it’s about experiences that flow naturally, look great, and make people feel confident in where they’re going next.",
-        "buttonText": "Explore My Creative Side"
+        "title": "Design & tools",
+        "paragraph": "I work from Figma and Adobe XD designs, document components in Storybook and review them with Chromatic, so what ships matches what was designed.",
+        "buttonText": "Design tools · {count}"
       },
       "skillsDialog": {
         "title": "My Development Toolkit",
@@ -227,15 +227,7 @@
           "title": "No Skills Found",
           "message": "No skills match your search criteria. Please try different keywords or filters."
         },
-        "total": "Total Skills: { tot }",
-        "noSkills": {
-          "title": "No Skills Yet",
-          "message": "There are no skills to display at the moment. Check back soon!"
-        },
-        "skillsError": {
-          "title": "Error Loading Skills",
-          "message": "An error occurred while loading the skills. Please try again later."
-        }
+        "total": "Total Skills: { tot }"
       }
     },
     "projects": {
@@ -243,11 +235,11 @@
         "code": "Code",
         "live": "Live site"
       },
-      "hero": "My Web Projects",
+      "hero": "Projects",
       "personalProjects": {
-        "tabLabel": "Personal Projects",
-        "title": "Personal Projects & Selected Work",
-        "description": "This section showcases a collection of projects that highlight my growth as a developer. Some were built to experiment with new technologies and refine my skills; others are professional projects created for clients who entrusted me with the development of their platforms. Where possible, you can explore the final deployed product, while the source code remains private out of respect for client confidentiality. Each project reflects my approach to development: attention to detail, focus on user experience, and a desire to turn ideas into something tangible.",
+        "tabLabel": "Projects",
+        "title": "Client work & personal projects",
+        "description": "Client sites and personal experiments. Live links where available; client source code stays private.",
          "list": [
           {
             "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
@@ -328,9 +320,10 @@
         "readLessCta": "Read Less"
       },
       "sbTemplatesProject": {
-        "tabLabel": "SB Templates Project",
-        "title": "A faster, smarter way to start your next project",
-        "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building.",
+        "tabLabel": "SB Templates",
+        "logoAlt": "SB Templates logo",
+        "title": "A faster way to start a new project",
+        "description": "Open-source starter templates for Nuxt, Astro and Flutter, with architecture, build tools, linting and formatting already configured, so a new project starts from working code.",
         "list": [
           {
             "id":"454b54e4-aaec-4b41-b03b-d39d5c0b7455",
@@ -368,14 +361,6 @@
           "title": "Coming Soon",
           "paragraph": "I'm working on new templates for different frameworks and platforms. Stay tuned for updates!"
         }
-      },
-      "projectError": {
-        "title": "Error Loading Projects",
-        "message": "An error occurred while loading the projects. Please try again later."
-      },
-      "templatesError": {
-        "title": "Error Loading Templates",
-        "message": "An error occurred while loading the templates. Please try again later."
       }
     },
     "privacy": {

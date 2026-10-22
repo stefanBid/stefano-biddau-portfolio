@@ -204,13 +204,15 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 | `--sb-primary-hover` | `hover:bg-primary-hover` | `#f06a1c` | Hover state of primary |
 | `--sb-primary-border` | `border-primary-border` | `#b34704` | Border on primary elements |
 | `--sb-on-primary` | `text-on-primary` | `#0f0f20` | Text on a primary fill |
+| `--sb-primary-ink` | `text-primary-ink` | `#f47a32` | Orange **as text** (links, CTAs, dates): 5.52:1 on `surface-2`, 6.24:1 on `surface` |
+| `--sb-primary-ink-hover` | `hover:text-primary-ink-hover` | `#f8904d` | Hover state of orange text |
 | `--sb-success/warning/error/info` | `text-success` etc. | — | Status colours (text) |
 | `--sb-*-soft` | `bg-success-soft` etc. | — | Status background tints |
 | `--sb-focus-ring` | `ring-focus-ring` | = ink | Focus ring |
 
 Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-Avoid `text-primary` on `bg-surface-2` (4.24:1, below WCAG AA). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities).
+`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities).
 
 ### Shapes and shadows
 
@@ -314,14 +316,20 @@ All reusable components live in `app/components/`. Three component tiers:
 
 ### `BaseButton`
 
+The **only** component that renders a `<button>` or a button-like `<a>`: every other component (tabs, menus, icon buttons, close button, menu toggle, "Read more", timeline dots) is built on it. ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
+
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style |
-| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a target="_blank">` |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'tab' \| 'bare'` | `'primary'` | `ghost` = text only (links-as-buttons, menu items); `tab` = underlined tab; `bare` = no visual style, for custom-drawn controls (keeps focus ring and transition) |
+| `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
+| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
-| `ariaLabel` | `string` | `undefined` | For icon-only usage |
+| `ariaLabel` | `string` | `undefined` | Required with `iconOnly` |
 | `isDisabled` | `boolean` | `false` | |
 | `isLoading` | `boolean` | `false` | Shows spinner |
+| `isActive` | `boolean` | `false` | Selected state for `ghost` (menu items) and `tab` |
+| `iconOnly` | `boolean` | `false` | Square 44px target |
+| `block` | `boolean` | `false` | Full width, left-aligned (menu and listbox options) |
 
 Slot: `default` (button label / content)
 
@@ -329,8 +337,11 @@ Slot: `default` (button label / content)
 <BaseButton variant="primary" :is-loading="isSaving" type="submit">
   Save
 </BaseButton>
-<BaseButton type="link" to="https://github.com/stefanoBid" variant="outline">
+<BaseButton type="link" to="https://github.com/stefanBid" variant="outline">
   <Icon name="mdi:github" class="size-4" /> GitHub
+</BaseButton>
+<BaseButton variant="ghost" tone="accent" class="uppercase" @click="toggle">
+  Read more
 </BaseButton>
 ```
 
@@ -384,7 +395,7 @@ Model: `defineModel<string>('input')`
 | `id` | `string` | — | Required |
 | `name` | `string` | `undefined` | |
 | `label` | `string` | `undefined` | Shown if no `default` slot |
-| `error` | `string \| null` | `null` | Rendered below as `role="alert"`, linked via `aria-describedby` |
+| `error` | `string \| null` | `null` | Rendered below, linked via `aria-describedby` (no live region: the form announces one summary and moves focus) |
 
 Model: `defineModel<boolean>('input')`
 Slot: `default` (custom label content, rendered inside a `<label for>` so the text toggles the box)
@@ -406,7 +417,7 @@ Generic component (`generic="T"`).
 | `prefixIcon` | `string` | `undefined` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
-Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode); Enter/Space/↓ open, ↑/↓ move between options, Escape closes only the list and returns focus to the input.
+Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode); with more than one value the input reads "N selected" (`a11y.selectedCount`) instead of a truncated list; Enter/Space/↓ open, ↑/↓ move between options, Escape closes only the list and returns focus to the input.
 
 ### `BaseChip`
 
@@ -440,6 +451,7 @@ Behaviour: closes on `Escape`, locks scroll, traps Tab inside and restores focus
 | `icon` | `string` | — | Required. Iconify name |
 | `ariaLabel` | `string` | `undefined` | Always set it |
 | `isActive` | `boolean` | `false` | Active/pressed state styling |
+| `text` | `string` | `undefined` | Optional short label next to the icon (e.g. the current language code) |
 
 Emits: `(e: 'click'): void`
 
@@ -450,7 +462,7 @@ Emits: `(e: 'click'): void`
 | `icon` | `string` | — | Required. Trigger icon |
 | `label` | `string` | — | Required. Accessible name of the trigger and the menu |
 | `items` | `MenuItem[]` | — | Required |
-| `selectedItemId` | `string \| null` | `null` | Checked item (`menuitemradio`) |
+| `selectedItemId` | `string \| null` | `null` | Checked item (`menuitemradio`, check icon); also shown uppercase on the trigger (`EN` / `IT`) |
 
 Emits: `(e: 'select', itemId: string): void`
 Slot: `trigger` (`{ isOpen, toggle }`). ↑/↓ move between items; Escape closes only the menu and returns focus to the trigger.
@@ -467,8 +479,7 @@ Emits: `(e: 'close', value: false): void`. Renders a `solar:close-circle-bold-du
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required |
-| `variant` | `'primary' \| 'secondary'` | `'primary'` | `primary` = accent fill; `secondary` = surface fill |
+| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required. Rendered as underlined text tabs (`BaseButton variant="tab"`); `icon` is not shown |
 | `align` | `'left' \| 'center' \| 'right'` | `'left'` | |
 | `selectedTabId` | `string \| number` | first tab | |
 | `panelId` | `string` | `undefined` | `id` of the `role="tabpanel"` the tabs control |
@@ -522,12 +533,16 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 
 | Prop | Type | Notes |
 |---|---|---|
+| `id` | `string \| number` | Required. Renders the article as `#project-<id>` (deep-link target) |
 | `title` | `string` | Required |
-| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText` |
-| `coverImageSrc` | `string` | Optional project cover |
-| `coverImageAlt` | `string` | Optional alt text |
-| `codebaseUrl` | `string` | Optional GitHub link |
-| `deployUrl` | `string` | Optional live demo link |
+| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText`; first block as preview, "Read more" expands in place |
+| `imageSrc` | `string` | Optional project cover |
+| `imageAlt` | `string` | Optional alt text |
+| `codebaseUrls` | `MenuItem[]` | Optional source links ("Code" button, or a menu when more than one) |
+| `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site" button, or a menu) |
+| `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
+
+Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
 
 ### `CustomSbTemplatesCard`
 
@@ -579,7 +594,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Compact page opener for inner pages (About, Skills, Projects): `min-h-[40dvh]`, the page `h1` in `sb-hero`, entering with `animate-rise-in`. Props: `id`, `text`. The home page has its own first screen (name, role, CTAs, avatar, selected work) and does not use it.
+Compact page opener for inner pages (About, Skills, Projects): `min-h-[40dvh]`, the page `h1` in `sb-hero`, entering with `animate-rise-in`. Props: `id`, `text`, `bordered` (default `true`; `false` on `my-projects.vue`, where the tab bar already draws the divider). The home page has its own first screen (name, role, CTAs, avatar, selected work) and does not use it.
 
 ---
 
@@ -819,13 +834,13 @@ Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.lis
 ### `useSkills()`
 
 ```ts
-const { filters, skills, pagination } = useSkills()
+const { filters, skills, pagination, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs).
 
 ---
 

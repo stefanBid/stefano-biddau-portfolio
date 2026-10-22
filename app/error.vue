@@ -30,7 +30,7 @@ const onBackHome = () => {
 <template>
   <NuxtLayout>
     <section class="min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center text-center gap-6 py-20">
-      <h1 class="sb-display text-primary mb-0 tabular-nums">
+      <h1 class="sb-hero text-primary-ink mb-0 tabular-nums">
         {{ is404 ? '404' : (props.error.statusCode ?? 500) }}
       </h1>
 

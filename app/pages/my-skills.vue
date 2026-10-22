@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import useSkills from '~/composables/data/useSkills'
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
@@ -17,8 +19,16 @@ useSeoMeta({
 })
 
 // State
+const { countByTypes } = useSkills()
+
 const openSkillsDialog = ref<boolean>(false)
 const filterTypes = ref<SkillType[]>([])
+
+const PRESET_TYPES: Record<'frontend' | 'backend' | 'design', SkillType[]> = {
+  frontend: ['feLang', 'feFramework'],
+  backend: ['beLang', 'beFramework', 'database'],
+  design: ['tool'],
+}
 
 const ICONS = {
   frontend: [
@@ -48,21 +58,8 @@ const ICONS = {
 }
 
 // Events
-const onOpenSkillsDialog = (filterPresetType?: 'frontend' | 'backend' | 'design') => {
-  switch (filterPresetType) {
-    case 'frontend':
-      filterTypes.value = ['feLang', 'feFramework']
-      break
-    case 'backend':
-      filterTypes.value = ['beLang', 'beFramework', 'database']
-      break
-    case 'design':
-      filterTypes.value = ['tool']
-      break
-    default:
-      filterTypes.value = []
-      break
-  }
+const onOpenSkillsDialog = (filterPresetType?: keyof typeof PRESET_TYPES) => {
+  filterTypes.value = filterPresetType ? PRESET_TYPES[filterPresetType] : []
   openSkillsDialog.value = true
 }
 
@@ -88,7 +85,7 @@ const onCloseSkillsDialog = () => {
         <div class="relative h-fit">
           <!-- Left content (not clipped) -->
           <div class="flex items-center">
-            <div class="min-h-117.5 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface/70 rounded-lg">
+            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.frontendCard.title') }}
               </h2>
@@ -97,7 +94,7 @@ const onCloseSkillsDialog = () => {
               </p>
               <div class="mt-6 md:mt-8">
                 <BaseButton variant="primary" @click="onOpenSkillsDialog('frontend')">
-                  {{ t('pages.skills.frontendCard.buttonText') }}
+                  {{ t('pages.skills.frontendCard.buttonText', { count: countByTypes(PRESET_TYPES.frontend) }) }}
                 </BaseButton>
               </div>
             </div>
@@ -108,7 +105,7 @@ const onCloseSkillsDialog = () => {
             class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
           >
             <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
               <CustomSolarSystem :planets-icon="ICONS.frontend" />
             </div>
           </div>
@@ -125,7 +122,7 @@ const onCloseSkillsDialog = () => {
         <div class="relative h-fit">
           <!-- Left content (not clipped) -->
           <div class="flex items-center">
-            <div class="min-h-117.5 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface/70 rounded-lg">
+            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.backendCard.title') }}
               </h2>
@@ -134,7 +131,7 @@ const onCloseSkillsDialog = () => {
               </p>
               <div class="mt-6 md:mt-8">
                 <BaseButton variant="primary" @click="onOpenSkillsDialog('backend')">
-                  {{ t('pages.skills.backendCard.buttonText') }}
+                  {{ t('pages.skills.backendCard.buttonText', { count: countByTypes(PRESET_TYPES.backend) }) }}
                 </BaseButton>
               </div>
             </div>
@@ -145,7 +142,7 @@ const onCloseSkillsDialog = () => {
             class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
           >
             <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
               <CustomSolarSystem :planets-icon="ICONS.backend" />
             </div>
           </div>
@@ -162,7 +159,7 @@ const onCloseSkillsDialog = () => {
         <div class="relative h-fit">
           <!-- Left content (not clipped) -->
           <div class="flex items-center">
-            <div class="min-h-117.5 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface/70 rounded-lg">
+            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
               <h2 class="sb-h3 mb-0 text-center md:text-left">
                 {{ t('pages.skills.designCard.title') }}
               </h2>
@@ -171,7 +168,7 @@ const onCloseSkillsDialog = () => {
               </p>
               <div class="mt-6 md:mt-8">
                 <BaseButton variant="primary" @click="onOpenSkillsDialog('design')">
-                  {{ t('pages.skills.designCard.buttonText') }}
+                  {{ t('pages.skills.designCard.buttonText', { count: countByTypes(PRESET_TYPES.design) }) }}
                 </BaseButton>
               </div>
             </div>
@@ -182,7 +179,7 @@ const onCloseSkillsDialog = () => {
             class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
           >
             <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2">
+            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
               <CustomSolarSystem :planets-icon="ICONS.design" />
             </div>
           </div>

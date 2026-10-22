@@ -97,7 +97,7 @@ const htmlContent = computed(() => {
 }
 
 .rich-text :deep(a) {
-  color: var(--color-primary);
+  color: var(--color-primary-ink);
   text-decoration: underline;
   transition: opacity var(--sb-duration-feedback) var(--ease-in-out);
 }

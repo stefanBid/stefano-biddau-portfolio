@@ -39,7 +39,7 @@ const FIELD_IDS: Record<ContactField, string> = {
 // Messages are i18n keys, resolved at render time so they follow a locale switch
 const contactValidationSchema = z.object({
   name: z.string().trim().min(1, 'pages.home.contactForm.fields.name.errorRequired').max(100, 'pages.home.contactForm.fields.name.errorMaxlength'),
-  email: z.email('pages.home.contactForm.fields.email.errorInvalid'),
+  email: z.string().trim().min(1, 'pages.home.contactForm.fields.email.errorRequired').pipe(z.email('pages.home.contactForm.fields.email.errorInvalid')),
   message: z.string().trim().min(1, 'pages.home.contactForm.fields.message.errorRequired').min(MESSAGE_MIN_LENGTH, 'pages.home.contactForm.fields.message.errorMinlength').max(MESSAGE_MAX_LENGTH, 'pages.home.contactForm.fields.message.errorMaxlength'),
   consentGiven: z.boolean().refine(val => val === true, {
     message: 'pages.home.contactForm.fields.consentGiven.errorRequired',
@@ -64,6 +64,8 @@ const formIsChanged = computed(() => {
     || consentGivenController.value !== false
   )
 })
+
+const errorCount = computed(() => FIELD_ORDER.filter(field => errors.value[field]).length)
 
 const errorMessage = (field: ContactField) => {
   const key = errors.value[field]
@@ -190,7 +192,15 @@ watch(
     :title="t('pages.home.contactForm.title')"
     @close="closeForm"
   >
-    <form class="flex flex-col gap-6 my-4 md:my-6 sb-transition" @reset.prevent="onResetForm" @submit.prevent="onSendMessage">
+    <form
+      class="flex flex-col gap-6 my-4 md:my-6 sb-transition"
+      novalidate
+      @reset.prevent="onResetForm"
+      @submit.prevent="onSendMessage"
+    >
+      <p aria-live="polite" class="sr-only">
+        {{ errorCount ? t('pages.home.contactForm.errorSummary', errorCount) : '' }}
+      </p>
       <div class="flex flex-col md:flex-row gap-6">
         <div class="w-full md:w-[45%] space-y-6 ">
           <BaseInput
@@ -217,6 +227,7 @@ watch(
             id="message"
             v-model:input="messageController"
             :error="errorMessage('message')"
+            :hint="t('pages.home.contactForm.fields.message.hint')"
             :label="t('pages.home.contactForm.fields.message.label')"
             :max-length="MESSAGE_MAX_LENGTH"
             :placeholder="t('pages.home.contactForm.fields.message.placeholder')"
@@ -231,20 +242,22 @@ watch(
         {{ t('pages.home.contactForm.fields.consentGiven.label') }}
         {{ t('pages.home.contactForm.fields.consentGiven.extra') }}
         <NuxtLink
-          class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
+          class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           rel="noopener noreferrer"
           target="_blank"
           :to="localePath('privacy-policy')"
         >
           {{ t('nav.privacy-policy') }}
+          <span class="sr-only">({{ t('a11y.newTab') }})</span>
         </NuxtLink>,
         <NuxtLink
-          class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
+          class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           rel="noopener noreferrer"
           target="_blank"
           :to="localePath('terms-and-conditions')"
         >
           {{ t('nav.terms-and-conditions') }}
+          <span class="sr-only">({{ t('a11y.newTab') }})</span>
         </NuxtLink>
       </BaseCheckbox>
       <div
@@ -266,7 +279,7 @@ watch(
         <BaseButton
           :is-disabled="!formIsChanged || emailIsSending"
           type="reset"
-          variant="secondary"
+          variant="ghost"
         >
           {{ t('pages.home.contactForm.fields.resetButton.text') }}
         </BaseButton>

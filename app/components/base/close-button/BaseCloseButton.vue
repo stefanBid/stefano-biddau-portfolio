@@ -12,22 +12,23 @@ const emit = defineEmits <{
 }>()
 
 // Events
-const onClose = () => {
+const onClose = (event: MouseEvent) => {
+  event.stopPropagation()
   emit('close', false)
 }
 </script>
 
 <template>
-  <button
+  <BaseButton
     :aria-label="props.label"
-    class="inline-flex group items-center rounded-lg p-1 sb-focus ml-4 cursor-pointer text-ink-muted hover:text-ink sb-transition"
-    type="button"
-    @click.stop="onClose"
+    icon-only
+    variant="ghost"
+    @click="onClose"
   >
     <Icon
       aria-hidden="true"
-      class="size-6 md:size-7 sb-transition"
+      class="size-6 md:size-7"
       name="solar:close-circle-bold-duotone"
     />
-  </button>
+  </BaseButton>
 </template>

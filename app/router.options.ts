@@ -19,7 +19,16 @@ export default <RouterConfig>{
     // (main.css) — without it the browser glides to position over ~1s.
     return new Promise((resolve) => {
       nuxtApp.hooks.hookOnce('page:transition:finish', () => {
-        resolve(savedPosition ? { ...savedPosition, behavior: 'instant' } : { top: 0, behavior: 'instant' })
+        if (savedPosition) {
+          resolve({ ...savedPosition, behavior: 'instant' })
+        }
+        else if (to.hash) {
+          // Deep links (e.g. home → /my-projects#project-<id>); the offset clears the fixed h-16 header
+          resolve({ el: to.hash, top: 96, behavior: 'instant' })
+        }
+        else {
+          resolve({ top: 0, behavior: 'instant' })
+        }
       })
     })
   },

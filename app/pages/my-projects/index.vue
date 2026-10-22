@@ -21,50 +21,29 @@ useSeoMeta({
 const { projects } = useProjects()
 
 // State
-const expandedProjectIds = ref<Set<string>>(new Set())
+// Set on the client only: prerendered HTML has no hash, so it cannot drive the first render
+const linkedProjectId = ref<string | null>(null)
 
 // Events
-
-const onTriggerProject = (projectId: string, isExpanded: boolean) => {
-  const set = new Set(expandedProjectIds.value)
-  if (isExpanded) {
-    set.add(projectId)
-    // Scroll to milestone with offset for header
-    nextTick(() => {
-      if (!import.meta.client) {
-        return
-      }
-
-      const milestoneElement = document.querySelector(`[data-project-id="${projectId}"]`)
-      if (milestoneElement) {
-        const headerOffset = 80 // Header height + some padding
-        const elementPosition = milestoneElement.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.scrollY - headerOffset
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        })
-      }
-    })
-  }
-  else { set.delete(projectId) }
-  expandedProjectIds.value = set
-}
+onMounted(() => {
+  watch(() => route.hash, (hash) => {
+    linkedProjectId.value = hash.startsWith('#project-') ? decodeURIComponent(hash.slice('#project-'.length)) : null
+  }, { immediate: true })
+})
 </script>
 
 <template>
-  <div class="flex flex-col gap-20">
-    <div class="grid gap-3 md:gap-4 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.5fr)] lg:gap-x-12 lg:items-start">
-      <h2 class="sb-h1 mb-0">
+  <div class="flex flex-col gap-10 md:gap-20">
+    <header class="flex flex-col gap-3">
+      <h2 class="sb-h1 mb-0 text-balance">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="sb-body text-ink-muted">
+      <p class="sb-body text-ink-muted mb-0">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
-    </div>
+    </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-16 items-start">
       <template v-if="!projects || projects.length === 0">
         <div class="col-span-2">
           <BaseEmptyBox
@@ -79,14 +58,13 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
           v-for="project in projects"
           :id="project.id"
           :key="project.id"
-          :class="{ 'lg:col-span-2': expandedProjectIds.has(project.id) }"
           :codebase-urls="project.codebaseUrls"
           :content="project.content"
           :deployment-urls="project.deploymentUrls"
           :image-alt="project.coverImageAlt"
           :image-src="project.coverImageSrc"
+          :initially-expanded="project.id === linkedProjectId"
           :title="project.title"
-          @toggle-description="onTriggerProject(project.id, $event)"
         />
       </template>
     </div>

@@ -11,6 +11,9 @@ interface BaseChipProps {
   }
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<BaseChipProps>(), {
   icon: undefined,
@@ -54,7 +57,7 @@ const onClick = () => {
     :class="{
       'bg-primary text-on-primary': props.variant === 'primary',
       'bg-surface border border-border text-ink': props.variant === 'secondary',
-      'bg-transparent border border-primary text-primary': props.variant === 'outline',
+      'bg-transparent border border-primary text-primary-ink': props.variant === 'outline',
       'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'primary',
       'cursor-pointer hover:bg-surface-2 active:bg-border': isInteractive && props.variant === 'secondary',
       'cursor-pointer hover:bg-primary hover:text-on-primary active:opacity-90': isInteractive && props.variant === 'outline',
@@ -67,9 +70,11 @@ const onClick = () => {
   >
     <Icon
       v-if="props.icon"
+      aria-hidden="true"
       class="size-3.5 md:size-4"
       :name="props.icon"
     />
     <span class="sb-overline truncate">{{ props.text }}</span>
+    <span v-if="props.linkable?.target === '_blank'" class="sr-only">({{ t('a11y.newTab') }})</span>
   </component>
 </template>

@@ -18,7 +18,7 @@ const props = withDefaults(
     imageWidth: undefined,
     imageHeight: undefined,
     icons: undefined,
-    deploymentUrl: undefined,
+    codebaseUrl: undefined,
   },
 )
 
@@ -31,6 +31,18 @@ const DEFAULT_IMAGE_HEIGHT = 400
 
 const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
 const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
+
+const TECH_NAMES: Record<string, string> = {
+  'logos:nuxt-icon': 'Nuxt',
+  'logos:flutter': 'Flutter',
+  'logos:ios': 'iOS',
+  'logos:android-icon': 'Android',
+  'logos:astro-icon': 'Astro',
+}
+
+const techLabel = computed(() => (props.icons ?? [])
+  .map(icon => TECH_NAMES[icon] ?? icon.split(':').pop()?.replace(/-icon$/, '') ?? icon)
+  .join(' + '))
 </script>
 
 <template>
@@ -70,17 +82,21 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
         <!-- Technologies -->
         <div
           v-if="props.icons && props.icons.length > 0"
+          :aria-label="techLabel"
           class="flex items-center justify-center gap-2 mt-6 sb-transition"
+          role="img"
         >
           <template v-for="(icon, index) in props.icons" :key="index">
             <div class="flex items-center justify-center p-2 rounded-md bg-ink h-10 md:h-12">
               <Icon
-                class="size-6 md:size-7 text-primary sb-transition"
+                aria-hidden="true"
+                class="size-6 md:size-7 text-primary-ink sb-transition"
                 :name="icon"
               />
             </div>
             <span
               v-if="index < props.icons.length - 1"
+              aria-hidden="true"
               class="sb-body text-ink-muted"
             >
               +

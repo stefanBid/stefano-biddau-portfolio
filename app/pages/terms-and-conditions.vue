@@ -76,19 +76,19 @@ const lastUpdate = computed(() => {
       </p>
       <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.useOfWebsite.point1') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.useOfWebsite.point2') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.useOfWebsite.point3') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.useOfWebsite.point4') }}</span>
         </li>
       </ul>
@@ -116,15 +116,15 @@ const lastUpdate = computed(() => {
       </p>
       <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.contactForm.point1') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.contactForm.point2') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span>{{ t('pages.terms.contactForm.point3') }}</span>
         </li>
       </ul>
@@ -194,7 +194,7 @@ const lastUpdate = computed(() => {
       <p class="sb-body text-ink-muted leading-relaxed">
         {{ t('pages.terms.contact.content') }}:
         <a
-          class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
+          class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
           href="mailto:biddau.stefano99@gmail.com"
         >
           biddau.stefano99@gmail.com

@@ -7,6 +7,7 @@ interface CustomProjectsCardProps {
   imageAlt?: string
   codebaseUrls?: Array<MenuItem>
   deploymentUrls?: Array<MenuItem>
+  initiallyExpanded?: boolean
 }
 
 // Input / Output
@@ -15,6 +16,7 @@ const props = withDefaults(
   {
     imageSrc: undefined,
     imageAlt: undefined,
+    initiallyExpanded: false,
   },
 )
 
@@ -27,8 +29,14 @@ const emits = defineEmits<{
 const { t } = useI18n()
 
 // State
-const isDescriptionExpanded = ref(false)
-const MAX_CONTENT_BLOCKS = 1 // numero massimo di blocchi da mostrare in preview
+const isDescriptionExpanded = ref(props.initiallyExpanded)
+const MAX_CONTENT_BLOCKS = 1
+
+watch(() => props.initiallyExpanded, (value) => {
+  if (value) {
+    isDescriptionExpanded.value = true
+  }
+})
 
 const needsExpansion = computed(() => {
   const hasManyBlocks = props.content?.length > MAX_CONTENT_BLOCKS
@@ -77,8 +85,7 @@ const urlGroups = computed<UrlGroup[]>(() => {
 })
 
 // Events
-const onTriggerDescription = (event: Event) => {
-  (event.currentTarget as HTMLElement)?.blur()
+const onTriggerDescription = () => {
   isDescriptionExpanded.value = !isDescriptionExpanded.value
   emits('toggleDescription', isDescriptionExpanded.value)
 }
@@ -89,7 +96,11 @@ const onSelectUrl = (url: string) => {
 </script>
 
 <template>
-  <article :data-project-id="props.id">
+  <article
+    :id="`project-${props.id}`"
+    class="scroll-mt-24"
+    :data-project-id="props.id"
+  >
     <BaseCard
       class="h-full"
       :variant="isDescriptionExpanded ? 'light' : 'dark'"
@@ -106,7 +117,7 @@ const onSelectUrl = (url: string) => {
                 :src="props.imageSrc"
               />
             </div>
-            <div class="absolute inset-0 bg-bg/50"></div>
+            <div class="absolute inset-0 bg-linear-to-t from-bg/90 via-bg/40 to-transparent"></div>
           </div>
 
           <!-- Content wrapper -->
@@ -170,29 +181,39 @@ const onSelectUrl = (url: string) => {
 
       <!-- Card Body -->
       <template #card-body>
+        <!-- Collapsed cards share one height: fixed 4-line preview, faded at the bottom -->
         <BaseRichText
           v-if="props.content.length > 0"
+          :id="`project-body-${props.id}`"
           :blocks="getContentPreview"
-          class="sb-transition"
+          :class="{ 'h-27 overflow-hidden mask-b-from-50%': !isDescriptionExpanded }"
         />
       </template>
 
       <!-- Card Footer -->
       <template #card-footer>
-        <button
+        <BaseButton
           v-if="needsExpansion"
-          class="inline-flex items-center gap-1.5 sb-label uppercase px-2 py-1.5 text-primary hover:text-primary-hover cursor-pointer rounded-sm sb-transition sb-focus"
-          @click="$event => onTriggerDescription($event)"
+          :aria-controls="`project-body-${props.id}`"
+          :aria-expanded="isDescriptionExpanded ? 'true' : 'false'"
+          class="-ml-3 uppercase"
+          tone="accent"
+          variant="ghost"
+          @click="onTriggerDescription"
         >
-          <span class="sb-label uppercase">
-            {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
-          </span>
+          {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
           <Icon
-            class="size-5 transition-transform"
+            aria-hidden="true"
+            class="size-5 sb-transition"
             :class="{ 'rotate-180': isDescriptionExpanded }"
             name="solar:alt-arrow-down-bold-duotone"
           />
-        </button>
+        </BaseButton>
+        <div
+          v-else
+          aria-hidden="true"
+          class="min-h-11"
+        ></div>
       </template>
     </BaseCard>
   </article>

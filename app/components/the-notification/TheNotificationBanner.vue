@@ -53,7 +53,6 @@ onMounted(() => {
         'bg-info-soft border-info': props.type === 'info',
       },
     ]"
-    :role="props.type === 'error' ? 'alert' : 'status'"
   >
     <div class="flex items-start gap-3 md:gap-4">
       <!-- Icon -->

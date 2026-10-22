@@ -79,7 +79,6 @@ const describedBy = computed(() => {
       v-if="props.error"
       :id="`${props.id}-error`"
       class="sb-small text-error mt-1.5 sb-transition"
-      role="alert"
     >
       {{ props.error }}
     </p>

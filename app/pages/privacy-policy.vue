@@ -67,7 +67,7 @@ const lastUpdate = computed(() => {
           <p class="sb-body text-ink-muted leading-relaxed">
             {{ t('pages.privacy.dataController.email') }}:
             <a
-              class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
+              class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
               href="mailto:biddau.stefano99@gmail.com"
             >
               biddau.stefano99@gmail.com
@@ -87,15 +87,15 @@ const lastUpdate = computed(() => {
       </p>
       <ul class="space-y-3 md:space-y-4 ml-4 md:ml-6">
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.name') }}:</strong> {{ t('pages.privacy.dataCollected.nameDesc') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.email') }}:</strong> {{ t('pages.privacy.dataCollected.emailDesc') }}</span>
         </li>
         <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary shrink-0">•</span>
+          <span class="text-primary-ink shrink-0">•</span>
           <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.message') }}:</strong> {{ t('pages.privacy.dataCollected.messageDesc') }}</span>
         </li>
       </ul>
@@ -139,7 +139,7 @@ const lastUpdate = computed(() => {
           <p class="sb-overline text-ink-muted/70">
             {{ t('pages.privacy.thirdParties.privacyPolicy') }}:
             <a
-              class="text-primary hover:text-primary-hover wrap-break-word underline underline-offset-4 sb-transition sb-focus rounded-sm"
+              class="text-primary-ink hover:text-primary-ink-hover wrap-break-word underline underline-offset-4 sb-transition sb-focus rounded-sm"
               href="https://www.emailjs.com/legal/privacy-policy/"
               rel="noopener noreferrer"
               target="_blank"
@@ -172,34 +172,34 @@ const lastUpdate = computed(() => {
         </p>
         <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.access') }}</span>
           </li>
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.rectification') }}</span>
           </li>
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.erasure') }}</span>
           </li>
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.restriction') }}</span>
           </li>
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.portability') }}</span>
           </li>
           <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary shrink-0">•</span>
+            <span class="text-primary-ink shrink-0">•</span>
             <span>{{ t('pages.privacy.yourRights.objection') }}</span>
           </li>
         </ul>
         <p class="sb-body text-ink-muted leading-relaxed">
           {{ t('pages.privacy.yourRights.contact') }}:
           <a
-            class="text-primary hover:text-primary-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
+            class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
             href="mailto:biddau.stefano99@gmail.com"
           >
             biddau.stefano99@gmail.com

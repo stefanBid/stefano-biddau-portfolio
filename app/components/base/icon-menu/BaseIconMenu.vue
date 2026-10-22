@@ -26,10 +26,15 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 // State
 const menu = ref<HTMLElement | null>(null)
 
+const _focusTrigger = () => {
+  reference.value?.querySelector<HTMLElement>('button')?.focus()
+}
+
 // Events
 const onSelect = (itemId: string) => {
   emit('select', itemId)
   toggleFloating(false)
+  nextTick(() => _focusTrigger())
 }
 
 onClickOutside(floating, () => {
@@ -37,10 +42,6 @@ onClickOutside(floating, () => {
 }, { ignore: [reference] })
 
 const _items = () => Array.from(menu.value?.querySelectorAll<HTMLElement>('[role="menuitemradio"]') ?? [])
-
-const _focusTrigger = () => {
-  reference.value?.querySelector<HTMLElement>('button')?.focus()
-}
 
 // Capture phase + stopPropagation: Escape closes only this menu, not an enclosing dialog or drawer
 const onKeydown = (e: KeyboardEvent) => {
@@ -106,6 +107,7 @@ watch(open, (newVal) => {
           :aria-label="props.label"
           :icon="props.icon"
           :is-active="open"
+          :text="props.selectedItemId ?? undefined"
           @click="toggleFloating(!open)"
         />
       </slot>
@@ -127,21 +129,25 @@ watch(open, (newVal) => {
             role="menu"
           >
             <li v-for="item in props.items" :key="item.code" role="none">
-              <button
+              <BaseButton
                 :aria-checked="item.code === props.selectedItemId ? 'true' : 'false'"
-                class="group inline-flex w-full text-left rounded-lg px-3 py-2 md:px-3.5 md:py-2.5 gap-2 text-ink sb-label sb-focus sb-transition"
-                :class="{
-                  'bg-surface-2': props.selectedItemId === item.code,
-                  'hover:bg-surface-2 cursor-pointer': props.selectedItemId !== item.code,
-                }"
+                block
+                :is-active="item.code === props.selectedItemId"
                 role="menuitemradio"
-                type="button"
+                variant="ghost"
                 @click="onSelect(item.code)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
+                <Icon
+                  v-if="item.code === props.selectedItemId"
+                  aria-hidden="true"
+                  class="size-4 shrink-0 text-primary-ink"
+                  name="solar:check-circle-bold-duotone"
+                />
                 <template v-if="item.icon && item.iconType ">
                   <Icon
                     v-if="item.iconType === 'nuxt-icon'"
+                    aria-hidden="true"
                     class="size-4 shrink-0"
                     :name="item.icon"
                   />
@@ -152,7 +158,7 @@ watch(open, (newVal) => {
                     :src="item.icon"
                   />
                 </template>
-              </button>
+              </BaseButton>
             </li>
           </ul>
         </div>

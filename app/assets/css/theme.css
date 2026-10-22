@@ -30,6 +30,8 @@
   --sb-primary-hover: #f06a1c; /* lighter on hover: dark theme */
   --sb-primary-border: #b34704; /* deeper tone for primary borders */
   --sb-on-primary: #0f0f20;    /* provisional: 5.31:1 on primary */
+  --sb-primary-ink: #f47a32;       /* primary as text: 5.52:1 on surface-2, 6.24:1 on surface */
+  --sb-primary-ink-hover: #f8904d; /* 6.54:1 on surface-2 */
 
   /* States: text color paired with its soft tint */
   --sb-success: #4ade80;
@@ -92,6 +94,8 @@
   --color-primary-hover: var(--sb-primary-hover);
   --color-primary-border: var(--sb-primary-border);
   --color-on-primary: var(--sb-on-primary);
+  --color-primary-ink: var(--sb-primary-ink);
+  --color-primary-ink-hover: var(--sb-primary-ink-hover);
   --color-success: var(--sb-success);
   --color-success-soft: var(--sb-success-soft);
   --color-warning: var(--sb-warning);

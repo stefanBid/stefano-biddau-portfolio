@@ -118,7 +118,7 @@ watch(
             <div class="flex flex-col flex-1 min-w-0">
               <h2
                 id="sb-dialog-title"
-                class="mb-0 sb-transition truncate"
+                class="mb-0 sb-transition text-balance"
               >
                 {{ props.title }}
               </h2>

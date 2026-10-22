@@ -68,10 +68,26 @@ const getContentPreview = computed(() => {
   return props.content
 })
 
+const titleRef = ref<HTMLElement | null>(null)
+const focusTitleOnOpen = ref(false)
+
 // Events
 const onSelect = () => {
   emits('select', props.id)
 }
+
+// The Read more button unmounts once the milestone opens: hand focus to the title so keyboard users keep their place
+const onReadMore = () => {
+  focusTitleOnOpen.value = true
+  onSelect()
+}
+
+watch(() => props.isActive, (isActive) => {
+  if (isActive && focusTitleOnOpen.value) {
+    focusTitleOnOpen.value = false
+    nextTick(() => titleRef.value?.focus())
+  }
+})
 </script>
 
 <template>
@@ -92,12 +108,14 @@ const onSelect = () => {
         }"
       ></div>
       <!-- Clickable Point -->
-      <button
+      <BaseButton
+        :aria-controls="`milestone-body-${props.id}`"
+        :aria-expanded="props.isActive ? 'true' : 'false'"
         :aria-label="t('a11y.showMilestone', { title: props.title })"
-        :aria-pressed="props.isActive"
-        class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover sb-focus cursor-pointer sb-transition pointer-events-auto z-10"
+        class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover pointer-events-auto z-10"
+        variant="bare"
         @click="onSelect"
-      ></button>
+      />
     </div>
 
     <!-- Content -->
@@ -110,12 +128,16 @@ const onSelect = () => {
     >
       <!-- Header: Title + Date -->
       <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4 sb-transition">
-        <h2 class="sb-h3 mb-0 sb-transition flex-1">
+        <h2
+          ref="titleRef"
+          class="sb-h3 mb-0 sb-transition flex-1 outline-none"
+          tabindex="-1"
+        >
           {{ props.title }}
         </h2>
         <time
           v-if="props.date"
-          class="sb-overline text-primary whitespace-nowrap sb-transition"
+          class="sb-overline text-primary-ink whitespace-nowrap sb-transition"
           :datetime="isoDate"
         >
           {{ displayDate }}
@@ -133,6 +155,7 @@ const onSelect = () => {
       >
         <BaseRichText
           v-if="props.content.length > 0"
+          :id="`milestone-body-${props.id}`"
           :blocks="getContentPreview"
           class="sb-transition"
         />
@@ -167,14 +190,18 @@ const onSelect = () => {
 
       <!-- Expand indicator -->
       <div class="flex justify-center md:justify-start">
-        <button
+        <BaseButton
           v-if="needsExpansion && !props.isActive"
-          class="inline-flex cursor-pointer items-center gap-1.5 mt-2 sb-label uppercase text-primary hover:text-primary-hover sb-focus sb-transition rounded-sm px-2 py-1 w-fit"
-          @click="onSelect"
+          :aria-controls="`milestone-body-${props.id}`"
+          aria-expanded="false"
+          class="mt-2 md:-ml-3 uppercase"
+          tone="accent"
+          variant="ghost"
+          @click="onReadMore"
         >
-          <span class="sb-label uppercase">{{ t('pages.about.milestoneCta') }}</span>
-          <Icon class="size-5" name="solar:alt-arrow-down-bold-duotone" />
-        </button>
+          {{ t('pages.about.milestoneCta') }}
+          <Icon aria-hidden="true" class="size-5" name="solar:alt-arrow-down-bold-duotone" />
+        </BaseButton>
       </div>
     </BaseCard>
   </article>

@@ -47,7 +47,12 @@ const menu = ref<HTMLElement | null>(null)
 const menuWidth = ref<string | null>(null)
 const resizeRafId = ref<number | null>(null)
 
+const { t } = useI18n()
+
 const valuesWithCommas = computed<string>(() => {
+  if (model.value.length > 1) {
+    return t('a11y.selectedCount', { count: model.value.length })
+  }
   return model.value.map((v) => {
     const item = props.items.find(i => i.value === v)
     return item ? item.label : ''
@@ -253,7 +258,6 @@ watch(open, (newVal) => {
       v-if="props.error"
       :id="`${props.id}-error`"
       class="sb-small text-error mt-1.5 sb-transition"
-      role="alert"
     >
       {{ props.error }}
     </p>
@@ -278,25 +282,22 @@ watch(open, (newVal) => {
             role="listbox"
           >
             <li v-for="item in props.items" :key="item.label" role="none">
-              <button
+              <BaseButton
                 :aria-selected="model.includes(item.value) ? 'true' : 'false'"
-                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-2 text-ink cursor-pointer sb-label sb-focus sb-transition"
-                :class="{
-                  'bg-border': model.includes(item.value),
-                  'hover:bg-surface-2': !model.includes(item.value),
-                }"
+                block
+                :is-active="model.includes(item.value)"
                 role="option"
-                type="button"
+                variant="ghost"
                 @click="onSelect(item.value)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
                   aria-hidden="true"
-                  class="size-5 text-primary sb-transition"
+                  class="size-5 text-primary-ink sb-transition"
                   name="solar:check-circle-bold-duotone"
                 />
-              </button>
+              </BaseButton>
             </li>
           </ul>
         </div>
