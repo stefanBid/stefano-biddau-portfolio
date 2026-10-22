@@ -29,8 +29,6 @@ const { el, elStyle } = useTypedText(
 )
 
 // State
-
-const ready = ref(false)
 const contactFormIsOpen = ref(false)
 
 const getFile = computed<{ name: string, path: string }>(() => ({
@@ -46,13 +44,9 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       image-src="/images/my-avatar.webp"
       lock-scroll
       :text="t('pages.home.hero')"
-      @hero-animations-ended="ready = true"
     />
     <section
-      v-show="ready"
-      :aria-hidden="!ready"
       class="py-20 min-h-[60vh] flex flex-col items-center justify-center"
-      :inert="!ready"
     >
       <h2 class="sb-display mb-0 text-center">
         {{ t('pages.home.title') }}
@@ -107,35 +101,3 @@ const getFile = computed<{ name: string, path: string }>(() => ({
     <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>
-
-<style scoped>
-/* ===================== Animations ===================== */
-
-@keyframes fade-in {
-  0% {
-    opacity: 0;
-  }
-  100% {
-    opacity: 1;
-  }
-}
-
-@keyframes scale-fade {
-  0% {
-    opacity: 0;
-    transform:  scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform:  scale(1);
-  }
-}
-
-.animate-fade-in {
-  animation: fade-in 1.2s ease-out 0.5s forwards; /* 0.5s delay */
-}
-
-.animate-scale-fade {
-  animation: scale-fade 1.8s ease-out forwards;
-}
-</style>

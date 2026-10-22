@@ -42,8 +42,8 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue`, `CustomSkillsCard.vue` |
 | Composable | camelCase + `use` | `useNotification.ts` |
 | Utility / type | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-sb-*` / `u-sb-*` | `ty-sb-h3`, `u-sb-soft-transition` |
-| CSS variable | `--color-sb-*` | `--color-sb-accent` |
+| CSS utility | `sb-*` | `sb-h3`, `sb-transition` |
+| CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
@@ -110,6 +110,7 @@ const emit = defineEmits<{
 - No custom CSS classes unless explicitly requested
 - No `<style>` blocks unless explicitly requested
 - Never hardcode raw hex values — use design tokens
+- Closed theme: only theme tokens generate utilities — no default palette (`text-white`, `bg-gray-*`), text sizes (`text-sm`), `font-semibold`/`font-medium`, `2xl:`, arbitrary values (`text-[15px]`, `shadow-[…]`)
 - No `dark:` Tailwind variants needed
 - Dynamic classes via `:class` with arrays/objects — never string concatenation
 
@@ -128,30 +129,25 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 
 ## Design system
 
-### Colours (`--color-sb-*` / Tailwind `bg-sb-*`, `text-sb-*`, `border-sb-*`)
-Token values and usage: `app/assets/css/theme.css` (`@theme` block). Opacity modifiers allowed: `bg-sb-main/80`.
+Four files in `app/assets/css/`, prefix `sb`, structure maintained by the sb-design plugin (`/sb-design:check`, `/sb-design:align`): `main.css` (entry, page base styles), `theme.css`, `typography.css`, `animation.css`. Values and full tables: README §4.
 
-### Typography (`ty-sb-*`)
-Class definitions: `app/assets/css/typography.css`. Semantic hierarchy: `ty-sb-hero`, `ty-sb-impact`, `ty-sb-h1`–`ty-sb-h3` are Bebas Neue; `ty-sb-h4`, `ty-sb-p`, `ty-sb-span`, `ty-sb-label`, `ty-sb-btn-label`, `ty-sb-caption`, `ty-sb-code` are Space Mono. `h1`–`h4`, `p`, `span`, `label`, `small`, `code` tags get matching styles for free from `base.css` — no class needed unless the element isn't the matching tag.
+### Colours (`theme.css`)
+Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Avoid `text-primary` on `bg-surface-2` (below AA).
 
-### Utility classes (`u-sb-*`)
-Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transition` to interactive elements.
+### Shapes and shadows (`theme.css`)
+`rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
 
-### Animations (Vue `<Transition>`)
-Keyframe/duration definitions: `app/assets/css/animations.css` (`fade`, `slide-down`, `scale-fade`).
+### Typography (`sb-*`, `typography.css`)
+One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-overline`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
-### Proportions audit
-When asked to audit or refactor a file's typography/spacing/padding against the design system
-(dead `ty-sb-*`/`u-sb-*` classes, wrong heading tags, margins/padding not proportioned to the
-`--fs-sb-*` scale), use the `design-system-proportions-audit` skill. It re-reads the 5 CSS files
-fresh every time, covers the target file element by element (no sampling), always shows the full
-report before applying any fix, and never touches color tokens.
+### Motion and focus (`animation.css`)
+Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin|bounce`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance`.
 
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
 - Collections: `solar` (bold duotone UI), `mdi` (general UI), `logos` (brand/tech), `flagpack` (flags)
 - Size via Tailwind: `size-4` to `size-7`
-- Colour via token: `text-sb-contrast`, `text-sb-muted`, `text-sb-accent`
+- Colour via token: `text-ink`, `text-ink-muted`, `text-primary`
 - Always `aria-label` on icon-only interactive elements
 - **Do not use `lucide`** — not installed
 
@@ -170,7 +166,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` |
 
-Creating a new page: see the `add-page` skill.
+Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
 Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
@@ -314,7 +310,7 @@ Fully delegated to auto-generated `.nuxt/tsconfig.app.json` / `.nuxt/tsconfig.se
 
 ## Maintenance workflows
 
-On request, run these checks (`dependency-check`, `lint-check`, `build-check`, `seo-check`, `full-checkup`, `update-documentation`, `design-system-proportions-audit` skills). Report results in the same language the user asked in.
+Handled by the sb-context-fe plugins (project state in `.sb-context/`): `/sb-health:deps`, `/sb-health:lint`, `/sb-health:build`, `/sb-health:seo`, `/sb-health:checkup` (full pass), `/sb-health:docs` (README sync); `/sb-design:check` (style still aligned?), `/sb-design:migrate` (templates using classes the theme no longer generates). Report results in the same language the user asked in.
 
 ---
 

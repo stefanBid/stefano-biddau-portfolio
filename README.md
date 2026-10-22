@@ -898,16 +898,18 @@ One file, all context: stack, npm install policy, project structure, naming rule
 
 ### Maintenance workflows
 
-Ask Claude Code in plain language (English or Italian) to run any of these — defined in `CLAUDE.md`'s "Maintenance workflows" section:
+Run through the sb-context-fe Claude Code plugins (project profile and settings in `.sb-context/`), listed in `CLAUDE.md`'s "Maintenance workflows" section:
 
-| Workflow | What it does |
+| Command | What it does |
 |---|---|
-| Dependency check | Runs `npm outdated`, classifies safe vs needs-attention updates, applies safe ones, runs `npm audit` / `npm audit fix` |
-| Lint check | Runs `eslint --fix`, reports remaining warnings/errors |
-| Build check | Runs `nuxt typecheck` + `nuxt build`, categorises errors |
-| SEO / GSC readiness check | Validates `sitemap.xml`, `robots.txt`, and per-page SEO meta against `nuxt.config.ts` |
-| Full checkup | Runs dependency → SEO → build → lint checks in order, stops on blocking errors, then decides if docs need updating |
-| Update documentation | Diffs `README.md` against the actual codebase and rewrites only the affected sections |
+| `/sb-health:deps` | Outdated/vulnerable dependencies, safe updates, major-version migrations |
+| `/sb-health:lint` | Runs `eslint --fix`, reports remaining warnings/errors |
+| `/sb-health:build` | Type check + production build, categorises errors |
+| `/sb-health:seo` | Validates `robots.txt`, sitemap and per-page SEO meta |
+| `/sb-health:checkup` | Full maintenance pass |
+| `/sb-health:docs` | Syncs `README.md` with the codebase, editing only affected sections |
+| `/sb-design:check` | Read-only check that the global style is still aligned |
+| `/sb-design:migrate` | Finds template classes the theme no longer generates and proposes replacements |
 
 ### Documentation sync rule
 
