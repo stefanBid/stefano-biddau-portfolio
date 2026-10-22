@@ -1,0 +1,141 @@
+/* ==========================================================================
+   animation.css — durations, easings, animations, Vue transitions
+   Prefix "sb".
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Durations and movement distance
+   Tailwind 4 has no namespace for durations: raw variables with the prefix.
+   -------------------------------------------------------------------------- */
+:root {
+  --sb-duration-feedback: 150ms;  /* 100–150ms: hover, focus, toggles, color changes */
+  --sb-duration-state: 200ms;     /* 150–300ms: dropdowns, menus, messages appearing */
+  --sb-duration-layout: 400ms;    /* 300–500ms: side menu, overlays, page changes */
+  --sb-duration-entrance: 800ms;  /* 500–800ms: authored entrances */
+
+  /* Used by every translate; zeroed under reduced motion */
+  --sb-motion-distance: 8px;
+}
+
+/* --------------------------------------------------------------------------
+   2. Easings and animations, closed
+   -------------------------------------------------------------------------- */
+@theme {
+  --ease-*: initial;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);    /* arrival */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);        /* exit */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);  /* in-place state changes */
+
+  --animate-*: initial;
+  --animate-fade-in: fade-in var(--sb-duration-state) var(--ease-out) both;
+  --animate-fade-out: fade-out var(--sb-duration-feedback) var(--ease-in) both;
+  --animate-rise-in: rise-in var(--sb-duration-state) var(--ease-out) both;
+  --animate-slide-in-right: slide-in-right var(--sb-duration-layout) var(--ease-out) both;
+  --animate-spin: spin 0.8s linear infinite;    /* loading indicators only */
+
+  @keyframes fade-in        { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes fade-out       { from { opacity: 1; } to { opacity: 0; } }
+  @keyframes rise-in        { from { opacity: 0; transform: translateY(var(--sb-motion-distance)); } to { opacity: 1; transform: none; } }
+  @keyframes slide-in-right { from { opacity: 0; transform: translateX(calc(var(--sb-motion-distance) * 3)); } to { opacity: 1; transform: none; } }
+  @keyframes spin           { to { transform: rotate(360deg); } }
+}
+
+/* --------------------------------------------------------------------------
+   3. Utilities: transition and focus
+   -------------------------------------------------------------------------- */
+@utility sb-transition {
+  transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, transform;
+  transition-duration: var(--sb-duration-feedback);
+  transition-timing-function: var(--ease-in-out);
+}
+
+@utility sb-transition-slow {
+  transition-property: color, background-color, border-color, outline-color, box-shadow, opacity, transform;
+  transition-duration: var(--sb-duration-layout);
+  transition-timing-function: var(--ease-in-out);
+}
+
+@utility sb-focus {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-focus-ring;
+}
+
+@utility sb-focus-within {
+  @apply outline-none focus-within:ring-2 focus-within:ring-focus-ring;
+}
+
+@utility sb-no-focus {
+  @apply focus-visible:ring-0 focus-visible:outline-none;
+}
+
+/* --------------------------------------------------------------------------
+   4. Vue <Transition> classes (names used by the components)
+   Opacity and transform; entering slower than leaving.
+   -------------------------------------------------------------------------- */
+.fade-enter-active {
+  transition: opacity var(--sb-duration-entrance) var(--ease-out), transform var(--sb-duration-entrance) var(--ease-out);
+}
+.fade-leave-active {
+  transition: opacity var(--sb-duration-feedback) var(--ease-in), transform var(--sb-duration-feedback) var(--ease-in);
+}
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateY(calc(var(--sb-motion-distance) * 2));
+}
+
+.slide-down-enter-active {
+  transition: opacity var(--sb-duration-state) var(--ease-out), transform var(--sb-duration-state) var(--ease-out);
+}
+.slide-down-leave-active {
+  transition: opacity var(--sb-duration-feedback) var(--ease-in), transform var(--sb-duration-feedback) var(--ease-in);
+}
+.slide-down-enter-from,
+.slide-down-leave-to {
+  opacity: 0;
+  transform: translateY(calc(var(--sb-motion-distance) * -2));
+}
+
+.scale-fade-enter-active {
+  transition: opacity var(--sb-duration-state) var(--ease-out), transform var(--sb-duration-state) var(--ease-out);
+}
+.scale-fade-leave-active {
+  transition: opacity var(--sb-duration-feedback) var(--ease-in), transform var(--sb-duration-feedback) var(--ease-in);
+}
+.scale-fade-enter-from,
+.scale-fade-leave-to {
+  opacity: 0;
+  transform: scale(0.95);
+}
+
+/* The blur is a deliberate page-change effect */
+.page-enter-active {
+  transition: opacity var(--sb-duration-layout) var(--ease-out), filter var(--sb-duration-layout) var(--ease-out);
+}
+.page-leave-active {
+  transition: opacity var(--sb-duration-feedback) var(--ease-in), filter var(--sb-duration-feedback) var(--ease-in);
+}
+.page-enter-from,
+.page-leave-to {
+  opacity: 0;
+  filter: blur(1rem);
+}
+
+/* --------------------------------------------------------------------------
+   5. Reduced motion: required
+   Spatial movement goes away; opacity, color and state transitions that carry
+   meaning stay, so durations are NOT zeroed.
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --sb-motion-distance: 0px;
+  }
+  .scale-fade-enter-from,
+  .scale-fade-leave-to {
+    transform: none;
+  }
+  @layer base {
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

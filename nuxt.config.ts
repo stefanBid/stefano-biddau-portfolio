@@ -57,6 +57,7 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   colorMode: {
+    dataValue: 'theme',
     classSuffix: '',
     // Fixed, no OS-following and no toggle — this app is always dark (see CLAUDE.md)
     preference: 'dark',
