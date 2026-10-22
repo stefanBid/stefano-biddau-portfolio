@@ -108,14 +108,14 @@ watch(() => props.isActive, (isActive) => {
         }"
       ></div>
       <!-- Clickable Point -->
-      <BaseButton
+      <button
         :aria-controls="`milestone-body-${props.id}`"
         :aria-expanded="props.isActive ? 'true' : 'false'"
         :aria-label="t('a11y.showMilestone', { title: props.title })"
-        class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover pointer-events-auto z-10"
-        variant="bare"
+        class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover cursor-pointer sb-transition sb-focus pointer-events-auto z-10 before:absolute before:-inset-3.5 md:before:-inset-3"
+        type="button"
         @click="onSelect"
-      />
+      ></button>
     </div>
 
     <!-- Content -->

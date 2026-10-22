@@ -22,12 +22,13 @@ const onClose = (event: MouseEvent) => {
   <BaseButton
     :aria-label="props.label"
     icon-only
+    size="sm"
     variant="ghost"
     @click="onClose"
   >
     <Icon
       aria-hidden="true"
-      class="size-6 md:size-7"
+      class="size-6"
       name="solar:close-circle-bold-duotone"
     />
   </BaseButton>

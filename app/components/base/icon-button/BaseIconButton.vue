@@ -28,9 +28,9 @@ const onClick = () => {
   <BaseButton
     :aria-label="props.ariaLabel"
     class="border border-border"
-    :class="{ 'size-auto! min-h-10 px-2.5!': props.text }"
     :icon-only="!props.text"
     :is-active="props.isActive"
+    size="sm"
     variant="ghost"
     @click="onClick"
   >

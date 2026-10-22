@@ -170,8 +170,9 @@ const _debouncedFilterUpdate = () => {
         <div class="flex items-center gap-4">
           <BaseButton
             :aria-label="t('a11y.previousPage')"
-            class="p-2!"
+            icon-only
             :is-disabled="currentPage === 1 || totalPages === 0"
+            size="sm"
             variant="secondary"
             @click="onGoToPrevPage"
           >
@@ -182,8 +183,9 @@ const _debouncedFilterUpdate = () => {
           </span>
           <BaseButton
             :aria-label="t('a11y.nextPage')"
-            class="p-2!"
+            icon-only
             :is-disabled="currentPage === totalPages || totalPages === 0"
+            size="sm"
             variant="secondary"
             @click="onGoToNextPage"
           >

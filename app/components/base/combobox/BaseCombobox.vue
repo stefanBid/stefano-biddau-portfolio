@@ -282,12 +282,12 @@ watch(open, (newVal) => {
             role="listbox"
           >
             <li v-for="item in props.items" :key="item.label" role="none">
-              <BaseButton
+              <button
                 :aria-selected="model.includes(item.value) ? 'true' : 'false'"
-                block
-                :is-active="model.includes(item.value)"
+                class="inline-flex w-full items-center gap-2 min-h-11 px-3 rounded-md text-left sb-label cursor-pointer sb-transition sb-focus"
+                :class="model.includes(item.value) ? 'bg-surface-2 text-ink' : 'text-ink-muted hover:bg-surface-2 hover:text-ink'"
                 role="option"
-                variant="ghost"
+                type="button"
                 @click="onSelect(item.value)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
@@ -297,7 +297,7 @@ watch(open, (newVal) => {
                   class="size-5 text-primary-ink sb-transition"
                   name="solar:check-circle-bold-duotone"
                 />
-              </BaseButton>
+              </button>
             </li>
           </ul>
         </div>

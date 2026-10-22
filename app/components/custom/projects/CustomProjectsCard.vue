@@ -127,7 +127,8 @@ const onSelectUrl = (url: string) => {
               <template v-for="group in urlGroups" :key="group.key">
                 <BaseButton
                   v-if="group.urls.length === 1"
-                  class="px-3! py-2! gap-2 shrink-0"
+                  class="shrink-0"
+                  size="sm"
                   :to="group.urls[0]!.code"
                   type="link"
                   variant="primary"
@@ -137,7 +138,7 @@ const onSelectUrl = (url: string) => {
                     class="size-5"
                     :name="group.icon"
                   />
-                  <span class="sb-label normal-case">{{ group.label }}</span>
+                  {{ group.label }}
                 </BaseButton>
                 <BaseIconMenu
                   v-else
@@ -150,7 +151,8 @@ const onSelectUrl = (url: string) => {
                     <BaseButton
                       :aria-expanded="isOpen ? 'true' : 'false'"
                       aria-haspopup="menu"
-                      class="px-3! py-2! gap-2 shrink-0"
+                      class="shrink-0"
+                      size="sm"
                       type="button"
                       variant="primary"
                       @click="toggle(!isOpen)"
@@ -160,7 +162,7 @@ const onSelectUrl = (url: string) => {
                         class="size-5"
                         :name="group.icon"
                       />
-                      <span class="sb-label normal-case">{{ group.label }}</span>
+                      {{ group.label }}
                     </BaseButton>
                   </template>
                 </BaseIconMenu>

@@ -64,19 +64,20 @@ const onKeydown = (e: KeyboardEvent, index: number) => {
     }"
     role="tablist"
   >
-    <BaseButton
+    <button
       v-for="(tab, index) in props.tabs"
       :key="tab.id"
       :aria-controls="props.panelId"
       :aria-selected="safeSelectedTabId === tab.id"
-      :is-active="safeSelectedTabId === tab.id"
+      class="relative inline-flex items-center min-h-11 px-1 sb-label uppercase cursor-pointer rounded-sm sb-transition sb-focus after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
+      :class="safeSelectedTabId === tab.id ? 'text-ink after:scale-x-100' : 'text-ink-muted hover:text-ink after:scale-x-0'"
       role="tab"
       :tabindex="safeSelectedTabId === tab.id ? 0 : -1"
-      variant="tab"
+      type="button"
       @click="onSelectTab(tab.id)"
       @keydown="onKeydown($event, index)"
     >
       {{ tab.label }}
-    </BaseButton>
+    </button>
   </div>
 </template>

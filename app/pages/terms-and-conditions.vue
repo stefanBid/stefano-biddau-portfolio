@@ -209,7 +209,7 @@ const lastUpdate = computed(() => {
         variant="outline"
         @click="$router.push(localePath('index'))"
       >
-        <Icon class="inline-block size-5 md:size-6 mr-2" name="solar:arrow-left-line-duotone" />
+        <Icon aria-hidden="true" class="size-5" name="solar:arrow-left-line-duotone" />
         {{ t('pages.terms.backHome') }}
       </BaseButton>
     </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 interface BaseButtonProps {
-  variant?: 'primary' | 'secondary' | 'outline' | 'ghost' | 'tab' | 'bare'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
   tone?: 'neutral' | 'accent'
   type?: 'button' | 'submit' | 'reset' | 'link'
   ariaLabel?: string
@@ -9,7 +10,6 @@ interface BaseButtonProps {
   isLoading?: boolean
   isActive?: boolean
   iconOnly?: boolean
-  block?: boolean
 }
 
 // Dependencies
@@ -18,6 +18,7 @@ const { t } = useI18n()
 // Input / Output
 const props = withDefaults(defineProps<BaseButtonProps>(), {
   variant: 'primary',
+  size: 'md',
   tone: 'neutral',
   type: 'button',
   to: undefined,
@@ -26,7 +27,6 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   isLoading: false,
   isActive: false,
   iconOnly: false,
-  block: false,
 })
 
 // Data
@@ -34,29 +34,39 @@ const isExternal = computed(() => /^https?:\/\//.test(props.to ?? ''))
 
 const isInteractive = computed(() => props.type === 'link' || (!props.isDisabled && !props.isLoading))
 
-const isFilled = computed(() => ['primary', 'secondary', 'outline'].includes(props.variant))
+const isFilled = computed(() => props.variant !== 'ghost')
+
+const SIZE_CLASSES = {
+  // sm is 36px tall; the invisible ::before extends the hit area to 44px
+  sm: {
+    icon: 'size-9 relative before:absolute before:-inset-1',
+    filled: 'min-h-9 px-3.5 sb-label font-bold uppercase relative before:absolute before:-inset-y-1 before:inset-x-0',
+    ghost: 'min-h-9 px-2.5 sb-label relative before:absolute before:-inset-y-1 before:inset-x-0',
+  },
+  md: {
+    icon: 'size-11',
+    filled: 'min-h-11 px-5 py-2.5 md:px-7 md:py-3 sb-body-strong uppercase',
+    ghost: 'min-h-11 px-3 sb-body',
+  },
+  lg: {
+    icon: 'size-13',
+    filled: 'min-h-13 px-7 py-3 md:px-9 sb-body-strong uppercase',
+    ghost: 'min-h-13 px-4 sb-body-strong',
+  },
+} as const
 
 const classes = computed(() => {
-  if (props.variant === 'bare') {
-    return ['sb-transition sb-focus', isInteractive.value ? 'cursor-pointer' : 'cursor-not-allowed opacity-45']
-  }
+  const size = SIZE_CLASSES[props.size]
 
   return [
-    'inline-flex items-center gap-2 rounded-lg sb-transition sb-focus',
+    'inline-flex items-center justify-center gap-2 rounded-lg sb-transition sb-focus',
     isInteractive.value ? 'cursor-pointer' : 'cursor-not-allowed opacity-45',
-    props.block ? 'w-full justify-start text-left' : 'justify-center',
 
     // Size
-    props.iconOnly
-      ? 'size-11 md:size-10 shrink-0'
-      : isFilled.value
-        ? 'min-h-11 px-5 py-2.5 md:px-7 md:py-3'
-        : props.variant === 'tab'
-          ? 'min-h-11 px-1'
-          : 'min-h-11 px-3',
+    props.iconOnly ? `${size.icon} shrink-0` : isFilled.value ? size.filled : size.ghost,
 
     // Variants
-    isFilled.value ? 'border sb-body-strong uppercase' : 'sb-body',
+    isFilled.value && 'border',
 
     props.variant === 'primary' && 'bg-primary border-primary-border text-on-primary',
     props.variant === 'primary' && isInteractive.value && 'hover:bg-primary-hover',
@@ -71,9 +81,6 @@ const classes = computed(() => {
     props.variant === 'ghost' && props.tone === 'accent' && isInteractive.value && 'hover:text-primary-ink-hover',
     props.variant === 'ghost' && props.tone === 'neutral' && (props.isActive ? 'text-ink bg-surface-2' : 'text-ink-muted'),
     props.variant === 'ghost' && props.tone === 'neutral' && isInteractive.value && 'hover:text-ink hover:bg-surface-2',
-
-    props.variant === 'tab' && 'relative uppercase after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-primary after:sb-transition',
-    props.variant === 'tab' && (props.isActive ? 'text-ink after:scale-x-100' : 'text-ink-muted hover:text-ink after:scale-x-0'),
   ]
 })
 </script>

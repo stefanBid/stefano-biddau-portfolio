@@ -120,7 +120,7 @@ const techLabel = computed(() => (props.icons ?? [])
           variant="primary"
         >
           <Icon
-            class="size-5 md:size-6 mr-2"
+            class="size-5"
             name="solar:rocket-2-bold-duotone"
           />
           {{ t('pages.projects.sbTemplatesProject.linkToCta') }}

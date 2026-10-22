@@ -17,13 +17,12 @@ const onToggle = () => emit('toggle', !props.open)
 </script>
 
 <template>
-  <BaseButton
+  <button
     aria-controls="mobile-drawer"
     :aria-expanded="open ? 'true' : 'false'"
     :aria-label="open ? t('a11y.closeMenu') : t('a11y.openMenu')"
-    class="-mr-2"
-    icon-only
-    variant="ghost"
+    class="inline-flex items-center justify-center size-11 -mr-2 rounded-lg text-ink cursor-pointer sb-transition sb-focus"
+    type="button"
     @click="onToggle()"
   >
     <svg
@@ -60,7 +59,7 @@ const onToggle = () => emit('toggle', !props.open)
         y2="12"
       />
     </svg>
-  </BaseButton>
+  </button>
 </template>
 
 <style scoped>

@@ -316,28 +316,30 @@ All reusable components live in `app/components/`. Three component tiers:
 
 ### `BaseButton`
 
-The **only** component that renders a `<button>` or a button-like `<a>`: every other component (tabs, menus, icon buttons, close button, menu toggle, "Read more", timeline dots) is built on it. ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
+Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu and listbox options (`BaseIconMenu`, `BaseCombobox`), timeline dots (`CustomMilestone`) and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost' \| 'tab' \| 'bare'` | `'primary'` | `ghost` = text only (links-as-buttons, menu items); `tab` = underlined tab; `bare` = no visual style, for custom-drawn controls (keeps focus ring and transition) |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = text only |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | `sm` 36px (hit area extended to 44px), `md` 44px, `lg` 52px |
 | `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
 | `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | Required with `iconOnly` |
 | `isDisabled` | `boolean` | `false` | |
 | `isLoading` | `boolean` | `false` | Shows spinner |
-| `isActive` | `boolean` | `false` | Selected state for `ghost` (menu items) and `tab` |
-| `iconOnly` | `boolean` | `false` | Square 44px target |
-| `block` | `boolean` | `false` | Full width, left-aligned (menu and listbox options) |
+| `isActive` | `boolean` | `false` | Selected state for `ghost` |
+| `iconOnly` | `boolean` | `false` | Square button (36 / 44 / 52px by `size`) |
 
-Slot: `default` (button label / content)
+Where each size is used: `sm` for compact controls (project Code/Live links, skills pagination, `BaseIconButton`, `BaseCloseButton`); `md` for forms and card CTAs; `lg` for the home first-screen CTAs. Don't resize buttons with `!` overrides: pick a `size`.
+
+Slot: `default` (button label / content). Icons inside are spaced by the built-in `gap-2`.
 
 ```vue
 <BaseButton variant="primary" :is-loading="isSaving" type="submit">
   Save
 </BaseButton>
-<BaseButton type="link" to="https://github.com/stefanBid" variant="outline">
+<BaseButton size="sm" type="link" to="https://github.com/stefanBid" variant="outline">
   <Icon name="mdi:github" class="size-4" /> GitHub
 </BaseButton>
 <BaseButton variant="ghost" tone="accent" class="uppercase" @click="toggle">
@@ -479,7 +481,7 @@ Emits: `(e: 'close', value: false): void`. Renders a `solar:close-circle-bold-du
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required. Rendered as underlined text tabs (`BaseButton variant="tab"`); `icon` is not shown |
+| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required. Rendered as native underlined text tabs; `icon` is not shown |
 | `align` | `'left' \| 'center' \| 'right'` | `'left'` | |
 | `selectedTabId` | `string \| number` | first tab | |
 | `panelId` | `string` | `undefined` | `id` of the `role="tabpanel"` the tabs control |

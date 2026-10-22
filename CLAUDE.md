@@ -46,7 +46,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
-- **Never write a native `<button>`**: use `BaseButton` (variants `primary`, `secondary`, `outline`, `ghost`, `tab`, `bare`; props `iconOnly`, `block`, `isActive`, `tone`). Base components that need a button are built on it too
+- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `size` `sm` | `md` | `lg`; `iconOnly`, `isActive`, `tone`). Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, timeline dots, hamburger. Never resize a `BaseButton` with `!` overrides — pick a `size`
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 

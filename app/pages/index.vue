@@ -98,13 +98,13 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           ></span>
         </p>
         <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
-          <BaseButton variant="primary" @click="contactFormIsOpen = true">
+          <BaseButton size="lg" variant="primary" @click="contactFormIsOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
-          <BaseButton variant="secondary" @click="downloadFile(getFile.path, getFile.name)">
+          <BaseButton size="lg" variant="secondary" @click="downloadFile(getFile.path, getFile.name)">
             <Icon
               aria-hidden="true"
-              class="size-5 mr-2"
+              class="size-5"
               name="solar:download-minimalistic-bold-duotone"
             />
             {{ t('pages.home.cvCard.buttonText') }}

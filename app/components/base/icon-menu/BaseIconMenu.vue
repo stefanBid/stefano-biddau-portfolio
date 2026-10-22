@@ -129,12 +129,12 @@ watch(open, (newVal) => {
             role="menu"
           >
             <li v-for="item in props.items" :key="item.code" role="none">
-              <BaseButton
+              <button
                 :aria-checked="item.code === props.selectedItemId ? 'true' : 'false'"
-                block
-                :is-active="item.code === props.selectedItemId"
+                class="inline-flex w-full items-center gap-2 min-h-11 px-3 rounded-md text-left sb-label cursor-pointer sb-transition sb-focus"
+                :class="item.code === props.selectedItemId ? 'bg-surface-2 text-ink' : 'text-ink-muted hover:bg-surface-2 hover:text-ink'"
                 role="menuitemradio"
-                variant="ghost"
+                type="button"
                 @click="onSelect(item.code)"
               >
                 <span class="truncate flex-1">{{ item.label }}</span>
@@ -158,7 +158,7 @@ watch(open, (newVal) => {
                     :src="item.icon"
                   />
                 </template>
-              </BaseButton>
+              </button>
             </li>
           </ul>
         </div>
