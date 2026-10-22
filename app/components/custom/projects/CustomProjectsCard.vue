@@ -208,7 +208,7 @@ const onSelectUrl = (url: string) => {
           v-if="needsExpansion"
           :aria-controls="`project-body-${props.id}`"
           :aria-expanded="isDescriptionExpanded ? 'true' : 'false'"
-          class="-ml-3 uppercase"
+          class="-ml-6"
           tone="accent"
           variant="ghost"
           @click="onTriggerDescription"

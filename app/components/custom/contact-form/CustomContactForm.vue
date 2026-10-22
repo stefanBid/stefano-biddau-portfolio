@@ -277,12 +277,17 @@ watch(
       <div class="w-full flex flex-wrap justify-end items-center mt-4 gap-4">
         <BaseButton
           :is-disabled="!formIsChanged || emailIsSending"
+          size="sm"
           type="reset"
           variant="ghost"
         >
           {{ t('pages.home.contactForm.fields.resetButton.text') }}
         </BaseButton>
-        <BaseButton :is-loading="emailIsSending" type="submit" variant="primary">
+        <BaseButton
+          :is-loading="emailIsSending"
+          type="submit"
+          variant="primary"
+        >
           {{ emailIsSending ? t('pages.home.contactForm.fields.submitButton.loadingText') : t('pages.home.contactForm.fields.submitButton.text') }}
         </BaseButton>
       </div>

@@ -72,6 +72,7 @@ const onCloseSkillsDialog = () => {
   <div>
     <ThePageHero
       id="my-skills"
+      image-src="/images/3d-avatar/avatar-pose-1.webp"
       :text="t('pages.skills.hero')"
     />
     <section :aria-label="t('a11y.skillsSection')" class=" w-full py-20 flex flex-col gap-20">

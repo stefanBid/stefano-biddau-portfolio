@@ -302,6 +302,10 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 
 ---
 
+### 3D avatars
+
+`public/images/3d-avatar/avatar-pose-{1..5}.webp` — full-resolution (1024×1536) WebP with transparent background, quality 92 / alpha 100. One per page: home 4 (waving), About 3 (on a planet), Skills 1 (laptop), Projects 5 (presenting); 2 is unused. They are rendered with `<NuxtImg provider="none">` (registered in `nuxt.config.ts` → `image.providers.none`) so they are served untouched instead of being re-encoded at the global quality 80.
+
 ## 5. Components
 
 All reusable components live in `app/components/`. Three component tiers:
@@ -321,7 +325,7 @@ Every **action** (submit, download, open, "Read more", links styled as buttons, 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = text only |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | `sm` 36px (hit area extended to 44px), `md` 44px, `lg` 52px |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The **only** prop that changes dimensions (see table below) |
 | `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
 | `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab, show an ↗ icon and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
@@ -331,7 +335,15 @@ Every **action** (submit, download, open, "Read more", links styled as buttons, 
 | `isActive` | `boolean` | `false` | Selected state for `ghost` |
 | `iconOnly` | `boolean` | `false` | Square button (36 / 44 / 52px by `size`) |
 
-Where each size is used: `sm` for compact controls (project Code/Live links, skills pagination, `BaseIconButton`, `BaseCloseButton`); `md` for forms and card CTAs; `lg` for the home first-screen CTAs. Don't resize buttons with `!` overrides: pick a `size`.
+Every variant and `type` produces the same box at a given size; `variant`/`tone` only change colours (a `ghost` keeps a transparent 1px border). Text is always uppercase.
+
+| Size | Height | Padding x | Text | `iconOnly` | Use for |
+|---|---|---|---|---|---|
+| `sm` | 36px (hit area 44px) | 14px | `sb-label` bold | 36×36 | Supporting or compact actions: on images, toolbars, pagination, filter chips, header controls, language switch, close, secondary form actions ("Clear form") |
+| `md` | 44px | 24px | `sb-body-strong` | 44×44 | Default. Actions in page or dialog content: card CTAs, form submit, "Back to home", "Read more" |
+| `lg` | 52px | 32px | `sb-body-strong` | 52×52 | The page's main call to action, one per screen, in the first viewport (home CTAs, 404 "Back to home") |
+
+Never resize a `BaseButton` with classes: pick a `size`. Buttons that stack on narrow screens share one width (one-column grid sized to the widest, e.g. the home CTAs). A `ghost` aligned under text compensates its padding with a negative margin (`-ml-6` at `md`).
 
 Slot: `default` (button label / content). Icons inside are spaced by the built-in `gap-2`.
 
@@ -599,7 +611,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Page opener for About and Skills: the page `h1` in `sb-hero` (fluid 56 → 120px), entering with `animate-rise-in`, closed by a bottom border. Props: `id`, `text`. Projects does not use it: the tab bar comes first and each tab's heading is the page `h1`. The home page has its own first screen (name, role, CTAs, avatar, selected work).
+Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`. On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (name, role, CTAs, avatar, selected work).
 
 ---
 

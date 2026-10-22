@@ -149,7 +149,6 @@ const _debouncedFilterUpdate = () => {
         <li v-for="item in selectedTypeItems" :key="item.value">
           <BaseButton
             :aria-label="t('a11y.removeFilter', { name: item.label })"
-            class="normal-case"
             size="sm"
             variant="secondary"
             @click="onRemoveType(item.value)"

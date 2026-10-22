@@ -233,6 +233,7 @@
       }
     },
     "projects": {
+      "hero": "Progetti",
       "links": {
         "code": "Codice",
         "live": "Sito online"

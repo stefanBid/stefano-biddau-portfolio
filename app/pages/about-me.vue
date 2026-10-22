@@ -59,6 +59,7 @@ const onSelectMilestone = (id: string | number) => {
   <div>
     <ThePageHero
       id="about-me"
+      image-src="/images/3d-avatar/avatar-pose-3.webp"
       :text="t('pages.about.hero')"
     />
     <!-- Timeline Section -->

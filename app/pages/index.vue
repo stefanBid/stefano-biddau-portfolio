@@ -97,7 +97,8 @@ const getFile = computed<{ name: string, path: string }>(() => ({
             :style="elStyle"
           ></span>
         </p>
-        <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-4">
+        <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
+        <div class="mt-10 grid w-fit grid-cols-1 gap-4 sm:flex">
           <BaseButton size="lg" variant="primary" @click="contactFormIsOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
@@ -116,8 +117,11 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           alt=""
           class="w-40 sm:w-64 lg:w-full lg:max-w-md h-auto"
           fetchpriority="high"
+          :height="1536"
           loading="eager"
-          src="/images/my-avatar.webp"
+          provider="none"
+          src="/images/3d-avatar/avatar-pose-4.webp"
+          :width="1024"
         />
       </div>
     </section>

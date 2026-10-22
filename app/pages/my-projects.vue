@@ -23,8 +23,13 @@ const onSelectTab = (tabId: string | number) => {
 
 <template>
   <div>
+    <ThePageHero
+      id="my-projects"
+      image-src="/images/3d-avatar/avatar-pose-5.webp"
+      :text="t('pages.projects.hero')"
+    />
     <BaseTabs
-      class="pt-8 md:pt-16"
+      class="mt-8 md:mt-12"
       panel-id="projects-panel"
       :selected-tab-id="currentTabId"
       :tabs="tabs"

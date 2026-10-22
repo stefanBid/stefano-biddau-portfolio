@@ -46,7 +46,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
-- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `size` `sm` | `md` | `lg`; `iconOnly`, `isActive`, `tone`). Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, timeline dots, hamburger. Never resize a `BaseButton` with `!` overrides — pick a `size`
+- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `iconOnly`, `isActive`, `tone`). **Only `size` changes dimensions** — same box for every variant/type: `sm` 36px (hit 44) for supporting/compact actions (on images, toolbars, pagination, chips, header controls, close, secondary form actions); `md` 44px default for actions in content and dialogs (card CTAs, submit, back, read more); `lg` 52px for the page's single main CTA in the first viewport. Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, timeline dots, hamburger. Never resize a `BaseButton` with classes
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 

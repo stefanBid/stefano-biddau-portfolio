@@ -55,6 +55,7 @@ const onBackHome = () => {
 
       <BaseButton
         class="mt-4"
+        size="lg"
         type="button"
         variant="primary"
         @click="onBackHome"

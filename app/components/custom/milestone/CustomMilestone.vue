@@ -195,7 +195,7 @@ watch(() => props.isActive, (isActive) => {
           v-if="needsExpansion && !props.isActive"
           :aria-controls="`milestone-body-${props.id}`"
           aria-expanded="false"
-          class="mt-2 md:-ml-3 uppercase"
+          class="mt-2 md:-ml-6"
           tone="accent"
           variant="ghost"
           @click="onReadMore"

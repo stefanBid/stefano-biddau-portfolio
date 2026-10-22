@@ -34,24 +34,20 @@ const isExternal = computed(() => /^https?:\/\//.test(props.to ?? ''))
 
 const isInteractive = computed(() => props.type === 'link' || (!props.isDisabled && !props.isLoading))
 
-const isFilled = computed(() => props.variant !== 'ghost')
-
+// Only size changes the box: every variant and type shares height, padding, type and border width
 const SIZE_CLASSES = {
   // sm is 36px tall; the invisible ::before extends the hit area to 44px
   sm: {
+    box: 'h-9 px-3.5 sb-label font-bold relative before:absolute before:-inset-y-1 before:inset-x-0',
     icon: 'size-9 relative before:absolute before:-inset-1',
-    filled: 'min-h-9 px-3.5 sb-label font-bold uppercase relative before:absolute before:-inset-y-1 before:inset-x-0',
-    ghost: 'min-h-9 px-2.5 sb-label relative before:absolute before:-inset-y-1 before:inset-x-0',
   },
   md: {
+    box: 'h-11 px-6 sb-body-strong',
     icon: 'size-11',
-    filled: 'min-h-11 px-5 py-2.5 md:px-7 md:py-3 sb-body-strong uppercase',
-    ghost: 'min-h-11 px-3 sb-body',
   },
   lg: {
+    box: 'h-13 px-8 sb-body-strong',
     icon: 'size-13',
-    filled: 'min-h-13 px-7 py-3 md:px-9 sb-body-strong uppercase',
-    ghost: 'min-h-13 px-4 sb-body-strong',
   },
 } as const
 
@@ -59,15 +55,13 @@ const classes = computed(() => {
   const size = SIZE_CLASSES[props.size]
 
   return [
-    'inline-flex items-center justify-center gap-2 rounded-lg sb-transition sb-focus',
+    'inline-flex items-center justify-center gap-2 rounded-lg border uppercase whitespace-nowrap sb-transition sb-focus',
     isInteractive.value ? 'cursor-pointer' : 'cursor-not-allowed opacity-45',
 
     // Size
-    props.iconOnly ? `${size.icon} shrink-0` : isFilled.value ? size.filled : size.ghost,
+    props.iconOnly ? `${size.icon} shrink-0` : size.box,
 
-    // Variants
-    isFilled.value && 'border',
-
+    // Variants: colours only
     props.variant === 'primary' && 'bg-primary border-primary-border text-on-primary',
     props.variant === 'primary' && isInteractive.value && 'hover:bg-primary-hover',
 
@@ -77,6 +71,7 @@ const classes = computed(() => {
     props.variant === 'outline' && 'bg-transparent border-primary text-primary-ink',
     props.variant === 'outline' && isInteractive.value && 'hover:bg-primary hover:text-on-primary',
 
+    props.variant === 'ghost' && 'border-transparent',
     props.variant === 'ghost' && props.tone === 'accent' && 'text-primary-ink',
     props.variant === 'ghost' && props.tone === 'accent' && isInteractive.value && 'hover:text-primary-ink-hover',
     props.variant === 'ghost' && props.tone === 'neutral' && (props.isActive ? 'text-ink bg-surface-2' : 'text-ink-muted'),

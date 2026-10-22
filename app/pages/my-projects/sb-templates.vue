@@ -36,9 +36,9 @@ const { templates } = useTemplates()
         />
       </div>
       <div class="flex flex-col gap-3">
-        <h1 class="sb-h1 mb-0 text-balance">
+        <h2 class="sb-h1 mb-0 text-balance">
           {{ t('pages.projects.sbTemplatesProject.title') }}
-        </h1>
+        </h2>
         <p class="sb-body text-ink-muted mb-0">
           {{ t('pages.projects.sbTemplatesProject.description') }}
         </p>

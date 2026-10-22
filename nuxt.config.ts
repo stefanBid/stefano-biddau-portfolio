@@ -192,5 +192,9 @@ export default defineNuxtConfig({
     quality: 80,
     format: ['webp', 'avif', 'png'],
     screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
+    // Passthrough for assets already optimised by hand (3D avatars): served as-is, no re-encoding
+    providers: {
+      none: { provider: 'none' },
+    },
   },
 })

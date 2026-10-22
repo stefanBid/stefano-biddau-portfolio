@@ -232,6 +232,7 @@
       }
     },
     "projects": {
+      "hero": "Projects",
       "links": {
         "code": "Code",
         "live": "Live site"

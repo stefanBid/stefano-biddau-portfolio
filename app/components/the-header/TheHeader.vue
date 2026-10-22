@@ -238,7 +238,7 @@ watch(isMdUp, (newVal) => {
             :key="lang.code"
             :aria-label="lang.label"
             :aria-pressed="lang.code === props.selectedLangId ? 'true' : 'false'"
-            class="border border-border uppercase"
+            class="border-border"
             :is-active="lang.code === props.selectedLangId"
             size="sm"
             variant="ghost"
