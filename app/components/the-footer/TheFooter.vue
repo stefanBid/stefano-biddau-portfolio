@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit inline-flex items-center min-h-10 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
+                class="w-fit inline-flex items-center min-h-8 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
                 :to="link.path"
               >
                 {{ link.name }}
