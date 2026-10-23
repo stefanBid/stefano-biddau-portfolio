@@ -24,19 +24,18 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const typedRoles = computed(() => [
-  t('pages.home.subtitle.typed.0'),
-  t('pages.home.subtitle.typed.1'),
-  t('pages.home.subtitle.typed.2'),
-  t('pages.home.subtitle.typed.3'),
-])
+const typedRole = computed(() => t('pages.home.subtitle.role'))
 
+// Types once and drops the cursor, so nothing keeps moving next to the heading (WCAG 2.2.2)
 const { el, elStyle } = useTypedText(
-  typedRoles,
+  typedRole,
   {
-    backDelay: 500,
+    contentType: 'null',
+    onComplete: self => self.cursor?.remove(),
   },
 )
+
+const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
 
 // State
 const contactFormIsOpen = ref(false)
@@ -93,14 +92,14 @@ const getFile = computed<{ name: string, path: string }>(() => ({
 
 <template>
   <div>
-    <section class="min-h-[calc(100dvh-4rem)] grid items-center content-center gap-8 py-10 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
+    <section class="grid items-center content-center gap-6 py-8 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:py-16">
       <div class="order-2 lg:order-1 flex flex-col items-center text-center lg:items-start lg:text-left">
         <h1 class="sb-display mb-0 text-balance">
           {{ t('pages.home.title') }}
         </h1>
         <p class="sb-h3 mt-4 min-h-14 text-ink-muted">
           {{ t('pages.home.subtitle.costant') }}
-          <span class="sr-only">{{ typedRoles.join(', ') }}</span>
+          <span class="sr-only">{{ typedRole }}</span>
           <span
             ref="el"
             aria-hidden="true"
@@ -108,8 +107,11 @@ const getFile = computed<{ name: string, path: string }>(() => ({
             :style="elStyle"
           ></span>
         </p>
+        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none lg:text-left">
+          {{ t('pages.home.lead') }}
+        </p>
         <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
-        <div class="mt-10 grid w-fit grid-cols-1 gap-4 sm:flex">
+        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex">
           <BaseButton size="lg" variant="primary" @click="contactFormIsOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
@@ -126,7 +128,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       <div class="order-1 lg:order-2 flex justify-center">
         <NuxtImg
           alt=""
-          class="w-40 sm:w-64 lg:w-full lg:max-w-md h-auto"
+          class="w-32 sm:w-64 lg:w-full lg:max-w-sm h-auto"
           fetchpriority="high"
           :height="1536"
           loading="eager"
@@ -169,7 +171,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
               />
             </div>
             <div class="p-4 md:p-5">
-              <h3 class="sb-h4 mb-1 text-balance">
+              <h3 class="sb-h4 mb-1 text-left text-balance">
                 {{ item.title }}
               </h3>
               <p class="sb-small text-ink-muted text-left mb-0">
@@ -291,6 +293,13 @@ const getFile = computed<{ name: string, path: string }>(() => ({
               {{ t('pages.home.cvCard.buttonText') }}
             </BaseButton>
           </div>
+          <p class="sb-body text-ink-muted text-left mt-6 mb-0">
+            {{ t('pages.home.closingCta.emailPrefix') }}
+            <a
+              class="block w-fit hyphens-none text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus sm:inline"
+              :href="`mailto:${CONTACT_EMAIL}`"
+            >{{ CONTACT_EMAIL.split('@')[0] }}<wbr />@{{ CONTACT_EMAIL.split('@')[1] }}</a>
+          </p>
         </div>
         <div class="hidden md:flex justify-center self-end pt-8">
           <NuxtImg

@@ -17,7 +17,7 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "Sono Stefano Biddau, web designer e sviluppatore front-end. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
+      "description": "Sono Stefano Biddau, sviluppatore full-stack e web designer. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
     },
     "about": {
       "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -77,14 +77,10 @@
     "home": {
       "title": "Ciao, sono Stefano Biddau",
       "subtitle": {
-        "costant": "E sono un",
-        "typed": [
-          "Front End Developer",
-          "Back End Developer",
-          "Web Designer",
-          "UI/UX Enthusiast"
-        ]
+        "costant": "E sono uno",
+        "role": "Sviluppatore Full-Stack & Web Designer"
       },
+      "lead": "In SI2001 dal 2023 e disponibile per progetti freelance. Costruisco prodotti web completi, dall'interfaccia al database.",
       "cvCard": {
         "buttonText": "Scarica CV"
       },
@@ -138,7 +134,8 @@
       },
       "closingCta": {
         "title": "Hai un progetto o un ruolo in mente?",
-        "text": "Scrivimi, oppure porta con te il mio CV. Ti rispondo via email."
+        "text": "Scrivimi, oppure porta con te il mio CV. Ti rispondo via email.",
+        "emailPrefix": "Preferisci la mail?"
       },
       "contactForm": {
         "title": "Contattami",

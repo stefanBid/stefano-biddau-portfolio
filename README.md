@@ -794,7 +794,8 @@ const { el, elStyle } = useTypedText(computed(() => [t('key.0'), t('key.1')]))
 
 - Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace)
 - Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing)
-- Respects `prefers-reduced-motion` automatically
+- Under `prefers-reduced-motion` typed.js is skipped and the first string is written as static text
+- Home types its single role once (`contentType: 'null'` so `&` survives) and removes the cursor in `onComplete`, so nothing keeps moving next to the heading
 
 ### `useFloatingUi(config?)`
 
@@ -936,6 +937,8 @@ No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read
 ### `server/api/github-stats.json.ts`
 
 Serves `/api/github-stats.json`, prerendered (`routeRules['/api/github-stats.json'] = { prerender: true }`), so GitHub is queried once per deploy and the result ships as a static file. Reads the public profile and owned repositories of `stefanBid` over REST; with `NUXT_GITHUB_TOKEN` set it also reads contributions in the last year over GraphQL (anonymous GraphQL is refused). Any GitHub failure returns `{ stats: null }` instead of failing the build. Totals and top repositories exclude forks.
+
+In dev only, the GitHub fetch is wrapped in `defineCachedFunction` (10 min, keyed by token presence): dev renders the home and its `_payload.json` on every visit, and without the cache each navigation to `/` waited ~0.5s on GitHub (and spent rate limit). Builds bypass the cache and always fetch fresh; errors are never cached.
 
 The token lives in `runtimeConfig.githubToken` (server-only, default `''`) and is filled at runtime from `NUXT_GITHUB_TOKEN`. Never assign `process.env.…` to it in `nuxt.config.ts`: that value gets inlined into the Netlify Function bundle.
 

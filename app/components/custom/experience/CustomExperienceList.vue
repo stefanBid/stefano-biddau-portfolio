@@ -85,7 +85,7 @@ onMounted(() => {
         />
       </span>
       <div class="min-w-0 pt-0.5">
-        <h3 class="sb-h4 mb-1 text-balance">
+        <h3 class="sb-h4 mb-1 text-left text-balance">
           {{ item.role }}
         </h3>
         <p v-if="item.organization || item.typeLabel" class="sb-body text-ink text-left mb-0">

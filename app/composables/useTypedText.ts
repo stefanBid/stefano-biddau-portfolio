@@ -59,13 +59,8 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     }
   }
 
-  function _reducedMotionOverrides(): InputOptions {
-    if (typeof window === 'undefined') {
-      return {}
-    }
-    const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
-
-    return reduced ? { typeSpeed: 9999, backSpeed: 9999, loop: false, showCursor: false } : {}
+  function _prefersReducedMotion(): boolean {
+    return typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   }
 
   /* --- core logic --- */
@@ -80,11 +75,16 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
       return
     }
 
+    // typed.js has no instant mode — its speeds are per character — so reduced motion gets the first string as static text
+    if (_prefersReducedMotion()) {
+      target.textContent = _strings.value[0] ?? ''
+      return
+    }
+
     const { default: Typed } = await import('typed.js') // Lazy load for SSR safety
 
     const finalTypedOptions: TypedOptions = {
       ..._normalizeOptions(_typedOptions.value), // for sync with reactive options
-      ..._reducedMotionOverrides(),
       strings: _strings.value,
     }
 

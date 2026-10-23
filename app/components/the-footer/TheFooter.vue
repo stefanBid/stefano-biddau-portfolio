@@ -171,7 +171,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         </div>
 
         <!-- Right side: legal links -->
-        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 not-italic text-center lg:text-right">
+        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
             class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
@@ -181,7 +181,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </NuxtLink>
 
           <!-- Separator -->
-          <span class="sb-small italic not-italic opacity-40 select-none">|</span>
+          <span class="sb-small italic opacity-40 select-none">|</span>
 
           <!-- Terms -->
           <NuxtLink
