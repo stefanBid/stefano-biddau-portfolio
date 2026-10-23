@@ -205,12 +205,12 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination, topSkills, countByTypes } = useSkills()
+const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `topSkills`: every `isGod` skill, alphabetical, ignores filters.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack`: home "Core stack", `FEATURED_STACK` names grouped `frontend`/`backend`/`database`, ignores filters and `isGod`.
 
 ### `useGithubStats()`
 ```ts

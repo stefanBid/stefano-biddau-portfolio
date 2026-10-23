@@ -8,7 +8,7 @@ const { t, locale } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const { projects } = useProjects()
-const { topSkills } = useSkills()
+const { featuredStack } = useSkills()
 const { stats: githubStats } = await useGithubStats()
 
 useSeoMeta({
@@ -40,6 +40,13 @@ const { el, elStyle } = useTypedText(
 
 // State
 const contactFormIsOpen = ref(false)
+
+// Each group spans as many outer columns as it has tiles, so every tile keeps the same width and backend + database share a row on mobile
+const STACK_GROUP_LAYOUT = {
+  frontend: { span: 'col-span-3 md:col-span-5', cols: 'grid-cols-3 md:grid-cols-5' },
+  backend: { span: 'col-span-2', cols: 'grid-cols-2' },
+  database: { span: 'col-span-1', cols: 'grid-cols-1' },
+} as const
 
 const PROJECT_LINKS = [
   { id: 'bd6a7d77-d3e5-48be-a83c-28d290f788ec', metaKey: 'romano' },
@@ -192,18 +199,31 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
-      <ul class="grid grid-cols-3 gap-3 md:gap-4 lg:grid-cols-9 mb-0 p-0 list-none">
-        <li v-for="skill in topSkills" :key="skill.id">
-          <CustomSkillsCard
-            class="h-full"
-            compact
-            gold
-            :icon="skill.icon ?? 'solar:code-square-bold-duotone'"
-            :level="skill.level"
-            :name="skill.name"
-          />
-        </li>
-      </ul>
+      <div class="grid grid-cols-3 gap-x-3 gap-y-8 md:grid-cols-5 md:gap-x-4 lg:grid-cols-8">
+        <div
+          v-for="group in featuredStack"
+          :key="group.key"
+          :class="STACK_GROUP_LAYOUT[group.key].span"
+        >
+          <h3 class="sb-label uppercase text-ink-muted mb-3">
+            {{ t(`pages.home.topSkills.groups.${group.key}`) }}
+          </h3>
+          <ul
+            class="grid gap-3 md:gap-4 mb-0 p-0 list-none"
+            :class="STACK_GROUP_LAYOUT[group.key].cols"
+          >
+            <li v-for="skill in group.skills" :key="skill.id">
+              <CustomSkillsCard
+                class="h-full"
+                compact
+                :icon="skill.icon ?? 'solar:code-square-bold-duotone'"
+                :level="skill.level"
+                :name="skill.name"
+              />
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section

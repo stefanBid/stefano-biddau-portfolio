@@ -9,8 +9,22 @@ interface Skill {
   isGod?: boolean
 }
 
+type StackArea = 'frontend' | 'backend' | 'database'
+
+interface StackGroup {
+  key: StackArea
+  skills: Skill[]
+}
+
 const DEFAULT_PAGE_SIZE = 12
 const DEFAULT_STARTING_PAGE = 1
+
+// Home page "Core stack": a curated full-stack profile, independent from isGod
+const FEATURED_STACK: Record<StackArea, string[]> = {
+  frontend: ['Angular', 'Vue', 'Vite', 'Nuxt', 'Flutter'],
+  backend: ['Spring', 'Java'],
+  database: ['PostgreSQL'],
+}
 
 // Local skills data (detached from BE)
 const SKILLS_DATA: Skill[] = [
@@ -90,7 +104,7 @@ const SKILLS_DATA: Skill[] = [
     id: '973b1c25-8edb-4182-a85c-9bb17fa4bb60',
     name: 'Flutter',
     level: 4,
-    icon: 'logos:flutter',
+    icon: 'logos:flutter-icon',
     category: 'feFramework',
     isGod: false,
   },
@@ -396,9 +410,12 @@ export default function useSkills() {
     }
   })
 
-  const topSkills = computed<Skill[]>(() => SKILLS_DATA
-    .filter(skill => skill.isGod)
-    .sort((a, b) => a.name.localeCompare(b.name)))
+  const featuredStack = computed<StackGroup[]>(() => (Object.keys(FEATURED_STACK) as StackArea[]).map(key => ({
+    key,
+    skills: FEATURED_STACK[key]
+      .map(name => SKILLS_DATA.find(skill => skill.name === name))
+      .filter(skill => skill !== undefined),
+  })))
 
   const countByTypes = (types: SkillType[]): number =>
     SKILLS_DATA.filter(skill => skill.category && types.includes(skill.category)).length
@@ -407,7 +424,7 @@ export default function useSkills() {
     filters,
     skills,
     pagination,
-    topSkills,
+    featuredStack,
     countByTypes,
   }
 }

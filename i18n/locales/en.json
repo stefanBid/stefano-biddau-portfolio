@@ -102,7 +102,12 @@
       },
       "topSkills": {
         "title": "Core stack",
-        "lead": "The tools I know best, at the top of my scale.",
+        "lead": "Front end, back end and database: the stack I build complete products with.",
+        "groups": {
+          "frontend": "Frontend",
+          "backend": "Backend",
+          "database": "Database"
+        },
         "viewAll": "All skills"
       },
       "github": {

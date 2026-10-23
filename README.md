@@ -338,6 +338,7 @@ Every **action** (submit, download, open, "Read more", links styled as buttons, 
 | `isLoading` | `boolean` | `false` | Shows spinner |
 | `isActive` | `boolean` | `false` | Selected state for `ghost` |
 | `iconOnly` | `boolean` | `false` | Square button (36 / 44 / 52px by `size`) |
+| `externalIconClass` | `string` | `undefined` | Extra classes on the external-link arrow (e.g. `hidden @xs:inline` to drop it in a narrow container) |
 
 Every variant and `type` produces the same box at a given size; `variant`/`tone` only change colours (a `ghost` keeps a transparent 1px border). Text is always uppercase.
 
@@ -574,6 +575,8 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 | `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
 
 Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
+
+The header is a size container (`@container`): below 20rem of card width (`@xs`) the "Code" / "Live site" labels become `sr-only` and the external-link arrow is hidden (`externalIconClass`), so the buttons shrink to their icons while keeping their accessible name.
 
 ### `CustomSbTemplatesCard`
 
@@ -879,13 +882,13 @@ Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.lis
 ### `useSkills()`
 
 ```ts
-const { filters, skills, pagination, topSkills, countByTypes } = useSkills()
+const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `topSkills` is every `isGod` skill, alphabetical, regardless of filters (home page "Core stack").
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack` is the home page "Core stack": `FEATURED_STACK` names grouped by area (`frontend`, `backend`, `database`), in authored order, regardless of filters and of `isGod`.
 
 ### `useGithubStats()`
 

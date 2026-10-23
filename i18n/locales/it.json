@@ -102,7 +102,12 @@
       },
       "topSkills": {
         "title": "Stack principale",
-        "lead": "Gli strumenti che conosco meglio, al massimo della mia scala.",
+        "lead": "Front end, back end e database: lo stack con cui costruisco prodotti completi.",
+        "groups": {
+          "frontend": "Frontend",
+          "backend": "Backend",
+          "database": "Database"
+        },
         "viewAll": "Tutte le skill"
       },
       "github": {

@@ -10,6 +10,7 @@ interface BaseButtonProps {
   isLoading?: boolean
   isActive?: boolean
   iconOnly?: boolean
+  externalIconClass?: string
 }
 
 // Dependencies
@@ -27,6 +28,7 @@ const props = withDefaults(defineProps<BaseButtonProps>(), {
   isLoading: false,
   isActive: false,
   iconOnly: false,
+  externalIconClass: undefined,
 })
 
 // Data
@@ -94,6 +96,7 @@ const classes = computed(() => {
       v-if="isExternal && !props.iconOnly"
       aria-hidden="true"
       class="size-4 shrink-0"
+      :class="props.externalIconClass"
       name="solar:arrow-right-up-linear"
     />
     <span v-if="isExternal" class="sr-only">({{ t('a11y.newTab') }})</span>

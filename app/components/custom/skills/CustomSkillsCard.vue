@@ -22,14 +22,14 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
     class="relative overflow-hidden rounded-xl shadow-md ring-1 ring-ink/5"
     :class="[
       props.gold && 'gold-card border-ink/50!',
-      props.compact && 'p-3! md:p-4!',
+      props.compact && 'p-2! sm:p-3! md:p-4!',
     ]"
     full-custom-content
     variant="dark"
   >
     <div
       class="flex sb-transition"
-      :class="props.compact ? 'flex-col items-center gap-3 text-center' : 'items-center gap-4 md:gap-6'"
+      :class="props.compact ? 'flex-col items-center gap-3 text-center hyphens-none' : 'items-center gap-4 md:gap-6'"
     >
       <!-- Icon -->
       <div

@@ -123,13 +123,15 @@ const onSelectUrl = (url: string) => {
           </div>
 
           <!-- Content wrapper -->
-          <div class="relative z-10 flex flex-col justify-between h-full p-4 md:p-6 sb-transition">
+          <!-- Container query: the card width depends on the grid, not the viewport -->
+          <div class="@container relative z-10 flex flex-col justify-between h-full p-4 md:p-6 sb-transition">
             <!-- Top row: actions -->
             <div class="flex  items-center gap-2 self-end sb-transition">
               <template v-for="group in urlGroups" :key="group.key">
                 <BaseButton
                   v-if="group.urls.length === 1"
                   class="shrink-0"
+                  external-icon-class="hidden @xs:inline"
                   size="sm"
                   :to="group.urls[0]!.code"
                   type="link"
@@ -140,7 +142,7 @@ const onSelectUrl = (url: string) => {
                     class="size-5"
                     :name="group.icon"
                   />
-                  {{ group.label }}
+                  <span class="sr-only @xs:not-sr-only">{{ group.label }}</span>
                 </BaseButton>
                 <BaseIconMenu
                   v-else
@@ -164,7 +166,7 @@ const onSelectUrl = (url: string) => {
                         class="size-5"
                         :name="group.icon"
                       />
-                      {{ group.label }}
+                      <span class="sr-only @xs:not-sr-only">{{ group.label }}</span>
                     </BaseButton>
                   </template>
                 </BaseIconMenu>
