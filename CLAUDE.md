@@ -205,12 +205,18 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination, countByTypes } = useSkills()
+const { filters, skills, pagination, topSkills, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs).
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `topSkills`: every `isGod` skill, alphabetical, ignores filters.
+
+### `useGithubStats()`
+```ts
+const { stats } = await useGithubStats()
+```
+The one async content source — `useFetch('/api/github-stats.json')`, prerendered once per build (see Server API). `stats` is `GithubStats | null`; `null` when GitHub was unreachable, hide the UI then.
 
 ### `useTemplates()`
 ```ts
@@ -280,6 +286,7 @@ Add new shared interfaces to `global.d.ts` inside `declare global {}` — never 
 
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file:
 
+- `server/api/github-stats.json.ts` — GitHub profile stats, prerendered to a static JSON (`routeRules['/api/github-stats.json'] = { prerender: true }`); contributions need `NUXT_GITHUB_TOKEN`. Token is `runtimeConfig.githubToken: ''`, filled from env at runtime — never assign `process.env` to it in `nuxt.config.ts` (it gets inlined into the function bundle)
 - `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy` (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — it must run per-request to read `CONTEXT`.
 
 New server code goes in `server/routes/<name>.ts` (served at `/<name>`) or `server/api/<name>.ts` (served at `/api/<name>`), depending on whether the path needs the `/api` prefix.

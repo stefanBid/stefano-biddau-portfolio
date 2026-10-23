@@ -95,6 +95,7 @@ NUXT_EMAILJS_SERVICE_ID=your_emailjs_service_id
 NUXT_EMAILJS_TEMPLATE_ADMIN_ID=your_admin_template_id
 NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID=your_reply_to_template_id
 NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
+NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
 ```
 
 ### Available commands
@@ -143,6 +144,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        the-page-hero/      ThePageHero.vue
      composables/
        data/                ← content-source composables (i18n- or local-data-backed)
+         useGithubStats.ts  ← GitHub profile stats from the prerendered /api/github-stats.json
          useMilestones.ts   ← reads pages.about.milestones from i18n
          useProjects.ts     ← reads pages.projects.personalProjects.list from i18n
          useSkills.ts       ← hardcoded local skills list + filtering/pagination
@@ -177,6 +179,8 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        generateUuid.ts     ← UUID v4 generator
        markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`)
 ── server/
+     api/
+       github-stats.json.ts ← GitHub profile stats, prerendered to a static JSON once per build
      routes/
        robots.txt.ts       ← per-request robots.txt, varies by Netlify deploy context
 ```
@@ -511,6 +515,15 @@ Emits: `(e: 'select', tabId: string | number): void`. Roving tabindex; ←/→/�
 | `icon` | `string` | `'solar:box-minimalistic-bold-duotone'` | |
 | `dimension` | `'normal' \| 'small'` | `'normal'` | |
 
+### `BaseCountUp`
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `number` | — | Required. Final value, formatted with `Intl.NumberFormat` for the active locale |
+| `duration` | `number` | `1400` | Milliseconds, exponential ease-out |
+
+Counts from 0 to `value` the first time it is 60% in view. SSR and no-JS render the final value; `prefers-reduced-motion` skips the animation. The animated digits are `aria-hidden`, screen readers get the final value only.
+
 ### `BaseRichText`
 
 | Prop | Type | Notes |
@@ -540,6 +553,7 @@ Uses `useEmailJs` for dual send (admin + reply-to-user), `zod` for validation, `
 | `level` | `number` | — | Required. 0–5 scale shown as filled squares |
 | `icon` | `string` | — | Required. Iconify name |
 | `gold` | `boolean` | `false` | Gold ring highlight (top skill) |
+| `compact` | `boolean` | `false` | Vertical tile (icon above name), no level bar — home "Core stack" grid |
 
 ### `CustomSkillsDialog`
 
@@ -582,6 +596,18 @@ Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#pro
 | `imageSrc` | `string` | Optional |
 | `imageCaption` | `string` | Optional |
 | `date` | `string` | Optional |
+
+### `CustomGithubStats`
+
+| Prop | Type | Notes |
+|---|---|---|
+| `stats` | `GithubStats` | Required |
+
+Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — contributions in the last year (only when the build had a token), public repositories, stars received, years on GitHub — next to the three most-starred own repositories. The page hides the whole section when `useGithubStats()` returns `null`.
+
+### `CustomExperienceList`
+
+No props. LinkedIn-style list of `useMilestones()` entries, newest first: role, `organization · type`, then `start – end · duration` (months counted inclusively, as LinkedIn does; no `endDate` means "Present"). The "Present" duration is refreshed on mount so a stale prerender corrects itself.
 
 ### `CustomSolarSystem`
 
@@ -832,7 +858,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization` and `type` (`MilestoneType`), used by `CustomExperienceList` on the home page.
 
 ### `useProjects()`
 
@@ -853,13 +879,21 @@ Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.lis
 ### `useSkills()`
 
 ```ts
-const { filters, skills, pagination, countByTypes } = useSkills()
+const { filters, skills, pagination, topSkills, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs).
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `topSkills` is every `isGod` skill, alphabetical, regardless of filters (home page "Core stack").
+
+### `useGithubStats()`
+
+```ts
+const { stats } = await useGithubStats()
+```
+
+The one async content source: `useFetch('/api/github-stats.json')`, which is prerendered at build time, so visitors never call GitHub and client-side navigation reads the same static file. `stats` is `GithubStats | null` — `null` when GitHub was unreachable during the build.
 
 ---
 
@@ -885,6 +919,9 @@ All interfaces are declared globally — no import needed
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
 | `NotificationItem` | `{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }` |
 | `SkillsFilterPreset` | `{ key, filters: SkillType[] }` — preset filter buttons in `my-skills.vue` |
+| `MilestoneType` | `'education' \| 'internship' \| 'fullTime'` |
+| `GithubRepo` | `{ name, url, description, language, stars }` |
+| `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |
 | `RichBlock` | Union of `RichBlockParagraph \| RichBlockHeading \| RichBlockList \| RichBlockQuote \| RichBlockCode` |
 
 ---
@@ -892,6 +929,12 @@ All interfaces are declared globally — no import needed
 ## 8. Server API
 
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file.
+
+### `server/api/github-stats.json.ts`
+
+Serves `/api/github-stats.json`, prerendered (`routeRules['/api/github-stats.json'] = { prerender: true }`), so GitHub is queried once per deploy and the result ships as a static file. Reads the public profile and owned repositories of `stefanBid` over REST; with `NUXT_GITHUB_TOKEN` set it also reads contributions in the last year over GraphQL (anonymous GraphQL is refused). Any GitHub failure returns `{ stats: null }` instead of failing the build. Totals and top repositories exclude forks.
+
+The token lives in `runtimeConfig.githubToken` (server-only, default `''`) and is filled at runtime from `NUXT_GITHUB_TOKEN`. Never assign `process.env.…` to it in `nuxt.config.ts`: that value gets inlined into the Netlify Function bundle.
 
 ### `server/routes/robots.txt.ts`
 
@@ -1003,6 +1046,7 @@ Add all variables under **Site settings → Environment variables** on Netlify. 
 | `NUXT_EMAILJS_TEMPLATE_ADMIN_ID` | Yes | EmailJS template ID — admin notification email |
 | `NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID` | Yes | EmailJS template ID — reply-to-user email |
 | `NUXT_PUBLIC_CLOUDINARY_BASE` | Optional | Cloudinary base URL for `@nuxt/image` cloud provider |
+| `NUXT_GITHUB_TOKEN` | Optional | GitHub fine-grained token, *Public repositories* access, no permissions. Mark it secret, Builds scope only. Without it the home page drops the contributions counter, and REST calls are anonymous (60 requests/h per IP) |
 
 ### Versioning
 

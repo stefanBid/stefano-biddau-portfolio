@@ -100,6 +100,41 @@
           "floatingPanel": "Libreria open source · 2025 · Vue 3"
         }
       },
+      "topSkills": {
+        "title": "Stack principale",
+        "lead": "Gli strumenti che conosco meglio, al massimo della mia scala.",
+        "viewAll": "Tutte le skill"
+      },
+      "github": {
+        "title": "Su GitHub",
+        "viewProfile": "Profilo GitHub",
+        "statsTitle": "In cifre",
+        "reposTitle": "I più stellati",
+        "starsCount": "{count} stella | {count} stelle",
+        "stats": {
+          "contributions": "Contributi nell'ultimo anno",
+          "publicRepos": "Repository pubblici",
+          "stars": "Stelle ricevute",
+          "years": "Anni su GitHub"
+        }
+      },
+      "experience": {
+        "title": "Esperienza",
+        "lead": "Dall'università al team con cui lavoro oggi.",
+        "viewAll": "Il mio percorso",
+        "present": "Oggi",
+        "years": "{count} anno | {count} anni",
+        "months": "{count} mese | {count} mesi",
+        "types": {
+          "education": "Formazione",
+          "internship": "Stage",
+          "fullTime": "Tempo indeterminato"
+        }
+      },
+      "closingCta": {
+        "title": "Hai un progetto o un ruolo in mente?",
+        "text": "Scrivimi, oppure porta con te il mio CV. Ti rispondo via email."
+      },
       "contactForm": {
         "title": "Contattami",
         "subtitle": "Scrivimi per un progetto o una posizione. Ti rispondo via email.",
@@ -159,6 +194,10 @@
           "title": "Il Mio Percorso Accademico",
           "subtitle": "UNISA - Informatica (Fisciano)",
           "date": "09/09/2018",
+          "endDate": "12/01/2022",
+          "role": "Laurea triennale in Informatica",
+          "organization": "Università degli Studi di Salerno",
+          "type": "education",
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -170,6 +209,10 @@
           "title": "Stage presso SI2001",
           "subtitle": "Sviluppatore Full Stack (stage)",
           "date": "11/20/2022",
+          "endDate": "02/01/2023",
+          "role": "Sviluppatore Full Stack",
+          "organization": "SI2001",
+          "type": "internship",
           "content": "Lo stage in **SI2001** è stato il mio primo vero passo dentro il mondo dello sviluppo professionale. In quei mesi mi sono formato come **sviluppatore full stack**, lavorando alla realizzazione di web application basate su **Spring Boot** e **Angular**. Ho sviluppato componenti front-end, integrato API REST, scritto logica back-end e gestito database, ottenendo una visione completa dell’architettura applicativa e del flusso di lavoro end-to-end.\n\nQuesto percorso mi ha permesso di trasformare le conoscenze accademiche in competenze concrete, applicate su progetti reali e all’interno di un team strutturato. Alla fine dello stage non ero più soltanto uno stagista: ero un giovane sviluppatore pronto a crescere ancora."
         },
         {
@@ -177,6 +220,9 @@
           "title": "Assunzione a tempo indeterminato presso SI2001",
           "subtitle": "Sviluppatore Full Stack",
           "date": "03/01/2023",
+          "role": "Sviluppatore Full Stack",
+          "organization": "SI2001",
+          "type": "fullTime",
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,

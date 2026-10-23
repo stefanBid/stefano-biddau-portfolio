@@ -4,6 +4,7 @@ interface CustomSkillCardProps {
   level: number
   icon: string
   gold?: boolean
+  compact?: boolean
 }
 
 // Dependencies
@@ -12,17 +13,24 @@ const { t } = useI18n()
 // Input / Output
 const props = withDefaults(defineProps<CustomSkillCardProps>(), {
   gold: false,
+  compact: false,
 })
 </script>
 
 <template>
   <BaseCard
     class="relative overflow-hidden rounded-xl shadow-md ring-1 ring-ink/5"
-    :class="props.gold ? 'gold-card border-ink/50!' : ''"
+    :class="[
+      props.gold && 'gold-card border-ink/50!',
+      props.compact && 'p-3! md:p-4!',
+    ]"
     full-custom-content
     variant="dark"
   >
-    <div class="flex items-center gap-4 md:gap-6 sb-transition">
+    <div
+      class="flex sb-transition"
+      :class="props.compact ? 'flex-col items-center gap-3 text-center' : 'items-center gap-4 md:gap-6'"
+    >
       <!-- Icon -->
       <div
         class="flex items-center justify-center size-12 sm:size-14 md:size-16 rounded-lg
@@ -37,7 +45,7 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
         />
       </div>
 
-      <div class="flex flex-col flex-1">
+      <div class="flex flex-col flex-1" :class="props.compact && 'items-center'">
         <!-- Skill Name -->
         <span
           class="sb-h4 text-ink sb-transition"
@@ -47,6 +55,7 @@ const props = withDefaults(defineProps<CustomSkillCardProps>(), {
 
         <!-- Level (0–5) -->
         <div
+          v-if="!props.compact"
           :aria-label="t('a11y.skillLevel', { level: props.gold ? 5 : props.level })"
           class="flex gap-1 mt-1"
           role="img"

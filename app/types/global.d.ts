@@ -88,6 +88,26 @@ declare global {
   }
 
   type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockQuote | RichBlockCode
+
+  type MilestoneType = 'education' | 'internship' | 'fullTime'
+
+  interface GithubRepo {
+    name: string
+    url: string
+    description: string | null
+    language: string | null
+    stars: number
+  }
+
+  interface GithubStats {
+    login: string
+    profileUrl: string
+    publicRepos: number
+    totalStars: number
+    yearsOnGithub: number
+    contributionsLastYear: number | null
+    topRepos: GithubRepo[]
+  }
 }
 
 export {}

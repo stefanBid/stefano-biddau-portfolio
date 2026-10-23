@@ -396,6 +396,10 @@ export default function useSkills() {
     }
   })
 
+  const topSkills = computed<Skill[]>(() => SKILLS_DATA
+    .filter(skill => skill.isGod)
+    .sort((a, b) => a.name.localeCompare(b.name)))
+
   const countByTypes = (types: SkillType[]): number =>
     SKILLS_DATA.filter(skill => skill.category && types.includes(skill.category)).length
 
@@ -403,6 +407,7 @@ export default function useSkills() {
     filters,
     skills,
     pagination,
+    topSkills,
     countByTypes,
   }
 }

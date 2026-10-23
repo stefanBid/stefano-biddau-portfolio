@@ -1,11 +1,15 @@
 <script setup lang="ts">
+import useGithubStats from '~/composables/data/useGithubStats'
 import useProjects from '~/composables/data/useProjects'
+import useSkills from '~/composables/data/useSkills'
 
 // Dependencies
 const { t, locale } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const { projects } = useProjects()
+const { topSkills } = useSkills()
+const { stats: githubStats } = await useGithubStats()
 
 useSeoMeta({
   // LOCALIZED
@@ -168,6 +172,118 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           </NuxtLink>
         </li>
       </ul>
+    </section>
+
+    <section aria-labelledby="top-skills-title" class="pb-24">
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+        <div>
+          <h2 id="top-skills-title" class="mb-0 scroll-mt-24">
+            {{ t('pages.home.topSkills.title') }}
+          </h2>
+          <p class="sb-body text-ink-muted text-left mt-2 mb-0">
+            {{ t('pages.home.topSkills.lead') }}
+          </p>
+        </div>
+        <NuxtLink
+          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          :to="localePath('my-skills')"
+        >
+          {{ t('pages.home.topSkills.viewAll') }}
+          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+        </NuxtLink>
+      </div>
+      <ul class="grid grid-cols-3 gap-3 md:gap-4 lg:grid-cols-9 mb-0 p-0 list-none">
+        <li v-for="skill in topSkills" :key="skill.id">
+          <CustomSkillsCard
+            class="h-full"
+            compact
+            gold
+            :icon="skill.icon ?? 'solar:code-square-bold-duotone'"
+            :level="skill.level"
+            :name="skill.name"
+          />
+        </li>
+      </ul>
+    </section>
+
+    <section
+      v-if="githubStats"
+      aria-labelledby="github-title"
+      class="pb-24"
+    >
+      <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+        <h2 id="github-title" class="mb-0 scroll-mt-24">
+          {{ t('pages.home.github.title') }}
+        </h2>
+        <a
+          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          :href="githubStats.profileUrl"
+          rel="noopener noreferrer"
+          target="_blank"
+        >
+          <Icon aria-hidden="true" class="size-4" name="mdi:github" />
+          {{ t('pages.home.github.viewProfile') }}
+          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-up-linear" />
+          <span class="sr-only">({{ t('a11y.newTab') }})</span>
+        </a>
+      </div>
+      <CustomGithubStats :stats="githubStats" />
+    </section>
+
+    <section aria-labelledby="experience-title" class="pb-24 grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+      <div class="flex flex-col items-start gap-4">
+        <h2 id="experience-title" class="mb-0 scroll-mt-24">
+          {{ t('pages.home.experience.title') }}
+        </h2>
+        <p class="sb-body text-ink-muted text-left mb-0">
+          {{ t('pages.home.experience.lead') }}
+        </p>
+        <NuxtLink
+          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          :to="localePath('about-me')"
+        >
+          {{ t('pages.home.experience.viewAll') }}
+          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+        </NuxtLink>
+      </div>
+      <CustomExperienceList />
+    </section>
+
+    <section aria-labelledby="closing-cta-title" class="pb-24">
+      <div class="grid items-center overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-[1.6fr_1fr]">
+        <div class="flex flex-col items-start p-6 md:p-12">
+          <h2 id="closing-cta-title" class="mb-0 text-balance">
+            {{ t('pages.home.closingCta.title') }}
+          </h2>
+          <p class="sb-lead text-ink-muted text-left mt-4 mb-0 max-w-xl">
+            {{ t('pages.home.closingCta.text') }}
+          </p>
+          <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex">
+            <BaseButton variant="primary" @click="contactFormIsOpen = true">
+              {{ t('pages.home.contactCard.buttonText') }}
+            </BaseButton>
+            <BaseButton variant="secondary" @click="downloadFile(getFile.path, getFile.name)">
+              <Icon
+                aria-hidden="true"
+                class="size-5"
+                name="solar:download-minimalistic-bold-duotone"
+              />
+              {{ t('pages.home.cvCard.buttonText') }}
+            </BaseButton>
+          </div>
+        </div>
+        <div class="hidden md:flex justify-center self-end pt-8">
+          <NuxtImg
+            alt=""
+            class="w-56 lg:w-64 h-auto"
+            :height="1536"
+            loading="lazy"
+            provider="none"
+            src="/images/3d-avatar/avatar-pose-2.webp"
+            :width="1024"
+          />
+        </div>
+      </div>
     </section>
 
     <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />

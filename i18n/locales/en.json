@@ -100,6 +100,41 @@
           "floatingPanel": "Open-source library · 2025 · Vue 3"
         }
       },
+      "topSkills": {
+        "title": "Core stack",
+        "lead": "The tools I know best, at the top of my scale.",
+        "viewAll": "All skills"
+      },
+      "github": {
+        "title": "On GitHub",
+        "viewProfile": "GitHub profile",
+        "statsTitle": "In numbers",
+        "reposTitle": "Most starred",
+        "starsCount": "{count} star | {count} stars",
+        "stats": {
+          "contributions": "Contributions in the last year",
+          "publicRepos": "Public repositories",
+          "stars": "Stars received",
+          "years": "Years on GitHub"
+        }
+      },
+      "experience": {
+        "title": "Experience",
+        "lead": "From university to the team I work with today.",
+        "viewAll": "My journey",
+        "present": "Present",
+        "years": "{count} yr | {count} yrs",
+        "months": "{count} mo | {count} mos",
+        "types": {
+          "education": "Education",
+          "internship": "Internship",
+          "fullTime": "Full-time"
+        }
+      },
+      "closingCta": {
+        "title": "Have a project or a role in mind?",
+        "text": "Write to me about it, or take my CV with you. I reply by email."
+      },
       "contactForm": {
         "title": "Contact Me",
         "subtitle": "Write to me about a project or a role. I'll reply by email.",
@@ -159,6 +194,10 @@
           "title": "My Academic Journey",
           "subtitle": "UNISA - Computer Science (Fisciano)",
           "date": "09/09/2018",
+          "endDate": "12/01/2022",
+          "role": "Bachelor's Degree in Computer Science",
+          "organization": "University of Salerno",
+          "type": "education",
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -170,6 +209,10 @@
           "title": "Internship at SI2001",
           "subtitle": "Full Stack Developer (internship)",
           "date": "11/20/2022",
+          "endDate": "02/01/2023",
+          "role": "Full Stack Developer",
+          "organization": "SI2001",
+          "type": "internship",
           "content": "My internship at **SI2001** was my first real step into the world of professional software development. During those months, I trained as a **full-stack developer**, contributing to the development of web applications built with **Spring Boot** and **Angular**. I developed front-end components, integrated REST APIs, implemented back-end business logic, and managed databases, gaining a comprehensive understanding of application architecture and the end-to-end development workflow.\n\nThis experience allowed me to transform academic knowledge into practical skills, applying them to real-world projects within a structured team environment. By the end of the internship, I was no longer just an intern—I was a young developer ready to continue growing and taking on new challenges."
         },
         {
@@ -177,6 +220,9 @@
           "title": "Permanent Position at SI2001",
           "subtitle": "Full Stack Developer",
           "date": "03/01/2023",
+          "role": "Full Stack Developer",
+          "organization": "SI2001",
+          "type": "fullTime",
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,

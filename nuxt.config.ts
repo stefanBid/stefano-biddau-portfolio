@@ -68,6 +68,8 @@ export default defineNuxtConfig({
   // Runtime config & routing
   // ---------------------------------------------------------------------------
   runtimeConfig: {
+    // Server-only, filled at runtime from NUXT_GITHUB_TOKEN — never read process.env here, the value would be inlined into the function bundle
+    githubToken: '',
     public: {
       siteUrl: 'https://stefanobiddau.com',
       // Netlify's CONTEXT env var is only set during the build, not at Function runtime —
@@ -97,6 +99,9 @@ export default defineNuxtConfig({
     '/it/my-projects/sb-templates': { prerender: true },
     '/it/privacy-policy': { prerender: true },
     '/it/terms-and-conditions': { prerender: true },
+
+    // Static JSON built once per deploy — GitHub is never called from the browser
+    '/api/github-stats.json': { prerender: true },
 
     // Dynamic, must run per-request — never prerender
     '/robots.txt': { prerender: false },
