@@ -5,8 +5,8 @@
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
   ![Version](https://img.shields.io/badge/version-1.7.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.42-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.6.2-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
@@ -23,13 +23,13 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
-### ✅ Resolved — `nuxt` upgraded to `4.5.2` (exact, no caret)
+### ✅ Resolved — `nuxt` upgraded to `4.6.2` (exact, no caret)
 
-`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
+`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `4.6.x` (Nuxt CLI v4, opt-in `nuxt/server` imports) needs no migration — validated the same way (typecheck + build + prerender clean); CLI v4 requires Node 24.11+, met by the `24.19.0` pin. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
-Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` — not yet re-verified on the current `4.5.2` pin. If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.6.2` (both `npm run build` and `nuxt dev`). If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
 
 ### ✅ Resolved — `@nuxt/image` `ipx` provider 500s on Netlify
 
@@ -944,7 +944,7 @@ The token lives in `runtimeConfig.githubToken` (server-only, default `''`) and i
 
 ### `server/routes/robots.txt.ts`
 
-Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, since it must run per-request to read `CONTEXT`.
+Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts, `Allow: /` + sitemap link on `production`. Netlify's `CONTEXT` is only set at build time, not in the Function runtime, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, so each deploy serves its own rules.
 
 ### Adding new server code
 
@@ -1066,39 +1066,43 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 
 | Package | Version | Purpose |
 |---|---|---|
-| `nuxt` | `4.5.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
-| `vue` | `^3.5.42` | UI framework |
-| `vue-router` | `^5.3.1` | Routing |
+| `nuxt` | `4.6.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
+| `vue` | `^3.5.44` | UI framework |
+| `vue-router` | `^5.4.0` | Routing |
 | `tailwindcss` | `^4.3.3` | Utility-first CSS |
 | `@tailwindcss/vite` | `^4.3.3` | Tailwind v4 Vite plugin |
 | `@nuxt/eslint` | `^1.17.0` | ESLint + stylistic rules |
-| `@nuxt/fonts` | `^0.14.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) |
-| `@nuxt/icon` | `^2.5.1` | SVG icon system |
-| `@nuxt/image` | `^2.1.0` | Image optimisation |
+| `@nuxt/fonts` | `^1.1.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) — served from `/_nuxt/fonts/` in production; a provider/download failure fails the build (`throwOnError` default) |
+| `@nuxt/icon` | `^2.6.0` | SVG icon system |
+| `@nuxt/image` | `^2.2.0` | Image optimisation |
 | `@nuxtjs/color-mode` | `^4.0.1` | Centralised colour-mode config, fixed to dark |
 | `@nuxtjs/i18n` | `^10.6.0` | Multi-language support (EN + IT) |
-| `@vueuse/core` | `^14.4.0` | Vue composition utilities |
-| `@vueuse/nuxt` | `^14.4.0` | Nuxt integration for VueUse |
+| `@vueuse/core` | `^15.0.0` | Vue composition utilities |
+| `@vueuse/nuxt` | `^15.0.0` | Nuxt integration for VueUse |
 | `@floating-ui/vue` | `^2.0.1` | Floating element positioning |
-| `isomorphic-dompurify` | `^4.1.0` | XSS-safe HTML sanitisation |
-| `@emailjs/browser` | `^4.4.1` | Contact form email sending |
+| `isomorphic-dompurify` | `^4.6.0` | XSS-safe HTML sanitisation |
+| `@emailjs/browser` | `^5.0.3` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |
-| `zod` | `^4.5.4` | Runtime form validation |
-| `eslint` | `^10.9.1` | Linter |
+| `zod` | `^4.6.7` | Runtime form validation |
+| `eslint` | `^10.13.0` | Linter |
 
-`esbuild` is pinned via `overrides` (`^0.28.0`) across all transient deps — dev-server CORS security fix (GHSA-67mh), see `package.json`.
+`esbuild` is pinned via `overrides` (`^0.28.0`) for dedup only — the dev-server CORS advisory (GHSA-67mh) is now fixed upstream by every consumer; without the override npm would install two esbuild copies, see `package.json`.
+
+Open advisory: `node-forge` ≤ 1.4.0 (GHSA-86w9-cpqp-85rv, high) reaches the project only through `nuxt` → `nitropack` → `listhen` (dev-server self-signed HTTPS), not the prerendered output. No patched `node-forge` exists yet; `npm audit`'s suggested fix is a downgrade of `nuxt` and is not applied. Tracked in `.sb-context/dependency-notes.json`.
 
 ### Dev dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `@iconify-json/solar` | `^1.2.10` | Solar icon set |
+| `@iconify-json/solar` | `^1.2.13` | Solar icon set |
 | `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
-| `@iconify-json/logos` | `^1.2.13` | Brand/tech logo icons |
+| `@iconify-json/logos` | `^1.2.17` | Brand/tech logo icons |
 | `@iconify-json/flagpack` | `^1.2.8` | Flag icons |
-| `@types/node` | `^26.4.1` | Node.js type definitions |
-| `typescript` | `^6.0.3` | TypeScript compiler |
-| `vue-tsc` | `^3.3.11` | Vue TypeScript type checking |
+| `@types/node` | `^26.6.5` | Node.js type definitions |
+| `typescript` | `^6.0.3` | TypeScript compiler — held on 6.x, see below |
+| `vue-tsc` | `^3.3.13` | Vue TypeScript type checking |
+
+`typescript` is intentionally held on `^6` (`_comment_typescript` in `package.json`): TS 7 is the native Go compiler and ships no classic JS compiler API, which `vue-tsc`/`@volar` (`nuxt typecheck`) relies on — Vue support is planned with TS 7.1 — and `@typescript-eslint` peers `typescript <6.1.0`. Tracked in `.sb-context/dependency-notes.json`.
 
 ---
 
