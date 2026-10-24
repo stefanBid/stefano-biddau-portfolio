@@ -7,6 +7,7 @@ interface Project {
   coverImageAlt?: string
   codebaseUrls?: MenuItem[]
   deploymentUrls?: MenuItem[]
+  isOngoing: boolean
 }
 
 export default function useProjects() {
@@ -43,6 +44,7 @@ export default function useProjects() {
       coverImageAlt: item.coverImageAlt ? _rt(item.coverImageAlt) : undefined,
       codebaseUrls: _mapUrls(item.codebaseUrls),
       deploymentUrls: _mapUrls(item.deploymentUrls),
+      isOngoing: item.status ? _rt(item.status) === 'ongoing' : false,
     } as Project))
   })
 

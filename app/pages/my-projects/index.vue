@@ -20,7 +20,7 @@ useSeoMeta({
 
 const { projects: projectsData } = useProjects()
 
-// Client work first, then open source and personal projects; course exercises last
+// Ongoing work first, then client work, open source and personal projects; course exercises last
 const PROJECT_ORDER = [
   'bd6a7d77-d3e5-48be-a83c-28d290f788ec',
   'acb2196a-5974-40ba-81c5-fccb58611c0b',
@@ -35,7 +35,7 @@ const projects = computed(() => [...projectsData.value].sort((a, b) => {
     const index = PROJECT_ORDER.indexOf(id)
     return index === -1 ? PROJECT_ORDER.length : index
   }
-  return rank(a.id) - rank(b.id)
+  return Number(b.isOngoing) - Number(a.isOngoing) || rank(a.id) - rank(b.id)
 }))
 
 // State
@@ -86,6 +86,7 @@ onMounted(() => {
           :image-alt="project.coverImageAlt"
           :image-src="project.coverImageSrc"
           :initially-expanded="project.id === linkedProjectId"
+          :is-ongoing="project.isOngoing"
           :meta="project.meta"
           :title="project.title"
         />

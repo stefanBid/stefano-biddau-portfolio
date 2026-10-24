@@ -21,7 +21,7 @@
     },
     "about": {
       "title": "About Me {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "I'm Stefano Biddau, a freelance web designer and front-end developer. Learn more about my background, values, and approach to digital design."
+      "description": "My path from a Computer Science degree to my current role at SI2001, plus the client and open-source work I do alongside it."
     },
     "skills": {
       "title": "Skills & Technologies {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -52,9 +52,8 @@
     "changeLanguage": "Change language",
     "previousPage": "Previous page",
     "nextPage": "Next page",
-    "showMilestone": "Show milestone: {title}",
     "skillsSection": "Skills and technologies",
-    "timelineSection": "Professional timeline",
+    "timelineSection": "Work and education",
     "skillLevel": "Level {level} of 5",
     "newTab": "opens in a new tab",
     "selectedCount": "{count} selected",
@@ -91,7 +90,7 @@
         "title": "Selected work",
         "viewAll": "All projects",
         "meta": {
-          "romano": "Client website · 2025 · Nuxt",
+          "romano": "Client · since 2025 · ongoing",
           "sbTemplates": "Open-source templates · since 2025 · Nuxt, Astro, Flutter",
           "floatingPanel": "Open-source library · 2025 · Vue 3"
         }
@@ -129,13 +128,22 @@
         "types": {
           "education": "Education",
           "internship": "Internship",
-          "fullTime": "Full-time"
+          "fullTime": "Full-time",
+          "upcoming": "Upcoming"
+        }
+      },
+      "clients": {
+        "title": "Who I've worked for",
+        "groups": {
+          "si2001": "With SI2001",
+          "freelance": "Freelance"
         }
       },
       "closingCta": {
         "title": "Have a project or a role in mind?",
         "text": "Write to me about it, or take my CV with you. I reply by email.",
-        "emailPrefix": "Prefer email?"
+        "emailPrefix": "Prefer email?",
+        "projectsLink": "Or see my projects first"
       },
       "contactForm": {
         "title": "Contact Me",
@@ -189,7 +197,10 @@
     },
     "about": {
       "hero": "About me",
-      "milestoneCta": "Read More",
+      "milestoneCta": "Read more",
+      "milestoneCtaLess": "Show less",
+      "upcomingFrom": "From {date}",
+      "clientsLabel": "Projects for clients including",
       "milestones": [
         {
           "id": "1",
@@ -200,6 +211,7 @@
           "role": "Bachelor's Degree in Computer Science",
           "organization": "University of Salerno",
           "type": "education",
+          "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "Python"],
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -215,6 +227,7 @@
           "role": "Full Stack Developer",
           "organization": "SI2001",
           "type": "internship",
+          "stack": ["Spring Boot", "Angular", "REST API"],
           "content": "My internship at **SI2001** was my first real step into the world of professional software development. During those months, I trained as a **full-stack developer**, contributing to the development of web applications built with **Spring Boot** and **Angular**. I developed front-end components, integrated REST APIs, implemented back-end business logic, and managed databases, gaining a comprehensive understanding of application architecture and the end-to-end development workflow.\n\nThis experience allowed me to transform academic knowledge into practical skills, applying them to real-world projects within a structured team environment. By the end of the internship, I was no longer just an intern—I was a young developer ready to continue growing and taking on new challenges."
         },
         {
@@ -222,14 +235,25 @@
           "title": "Permanent Position at SI2001",
           "subtitle": "Full Stack Developer",
           "date": "03/01/2023",
+          "endDate": "01/10/2027",
+          "clients": ["ABB", "Kleecks", "Intesa Sanpaolo"],
           "role": "Full Stack Developer",
           "organization": "SI2001",
           "type": "fullTime",
+          "stack": ["Vue.js", "Angular", "Flutter"],
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
           "imageCaption": "Me at my remote workstation, surrounded by screens and code as I bring new features to life.",
-          "content": "My transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
+          "content": "Today I work as a **back-end developer** on the European core banking systems of **Intesa Sanpaolo**.\n\nMy transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
+        },
+        {
+          "id": "4",
+          "title": "Coming soon",
+          "role": "Coming soon",
+          "date": "01/11/2027",
+          "type": "upcoming",
+          "content": "A step up in role and responsibility. More from January 2027."
         }
       ],
       "noMilestones": {
@@ -315,14 +339,15 @@
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
-            "meta": "Client website · 2025 · Nuxt",
-            "title": "Studio Legale Romano (Website)",
+            "meta": "Client · since 2025 · Nuxt",
+            "title": "Studio Legale Romano",
+            "status": "ongoing",
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Live Demo" }
             ],
             "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
             "coverImageAlt": "Romano Law Firm - Website project cover",
-            "content": "The **Studio Legale Romano** website is a project that was commissioned to me by the Romano law firm with the goal of creating a modern and professional digital showcase.\n\nThe website was designed to accurately represent the firm's identity while providing visitors with a clear, elegant, and trustworthy point of reference.\n\nI carefully crafted every aspect of the user interface, choosing a clean and contemporary design that reflects the standards and professionalism of the legal sector.\n\nThe browsing experience was designed to be intuitive and straightforward, guiding users through the most important content with ease.\n\nThe website includes a dedicated section presenting the firm's history, the professional backgrounds of its lawyers, and the values that guide their work.\n\nEach lawyer has a complete profile designed to highlight their expertise, experience, and areas of specialization.\n\nI also developed a dedicated services section where the firm's main legal services are presented in a clear and user-friendly manner.\n\nThis allows visitors to quickly identify their area of interest and understand how the firm can support their needs.\n\nContact information is always prominently displayed and easily accessible from every page of the website.\n\nAdditionally, I integrated a system that displays the firm's opening hours in real time, improving communication and accessibility for clients.\n\nThe result is a showcase website that combines visual refinement, functionality, and professionalism.\n\nA tailor-made project built for Studio Legale Romano, designed to strengthen its online presence and enhance the relationship between the firm and its visitors."
+            "content": "After launching the site in 2025, I keep working with the firm: I'm giving the website a new design and building new products for it. **PraticaSicura** is a portal for requesting flight refunds; **Domus** (front-end) and **Cardo** (back-end) make up the internal system the firm uses to manage its cases.\n\nThe **Studio Legale Romano** website is a project that was commissioned to me by the Romano law firm with the goal of creating a modern and professional digital showcase.\n\nThe website was designed to accurately represent the firm's identity while providing visitors with a clear, elegant, and trustworthy point of reference.\n\nI carefully crafted every aspect of the user interface, choosing a clean and contemporary design that reflects the standards and professionalism of the legal sector.\n\nThe browsing experience was designed to be intuitive and straightforward, guiding users through the most important content with ease.\n\nThe website includes a dedicated section presenting the firm's history, the professional backgrounds of its lawyers, and the values that guide their work.\n\nEach lawyer has a complete profile designed to highlight their expertise, experience, and areas of specialization.\n\nI also developed a dedicated services section where the firm's main legal services are presented in a clear and user-friendly manner.\n\nThis allows visitors to quickly identify their area of interest and understand how the firm can support their needs.\n\nContact information is always prominently displayed and easily accessible from every page of the website.\n\nAdditionally, I integrated a system that displays the firm's opening hours in real time, improving communication and accessibility for clients.\n\nThe result is a showcase website that combines visual refinement, functionality, and professionalism.\n\nA tailor-made project built for Studio Legale Romano, designed to strengthen its online presence and enhance the relationship between the firm and its visitors."
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -372,7 +397,8 @@
           "message": "There are no projects to display at the moment. Check back soon!"
         },
         "readMoreCta": "Read More",
-        "readLessCta": "Read Less"
+        "readLessCta": "Read Less",
+        "ongoing": "Ongoing"
       },
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",

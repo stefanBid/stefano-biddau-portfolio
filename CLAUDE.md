@@ -46,7 +46,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
-- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `iconOnly`, `isActive`, `tone`). **Only `size` changes dimensions** — same box for every variant/type: `sm` 36px (hit 44) for supporting/compact actions (on images, toolbars, pagination, chips, header controls, close, secondary form actions); `md` 44px default for actions in content and dialogs (card CTAs, submit, back, read more); `lg` 52px for the page's single main CTA in the first viewport. Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, timeline dots, hamburger. Never resize a `BaseButton` with classes
+- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `iconOnly`, `isActive`, `tone`). **Only `size` changes dimensions** — same box for every variant/type: `sm` 36px (hit 44) for supporting/compact actions (on images, toolbars, pagination, chips, header controls, close, secondary form actions); `md` 44px default for actions in content and dialogs (card CTAs, submit, back, read more); `lg` 52px for the page's single main CTA in the first viewport. Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, hamburger. Never resize a `BaseButton` with classes
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 
@@ -195,7 +195,7 @@ Client-side only.
 ```ts
 const { milestones } = useMilestones()
 ```
-No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Each entry carries `period` (labels + duration) and `typeLabel`, shared by `CustomExperienceList` and `CustomMilestone`. `type: 'upcoming'` (future start) is the About "coming soon" step, never shown on home; a future `endDate` is displayed but durations stop at today.
 
 ### `useProjects()`
 ```ts
@@ -217,6 +217,12 @@ Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i1
 const { stats } = await useGithubStats()
 ```
 The one async content source — `useFetch('/api/github-stats.json')`, prerendered once per build (see Server API). `stats` is `GithubStats | null`; `null` when GitHub was unreachable, hide the UI then.
+
+### `useSelectedWork()`
+```ts
+const { selectedWork } = useSelectedWork()
+```
+Romano + SB Templates + sb-floating-panel-vue with meta line and Projects anchor link — home "Selected work".
 
 ### `useTemplates()`
 ```ts

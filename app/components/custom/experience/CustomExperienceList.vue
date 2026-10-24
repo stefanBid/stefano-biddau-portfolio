@@ -2,66 +2,27 @@
 import useMilestones from '~/composables/data/useMilestones'
 
 // Dependencies
-const { t, locale } = useI18n()
 const { milestones } = useMilestones()
 
 // Data
-const TYPE_ICONS: Record<MilestoneType, string> = {
+const TYPE_ICONS: Record<Exclude<MilestoneType, 'upcoming'>, string> = {
   education: 'solar:square-academic-cap-bold-duotone',
   internship: 'solar:case-minimalistic-bold-duotone',
   fullTime: 'solar:case-minimalistic-bold-duotone',
 }
 
-// Shared with the client so hydration matches the prerendered text, then refreshed on mount for "Present" durations
-const now = useState('experience-now', () => Date.now())
-
-const monthFormat = computed(() => new Intl.DateTimeFormat(locale.value, { month: 'short', year: 'numeric', timeZone: 'UTC' }))
-
-// Locale files store dates as MM/DD/YYYY
-const _parseDate = (value?: string): Date | null => {
-  const [month, day, year] = (value ?? '').split('/').map(Number)
-  if (!month || !day || !year) {
-    return null
-  }
-  return new Date(Date.UTC(year, month - 1, day))
-}
-
-// Counts both the first and the last month, as LinkedIn does
-const _formatDuration = (start: Date, end: Date): string => {
-  const totalMonths = (end.getUTCFullYear() - start.getUTCFullYear()) * 12 + end.getUTCMonth() - start.getUTCMonth() + 1
-  const years = Math.floor(totalMonths / 12)
-  const months = totalMonths % 12
-
-  return [
-    years > 0 && t('pages.home.experience.years', years),
-    months > 0 && t('pages.home.experience.months', months),
-  ].filter(Boolean).join(' ')
-}
-
+// Announced next steps stay on the About page: the home list shows only what already happened
 const items = computed(() => [...milestones.value]
+  .filter(milestone => milestone.type !== 'upcoming')
   .reverse()
-  .map((milestone) => {
-    const start = _parseDate(milestone.date)
-    const end = _parseDate(milestone.endDate)
-
-    return {
-      id: milestone.id,
-      role: milestone.role ?? milestone.title,
-      organization: milestone.organization,
-      typeLabel: milestone.type ? t(`pages.home.experience.types.${milestone.type}`) : undefined,
-      icon: TYPE_ICONS[milestone.type ?? 'fullTime'],
-      startIso: start?.toISOString().slice(0, 7),
-      startLabel: start ? monthFormat.value.format(start) : undefined,
-      endIso: end?.toISOString().slice(0, 7),
-      endLabel: end ? monthFormat.value.format(end) : t('pages.home.experience.present'),
-      duration: start ? _formatDuration(start, end ?? new Date(now.value)) : undefined,
-    }
-  }))
-
-// Events
-onMounted(() => {
-  now.value = Date.now()
-})
+  .map(milestone => ({
+    id: milestone.id,
+    role: milestone.role ?? milestone.title,
+    organization: milestone.organization,
+    typeLabel: milestone.typeLabel,
+    icon: TYPE_ICONS[milestone.type === 'upcoming' || !milestone.type ? 'fullTime' : milestone.type],
+    ...milestone.period,
+  })))
 </script>
 
 <template>

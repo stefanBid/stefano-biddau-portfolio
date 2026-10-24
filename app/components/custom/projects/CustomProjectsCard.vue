@@ -9,6 +9,7 @@ interface CustomProjectsCardProps {
   codebaseUrls?: Array<MenuItem>
   deploymentUrls?: Array<MenuItem>
   initiallyExpanded?: boolean
+  isOngoing?: boolean
 }
 
 // Input / Output
@@ -19,6 +20,7 @@ const props = withDefaults(
     imageAlt: undefined,
     meta: undefined,
     initiallyExpanded: false,
+    isOngoing: false,
   },
 )
 
@@ -126,7 +128,13 @@ const onSelectUrl = (url: string) => {
           <!-- Container query: the card width depends on the grid, not the viewport -->
           <div class="@container relative z-10 flex flex-col justify-between h-full p-4 md:p-6 sb-transition">
             <!-- Top row: actions -->
-            <div class="flex  items-center gap-2 self-end sb-transition">
+            <div class="flex items-center justify-end gap-2 sb-transition">
+              <BaseChip
+                v-if="props.isOngoing"
+                class="mr-auto"
+                icon="solar:record-circle-bold-duotone"
+                :text="t('pages.projects.personalProjects.ongoing')"
+              />
               <template v-for="group in urlGroups" :key="group.key">
                 <BaseButton
                   v-if="group.urls.length === 1"

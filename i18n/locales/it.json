@@ -21,7 +21,7 @@
     },
     "about": {
       "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Mi chiamo Stefano Biddau e sono un web designer e sviluppatore front-end freelance. Scopri la mia storia, il mio percorso e il mio approccio al lavoro."
+      "description": "Il mio percorso dalla laurea in Informatica al ruolo attuale in SI2001, più i progetti per clienti e open source che porto avanti in parallelo."
     },
     "skills": {
       "title": "Competenze & Tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -52,9 +52,8 @@
     "changeLanguage": "Cambia lingua",
     "previousPage": "Pagina precedente",
     "nextPage": "Pagina successiva",
-    "showMilestone": "Mostra tappa: {title}",
     "skillsSection": "Competenze e tecnologie",
-    "timelineSection": "Percorso professionale",
+    "timelineSection": "Lavoro e formazione",
     "skillLevel": "Livello {level} su 5",
     "newTab": "si apre in una nuova scheda",
     "selectedCount": "{count} selezionati",
@@ -91,7 +90,7 @@
         "title": "Lavori selezionati",
         "viewAll": "Tutti i progetti",
         "meta": {
-          "romano": "Sito per cliente · 2025 · Nuxt",
+          "romano": "Cliente · dal 2025 · in corso",
           "sbTemplates": "Template open source · dal 2025 · Nuxt, Astro, Flutter",
           "floatingPanel": "Libreria open source · 2025 · Vue 3"
         }
@@ -129,13 +128,22 @@
         "types": {
           "education": "Formazione",
           "internship": "Stage",
-          "fullTime": "Tempo indeterminato"
+          "fullTime": "Tempo indeterminato",
+          "upcoming": "In arrivo"
+        }
+      },
+      "clients": {
+        "title": "Per chi ho lavorato",
+        "groups": {
+          "si2001": "Con SI2001",
+          "freelance": "Freelance"
         }
       },
       "closingCta": {
         "title": "Hai un progetto o un ruolo in mente?",
         "text": "Scrivimi, oppure porta con te il mio CV. Ti rispondo via email.",
-        "emailPrefix": "Preferisci la mail?"
+        "emailPrefix": "Preferisci la mail?",
+        "projectsLink": "Oppure guarda prima i miei progetti"
       },
       "contactForm": {
         "title": "Contattami",
@@ -190,6 +198,9 @@
     "about": {
       "hero": "Chi sono",
       "milestoneCta": "Leggi di più",
+      "milestoneCtaLess": "Mostra meno",
+      "upcomingFrom": "Da {date}",
+      "clientsLabel": "Progetti per clienti come",
       "milestones": [
         {
           "id": "1",
@@ -200,6 +211,7 @@
           "role": "Laurea triennale in Informatica",
           "organization": "Università degli Studi di Salerno",
           "type": "education",
+          "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "Python"],
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -215,6 +227,7 @@
           "role": "Sviluppatore Full Stack",
           "organization": "SI2001",
           "type": "internship",
+          "stack": ["Spring Boot", "Angular", "API REST"],
           "content": "Lo stage in **SI2001** è stato il mio primo vero passo dentro il mondo dello sviluppo professionale. In quei mesi mi sono formato come **sviluppatore full stack**, lavorando alla realizzazione di web application basate su **Spring Boot** e **Angular**. Ho sviluppato componenti front-end, integrato API REST, scritto logica back-end e gestito database, ottenendo una visione completa dell’architettura applicativa e del flusso di lavoro end-to-end.\n\nQuesto percorso mi ha permesso di trasformare le conoscenze accademiche in competenze concrete, applicate su progetti reali e all’interno di un team strutturato. Alla fine dello stage non ero più soltanto uno stagista: ero un giovane sviluppatore pronto a crescere ancora."
         },
         {
@@ -222,14 +235,25 @@
           "title": "Assunzione a tempo indeterminato presso SI2001",
           "subtitle": "Sviluppatore Full Stack",
           "date": "03/01/2023",
+          "endDate": "01/10/2027",
+          "clients": ["ABB", "Kleecks", "Intesa Sanpaolo"],
           "role": "Sviluppatore Full Stack",
           "organization": "SI2001",
           "type": "fullTime",
+          "stack": ["Vue.js", "Angular", "Flutter"],
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
           "imageCaption": "Io dalla mia postazione remota, immerso tra monitor e codice mentre do forma alle prossime funzionalità.",
-          "content": "Con l’assunzione a tempo indeterminato è iniziata la fase più intensa del mio percorso in **SI2001**. Ho partecipato a più di cinque progetti come **sviluppatore front-end**, affinando le mie competenze in **Vue.js**, **Angular** e **Flutter**, e contribuendo alla costruzione di applicazioni moderne, modulari e performanti.\n\nIn questo periodo ho partecipato attivamente a tutte le **cerimonie Agile** — sprint, stand-up e retrospettive — maturando sia come tecnico sia come professionista capace di proporre soluzioni, collaborare in modo efficace e sostenere il team nei momenti chiave. Con il tempo sono diventato una presenza affidabile nei progetti, contribuendo non solo con codice, ma anche con metodo, visione e consapevolezza tecnica."
+          "content": "Oggi lavoro come **sviluppatore back-end** sui sistemi di core banking europei di **Intesa Sanpaolo**.\n\nCon l’assunzione a tempo indeterminato è iniziata la fase più intensa del mio percorso in **SI2001**. Ho partecipato a più di cinque progetti come **sviluppatore front-end**, affinando le mie competenze in **Vue.js**, **Angular** e **Flutter**, e contribuendo alla costruzione di applicazioni moderne, modulari e performanti.\n\nIn questo periodo ho partecipato attivamente a tutte le **cerimonie Agile** — sprint, stand-up e retrospettive — maturando sia come tecnico sia come professionista capace di proporre soluzioni, collaborare in modo efficace e sostenere il team nei momenti chiave. Con il tempo sono diventato una presenza affidabile nei progetti, contribuendo non solo con codice, ma anche con metodo, visione e consapevolezza tecnica."
+        },
+        {
+          "id": "4",
+          "title": "Prossimamente",
+          "role": "Prossimamente",
+          "date": "01/11/2027",
+          "type": "upcoming",
+          "content": "Un passo avanti in ruolo e responsabilità. Dettagli da gennaio 2027."
         }
       ],
       "noMilestones": {
@@ -316,14 +340,15 @@
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
-            "meta": "Sito per cliente · 2025 · Nuxt",
-            "title": "Studio Legale Romano (Website)",
+            "meta": "Cliente · dal 2025 · Nuxt",
+            "title": "Studio Legale Romano",
+            "status": "ongoing",
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Demo Live" }
             ],
             "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
             "coverImageAlt": "Romano Law Firm - Website project cover",
-            "content": "Il sito dello **Studio Legale Romano** è un progetto che mi è stato commissionato dagli avvocati Romano con l’obiettivo di creare una vetrina digitale moderna e professionale.\n\nDoveva rappresentare al meglio l’identità dello studio e offrire ai visitatori un punto di riferimento chiaro, elegante e credibile.\n\nHo curato ogni dettaglio dell’interfaccia, scegliendo uno stile pulito e contemporaneo, adatto al settore legale.\n\nL’esperienza di navigazione è stata progettata per essere semplice e immediata, così da accompagnare l’utente nella scoperta dei contenuti più importanti.\n\nAll’interno del sito è presente una sezione dedicata alla storia dello studio, al percorso dei professionisti e ai valori che guidano il loro lavoro.\n\nOgni avvocato dispone di un profilo completo, costruito per mettere in risalto competenze e specializzazioni.\n\nHo realizzato anche un’area dedicata ai servizi offerti, dove le principali prestazioni vengono presentate in modo chiaro e intuitivo.\n\nQuesto permette agli utenti di individuare rapidamente l’ambito di interesse e comprendere come lo studio può supportarli.\n\nNon mancano le informazioni di contatto, sempre ben visibili e facilmente accessibili da qualsiasi pagina del sito.\n\nInoltre, ho integrato un sistema per mostrare in tempo reale gli orari di apertura dello studio, così da migliorare la comunicazione con i clienti.\n\nIl risultato è un sito vetrina che unisce cura estetica, funzionalità e professionalità.\n\nUn progetto costruito su misura per lo Studio Legale Romano, pensato per valorizzare la loro immagine e rendere più efficace il rapporto con i visitatori."
+            "content": "Dopo il lancio del sito nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti. **PraticaSicura** è un portale per richiedere i rimborsi dei voli; **Domus** (front-end) e **Cardo** (back-end) compongono il gestionale interno con cui lo studio segue le sue pratiche.\n\nIl sito dello **Studio Legale Romano** è un progetto che mi è stato commissionato dagli avvocati Romano con l’obiettivo di creare una vetrina digitale moderna e professionale.\n\nDoveva rappresentare al meglio l’identità dello studio e offrire ai visitatori un punto di riferimento chiaro, elegante e credibile.\n\nHo curato ogni dettaglio dell’interfaccia, scegliendo uno stile pulito e contemporaneo, adatto al settore legale.\n\nL’esperienza di navigazione è stata progettata per essere semplice e immediata, così da accompagnare l’utente nella scoperta dei contenuti più importanti.\n\nAll’interno del sito è presente una sezione dedicata alla storia dello studio, al percorso dei professionisti e ai valori che guidano il loro lavoro.\n\nOgni avvocato dispone di un profilo completo, costruito per mettere in risalto competenze e specializzazioni.\n\nHo realizzato anche un’area dedicata ai servizi offerti, dove le principali prestazioni vengono presentate in modo chiaro e intuitivo.\n\nQuesto permette agli utenti di individuare rapidamente l’ambito di interesse e comprendere come lo studio può supportarli.\n\nNon mancano le informazioni di contatto, sempre ben visibili e facilmente accessibili da qualsiasi pagina del sito.\n\nInoltre, ho integrato un sistema per mostrare in tempo reale gli orari di apertura dello studio, così da migliorare la comunicazione con i clienti.\n\nIl risultato è un sito vetrina che unisce cura estetica, funzionalità e professionalità.\n\nUn progetto costruito su misura per lo Studio Legale Romano, pensato per valorizzare la loro immagine e rendere più efficace il rapporto con i visitatori."
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -373,7 +398,8 @@
           "message": "Al momento non ci sono progetti da mostrare. Torna presto per aggiornamenti!"
         },
         "readMoreCta": "Leggi di più",
-        "readLessCta": "Leggi meno"
+        "readLessCta": "Leggi meno",
+        "ongoing": "In corso"
       },
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",

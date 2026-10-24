@@ -89,7 +89,15 @@ declare global {
 
   type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockQuote | RichBlockCode
 
-  type MilestoneType = 'education' | 'internship' | 'fullTime'
+  type MilestoneType = 'education' | 'internship' | 'fullTime' | 'upcoming'
+
+  interface MilestonePeriod {
+    startIso?: string
+    startLabel?: string
+    endIso?: string
+    endLabel: string
+    duration?: string
+  }
 
   interface GithubRepo {
     name: string

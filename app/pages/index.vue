@@ -1,13 +1,13 @@
 <script setup lang="ts">
 import useGithubStats from '~/composables/data/useGithubStats'
-import useProjects from '~/composables/data/useProjects'
+import useSelectedWork from '~/composables/data/useSelectedWork'
 import useSkills from '~/composables/data/useSkills'
 
 // Dependencies
 const { t, locale } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
-const { projects } = useProjects()
+const { selectedWork } = useSelectedWork()
 const { featuredStack } = useSkills()
 const { stats: githubStats } = await useGithubStats()
 
@@ -35,7 +35,11 @@ const { el, elStyle } = useTypedText(
   },
 )
 
-const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
+// SI2001 clients are named as the company's, not as my own: the group label keeps that honest
+const CLIENT_GROUPS = [
+  { key: 'si2001', names: ['ABB', 'Kleecks', 'Intesa Sanpaolo'] },
+  { key: 'freelance', names: ['Studio Legale Romano'] },
+] as const
 
 // State
 const contactFormIsOpen = ref(false)
@@ -47,43 +51,6 @@ const STACK_GROUP_LAYOUT = {
   database: { span: 'col-span-1', cols: 'grid-cols-1' },
 } as const
 
-const PROJECT_LINKS = [
-  { id: 'bd6a7d77-d3e5-48be-a83c-28d290f788ec', metaKey: 'romano' },
-  { id: 'acb2196a-5974-40ba-81c5-fccb58611c0b', metaKey: 'floatingPanel' },
-]
-
-const selectedWork = computed(() => {
-  const fromProjects = PROJECT_LINKS
-    .map(({ id, metaKey }) => {
-      const project = projects.value.find(p => p.id === id)
-      if (!project) {
-        return undefined
-      }
-      return {
-        key: id,
-        title: project.title,
-        imageSrc: project.coverImageSrc,
-        imageAlt: project.coverImageAlt || '',
-        imageFit: 'cover' as const,
-        meta: t(`pages.home.selectedWork.meta.${metaKey}`),
-        to: { path: localePath('my-projects'), hash: `#project-${id}` },
-      }
-    })
-    .filter(item => item !== undefined)
-
-  const sbTemplates = {
-    key: 'sb-templates',
-    title: t('nav.sb-templates'),
-    imageSrc: '/images/sbt-logos/sbt-logo.webp',
-    imageAlt: t('pages.projects.sbTemplatesProject.logoAlt'),
-    imageFit: 'contain' as const,
-    meta: t('pages.home.selectedWork.meta.sbTemplates'),
-    to: { path: localePath('/my-projects/sb-templates') },
-  }
-
-  return fromProjects.length === 2 ? [fromProjects[0]!, sbTemplates, fromProjects[1]!] : [...fromProjects, sbTemplates]
-})
-
 const getFile = computed<{ name: string, path: string }>(() => ({
   name: `Stefano_Biddau_CV_${locale.value}.pdf`,
   path: `/files/Stefano_Biddau_CV_${locale.value}.pdf`,
@@ -92,7 +59,8 @@ const getFile = computed<{ name: string, path: string }>(() => ({
 
 <template>
   <div>
-    <section class="grid items-center content-center gap-6 py-8 lg:grid-cols-[1.2fr_1fr] lg:gap-16 lg:py-16">
+    <!-- Pulled under the sticky header so the first screen is exactly one viewport; selected work starts below the fold -->
+    <section class="relative -mt-16 grid min-h-svh items-center content-center gap-6 pt-20 pb-24 lg:pt-24 lg:pb-28 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
       <div class="order-2 lg:order-1 flex flex-col items-center text-center lg:items-start lg:text-left">
         <h1 class="sb-display mb-0 text-balance">
           {{ t('pages.home.title') }}
@@ -107,7 +75,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
             :style="elStyle"
           ></span>
         </p>
-        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none lg:text-left">
+        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none lg:text-left hidden lg:block">
           {{ t('pages.home.lead') }}
         </p>
         <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
@@ -137,9 +105,20 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           :width="1024"
         />
       </div>
+      <a
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
+        href="#selected-work"
+      >
+        {{ t('pages.home.selectedWork.title') }}
+        <Icon aria-hidden="true" class="size-4" name="solar:arrow-down-linear" />
+      </a>
     </section>
 
-    <section aria-labelledby="selected-work-title" class="pb-24">
+    <section
+      id="selected-work"
+      aria-labelledby="selected-work-title"
+      class="scroll-mt-24 pt-8 pb-24"
+    >
       <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
         <h2 id="selected-work-title" class="mb-0 scroll-mt-24">
           {{ t('pages.home.selectedWork.title') }}
@@ -181,6 +160,33 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           </NuxtLink>
         </li>
       </ul>
+    </section>
+
+    <section aria-labelledby="clients-title" class="pb-24">
+      <h2 id="clients-title" class="mb-8 scroll-mt-24">
+        {{ t('pages.home.clients.title') }}
+      </h2>
+      <div class="grid border-y border-border md:grid-cols-[1fr_auto]">
+        <div
+          v-for="(group, index) in CLIENT_GROUPS"
+          :key="group.key"
+          class="py-8 md:py-10"
+          :class="index > 0 && 'border-t border-border md:border-t-0 md:border-l md:pl-10'"
+        >
+          <h3 class="sb-label uppercase text-ink-muted mb-4">
+            {{ t(`pages.home.clients.groups.${group.key}`) }}
+          </h3>
+          <ul class="m-0 flex list-none flex-wrap gap-x-10 gap-y-2 p-0">
+            <li
+              v-for="name in group.names"
+              :key="name"
+              class="sb-h1 mb-0 text-left text-ink"
+            >
+              {{ name }}
+            </li>
+          </ul>
+        </div>
+      </div>
     </section>
 
     <section aria-labelledby="top-skills-title" class="pb-24">
@@ -271,49 +277,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       <CustomExperienceList />
     </section>
 
-    <section aria-labelledby="closing-cta-title" class="pb-24">
-      <div class="grid items-center overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-[1.6fr_1fr]">
-        <div class="flex flex-col items-start p-6 md:p-12">
-          <h2 id="closing-cta-title" class="mb-0 text-balance">
-            {{ t('pages.home.closingCta.title') }}
-          </h2>
-          <p class="sb-lead text-ink-muted text-left mt-4 mb-0 max-w-xl">
-            {{ t('pages.home.closingCta.text') }}
-          </p>
-          <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex">
-            <BaseButton variant="primary" @click="contactFormIsOpen = true">
-              {{ t('pages.home.contactCard.buttonText') }}
-            </BaseButton>
-            <BaseButton variant="secondary" @click="downloadFile(getFile.path, getFile.name)">
-              <Icon
-                aria-hidden="true"
-                class="size-5"
-                name="solar:download-minimalistic-bold-duotone"
-              />
-              {{ t('pages.home.cvCard.buttonText') }}
-            </BaseButton>
-          </div>
-          <p class="sb-body text-ink-muted text-left mt-6 mb-0">
-            {{ t('pages.home.closingCta.emailPrefix') }}
-            <a
-              class="block w-fit hyphens-none text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus sm:inline"
-              :href="`mailto:${CONTACT_EMAIL}`"
-            >{{ CONTACT_EMAIL.split('@')[0] }}<wbr />@{{ CONTACT_EMAIL.split('@')[1] }}</a>
-          </p>
-        </div>
-        <div class="hidden md:flex justify-center self-end pt-8">
-          <NuxtImg
-            alt=""
-            class="w-56 lg:w-64 h-auto"
-            :height="1536"
-            loading="lazy"
-            provider="none"
-            src="/images/3d-avatar/avatar-pose-2.webp"
-            :width="1024"
-          />
-        </div>
-      </div>
-    </section>
+    <CustomClosingCta @contact="contactFormIsOpen = true" />
 
     <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>

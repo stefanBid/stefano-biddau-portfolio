@@ -147,6 +147,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
          useGithubStats.ts  ← GitHub profile stats from the prerendered /api/github-stats.json
          useMilestones.ts   ← reads pages.about.milestones from i18n
          useProjects.ts     ← reads pages.projects.personalProjects.list from i18n
+         useSelectedWork.ts ← Romano + SB Templates + floating panel, linked to their Projects anchors
          useSkills.ts       ← hardcoded local skills list + filtering/pagination
          useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
@@ -324,7 +325,7 @@ All reusable components live in `app/components/`. Three component tiers:
 
 ### `BaseButton`
 
-Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu and listbox options (`BaseIconMenu`, `BaseCombobox`), timeline dots (`CustomMilestone`) and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
+Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu and listbox options (`BaseIconMenu`, `BaseCombobox`), and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -573,6 +574,7 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 | `codebaseUrls` | `MenuItem[]` | Optional source links ("Code" button, or a menu when more than one) |
 | `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site" button, or a menu) |
 | `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
+| `isOngoing` | `boolean` | `false`. Shows an "Ongoing" chip on the cover; `my-projects/index.vue` sorts ongoing projects first |
 
 Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
 
@@ -592,13 +594,25 @@ The header is a size container (`@container`): below 20rem of card width (`@xs`)
 
 | Prop | Type | Notes |
 |---|---|---|
-| `id` | `string` | Required |
-| `title` | `string` | Required |
-| `content` | `RichBlock[]` | Required |
-| `subtitle` | `string` | Optional |
-| `imageSrc` | `string` | Optional |
-| `imageCaption` | `string` | Optional |
-| `date` | `string` | Optional |
+| `id` | `string \| number` | Required |
+| `isOpen` | `boolean` | Required — controlled by the page |
+| `role` | `string` | Required — card heading |
+| `period` | `MilestonePeriod` | Required — `start – end` line, duration after `organization · type` |
+| `content` | `RichBlock[]` | Required — first block only while closed |
+| `organization` / `typeLabel` | `string` | Optional |
+| `stack` | `string[]` | Optional — rendered as `BaseChip`s |
+| `imageSrc` / `imageWidth` / `imageHeight` | | Optional — polaroid `figure`, shown only when open |
+| `imageCaption` | `string` | Optional — `figcaption` (image `alt` is then empty) |
+
+Emits `toggle(id)`. Each milestone opens and closes on its own (Read more ↔ Show less, `aria-expanded`); the timeline dot is decorative. Closing a milestone whose top is above the viewport scrolls it back into view, instantly under reduced motion.
+
+### `CustomClosingCta`
+
+| Prop | Type | Notes |
+|---|---|---|
+| `showProjectsLink` | `boolean` | Optional — adds a link to My Projects |
+
+Closing call to action shared by Home and About Me: contact (emits `contact`, the page owns the `CustomContactForm`), CV download for the active locale, mailto fallback.
 
 ### `CustomGithubStats`
 
@@ -640,7 +654,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`. On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (name, role, CTAs, avatar, selected work).
+Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`, `lead?` (one `sb-lead` paragraph under the title; About uses the home lead). On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (name, role, CTAs, avatar): exactly one viewport tall (`min-h-svh`, pulled under the sticky header), with a link down to Selected work; below it, a clients band (SI2001 clients and freelance clients, names only).
 
 ---
 
@@ -862,7 +876,15 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization` and `type` (`MilestoneType`), used by `CustomExperienceList` on the home page.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` and `clients` (string lists). The composable adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
+
+### `useSelectedWork()`
+
+```ts
+const { selectedWork } = useSelectedWork()
+```
+
+The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title, cover, meta line and a link to their Projects anchor. Used by the home "Selected work" grid.
 
 ### `useProjects()`
 
@@ -870,7 +892,7 @@ Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` —
 const { projects } = useProjects()
 ```
 
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. An entry with `status: "ongoing"` gets `isOngoing: true`.
 
 ### `useTemplates()`
 
@@ -923,7 +945,8 @@ All interfaces are declared globally — no import needed
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
 | `NotificationItem` | `{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }` |
 | `SkillsFilterPreset` | `{ key, filters: SkillType[] }` — preset filter buttons in `my-skills.vue` |
-| `MilestoneType` | `'education' \| 'internship' \| 'fullTime'` |
+| `MilestoneType` | `'education' \| 'internship' \| 'fullTime' \| 'upcoming'` |
+| `MilestonePeriod` | `{ startIso?, startLabel?, endIso?, endLabel, duration? }` — computed by `useMilestones` |
 | `GithubRepo` | `{ name, url, description, language, stars }` |
 | `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |
 | `RichBlock` | Union of `RichBlockParagraph \| RichBlockHeading \| RichBlockList \| RichBlockQuote \| RichBlockCode` |

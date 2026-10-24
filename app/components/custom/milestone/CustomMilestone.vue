@@ -1,207 +1,192 @@
 <script setup lang="ts">
 interface CustomMilestoneProps {
   id: number | string
-  isActive: boolean
-  title: string
+  isOpen: boolean
+  role: string
+  period: MilestonePeriod
   content: RichBlock[]
-  subtitle?: string
+  organization?: string
+  typeLabel?: string
+  stack?: string[]
+  clients?: string[]
   imageSrc?: string
   imageWidth?: number
   imageHeight?: number
-  imageAlt?: string
-  date?: string
+  imageCaption?: string
 }
+
+// Dependencies
+const { t } = useI18n()
+const reducedMotion = usePreferredReducedMotion()
 
 // Input / Output
 const props = withDefaults(
   defineProps<CustomMilestoneProps>(),
   {
-    subtitle: undefined,
+    organization: undefined,
+    typeLabel: undefined,
+    stack: () => [],
+    clients: () => [],
     imageSrc: undefined,
     imageWidth: undefined,
     imageHeight: undefined,
-    imageAlt: undefined,
-    date: undefined,
+    imageCaption: undefined,
   },
 )
 
 const emits = defineEmits<{
   // eslint-disable-next-line no-unused-vars
-  (e: 'select', id: number | string): void
+  (e: 'toggle', id: number | string): void
 }>()
-
-// Dependencies
-const { t, locale } = useI18n()
 
 // State
 const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
 const DEFAULT_IMAGE_WIDTH = 800 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
 const DEFAULT_IMAGE_HEIGHT = 1000
 
-// Locale files store dates as MM/DD/YYYY
-const parsedDate = computed(() => {
-  const [month, day, year] = (props.date ?? '').split('/').map(Number)
-  if (!month || !day || !year) {
-    return null
-  }
-  return new Date(Date.UTC(year, month - 1, day))
-})
-
-const isoDate = computed(() => parsedDate.value?.toISOString().slice(0, 10))
-
-const displayDate = computed(() => parsedDate.value
-  ? new Intl.DateTimeFormat(locale.value, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(parsedDate.value)
-  : props.date)
+const articleRef = ref<HTMLElement | null>(null)
 
 const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
 const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
 
-const needsExpansion = computed(() => {
-  const hasManyBlocks = props.content.length > MAX_CONTENT_BLOCKS
-  return hasManyBlocks
-})
+// The photo only shows when open, so a milestone with an image is always expandable
+const isExpandable = computed(() => props.content.length > MAX_CONTENT_BLOCKS || Boolean(props.imageSrc))
 
-const getContentPreview = computed(() => {
-  if (!props.isActive && props.content.length > MAX_CONTENT_BLOCKS) {
-    return props.content.slice(0, MAX_CONTENT_BLOCKS)
-  }
-  return props.content
-})
+const visibleContent = computed(() => props.isOpen ? props.content : props.content.slice(0, MAX_CONTENT_BLOCKS))
 
-const titleRef = ref<HTMLElement | null>(null)
-const focusTitleOnOpen = ref(false)
+const subline = computed(() => [props.organization, props.typeLabel].filter(Boolean).join(' · '))
 
 // Events
-const onSelect = () => {
-  emits('select', props.id)
-}
+// Collapsing a long milestone can leave its top above the viewport: bring it back so the reader keeps their place
+const onToggle = () => {
+  const isClosing = props.isOpen
+  emits('toggle', props.id)
 
-// The Read more button unmounts once the milestone opens: hand focus to the title so keyboard users keep their place
-const onReadMore = () => {
-  focusTitleOnOpen.value = true
-  onSelect()
-}
-
-watch(() => props.isActive, (isActive) => {
-  if (isActive && focusTitleOnOpen.value) {
-    focusTitleOnOpen.value = false
-    nextTick(() => titleRef.value?.focus())
+  if (!isClosing) {
+    return
   }
-})
+
+  nextTick(() => {
+    const article = articleRef.value
+    if (article && article.getBoundingClientRect().top < 0) {
+      article.scrollIntoView({ block: 'start', behavior: reducedMotion.value === 'reduce' ? 'auto' : 'smooth' })
+    }
+  })
+}
 </script>
 
 <template>
   <article
-    class="relative"
-    :data-milestone-id="props.id"
+    ref="articleRef"
+    :aria-labelledby="`milestone-title-${props.id}`"
+    class="relative scroll-mt-24"
   >
-    <!-- Timeline Point with Halo Effect -->
     <div
-      class="absolute -left-8.25 md:-left-12.75 top-3.5 sm:top-4.5 md:top-10 flex items-center justify-center pointer-events-none sb-transition"
+      aria-hidden="true"
+      class="absolute -left-8.25 md:-left-12.75 top-5 md:top-7.5 flex items-center justify-center pointer-events-none"
     >
-      <!-- Static Halo -->
-      <div
+      <span
         class="absolute inset-0 rounded-full sb-transition"
-        :class="{
-          'bg-primary/40 scale-200': props.isActive,
-          'bg-transparent scale-0': !props.isActive,
-        }"
-      ></div>
-      <!-- Clickable Point -->
-      <button
-        :aria-controls="`milestone-body-${props.id}`"
-        :aria-expanded="props.isActive ? 'true' : 'false'"
-        :aria-label="t('a11y.showMilestone', { title: props.title })"
-        class="relative size-4 md:size-5 bg-primary rounded-full hover:bg-primary-hover cursor-pointer sb-transition sb-focus pointer-events-auto z-10 before:absolute before:-inset-3.5 md:before:-inset-3"
-        type="button"
-        @click="onSelect"
-      ></button>
+        :class="props.isOpen ? 'bg-primary/40 scale-200' : 'bg-transparent scale-0'"
+      ></span>
+      <span class="relative block size-4 md:size-5 rounded-full bg-primary"></span>
     </div>
 
-    <!-- Content -->
     <BaseCard
-      :class="{
-        'bg-transparent!': !props.isActive,
-      }"
+      :class="{ 'bg-transparent!': !props.isOpen }"
       full-custom-content
       variant="dark"
     >
-      <!-- Header: Title + Date -->
-      <div class="flex flex-col sm:flex-row items-start justify-start sm:justify-between gap-y-0.5 gap-x-4 sb-transition">
+      <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-y-1 gap-x-6">
         <h2
-          ref="titleRef"
-          class="sb-h3 mb-0 sb-transition flex-1 outline-none"
-          tabindex="-1"
+          :id="`milestone-title-${props.id}`"
+          class="sb-h3 mb-0 flex-1 text-balance"
         >
-          {{ props.title }}
+          {{ props.role }}
+          <span v-if="subline" class="sr-only">, {{ subline }}</span>
         </h2>
-        <time
-          v-if="props.date"
-          class="sb-overline text-primary-ink whitespace-nowrap sb-transition"
-          :datetime="isoDate"
-        >
-          {{ displayDate }}
-        </time>
+        <p v-if="props.period.startLabel" class="sb-overline text-primary-ink text-left mb-0 sm:whitespace-nowrap">
+          <time :datetime="props.period.startIso">{{ props.period.startLabel }}</time>
+          –
+          <time v-if="props.period.endIso" :datetime="props.period.endIso">{{ props.period.endLabel }}</time>
+          <template v-else>
+            {{ props.period.endLabel }}
+          </template>
+        </p>
       </div>
-      <p
-        v-if="props.subtitle"
-        class="sb-h4 text-ink-muted mt-2 mb-0 sb-transition"
-      >
-        {{ props.subtitle }}
+      <p v-if="subline || props.period.duration" class="sb-body text-ink-muted text-left hyphens-none mt-1 mb-0">
+        {{ subline }}
+        <template v-if="props.period.duration">
+          <template v-if="subline">
+            ·
+          </template>
+          {{ props.period.duration }}
+        </template>
       </p>
+
+      <p v-if="props.clients.length" class="sb-body text-ink-muted text-left hyphens-none mt-3 mb-0">
+        {{ t('pages.about.clientsLabel') }}
+        <strong class="font-bold text-ink">{{ props.clients.join(' · ') }}</strong>
+      </p>
+
+      <ul v-if="props.stack.length" class="flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none">
+        <li v-for="item in props.stack" :key="item">
+          <BaseChip :text="item" variant="secondary" />
+        </li>
+      </ul>
+
       <div
+        :id="`milestone-body-${props.id}`"
         class="mt-5 md:mt-6"
-        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12 lg:items-start': props.isActive && props.imageSrc }"
+        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12 lg:items-start': props.isOpen && props.imageSrc }"
       >
         <BaseRichText
-          v-if="props.content.length > 0"
-          :id="`milestone-body-${props.id}`"
-          :blocks="getContentPreview"
-          class="sb-transition"
-          :class="{ 'max-w-[75ch]': !(props.isActive && props.imageSrc) }"
+          v-if="visibleContent.length"
+          :blocks="visibleContent"
+          class="max-w-[75ch] *:text-left md:*:text-justify"
         />
 
-        <!-- Polaroid Image (only when active) -->
-        <div
-          v-if="props.isActive && props.imageSrc"
-          class="mt-6 md:mt-8 lg:mt-0 lg:sticky lg:top-24 flex justify-center sb-transition"
+        <figure
+          v-if="props.isOpen && props.imageSrc"
+          class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md md:mt-8 md:p-4 lg:sticky lg:top-24 lg:mx-0 lg:mt-0"
         >
-          <div
-            class="bg-ink p-3 md:p-4 shadow-md max-w-sm w-full sb-transition"
-          >
-            <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden sb-transition  ">
-              <NuxtImg
-                :alt="props.imageAlt || props.title"
-                class="w-full h-full object-cover"
-                :height="imageHeight"
-                loading="lazy"
-                :src="props.imageSrc"
-                :width="imageWidth"
-              />
-            </div>
-            <p
-              v-if="props.imageAlt"
-              class="text-center text-bg mt-3 sb-small italic sb-transition"
-            >
-              {{ props.imageAlt }}
-            </p>
+          <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden">
+            <NuxtImg
+              :alt="props.imageCaption ? '' : props.role"
+              class="w-full h-full object-cover"
+              :height="imageHeight"
+              loading="lazy"
+              sizes="320px sm:352px"
+              :src="props.imageSrc"
+              :width="imageWidth"
+            />
           </div>
-        </div>
+          <figcaption
+            v-if="props.imageCaption"
+            class="sb-small italic text-center text-balance text-bg mt-3"
+          >
+            {{ props.imageCaption }}
+          </figcaption>
+        </figure>
       </div>
 
-      <!-- Expand indicator -->
-      <div class="flex justify-center md:justify-start">
+      <div v-if="isExpandable" class="flex justify-center md:justify-start">
         <BaseButton
-          v-if="needsExpansion && !props.isActive"
           :aria-controls="`milestone-body-${props.id}`"
-          aria-expanded="false"
-          class="mt-2 md:-ml-6"
+          :aria-expanded="props.isOpen ? 'true' : 'false'"
+          class="mt-2 md:-ml-4"
           tone="accent"
           variant="ghost"
-          @click="onReadMore"
+          @click="onToggle"
         >
-          {{ t('pages.about.milestoneCta') }}
-          <Icon aria-hidden="true" class="size-5" name="solar:alt-arrow-down-bold-duotone" />
+          {{ props.isOpen ? t('pages.about.milestoneCtaLess') : t('pages.about.milestoneCta') }}
+          <span class="sr-only">: {{ [props.role, subline].filter(Boolean).join(', ') }}</span>
+          <Icon
+            aria-hidden="true"
+            class="size-5 sb-transition"
+            :class="{ 'rotate-180': props.isOpen }"
+            name="solar:alt-arrow-down-bold-duotone"
+          />
         </BaseButton>
       </div>
     </BaseCard>
