@@ -1,3 +1,6 @@
+import { resolveSkills } from '~/composables/data/useSkills'
+import type { Skill } from '~/composables/data/useSkills'
+
 export interface SbTemplate {
   id: string
   title: string
@@ -7,6 +10,7 @@ export interface SbTemplate {
   logoWidth?: number
   logoHeight?: number
   langIcons?: string[]
+  skills: Skill[]
 }
 
 export default function useTemplates() {
@@ -30,6 +34,7 @@ export default function useTemplates() {
       logoWidth: item.logoWidth,
       logoHeight: item.logoHeight,
       langIcons: Array.isArray(item.langIcons) ? item.langIcons.map((icon: string) => _rt(icon)) : undefined,
+      skills: Array.isArray(item.skills) ? resolveSkills(item.skills.map((id: Parameters<typeof _rt>[0]) => _rt(id))) : [],
     } as SbTemplate))
   })
 

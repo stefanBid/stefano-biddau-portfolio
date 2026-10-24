@@ -104,7 +104,7 @@ const emit = defineEmits<{
 ### TypeScript
 - Strict mode — no `any`, use `unknown` and narrow
 - `interface` for object shapes, `type` for unions/utility types
-- Global interfaces → `app/types/global.d.ts` — never inline in components
+- Types a composable exposes are declared and exported in that composable file; consumers use `import type { X } from '~/composables/...'`. `app/types/global.d.ts` only holds cross-cutting types (`MenuItem`, `RouteItem`, `RichBlock*`) and types shared with `server/` (`GithubRepo`, `GithubStats`) — never inline shared interfaces in components
 
 ### Styling
 - Default: inline Tailwind utility classes directly in templates
@@ -201,16 +201,19 @@ No backend — reads `pages.about.milestones` from the active i18n locale via `t
 ```ts
 const { projects } = useProjects()
 ```
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. `skills` (ids) only link skills to projects on the Skills page; `meta` stays the authored line.
+
+### `useSkillReferences()`
+```ts
+const { references, referencesByArea } = useSkillReferences()
+```
+Where each skill is used: work milestones (one entry per organization, links to its About milestone), projects (Projects anchor) and SB Templates (one entry). `referencesByArea` feeds the Skills page "Seen in" line. Exports `SkillReference`.
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
-filters.value.name = 'vue'
-filters.value.types = ['feFramework']
-filters.value.page = 1
+const { areas, featuredStack } = useSkills()
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack`: home "Core stack", `FEATURED_STACK` names grouped `frontend`/`backend`/`database`, ignores filters and `isGod`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`daily` = every day, gold; `shipped` = delivered work; `familiar` = used, not core). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, independent from tiers.
 
 ### `useGithubStats()`
 ```ts
@@ -267,6 +270,7 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 - File: `app/composables/useSomething.ts` — content-source composables (backed by i18n or a local data array, like `useMilestones`/`useProjects`/`useSkills`/`useTemplates`) go in `app/composables/data/useSomething.ts` instead
 - Export default function `useSomething`
 - Always type return values explicitly
+- Export the types the composable exposes from the same file
 - `useState` for global/shared state, `ref`/`computed` for local
 - Guard DOM access: `if (!import.meta.client) return`
 - Private helpers: `_` prefix
@@ -282,9 +286,9 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 
 ---
 
-## Global TypeScript types (`app/types/global.d.ts`)
+## TypeScript types
 
-Add new shared interfaces to `global.d.ts` inside `declare global {}` — never inline in components.
+Types exposed by a composable live in, and are exported from, that composable (e.g. `Skill` from `useSkills`, `Milestone` from `useMilestones`, `NotificationItem` from `useNotification`). `app/types/global.d.ts` (`declare global {}`) keeps only cross-cutting types (`MenuItem`, `RouteItem`, `RichBlock*`) and the GitHub types shared with `server/`.
 
 ---
 

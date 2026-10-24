@@ -223,9 +223,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
             <li v-for="skill in group.skills" :key="skill.id">
               <CustomSkillsCard
                 class="h-full"
-                compact
-                :icon="skill.icon ?? 'solar:code-square-bold-duotone'"
-                :level="skill.level"
+                :icon="skill.icon"
                 :name="skill.name"
               />
             </li>

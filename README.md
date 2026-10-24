@@ -65,7 +65,7 @@ Key design principles:
 - **Always dark** — a single dark colour palette; no `dark:` Tailwind variants, no theme switching overhead.
 - **Fully static** — all content is embedded at build time, pre-rendered via `routeRules` for maximum performance.
 - **i18n-first** — every user-facing string goes through `useI18n()`, supporting English (default) and Italian.
-- **Type-safe throughout** — strict TypeScript, global interfaces in `global.d.ts`, Zod for contact form validation.
+- **Type-safe throughout** — strict TypeScript, types exported by the composable that exposes them, Zod for contact form validation.
 
 ---
 
@@ -148,7 +148,8 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
          useMilestones.ts   ← reads pages.about.milestones from i18n
          useProjects.ts     ← reads pages.projects.personalProjects.list from i18n
          useSelectedWork.ts ← Romano + SB Templates + floating panel, linked to their Projects anchors
-         useSkills.ts       ← hardcoded local skills list + filtering/pagination
+         useSkillReferences.ts ← where each skill is used (milestones, projects, templates)
+         useSkills.ts       ← hardcoded local skills list, grouped by area and tier
          useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
        useFloatingUi.ts     ← @floating-ui/vue wrapper
@@ -162,7 +163,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
      pages/
        index.vue            ← / — Homepage
        about-me.vue         ← /about-me — Career milestones
-       my-skills.vue        ← /my-skills — Filterable skills grid
+       my-skills.vue        ← /my-skills — Skills by area and tier
        my-projects.vue      ← nested-route parent — hero + BaseTabs + <NuxtPage/>
        my-projects/
          index.vue           ← /my-projects — Personal projects grid
@@ -173,7 +174,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        pageTransition.client.ts ← drives usePageTransition state on navigation (skips fades for locale-only/tab changes)
      router.options.ts     ← custom scrollBehavior, waits for page transition to finish
      types/
-       global.d.ts         ← global TS interfaces
+       global.d.ts         ← cross-cutting TS types (navigation, rich text, GitHub)
      utils/
        blocksToHtml.ts     ← Rich text blocks → HTML
        downloadFile.ts     ← browser file download trigger (client-side only)
@@ -549,17 +550,30 @@ Uses `useEmailJs` for dual send (admin + reply-to-user), `zod` for validation, `
 
 ### `CustomSkillsCard`
 
+Vertical tile (icon above name) for the home "Core stack" grid.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `name` | `string` | Required |
+| `icon` | `string` | Required. Iconify name |
+
+### `CustomSkillsChip`
+
+Inline skill chip (icon + name) for the Skills page tier lists.
+
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `name` | `string` | — | Required |
-| `level` | `number` | — | Required. 0–5 scale shown as filled squares |
 | `icon` | `string` | — | Required. Iconify name |
-| `gold` | `boolean` | `false` | Gold ring highlight (top skill) |
-| `compact` | `boolean` | `false` | Vertical tile (icon above name), no level bar — home "Core stack" grid |
+| `gold` | `boolean` | `false` | Gold treatment — set for `daily` tier skills |
 
-### `CustomSkillsDialog`
+### `CustomSkillsTierIcon`
 
-Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
+Three concentric rings with the given tier's ring highlighted (inner = `daily`, middle = `shipped`, outer = `familiar`). Decorative (`aria-hidden`), used in the Skills legend and tier headings.
+
+| Prop | Type | Notes |
+|---|---|---|
+| `tier` | `SkillTier` | Required |
 
 ### `CustomProjectsCard`
 
@@ -600,7 +614,7 @@ The header is a size container (`@container`): below 20rem of card width (`@xs`)
 | `period` | `MilestonePeriod` | Required — `start – end` line, duration after `organization · type` |
 | `content` | `RichBlock[]` | Required — first block only while closed |
 | `organization` / `typeLabel` | `string` | Optional |
-| `stack` | `string[]` | Optional — rendered as `BaseChip`s |
+| `stack` | `MilestoneStackItem[]` | Optional — rendered as `BaseChip`s, with the technology logo when known |
 | `imageSrc` / `imageWidth` / `imageHeight` | | Optional — polaroid `figure`, shown only when open |
 | `imageCaption` | `string` | Optional — `figcaption` (image `alt` is then empty) |
 
@@ -628,11 +642,12 @@ No props. LinkedIn-style list of `useMilestones()` entries, newest first: role, 
 
 ### `CustomSolarSystem`
 
-Decorative animated orbit component used in `index.vue`, visualising tech categories as orbiting planets.
+Animated orbit diagram on the Skills page (`lg` and up), one per area. Orbit distance encodes the tier: inner = `daily` (gold planets), middle = `shipped`, outer = `familiar`; each planet is a real skill and logos stay upright. Purely visual (`aria-hidden`) — the tier lists beside it carry the same data. Sized by its container; paused under `prefers-reduced-motion`.
 
-| Prop | Type | Notes |
-|---|---|---|
-| `planetsIcon` | `string[]` | Required. Iconify names to display as orbiting planets (max 8) |
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `tiers` | `SkillTierGroup[]` | — | Required. One orbit per non-empty tier |
+| `activeId` | `string \| null` | `null` | Skill to highlight (others dim) — set while hovering its chip |
 
 Each `Custom*` component ships with a matching `*Skeleton.vue` for loading states.
 
@@ -685,9 +700,9 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 
 | File | Route (EN) | Route (IT) | Content |
 |---|---|---|---|
-| `index.vue` | `/` | `/it` | Hero + `CustomSolarSystem` + skills preview + contact form |
-| `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline |
-| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Filterable skills grid with `BaseTabs` |
+| `index.vue` | `/` | `/it` | Hero + skills preview + contact form |
+| `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline + "Alongside the day job" proof list |
+| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Tier legend, one section per area (tier lists + `CustomSolarSystem`), `CustomClosingCta` |
 | `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Personal projects showcase grid |
 | `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates showcase grid |
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
@@ -876,7 +891,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` and `clients` (string lists). The composable adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` (free keywords) and `clients` (string lists), and `skills` (skill ids, resolved to `Skill` objects). The composable maps each `stack` name to a `MilestoneStackItem` (logo from its `STACK_ICONS` table, none for unknown names) and adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
 
 ### `useSelectedWork()`
 
@@ -884,7 +899,7 @@ Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` —
 const { selectedWork } = useSelectedWork()
 ```
 
-The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title, cover, meta line and a link to their Projects anchor. Used by the home "Selected work" grid.
+The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title, cover, meta line, a `slug` (`romano` · `floatingPanel` · `sbTemplates`) and a link to their Projects anchor. Used by the home "Selected work" grid and the About Me "Alongside the day job" list (which adds an outcome line per `slug` from `pages.about.alongside.outcomes`).
 
 ### `useProjects()`
 
@@ -892,7 +907,7 @@ The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title,
 const { projects } = useProjects()
 ```
 
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. An entry with `status: "ongoing"` gets `isOngoing: true`.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. An entry with `status: "ongoing"` gets `isOngoing: true`. `skills` (skill ids) resolve to `Skill` objects, used only to link skills to projects on the Skills page ("Seen in"); `meta` stays the authored line.
 
 ### `useTemplates()`
 
@@ -900,18 +915,23 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 const { templates } = useTemplates()
 ```
 
-Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`.
+Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`. `skills` (skill ids) resolve to `Skill` objects; `langIcons` stay as platform icons.
+
+### `useSkillReferences()`
+
+```ts
+const { references, referencesByArea } = useSkillReferences()
+```
+
+Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor) and SB Templates (one entry). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line.
 
 ### `useSkills()`
 
 ```ts
-const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
-filters.value.name = 'vue'
-filters.value.types = ['feFramework']
-filters.value.page = 1
+const { areas, featuredStack } = useSkills()
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack` is the home page "Core stack": `FEATURED_STACK` names grouped by area (`frontend`, `backend`, `database`), in authored order, regardless of filters and of `isGod`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a readable slug `id` (`vue`, `spring`, `tailwind-css`), referenced by the `skills` arrays of projects, templates and milestones in the locale files, an `area` (`frontend`, `backend`, `tools`) and a `tier` (`daily`: used every day, gold; `shipped`: used in delivered work; `familiar`: used, not core). `areas` is the Skills page data: one `SkillAreaGroup` per area with its non-empty tiers in order, skills alphabetical. `resolveSkills(ids)` (named export) maps ids to skills and drops unknown ones. `featuredStack` is the home page "Core stack": `FEATURED_STACK` ids grouped by area (`frontend`, `backend`, `database`), in authored order, independent from tiers.
 
 ### `useGithubStats()`
 
@@ -934,19 +954,25 @@ The one async content source: `useFetch('/api/github-stats.json')`, which is pre
 
 ---
 
-### Global TypeScript types (`app/types/global.d.ts`)
+### TypeScript types
 
-All interfaces are declared globally — no import needed
+Types a composable exposes are exported from that composable and imported with `import type`:
+
+| From | Types |
+|---|---|
+| `composables/data/useSkills` | `Skill` (`{ id, name, icon, area, tier, onLight? }`), `SkillArea`, `SkillTier`, `SkillTierGroup`, `SkillAreaGroup`, `StackArea`, `StackGroup` |
+| `composables/data/useSkillReferences` | `SkillReference` (`{ key, title, skills, to }`) |
+| `composables/data/useMilestones` | `Milestone`, `MilestoneType`, `MilestonePeriod` (`{ startIso?, startLabel?, endIso?, endLabel, duration? }`), `MilestoneStackItem` (`{ name, icon? }`) |
+| `composables/data/useProjects` | `Project` |
+| `composables/data/useTemplates` | `SbTemplate` |
+| `composables/useNotification` | `NotificationItem` (`{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }`) |
+
+`app/types/global.d.ts` declares the remaining types globally (no import needed): cross-cutting ones and those shared with `server/`.
 
 | Type | Description |
 |---|---|
-| `SkillType` | `'beLang' \| 'feLang' \| 'beFramework' \| 'feFramework' \| 'database' \| 'tool' \| 'other'` |
 | `MenuItem` | `{ code, label, iconType, icon }` — language switcher and icon-menu items |
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
-| `NotificationItem` | `{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }` |
-| `SkillsFilterPreset` | `{ key, filters: SkillType[] }` — preset filter buttons in `my-skills.vue` |
-| `MilestoneType` | `'education' \| 'internship' \| 'fullTime' \| 'upcoming'` |
-| `MilestonePeriod` | `{ startIso?, startLabel?, endIso?, endLabel, duration? }` — computed by `useMilestones` |
 | `GithubRepo` | `{ name, url, description, language, stars }` |
 | `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |
 | `RichBlock` | Union of `RichBlockParagraph \| RichBlockHeading \| RichBlockList \| RichBlockQuote \| RichBlockCode` |

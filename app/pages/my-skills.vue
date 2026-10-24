@@ -1,9 +1,13 @@
 <script setup lang="ts">
+import useSkillReferences from '~/composables/data/useSkillReferences'
 import useSkills from '~/composables/data/useSkills'
+import type { SkillTier } from '~/composables/data/useSkills'
 
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
+const { areas } = useSkills()
+const { referencesByArea } = useSkillReferences()
 
 useSeoMeta({
   // LOCALIZED
@@ -18,53 +22,15 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-// State
-const { countByTypes } = useSkills()
+// Data
+const TIERS: SkillTier[] = ['daily', 'shipped', 'familiar']
 
-const openSkillsDialog = ref<boolean>(false)
-const filterTypes = ref<SkillType[]>([])
-
-const PRESET_TYPES: Record<'frontend' | 'backend' | 'design', SkillType[]> = {
-  frontend: ['feLang', 'feFramework'],
-  backend: ['beLang', 'beFramework', 'database'],
-  design: ['tool'],
-}
-
-const ICONS = {
-  frontend: [
-    'logos:html-5',
-    'logos:css-3',
-    'logos:javascript',
-    'logos:typescript-icon',
-    'logos:vue',
-    'logos:nuxt-icon',
-    'logos:angular-icon',
-    'logos:flutter',
-  ],
-  backend: [
-    'logos:nodejs-icon',
-    'logos:java',
-    'logos:spring-icon',
-    'logos:strapi-icon',
-    'logos:mysql-icon',
-    'logos:graphql',
-  ],
-  design: [
-    'logos:figma',
-    'logos:adobe-xd',
-    'logos:storybook-icon',
-    'logos:chromatic-icon',
-  ],
-}
+const activeSkillId = ref<string | null>(null)
+const contactFormIsOpen = ref<boolean>(false)
 
 // Events
-const onOpenSkillsDialog = (filterPresetType?: keyof typeof PRESET_TYPES) => {
-  filterTypes.value = filterPresetType ? PRESET_TYPES[filterPresetType] : []
-  openSkillsDialog.value = true
-}
-
-const onCloseSkillsDialog = () => {
-  openSkillsDialog.value = false
+const onHighlightSkill = (id: string | null) => {
+  activeSkillId.value = id
 }
 </script>
 
@@ -73,124 +39,100 @@ const onCloseSkillsDialog = () => {
     <ThePageHero
       id="my-skills"
       image-src="/images/3d-avatar/avatar-pose-1.webp"
+      :lead="t('pages.skills.lead')"
       :text="t('pages.skills.hero')"
     />
-    <section :aria-label="t('a11y.skillsSection')" class=" w-full py-20 flex flex-col gap-20">
-      <!-- CARD FRONTEND SKILLS -->
-      <BaseCard
-        class="p-0!"
-        full-custom-content
-        variant="dark"
-      >
-        <!-- Relative wrapper that represents the visible area of the card -->
-        <div class="relative h-fit">
-          <!-- Left content (not clipped) -->
-          <div class="flex items-center">
-            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
-              <h2 class="sb-h3 mb-0 text-center md:text-left">
-                {{ t('pages.skills.frontendCard.title') }}
-              </h2>
-              <p class="sb-body mt-3 md:mt-4 mb-0">
-                {{ t('pages.skills.frontendCard.paragraph') }}
-              </p>
-              <div class="mt-6 md:mt-8">
-                <BaseButton variant="primary" @click="onOpenSkillsDialog('frontend')">
-                  {{ t('pages.skills.frontendCard.buttonText', { count: countByTypes(PRESET_TYPES.frontend) }) }}
-                </BaseButton>
-              </div>
-            </div>
-          </div>
 
-          <!-- Overlay that ONLY clips the solar system -->
-          <div
-            class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
-          >
-            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
-              <CustomSolarSystem :planets-icon="ICONS.frontend" />
-            </div>
+    <div :aria-label="t('a11y.skillTiersLegend')" class="py-8 border-b border-border" role="group">
+      <dl class="grid gap-4 m-0 md:grid-cols-3 md:gap-10">
+        <div
+          v-for="tier in TIERS"
+          :key="tier"
+          class="flex items-start gap-3"
+        >
+          <CustomSkillsTierIcon class="mt-0.5" :tier="tier" />
+          <div>
+            <dt class="sb-label uppercase text-ink">
+              {{ t(`pages.skills.tiers.${tier}.label`) }}
+            </dt>
+            <dd class="sb-small text-ink-muted text-left m-0 mt-1">
+              {{ t(`pages.skills.tiers.${tier}.description`) }}
+            </dd>
           </div>
         </div>
-      </BaseCard>
+      </dl>
+    </div>
 
-      <!-- CARD BACKEND SKILLS -->
-      <BaseCard
-        class="p-0!"
-        full-custom-content
-        variant="dark"
-      >
-        <!-- Relative wrapper that represents the visible area of the card -->
-        <div class="relative h-fit">
-          <!-- Left content (not clipped) -->
-          <div class="flex items-center">
-            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
-              <h2 class="sb-h3 mb-0 text-center md:text-left">
-                {{ t('pages.skills.backendCard.title') }}
-              </h2>
-              <p class="sb-body mt-3 md:mt-4 mb-0">
-                {{ t('pages.skills.backendCard.paragraph') }}
-              </p>
-              <div class="mt-6 md:mt-8">
-                <BaseButton variant="primary" @click="onOpenSkillsDialog('backend')">
-                  {{ t('pages.skills.backendCard.buttonText', { count: countByTypes(PRESET_TYPES.backend) }) }}
-                </BaseButton>
-              </div>
-            </div>
-          </div>
+    <section
+      v-for="(area, index) in areas"
+      :key="area.key"
+      :aria-labelledby="`skills-${area.key}-title`"
+      class="grid items-center gap-12 py-16 border-b border-border md:py-20 lg:gap-16"
+      :class="index % 2 === 1 ? 'lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]' : 'lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)]'"
+    >
+      <div :class="index % 2 === 1 && 'lg:order-2'">
+        <h2 :id="`skills-${area.key}-title`" class="mb-0 text-balance">
+          {{ t(`pages.skills.areas.${area.key}.title`) }}
+        </h2>
+        <p class="sb-body text-ink-muted text-left text-pretty hyphens-none mt-4 mb-0 max-w-2xl">
+          {{ t(`pages.skills.areas.${area.key}.paragraph`) }}
+        </p>
+        <p v-if="referencesByArea[area.key].length" class="sb-small text-ink-muted text-left hyphens-none mt-4 mb-0">
+          {{ t('pages.skills.seenIn') }}
+          <template v-for="(item, itemIndex) in referencesByArea[area.key]" :key="item.key">
+            <NuxtLink
+              class="text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus"
+              :to="item.to"
+            >
+              {{ item.title }}
+            </NuxtLink><span v-if="itemIndex < referencesByArea[area.key].length - 1">, </span>
+          </template>
+        </p>
 
-          <!-- Overlay that ONLY clips the solar system -->
-          <div
-            class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
-          >
-            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
-              <CustomSolarSystem :planets-icon="ICONS.backend" />
-            </div>
-          </div>
-        </div>
-      </BaseCard>
-
-      <!-- CARD DESIGN SKILLS -->
-      <BaseCard
-        class="p-0!"
-        full-custom-content
-        variant="dark"
-      >
-        <!-- Relative wrapper that represents the visible area of the card -->
-        <div class="relative h-fit">
-          <!-- Left content (not clipped) -->
-          <div class="flex items-center">
-            <div class="min-h-96 w-full lg:w-2/3 h-full flex flex-col items-center md:items-start justify-center z-10 p-4 md:p-6 bg-surface md:bg-surface/70 rounded-lg">
-              <h2 class="sb-h3 mb-0 text-center md:text-left">
-                {{ t('pages.skills.designCard.title') }}
-              </h2>
-              <p class="sb-body mt-3 md:mt-4 mb-0">
-                {{ t('pages.skills.designCard.paragraph') }}
-              </p>
-              <div class="mt-6 md:mt-8">
-                <BaseButton variant="primary" @click="onOpenSkillsDialog('design')">
-                  {{ t('pages.skills.designCard.buttonText', { count: countByTypes(PRESET_TYPES.design) }) }}
-                </BaseButton>
-              </div>
-            </div>
-          </div>
-
-          <!-- Overlay that ONLY clips the solar system -->
-          <div
-            class="pointer-events-none absolute inset-0 overflow-hidden rounded-lg"
-          >
-            <!-- Solar system is positioned normally but gets clipped by the overlay bounds -->
-            <div class="absolute top-1/2 right-0 -translate-y-1/2 translate-x-1/2 hidden md:block">
-              <CustomSolarSystem :planets-icon="ICONS.design" />
-            </div>
+        <div class="flex flex-col gap-8 mt-10">
+          <div v-for="tier in area.tiers" :key="tier.key">
+            <h3
+              :id="`skills-${area.key}-${tier.key}`"
+              class="flex items-center gap-2 sb-label uppercase text-ink mb-3"
+            >
+              <CustomSkillsTierIcon :tier="tier.key" />
+              {{ t(`pages.skills.tiers.${tier.key}.label`) }}
+              <span aria-hidden="true" class="text-ink-muted">· {{ tier.skills.length }}</span>
+            </h3>
+            <ul
+              :aria-labelledby="`skills-${area.key}-${tier.key}`"
+              class="flex flex-wrap gap-2 m-0 p-0 list-none"
+              @mouseleave="onHighlightSkill(null)"
+            >
+              <li
+                v-for="skill in tier.skills"
+                :key="skill.id"
+                @mouseenter="onHighlightSkill(skill.id)"
+              >
+                <CustomSkillsChip
+                  :gold="skill.tier === 'daily'"
+                  :icon="skill.icon"
+                  :name="skill.name"
+                  :on-light="skill.onLight"
+                />
+              </li>
+            </ul>
           </div>
         </div>
-      </BaseCard>
+      </div>
+
+      <figure aria-hidden="true" class="hidden m-0 lg:block" :class="index % 2 === 1 && 'lg:order-1'">
+        <CustomSolarSystem :active-id="activeSkillId" :tiers="area.tiers" />
+        <figcaption class="sb-small italic text-ink-muted text-center mt-4">
+          {{ t('pages.skills.orbitCaption') }}
+        </figcaption>
+      </figure>
     </section>
-    <LazyCustomSkillsDialog
-      :filter-types="filterTypes"
-      :open-dialog="openSkillsDialog"
-      @close-dialog="onCloseSkillsDialog"
-    />
+
+    <div class="pt-24">
+      <CustomClosingCta show-projects-link @contact="contactFormIsOpen = true" />
+    </div>
+
+    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>

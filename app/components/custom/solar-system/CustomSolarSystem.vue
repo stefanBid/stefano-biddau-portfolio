@@ -1,56 +1,46 @@
 <script setup lang="ts">
-interface Props {
-  planetsIcon: string[]
+import type { SkillTier, SkillTierGroup } from '~/composables/data/useSkills'
+
+interface CustomSolarSystemProps {
+  tiers: SkillTierGroup[]
+  activeId?: string | null
 }
 
-const props = defineProps<Props>()
+// Input / Output
+const props = withDefaults(defineProps<CustomSolarSystemProps>(), {
+  activeId: null,
+})
 
-// Colors live in theme.css (--sb-planet-*)
-const PLANET_COUNT = 8
-const planetColors = Array.from({ length: PLANET_COUNT }, (_, i) => `var(--sb-planet-${i + 1})`)
-const planetAtmosphereColors = Array.from({ length: PLANET_COUNT }, (_, i) => `var(--sb-planet-atmo-${i + 1})`)
-
-const getOrbitStyle = (index: number, total: number) => {
-  const safeTotal = Math.max(total - 1, 1)
-  const baseSize = 230
-  const step = 50
-  const size = baseSize + index * step
-
-  // Fewer planets make the system faster; non-linear curve distributes speed inner→outer
-  const clampedTotal = Math.min(Math.max(total, 1), 8)
-  const systemRatio = (clampedTotal - 1) / 7
-
-  const slowMin = 6.8 // +0.9 from previous
-  const slowMax = 13.4 // +1.2
-  const fastMin = 3.4 // +0.5
-  const fastMax = 7.2 // +0.5
-
-  const slowDuration = slowMin + (slowMax - slowMin) * systemRatio
-  const fastDuration = fastMin + (fastMax - fastMin) * systemRatio
-
-  const linear = safeTotal === 0 ? 0 : index / safeTotal
-  const curved = Math.pow(linear, 0.8)
-
-  const duration = slowDuration - curved * (slowDuration - fastDuration)
-
-  const phase = (index * 0.61803398875) % 1
-  const delay = -(duration * phase)
-
-  return {
-    '--orbit-size': `${size}px`,
-    '--orbit-duration': `${duration}s`,
-    '--orbit-delay': `${delay}s`,
-    '--planet-color': planetColors[index % planetColors.length],
-    '--planet-atmosphere': planetAtmosphereColors[index % planetAtmosphereColors.length],
-    '--planet-tilt': `${(index % 2 === 0 ? 1 : -1) * 6}deg`,
-  }
+// Data
+// Orbit distance is the data: the closer to the sun, the more often the skill is used
+const ORBITS: Record<SkillTier, { ratio: number, duration: number, direction: 'normal' | 'reverse' }> = {
+  daily: { ratio: 0.46, duration: 70, direction: 'normal' },
+  shipped: { ratio: 0.7, duration: 110, direction: 'reverse' },
+  familiar: { ratio: 0.94, duration: 160, direction: 'normal' },
 }
+
+const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
+  key: tier.key,
+  style: {
+    '--orbit-ratio': ORBITS[tier.key].ratio,
+    '--orbit-duration': `${ORBITS[tier.key].duration}s`,
+    '--orbit-direction': ORBITS[tier.key].direction,
+  },
+  planets: tier.skills.map((skill, index) => ({
+    id: skill.id,
+    icon: skill.icon,
+    onLight: skill.onLight,
+    style: {
+      '--slot-angle': `${(360 / tier.skills.length) * index + tierIndex * 23}deg`,
+    },
+  })),
+})))
 </script>
 
 <template>
-  <div aria-hidden="true" class="solar-system relative flex items-center justify-center w-full h-full">
-    <div class="relative w-85 h-85 overflow-visible">
-      <!-- ☀️ SUN -->
+  <!-- Rotating orbits have square bounding boxes wider than the circle drawn; the frame clips them -->
+  <div aria-hidden="true" class="solar-system-frame">
+    <div class="solar-system relative w-full aspect-square">
       <div class="sun">
         <div class="sun-glow"></div>
         <div class="sun-corona"></div>
@@ -58,23 +48,32 @@ const getOrbitStyle = (index: number, total: number) => {
         <div class="sun-flare"></div>
       </div>
 
-      <!-- 🪐 PLANETS -->
       <div
-        v-for="(icon, index) in props.planetsIcon"
-        :key="icon + '-' + index"
+        v-for="orbit in orbits"
+        :key="orbit.key"
         class="orbit"
-        :class="{ 'orbit--reverse': index % 2 === 1 }"
-        :style="getOrbitStyle(index, props.planetsIcon.length)"
+        :class="`orbit--${orbit.key}`"
+        :style="orbit.style"
       >
-        <div class="planet">
-          <div class="planet-body">
-            <Icon class="w-6 h-6 planet-icon" :name="icon" />
-
-            <div
-              v-if="index === 2 || index === 4"
-              class="moon-orbit"
-            >
-              <div class="moon"></div>
+        <div
+          v-for="planet in orbit.planets"
+          :key="planet.id"
+          class="slot"
+          :style="planet.style"
+        >
+          <div
+            class="planet"
+            :class="{
+              'is-active': props.activeId === planet.id,
+              'is-dimmed': props.activeId && props.activeId !== planet.id,
+            }"
+          >
+            <div class="planet-upright">
+              <div class="planet-counter">
+                <div class="planet-body" :class="{ 'planet-body--light': planet.onLight }">
+                  <Icon class="planet-icon" :name="planet.icon" />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -84,85 +83,73 @@ const getOrbitStyle = (index: number, total: number) => {
 </template>
 
 <style scoped>
+.solar-system-frame {
+  overflow: hidden;
+  padding: 24px;
+}
+
+.solar-system {
+  container-type: inline-size;
+  --planet-size: clamp(28px, 8.5cqi, 40px);
+}
+
 /* --- SUN --- */
 
 .sun {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 180px;
-  height: 180px;
+  width: 28%;
+  aspect-ratio: 1;
   transform: translate(-50%, -50%);
-  pointer-events: none;
   animation: sunPulse 4s ease-in-out infinite;
-  z-index: 10;
-  will-change: transform;
+  z-index: 3;
 }
 
 @keyframes sunPulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.04);
-  }
+  0%, 100% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.04); }
 }
 
-/* outer glow */
 .sun-glow {
   position: absolute;
   inset: 0;
   border-radius: 9999px;
   background: radial-gradient(circle, var(--sb-sun-200) 0%, var(--sb-sun-500) 55%, transparent 100%);
-  filter: blur(16px);
-  opacity: 0.95;
+  filter: blur(14px);
+  opacity: 0.8;
 }
 
-/* pulsing corona */
 .sun-corona {
   position: absolute;
-  inset: 12px;
+  inset: 7%;
   border-radius: 9999px;
   background: radial-gradient(
     circle,
     color-mix(in oklab, var(--sb-sun-corona-inner) 45%, transparent) 0%,
-    color-mix(in oklab, var(--sb-sun-corona-mid) 28%, transparent) 35%,
-    color-mix(in oklab, var(--sb-sun-corona-mid) 18%, transparent) 55%,
-    color-mix(in oklab, var(--sb-sun-corona-outer) 10%, transparent) 72%,
-    color-mix(in oklab, var(--sb-sun-corona-outer) 6%, transparent) 88%,
+    color-mix(in oklab, var(--sb-sun-corona-mid) 22%, transparent) 45%,
+    color-mix(in oklab, var(--sb-sun-corona-outer) 8%, transparent) 80%,
     transparent 100%
   );
-  filter: blur(7px);
-  opacity: 0.92;
+  filter: blur(6px);
   animation: coronaPulse 6s ease-in-out infinite;
 }
 
 @keyframes coronaPulse {
-  0%, 100% {
-    opacity: 0.75;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
+  0%, 100% { opacity: 0.75; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.06); }
 }
 
-/* sun core */
 .sun-core {
   position: absolute;
-  inset: 34px;
+  inset: 19%;
   border-radius: 9999px;
   background: radial-gradient(circle, var(--sb-sun-100) 0%, var(--sb-sun-200) 55%, var(--sb-sun-400) 100%);
-  box-shadow:
-    0 0 32px color-mix(in oklab, var(--sb-sun-350) 90%, transparent),
-    0 0 64px color-mix(in oklab, var(--sb-sun-500) 80%, transparent);
 }
 
-/* rotating flare */
 .sun-flare {
   position: absolute;
-  inset: 26px;
+  inset: 14%;
   border-radius: 9999px;
   background: conic-gradient(
     from 0deg,
@@ -171,17 +158,10 @@ const getOrbitStyle = (index: number, total: number) => {
     transparent 80deg,
     transparent 180deg,
     color-mix(in oklab, var(--sb-sun-300) 16%, transparent) 220deg,
-    transparent 260deg,
-    transparent 360deg
+    transparent 260deg
   );
   mix-blend-mode: screen;
-  opacity: 0.9;
-  animation: sunFlareSpin 28s linear infinite;
-}
-
-@keyframes sunFlareSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  animation: spin 28s linear infinite;
 }
 
 /* --- ORBITS --- */
@@ -190,122 +170,107 @@ const getOrbitStyle = (index: number, total: number) => {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: var(--orbit-size);
-  height: var(--orbit-size);
+  width: calc(var(--orbit-ratio) * 100%);
+  aspect-ratio: 1;
   border-radius: 9999px;
-  border: 1px solid color-mix(in oklab, var(--sb-orbit) 28%, transparent);
-  animation: orbit-spin var(--orbit-duration) linear infinite;
-  animation-delay: var(--orbit-delay);
-  z-index: 1;
-  will-change: transform;
+  border: 1px solid color-mix(in oklab, var(--sb-orbit) 30%, transparent);
+  transform: translate(-50%, -50%);
+  animation: orbitSpin var(--orbit-duration) linear infinite;
+  animation-direction: var(--orbit-direction);
+  z-index: 2;
 }
 
-.orbit--reverse {
-  animation-name: orbit-spin-reverse;
+@keyframes orbitSpin {
+  from { transform: translate(-50%, -50%) rotate(0deg); }
+  to { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
-@keyframes orbit-spin {
-  0%   { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
-}
-
-@keyframes orbit-spin-reverse {
-  0%   { transform: translate(-50%, -50%) rotate(360deg); }
-  100% { transform: translate(-50%, -50%) rotate(0deg); }
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* --- PLANETS --- */
 
+.slot {
+  position: absolute;
+  inset: 0;
+  transform: rotate(var(--slot-angle));
+}
+
 .planet {
   position: absolute;
-  top: 50%;
-  left: -22px;
-  transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  z-index: 5;
+  left: 50%;
+  top: 0;
+  width: var(--planet-size);
+  height: var(--planet-size);
+  translate: -50% -50%;
+  transition:
+    scale var(--sb-duration-state) var(--ease-out),
+    opacity var(--sb-duration-state) var(--ease-out);
+}
+
+.planet.is-active {
+  scale: 1.3;
+  z-index: 1;
+}
+
+.planet.is-dimmed {
+  opacity: 0.3;
+}
+
+/* Undo the slot angle, then counter-spin against the orbit, so logos stay upright */
+.planet-upright {
+  width: 100%;
+  height: 100%;
+  transform: rotate(calc(-1 * var(--slot-angle)));
+}
+
+.planet-counter {
+  width: 100%;
+  height: 100%;
+  animation: orbitCounter var(--orbit-duration) linear infinite;
+  animation-direction: var(--orbit-direction);
+}
+
+@keyframes orbitCounter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
 }
 
 .planet-body {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 9999px;
-  background-color: var(--planet-color);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow:
-    0 0 8px color-mix(in oklab, var(--sb-planet-shadow) 60%, transparent),
-    0 0 18px color-mix(in oklab, var(--sb-planet-shadow) 30%, transparent);
-  transform: rotate(var(--planet-tilt));
-  animation: planetTilt 9s ease-in-out infinite;
-  will-change: transform;
-}
-
-@keyframes planetTilt {
-  0%, 100% { transform: rotate(var(--planet-tilt)); }
-  50%     { transform: rotate(calc(var(--planet-tilt) + 2deg)); }
-}
-
-/* planet atmosphere */
-.planet-body::before {
-  content: "";
-  position: absolute;
-  inset: -6px;
+  width: 100%;
+  height: 100%;
   border-radius: 9999px;
-  background: radial-gradient(
-    circle,
-    var(--planet-atmosphere) 0%,
-    transparent 70%
-  );
-  opacity: 0.85;
-  filter: blur(3px);
-  animation: atmospherePulse 7s ease-in-out infinite;
+  border: 1px solid var(--sb-border-strong);
+  background-color: var(--sb-surface-2);
+  box-shadow: 0 2px 6px color-mix(in oklab, var(--sb-planet-shadow) 70%, transparent);
+  transition: box-shadow var(--sb-duration-state) var(--ease-out);
 }
 
-@keyframes atmospherePulse {
-  0%, 100% { opacity: 0.75; transform: scale(1); }
-  50%      { opacity: 1; transform: scale(1.04); }
+.planet-body--light {
+  background-color: var(--sb-ink);
 }
 
-/* planet icon */
+.orbit--daily .planet-body {
+  border-color: color-mix(in oklab, var(--sb-gold-200) 60%, transparent);
+  background: radial-gradient(circle at 30% 0%, var(--sb-gold-100) 0, var(--sb-gold-400) 45%, var(--sb-gold-800) 100%);
+}
+
+.planet.is-active .planet-body {
+  box-shadow:
+    0 0 0 2px var(--sb-bg),
+    0 0 0 4px var(--sb-primary);
+}
+
 .planet-icon {
-  position: relative;
-  z-index: 1;
+  width: 60%;
+  height: 60%;
   color: var(--sb-ink);
   filter: drop-shadow(0 0 2px var(--sb-shadow-color));
-}
-
-/* --- MOONS --- */
-
-.moon-orbit {
-  position: absolute;
-  width: 62px;
-  height: 62px;
-  border-radius: 9999px;
-  border: 1px solid color-mix(in oklab, var(--sb-orbit) 35%, transparent);
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  animation: moonOrbit 10s linear infinite;
-}
-
-.moon {
-  position: absolute;
-  top: 50%;
-  right: -6px;
-  transform: translateY(-50%);
-  width: 10px;
-  height: 10px;
-  border-radius: 9999px;
-  background: radial-gradient(circle, var(--sb-moon-100) 0%, var(--sb-ink-muted) 70%);
-  box-shadow: 0 0 6px color-mix(in oklab, var(--sb-planet-shadow) 70%, transparent);
-}
-
-@keyframes moonOrbit {
-  0%   { transform: translate(-50%, -50%) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 @media (prefers-reduced-motion: reduce) {

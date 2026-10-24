@@ -2,6 +2,7 @@ import useProjects from '~/composables/data/useProjects'
 
 interface SelectedWorkItem {
   key: string
+  slug: 'romano' | 'floatingPanel' | 'sbTemplates'
   title: string
   imageSrc?: string
   imageAlt: string
@@ -13,7 +14,7 @@ interface SelectedWorkItem {
 const PROJECT_LINKS = [
   { id: 'bd6a7d77-d3e5-48be-a83c-28d290f788ec', metaKey: 'romano' },
   { id: 'acb2196a-5974-40ba-81c5-fccb58611c0b', metaKey: 'floatingPanel' },
-]
+] as const
 
 export default function useSelectedWork() {
   const { t } = useI18n()
@@ -30,6 +31,7 @@ export default function useSelectedWork() {
         }
         return {
           key: id,
+          slug: metaKey,
           title: project.title,
           imageSrc: project.coverImageSrc,
           imageAlt: project.coverImageAlt || '',
@@ -42,6 +44,7 @@ export default function useSelectedWork() {
 
     const sbTemplates = {
       key: 'sb-templates',
+      slug: 'sbTemplates' as const,
       title: t('nav.sb-templates'),
       imageSrc: '/images/sbt-logos/sbt-logo.webp',
       imageAlt: t('pages.projects.sbTemplatesProject.logoAlt'),

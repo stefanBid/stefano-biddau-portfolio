@@ -1,7 +1,12 @@
-interface Project {
+import { resolveSkills } from '~/composables/data/useSkills'
+import type { Skill } from '~/composables/data/useSkills'
+
+export interface Project {
   id: string
   title: string
   meta?: string
+  // Only used to link skills to the projects that use them (Skills page)
+  skills: Skill[]
   content: RichBlock[]
   coverImageSrc?: string
   coverImageAlt?: string
@@ -35,17 +40,20 @@ export default function useProjects() {
       } as MenuItem))
     }
 
-    return rawProjects.map(item => ({
-      id: _rt(item.id || ''),
-      title: _rt(item.title || ''),
-      meta: item.meta ? _rt(item.meta) : undefined,
-      content: markdownToRichBlocks(_rt(item.content || '')),
-      coverImageSrc: item.coverImageSrc ? _rt(item.coverImageSrc) : undefined,
-      coverImageAlt: item.coverImageAlt ? _rt(item.coverImageAlt) : undefined,
-      codebaseUrls: _mapUrls(item.codebaseUrls),
-      deploymentUrls: _mapUrls(item.deploymentUrls),
-      isOngoing: item.status ? _rt(item.status) === 'ongoing' : false,
-    } as Project))
+    return rawProjects.map((item) => {
+      return {
+        id: _rt(item.id || ''),
+        title: _rt(item.title || ''),
+        meta: item.meta ? _rt(item.meta) : undefined,
+        skills: Array.isArray(item.skills) ? resolveSkills(item.skills.map((id: Parameters<typeof _rt>[0]) => _rt(id))) : [],
+        content: markdownToRichBlocks(_rt(item.content || '')),
+        coverImageSrc: item.coverImageSrc ? _rt(item.coverImageSrc) : undefined,
+        coverImageAlt: item.coverImageAlt ? _rt(item.coverImageAlt) : undefined,
+        codebaseUrls: _mapUrls(item.codebaseUrls),
+        deploymentUrls: _mapUrls(item.deploymentUrls),
+        isOngoing: item.status ? _rt(item.status) === 'ongoing' : false,
+      } as Project
+    })
   })
 
   return {

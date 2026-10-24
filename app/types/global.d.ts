@@ -1,7 +1,4 @@
 declare global {
-  // ------------------------ Types ------------------------ /
-  type SkillType = 'beLang' | 'feLang' | 'beFramework' | 'feFramework' | 'database' | 'tool' | 'other'
-
   // --------------------------------- Interfaces ------------------------ /
 
   interface MenuItem {
@@ -16,24 +13,6 @@ declare global {
     path: string
     disabled?: true
     routeName?: string
-  }
-
-  interface NotificationItem {
-    id: string
-    type: 'success' | 'warning' | 'error' | 'info'
-    icon?: string
-    title?: string
-    message: string
-    dismissible?: boolean
-    autoClose?: boolean
-    duration?: number
-  }
-
-  interface Pagination {
-    page: number
-    pageSize: number
-    pageCount: number
-    total: number
   }
 
   // Rich Text Blocks types
@@ -88,16 +67,6 @@ declare global {
   }
 
   type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockQuote | RichBlockCode
-
-  type MilestoneType = 'education' | 'internship' | 'fullTime' | 'upcoming'
-
-  interface MilestonePeriod {
-    startIso?: string
-    startLabel?: string
-    endIso?: string
-    endLabel: string
-    duration?: string
-  }
 
   interface GithubRepo {
     name: string

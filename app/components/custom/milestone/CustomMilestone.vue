@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { MilestonePeriod, MilestoneStackItem } from '~/composables/data/useMilestones'
+
 interface CustomMilestoneProps {
   id: number | string
   isOpen: boolean
@@ -7,7 +9,7 @@ interface CustomMilestoneProps {
   content: RichBlock[]
   organization?: string
   typeLabel?: string
-  stack?: string[]
+  stack?: MilestoneStackItem[]
   clients?: string[]
   imageSrc?: string
   imageWidth?: number
@@ -55,6 +57,8 @@ const isExpandable = computed(() => props.content.length > MAX_CONTENT_BLOCKS ||
 const visibleContent = computed(() => props.isOpen ? props.content : props.content.slice(0, MAX_CONTENT_BLOCKS))
 
 const subline = computed(() => [props.organization, props.typeLabel].filter(Boolean).join(' · '))
+// Screen readers announce "·" as "middle dot"
+const srSubline = computed(() => [props.organization, props.typeLabel].filter(Boolean).join(', '))
 
 // Events
 // Collapsing a long milestone can leave its top above the viewport: bring it back so the reader keeps their place
@@ -98,13 +102,13 @@ const onToggle = () => {
       variant="dark"
     >
       <div class="flex flex-col sm:flex-row sm:items-baseline sm:justify-between gap-y-1 gap-x-6">
-        <h2
+        <h3
           :id="`milestone-title-${props.id}`"
-          class="sb-h3 mb-0 flex-1 text-balance"
+          class="mb-0 flex-1 text-balance scroll-mt-24"
         >
           {{ props.role }}
-          <span v-if="subline" class="sr-only">, {{ subline }}</span>
-        </h2>
+          <span v-if="srSubline" class="sr-only">, {{ srSubline }}</span>
+        </h3>
         <p v-if="props.period.startLabel" class="sb-overline text-primary-ink text-left mb-0 sm:whitespace-nowrap">
           <time :datetime="props.period.startIso">{{ props.period.startLabel }}</time>
           –
@@ -120,7 +124,7 @@ const onToggle = () => {
           <template v-if="subline">
             ·
           </template>
-          {{ props.period.duration }}
+          <span class="whitespace-nowrap">{{ props.period.duration }}</span>
         </template>
       </p>
 
@@ -130,25 +134,29 @@ const onToggle = () => {
       </p>
 
       <ul v-if="props.stack.length" class="flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none">
-        <li v-for="item in props.stack" :key="item">
-          <BaseChip :text="item" variant="secondary" />
+        <li v-for="item in props.stack" :key="item.name">
+          <BaseChip
+            :icon="item.icon"
+            :text="item.name"
+            variant="secondary"
+          />
         </li>
       </ul>
 
       <div
         :id="`milestone-body-${props.id}`"
         class="mt-5 md:mt-6"
-        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:gap-12 lg:items-start': props.isOpen && props.imageSrc }"
+        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:items-start': props.isOpen && props.imageSrc }"
       >
         <BaseRichText
           v-if="visibleContent.length"
           :blocks="visibleContent"
-          class="max-w-[75ch] *:text-left md:*:text-justify"
+          class="max-w-[75ch] *:text-left *:text-pretty md:*:text-justify"
         />
 
         <figure
           v-if="props.isOpen && props.imageSrc"
-          class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md md:mt-8 md:p-4 lg:sticky lg:top-24 lg:mx-0 lg:mt-0"
+          class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md md:mt-8 md:p-4 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:mt-0"
         >
           <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden">
             <NuxtImg
@@ -168,26 +176,26 @@ const onToggle = () => {
             {{ props.imageCaption }}
           </figcaption>
         </figure>
-      </div>
 
-      <div v-if="isExpandable" class="flex justify-center md:justify-start">
-        <BaseButton
-          :aria-controls="`milestone-body-${props.id}`"
-          :aria-expanded="props.isOpen ? 'true' : 'false'"
-          class="mt-2 md:-ml-4"
-          tone="accent"
-          variant="ghost"
-          @click="onToggle"
-        >
-          {{ props.isOpen ? t('pages.about.milestoneCtaLess') : t('pages.about.milestoneCta') }}
-          <span class="sr-only">: {{ [props.role, subline].filter(Boolean).join(', ') }}</span>
-          <Icon
-            aria-hidden="true"
-            class="size-5 sb-transition"
-            :class="{ 'rotate-180': props.isOpen }"
-            name="solar:alt-arrow-down-bold-duotone"
-          />
-        </BaseButton>
+        <div v-if="isExpandable" class="flex lg:col-start-1 lg:row-start-2">
+          <BaseButton
+            :aria-controls="`milestone-body-${props.id}`"
+            :aria-expanded="props.isOpen ? 'true' : 'false'"
+            class="mt-2 -ml-4 md:-ml-6"
+            tone="accent"
+            variant="ghost"
+            @click="onToggle"
+          >
+            {{ props.isOpen ? t('pages.about.milestoneCtaLess') : t('pages.about.milestoneCta') }}
+            <span class="sr-only">: {{ [props.role, srSubline].filter(Boolean).join(', ') }}</span>
+            <Icon
+              aria-hidden="true"
+              class="size-5 sb-transition"
+              :class="{ 'rotate-180': props.isOpen }"
+              name="solar:alt-arrow-down-bold-duotone"
+            />
+          </BaseButton>
+        </div>
       </div>
     </BaseCard>
   </article>

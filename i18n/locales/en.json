@@ -25,7 +25,7 @@
     },
     "skills": {
       "title": "Skills & Technologies {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Skills and tools I use to build intuitive, high-performing interfaces: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
+      "description": "The stack I build with: Vue, Angular, TypeScript and Tailwind CSS every day, Nuxt and Flutter in shipped work, plus Java, Spring and Node.js on the backend."
     },
     "projects": {
       "title": "Web Projects {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -52,13 +52,11 @@
     "changeLanguage": "Change language",
     "previousPage": "Previous page",
     "nextPage": "Next page",
-    "skillsSection": "Skills and technologies",
     "timelineSection": "Work and education",
-    "skillLevel": "Level {level} of 5",
     "newTab": "opens in a new tab",
     "selectedCount": "{count} selected",
     "skipToContent": "Skip to content",
-    "removeFilter": "Remove filter: {name}"
+    "skillTiersLegend": "How to read the skill tiers"
   },
   "errorPage": {
     "notFoundTitle": "Page not found",
@@ -201,6 +199,16 @@
       "milestoneCtaLess": "Show less",
       "upcomingFrom": "From {date}",
       "clientsLabel": "Projects for clients including",
+      "lead": "Full-stack developer and web designer. At SI2001 since 2022; alongside it, I design and build sites for freelance clients and maintain my own open-source work.",
+      "alongside": {
+        "title": "Alongside the day job",
+        "lead": "Client work and open source I design, build and maintain myself.",
+        "outcomes": {
+          "romano": "Designed and built the firm's website. Now a redesign, the PraticaSicura refund portal and the Domus/Cardo case system.",
+          "sbTemplates": "Starter templates for Nuxt, Astro and Flutter with architecture, build, linting and formatting already set up.",
+          "floatingPanel": "A Vue 3 floating panel system built on {'@'}floating-ui/vue, with composables, arrows and resizing."
+        }
+      },
       "milestones": [
         {
           "id": "1",
@@ -212,48 +220,51 @@
           "organization": "University of Salerno",
           "type": "education",
           "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "Python"],
+          "skills": ["java", "html", "css", "javascript", "python"],
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
-          "content": "My academic journey at UNISA was much more than a traditional course of study: it was the place where I truly learned what it means to build solutions, tackle complexity, grow through challenges, and mature both as a developer and as a person.\n\nI began in 2018 with curiosity and only a few certainties, and over the years I built a solid foundation based on theory, practice, and a clearer understanding of what I wanted to become.\n\nI developed strong skills in **object-oriented programming with Java**, explored **distributed programming through Java EE**, and strengthened my abilities in **web development using HTML, CSS, and JavaScript**. Alongside these technical areas, I studied **mathematics and statistics** and applied them directly through **Python** for data analysis and experimentation.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, was one of the most significant challenges of my university years. Working with the **Fashion-MNIST** dataset, I compared different classification models and discovered the depth, rigor, and potential of machine learning when applied to real-world problems.\n\nBeyond theory, I completed several practical projects, including an e-commerce platform for automotive products. This experience taught me what it truly means to design and implement a fully functional application—from concept to execution—integrating both front-end and back-end logic.\n\nYet the most valuable part of those years was not only the technical knowledge I gained: it was the experience of working in teams, developing leadership when needed, and becoming a reliable reference point for other students. These soft skills shaped my collaborative mindset and the way I approach complex challenges today.\n\nWhen I graduated in December 2022, I felt that I was closing an important chapter—while carrying with me all the tools, knowledge, and self-awareness needed to begin a new one."
+          "content": "From 2018 to December 2022 I studied Computer Science at UNISA: **object-oriented programming in Java**, **distributed programming with Java EE**, **web development with HTML, CSS and JavaScript**, and **mathematics and statistics** applied with **Python**.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the **Fashion-MNIST** dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
         },
         {
           "id": "2",
           "title": "Internship at SI2001",
-          "subtitle": "Full Stack Developer (internship)",
+          "subtitle": "Full-Stack Developer Intern",
           "date": "11/20/2022",
           "endDate": "02/01/2023",
-          "role": "Full Stack Developer",
+          "role": "Full-Stack Developer Intern",
           "organization": "SI2001",
           "type": "internship",
           "stack": ["Spring Boot", "Angular", "REST API"],
-          "content": "My internship at **SI2001** was my first real step into the world of professional software development. During those months, I trained as a **full-stack developer**, contributing to the development of web applications built with **Spring Boot** and **Angular**. I developed front-end components, integrated REST APIs, implemented back-end business logic, and managed databases, gaining a comprehensive understanding of application architecture and the end-to-end development workflow.\n\nThis experience allowed me to transform academic knowledge into practical skills, applying them to real-world projects within a structured team environment. By the end of the internship, I was no longer just an intern—I was a young developer ready to continue growing and taking on new challenges."
+          "skills": ["spring", "angular"],
+          "content": "Full-stack internship at **SI2001**, on web applications built with Spring Boot and Angular.\n\nI built front-end components, integrated REST APIs, wrote back-end business logic and managed databases, on real projects inside a structured team. In March 2023 I joined SI2001 permanently."
         },
         {
           "id": "3",
           "title": "Permanent Position at SI2001",
-          "subtitle": "Full Stack Developer",
+          "subtitle": "Full-Stack Developer",
           "date": "03/01/2023",
           "endDate": "01/10/2027",
           "clients": ["ABB", "Kleecks", "Intesa Sanpaolo"],
-          "role": "Full Stack Developer",
+          "role": "Full-Stack Developer",
           "organization": "SI2001",
           "type": "fullTime",
-          "stack": ["Vue.js", "Angular", "Flutter"],
+          "stack": ["Java", "Spring Boot", "Spring Batch", "PostgreSQL", "Vue.js", "Angular", "Flutter"],
+          "skills": ["java", "spring", "postgresql", "vue", "angular", "flutter"],
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
-          "imageCaption": "Me at my remote workstation, surrounded by screens and code as I bring new features to life.",
-          "content": "Today I work as a **back-end developer** on the European core banking systems of **Intesa Sanpaolo**.\n\nMy transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
+          "imageCaption": "Me at my remote workstation, surrounded by screens and code.",
+          "content": "Today I work on the **back end** of the European core banking systems of **Intesa Sanpaolo**, with Java, Spring Boot, Spring Batch and PostgreSQL.\n\nBefore that, I worked on the **front end** of **more than five projects** with Vue.js, Angular and Flutter.\n\nI work in Agile teams, taking part in sprint planning, daily stand-ups and retrospectives."
         },
         {
           "id": "4",
-          "title": "Coming soon",
-          "role": "Coming soon",
+          "title": "What's next",
+          "role": "What's next",
           "date": "01/11/2027",
           "type": "upcoming",
-          "content": "A step up in role and responsibility. More from January 2027."
+          "content": "A step up in role and responsibility. Details when it starts."
         }
       ],
       "noMilestones": {
@@ -263,44 +274,36 @@
     },
     "skills": {
       "hero": "Skills & Technologies",
-      "frontendCard": {
-        "title": "Frontend",
-        "paragraph": "My main focus. I build interfaces in Vue, Nuxt and Angular with TypeScript and Tailwind CSS, from component libraries to complete sites like this one: accessible, responsive and quick to load.",
-        "buttonText": "Frontend stack · {count}"
-      },
-      "backendCard": {
-        "title": "Backend",
-        "paragraph": "Java with Spring and Hibernate, Node.js, and SQL databases such as PostgreSQL and MySQL. I design APIs and data models that stay readable as the product grows.",
-        "buttonText": "Backend stack · {count}"
-      },
-      "designCard": {
-        "title": "Design & tools",
-        "paragraph": "I work from Figma and Adobe XD designs, document components in Storybook and review them with Chromatic, so what ships matches what was designed.",
-        "buttonText": "Design tools · {count}"
-      },
-      "skillsDialog": {
-        "title": "My Development Toolkit",
-        "subtitle": "The technologies that power my work.",
-        "filters": {
-          "searchPlaceholder": "Search…",
-          "typePlaceholder": "Category",
-          "searchLabel": "Search",
-          "typeLabel": "Category"
+      "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS. Below, the full stack by area and by how often I use it.",
+      "orbitCaption": "Closer to the sun means I use it more often.",
+      "seenIn": "Seen in:",
+      "tiers": {
+        "daily": {
+          "label": "Daily",
+          "description": "What I work with every day. Shown as gold chips."
         },
-        "filterOptions": {
-          "feLang": "Frontend Languages",
-          "feFramework": "Frontend Frameworks",
-          "beLang": "Backend Languages",
-          "beFramework": "Backend Frameworks",
-          "database": "Databases",
-          "tool": "Tools & Platforms",
-          "other": "Other Skills"
+        "shipped": {
+          "label": "Shipped",
+          "description": "Used in delivered work; I can pick it up and ship."
         },
-        "noResults": {
-          "title": "No Skills Found",
-          "message": "No skills match your search criteria. Please try different keywords or filters."
+        "familiar": {
+          "label": "Familiar",
+          "description": "Used before, not part of my main toolkit."
+        }
+      },
+      "areas": {
+        "frontend": {
+          "title": "Frontend",
+          "paragraph": "My main focus. I build interfaces in Vue, Nuxt and Angular with TypeScript and Tailwind CSS, from component libraries to complete sites like this one: accessible, responsive and quick to load."
         },
-        "total": "Total Skills: { tot }"
+        "backend": {
+          "title": "Backend",
+          "paragraph": "I have shipped back ends in Java with Spring and in Node.js, and APIs in GraphQL. I have also worked with Hibernate, PostgreSQL and MySQL. I keep APIs and data models readable as the product grows."
+        },
+        "tools": {
+          "title": "Design & tools",
+          "paragraph": "I work from Figma and Adobe XD designs, document components in Storybook and review them with Chromatic, so what ships matches what was designed. Postman, Git, npm and Netlify cover the rest, from testing APIs to deploying."
+        }
       }
     },
     "projects": {
@@ -313,10 +316,11 @@
         "tabLabel": "Projects",
         "title": "Client work & personal projects",
         "description": "Client sites and personal experiments. Live links where available; client source code stays private.",
-         "list": [
+        "list": [
           {
             "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
             "meta": "Personal project · 2026 · Spring Boot + Flutter",
+            "skills": ["spring", "flutter"],
             "title": "Sfrigola Project",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
@@ -329,6 +333,7 @@
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
             "meta": "Bachelor's thesis · 2022 · Python",
+            "skills": ["python"],
             "title": "Comparing Machine Learning Algorithms for Image Classification",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
@@ -340,6 +345,7 @@
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
             "meta": "Client · since 2025 · Nuxt",
+            "skills": ["nuxt"],
             "title": "Studio Legale Romano",
             "status": "ongoing",
             "deploymentUrls": [
@@ -380,6 +386,7 @@
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
             "meta": "Open-source library · 2025 · Vue 3",
+            "skills": ["vue"],
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -414,7 +421,8 @@
             "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
             "logoWidth": 1280,
             "logoHeight": 1496,
-            "langIcons" : ["logos:nuxt-icon"]
+            "langIcons": ["logos:nuxt-icon"],
+            "skills": ["nuxt"]
           },
           {
             "id":"2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
@@ -424,7 +432,8 @@
             "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
             "logoWidth": 1280,
             "logoHeight": 1496,
-            "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
+            "langIcons": ["logos:flutter", "logos:ios", "logos:android-icon"],
+            "skills": ["flutter", "dart"]
           },
           {
             "id":"9fca248f-be83-4268-aafe-b5afcb91f7dd",
@@ -434,7 +443,8 @@
             "logoSrc": "/images/sbt-logos/sb-template-astro.webp",
             "logoWidth": 1280,
             "logoHeight": 1496,
-            "langIcons" : ["logos:astro-icon"]
+            "langIcons": ["logos:astro-icon"],
+            "skills": ["astro"]
           }
         ],
         "linkToCta": "Use this template",

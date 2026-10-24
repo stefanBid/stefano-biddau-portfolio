@@ -1,4 +1,22 @@
-interface Milestone {
+import { resolveSkills } from '~/composables/data/useSkills'
+import type { Skill } from '~/composables/data/useSkills'
+
+export type MilestoneType = 'education' | 'internship' | 'fullTime' | 'upcoming'
+
+export interface MilestonePeriod {
+  startIso?: string
+  startLabel?: string
+  endIso?: string
+  endLabel: string
+  duration?: string
+}
+
+export interface MilestoneStackItem {
+  name: string
+  icon?: string
+}
+
+export interface Milestone {
   id: string
   title: string
   content: RichBlock[]
@@ -13,9 +31,28 @@ interface Milestone {
   organization?: string
   type?: MilestoneType
   typeLabel?: string
-  stack: string[]
+  stack: MilestoneStackItem[]
+  skills: Skill[]
   clients: string[]
   period: MilestonePeriod
+}
+
+// Stack keywords as authored in the locale files; keywords without a logo render as plain chips
+const STACK_ICONS: Record<string, string> = {
+  'Angular': 'logos:angular-icon',
+  'API REST': 'mdi:api',
+  'CSS': 'logos:css-3',
+  'Flutter': 'logos:flutter-icon',
+  'HTML': 'logos:html-5',
+  'Java': 'logos:java',
+  'Java EE': 'logos:java',
+  'JavaScript': 'logos:javascript',
+  'PostgreSQL': 'logos:postgresql',
+  'Python': 'logos:python',
+  'REST API': 'mdi:api',
+  'Spring Batch': 'logos:spring-icon',
+  'Spring Boot': 'logos:spring-icon',
+  'Vue.js': 'logos:vue',
 }
 
 export default function useMilestones() {
@@ -93,7 +130,13 @@ export default function useMilestones() {
         organization: item.organization ? _rt(item.organization) : undefined,
         type,
         typeLabel: type ? _t(`pages.home.experience.types.${type}`) : undefined,
-        stack: Array.isArray(item.stack) ? item.stack.map(_rt) : [],
+        stack: Array.isArray(item.stack)
+          ? item.stack.map((entry: Parameters<typeof _rt>[0]) => {
+              const name = _rt(entry)
+              return { name, icon: STACK_ICONS[name] }
+            })
+          : [],
+        skills: Array.isArray(item.skills) ? resolveSkills(item.skills.map((id: Parameters<typeof _rt>[0]) => _rt(id))) : [],
         clients: Array.isArray(item.clients) ? item.clients.map(_rt) : [],
         period: _buildPeriod(date, endDate),
       } as Milestone

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useMilestones from '~/composables/data/useMilestones'
+import type { MilestoneType } from '~/composables/data/useMilestones'
 
 // Dependencies
 const { milestones } = useMilestones()
