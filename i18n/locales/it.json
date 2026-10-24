@@ -17,7 +17,7 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "Sono Stefano Biddau, web designer e sviluppatore front-end. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
+      "description": "Sono Stefano Biddau, sviluppatore full-stack e web designer. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
     },
     "about": {
       "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -44,38 +44,103 @@
       "description": "Termini e condizioni per l'utilizzo di stefanobiddau.com - Regole e linee guida per i visitatori del sito."
     }
   },
+  "a11y": {
+    "closeDialog": "Chiudi",
+    "dismissNotification": "Chiudi notifica",
+    "openMenu": "Apri menu",
+    "closeMenu": "Chiudi menu",
+    "changeLanguage": "Cambia lingua",
+    "previousPage": "Pagina precedente",
+    "nextPage": "Pagina successiva",
+    "showMilestone": "Mostra tappa: {title}",
+    "skillsSection": "Competenze e tecnologie",
+    "timelineSection": "Percorso professionale",
+    "skillLevel": "Livello {level} su 5",
+    "newTab": "si apre in una nuova scheda",
+    "selectedCount": "{count} selezionati",
+    "skipToContent": "Vai al contenuto",
+    "removeFilter": "Rimuovi filtro: {name}"
+  },
+  "errorPage": {
+    "notFoundTitle": "Pagina non trovata",
+    "genericTitle": "Qualcosa è andato storto",
+    "notFoundMessage": "La pagina che cerchi non esiste o è stata spostata.",
+    "genericMessage": "Si è verificato un errore imprevisto. Riprova tra un momento.",
+    "hint": "Controlla l'indirizzo, oppure torna alla home.",
+    "backHome": "Torna alla home",
+    "technicalDetails": "Dettagli tecnici"
+  },
   "header": {
-    "routeSection": "Menu",
-    "settingsSection": "Impostazioni"
+    "routeSection": "Menu"
   },
   "pages": {
     "home": {
-      "hero": "Bentornato",
       "title": "Ciao, sono Stefano Biddau",
       "subtitle": {
-        "costant": "E sono un",
-        "typed": [
-          "Front End Developer",
-          "Back End Developer",
-          "Web Designer",
-          "UI/UX Enthusiast"
-        ]
+        "costant": "E sono uno",
+        "role": "Sviluppatore Full-Stack & Web Designer"
       },
+      "lead": "In SI2001 dal 2023 e disponibile per progetti freelance. Costruisco prodotti web completi, dall'interfaccia al database.",
       "cvCard": {
-        "title": "Scarica il mio CV",
-        "subtitle": "Scopri il mio percorso professionale",
-        "paragraph": "Una panoramica completa delle mie competenze, esperienze lavorative e principali progetti. Il documento è aggiornato e ottimizzato per una consultazione rapida.",
         "buttonText": "Scarica CV"
       },
       "contactCard": {
-        "title": "Contattami",
-        "subtitle": "Parliamo dei tuoi progetti",
-        "paragraph": "Se hai bisogno di supporto tecnico o vuoi discutere una possibile collaborazione, sarò felice di ascoltare le tue idee e trovare insieme la soluzione migliore.",
         "buttonText": "Mettiti in contatto"
+      },
+      "selectedWork": {
+        "title": "Lavori selezionati",
+        "viewAll": "Tutti i progetti",
+        "meta": {
+          "romano": "Sito per cliente · 2025 · Nuxt",
+          "sbTemplates": "Template open source · dal 2025 · Nuxt, Astro, Flutter",
+          "floatingPanel": "Libreria open source · 2025 · Vue 3"
+        }
+      },
+      "topSkills": {
+        "title": "Stack principale",
+        "lead": "Front end, back end e database: lo stack con cui costruisco prodotti completi.",
+        "groups": {
+          "frontend": "Frontend",
+          "backend": "Backend",
+          "database": "Database"
+        },
+        "viewAll": "Tutte le skill"
+      },
+      "github": {
+        "title": "Su GitHub",
+        "viewProfile": "Profilo GitHub",
+        "statsTitle": "In cifre",
+        "reposTitle": "I più stellati",
+        "starsCount": "{count} stella | {count} stelle",
+        "stats": {
+          "contributions": "Contributi nell'ultimo anno",
+          "publicRepos": "Repository pubblici",
+          "stars": "Stelle ricevute",
+          "years": "Anni su GitHub"
+        }
+      },
+      "experience": {
+        "title": "Esperienza",
+        "lead": "Dall'università al team con cui lavoro oggi.",
+        "viewAll": "Il mio percorso",
+        "present": "Oggi",
+        "years": "{count} anno | {count} anni",
+        "months": "{count} mese | {count} mesi",
+        "types": {
+          "education": "Formazione",
+          "internship": "Stage",
+          "fullTime": "Tempo indeterminato"
+        }
+      },
+      "closingCta": {
+        "title": "Hai un progetto o un ruolo in mente?",
+        "text": "Scrivimi, oppure porta con te il mio CV. Ti rispondo via email.",
+        "emailPrefix": "Preferisci la mail?"
       },
       "contactForm": {
         "title": "Contattami",
-        "subtitle": "Compila il form per inviarmi un messaggio. Ti risponderò il prima possibile.",
+        "subtitle": "Scrivimi per un progetto o una posizione. Ti rispondo via email.",
+        "errorSummary": "Un campo da correggere | {count} campi da correggere",
         "fields": {
           "name": {
             "label": "Nome",
@@ -86,17 +151,19 @@
           "email": {
             "label": "Email",
             "placeholder": "Inserisci la tua email",
-            "errorInvalid": "Indirizzo email non valido"
+            "errorInvalid": "Indirizzo email non valido",
+            "errorRequired": "L'email è obbligatoria"
           },
           "message": {
             "label": "Messaggio",
             "placeholder": "Scrivi qui il tuo messaggio...",
             "errorRequired": "Il messaggio è obbligatorio",
             "errorMinlength": "Il messaggio è troppo corto",
+            "hint": "Almeno 10 caratteri.",
             "errorMaxlength": "Il messaggio è troppo lungo"
           },
           "consentGiven": {
-            "label": "Acconsento al trattamento dei dati forniti esclusivamente per finalità di contatto. I dati non verranno memorizzati né condivisi con terzi.",
+            "label": "Acconsento al trattamento dei miei dati al solo scopo di rispondere a questo messaggio. Vengono inviati tramite EmailJS e cancellati quando non servono più. Riceverai una copia del messaggio via email.",
             "extra": "Leggi",
             "errorRequired": "Devi acconsentire al trattamento dei tuoi dati"
           },
@@ -105,7 +172,7 @@
             "loadingText": "Invio in corso"
           },
           "resetButton": {
-            "text": "Resetta"
+            "text": "Svuota il modulo"
           }
         },
         "notifications": {
@@ -115,13 +182,13 @@
           },
           "error": {
             "title": "Errore di Invio",
-            "message": "Si è verificato un errore durante l'invio del tuo messaggio. Per favore, riprova più tardi."
+            "message": "Non è stato possibile inviare il messaggio. Quello che hai scritto è ancora qui: riprova tra un momento."
           }
         }
       }
     },
     "about": {
-      "hero": "Chi sono?",
+      "hero": "Chi sono",
       "milestoneCta": "Leggi di più",
       "milestones": [
         {
@@ -129,6 +196,10 @@
           "title": "Il Mio Percorso Accademico",
           "subtitle": "UNISA - Informatica (Fisciano)",
           "date": "09/09/2018",
+          "endDate": "12/01/2022",
+          "role": "Laurea triennale in Informatica",
+          "organization": "Università degli Studi di Salerno",
+          "type": "education",
           "imageSrc": "/images/milestones/unisa.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -140,6 +211,10 @@
           "title": "Stage presso SI2001",
           "subtitle": "Sviluppatore Full Stack (stage)",
           "date": "11/20/2022",
+          "endDate": "02/01/2023",
+          "role": "Sviluppatore Full Stack",
+          "organization": "SI2001",
+          "type": "internship",
           "content": "Lo stage in **SI2001** è stato il mio primo vero passo dentro il mondo dello sviluppo professionale. In quei mesi mi sono formato come **sviluppatore full stack**, lavorando alla realizzazione di web application basate su **Spring Boot** e **Angular**. Ho sviluppato componenti front-end, integrato API REST, scritto logica back-end e gestito database, ottenendo una visione completa dell’architettura applicativa e del flusso di lavoro end-to-end.\n\nQuesto percorso mi ha permesso di trasformare le conoscenze accademiche in competenze concrete, applicate su progetti reali e all’interno di un team strutturato. Alla fine dello stage non ero più soltanto uno stagista: ero un giovane sviluppatore pronto a crescere ancora."
         },
         {
@@ -147,6 +222,9 @@
           "title": "Assunzione a tempo indeterminato presso SI2001",
           "subtitle": "Sviluppatore Full Stack",
           "date": "03/01/2023",
+          "role": "Sviluppatore Full Stack",
+          "organization": "SI2001",
+          "type": "fullTime",
           "imageSrc": "/images/milestones/workstation.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
@@ -154,38 +232,36 @@
           "content": "Con l’assunzione a tempo indeterminato è iniziata la fase più intensa del mio percorso in **SI2001**. Ho partecipato a più di cinque progetti come **sviluppatore front-end**, affinando le mie competenze in **Vue.js**, **Angular** e **Flutter**, e contribuendo alla costruzione di applicazioni moderne, modulari e performanti.\n\nIn questo periodo ho partecipato attivamente a tutte le **cerimonie Agile** — sprint, stand-up e retrospettive — maturando sia come tecnico sia come professionista capace di proporre soluzioni, collaborare in modo efficace e sostenere il team nei momenti chiave. Con il tempo sono diventato una presenza affidabile nei progetti, contribuendo non solo con codice, ma anche con metodo, visione e consapevolezza tecnica."
         }
       ],
-      "milestoneError": {
-        "title": "Errore nel caricamento dei traguardi",
-        "message": "Si è verificato un errore durante il caricamento dei traguardi. Per favore, riprova più tardi."
-      },
       "noMilestones": {
         "title": "Nessun Traguardo",
         "message": "Al momento non ci sono traguardi da visualizzare. Torna presto per aggiornamenti!"
       }
     },
     "skills": {
-      "hero": "Conosciamoci meglio!",
+      "hero": "Competenze e tecnologie",
       "frontendCard": {
-        "title": "Frontend che Spacca, Punto.",
-        "paragraph": "Il frontend è il mio terreno di gioco, dove estetica e logica si intrecciano e ogni dettaglio conta. Creo interfacce che non solo funzionano: parlano, coinvolgono, trascinano l’utente dentro l’esperienza. Mi piace spingere ogni elemento al massimo, mantenendo tutto leggero, scattante e reattivo. Quando un’interfaccia scorre bene, quando tutto sembra “vivo”, quando l’utente percepisce che qualcuno dietro ci ha messo davvero la testa… ecco, lì so di aver fatto centro. Se vuoi un’esperienza che colpisce al primo impatto e rimane impressa, sei nel posto giusto.",
-        "buttonText": "Voglio vedere questo Frontend"
+        "title": "Frontend",
+        "paragraph": "Il mio campo principale. Costruisco interfacce con Vue, Nuxt e Angular, in TypeScript e Tailwind CSS: dalle librerie di componenti ai siti completi come questo, accessibili, responsive e veloci.",
+        "buttonText": "Stack frontend · {count}"
       },
       "backendCard": {
-        "title": "Il Motore che Non Tradisce Mai",
-        "paragraph": "Un'app può sembrare impeccabile in superficie, ma è il backend che decide se regge davvero la prova dei fatti. Il mio obiettivo è costruire un motore che non si inceppa, non si spaventa davanti ai picchi di traffico e soprattutto non ti fa rimpiangere scelte affrettate. Mi concentro su architetture solide, codice pulito e processi fluidi, così da garantire performance costanti e integrazioni che filano dritte come una lama. Lavoro per togliere problemi, non crearne. Quando il resto del team può contare su un backend che sta sempre in piedi, il progetto vola.",
-        "buttonText": "Mostrami la forza del Backend"
+        "title": "Backend",
+        "paragraph": "Java con Spring e Hibernate, Node.js e database SQL come PostgreSQL e MySQL. Progetto API e modelli dati che restano leggibili mentre il prodotto cresce.",
+        "buttonText": "Stack backend · {count}"
       },
       "designCard": {
-        "title": "Design che Fa Muovere le Persone",
-        "paragraph": "Un buon design non è solo estetica: è orientamento, logica, emozione. Mi piace costruire percorsi chiari, scorrevoli, che accompagnano l’utente senza farlo pensare troppo. Collaboro con i designer per dare forma a idee forti e trasformarle in esperienze reali, coerenti e soprattutto intuitive. Non insegno l’arte a nessuno, ma so come valorizzare ogni concept e trasformarlo in layout funzionali, consistenti e d’impatto. Il risultato? Soluzioni che non solo si vedono bene, ma funzionano alla grande e fanno dire all’utente: “ok, questo ha senso”.",
-        "buttonText": "Fammi vedere il lato creativo"
+        "title": "Design e strumenti",
+        "paragraph": "Lavoro su design in Figma e Adobe XD, documento i componenti in Storybook e li verifico con Chromatic, così ciò che va online corrisponde al progetto.",
+        "buttonText": "Strumenti di design · {count}"
       },
       "skillsDialog": {
         "title": "Il Mio Stack Tecnologico",
         "subtitle": "Le tecnologie che guidano il mio lavoro.",
         "filters": {
-          "searchPlaceholder": "Cerca competenze per nome",
-          "typePlaceholder": "Filtra competenze per tipo"
+          "searchPlaceholder": "Cerca…",
+          "typePlaceholder": "Categoria",
+          "searchLabel": "Cerca",
+          "typeLabel": "Categoria"
         },
         "filterOptions": {
           "all": "Tutte le Competenze",
@@ -201,26 +277,23 @@
           "title": "Nessuna Competenza Trovata",
           "message": "Nessuna competenza corrisponde ai criteri di ricerca. Prova con parole chiave o filtri diversi."
         },
-        "total": "Competenze Totali: { tot }",
-        "noSkills": {
-          "title": "Nessuna Competenza Disponibile",
-          "message": "Al momento non ci sono competenze da mostrare. Torna presto per aggiornamenti!"
-        },
-        "skillsError": {
-          "title": "Errore nel caricamento delle competenze",
-          "message": "Si è verificato un errore durante il caricamento delle competenze. Per favore, riprova più tardi."
-        }
+        "total": "Competenze Totali: { tot }"
       }
     },
     "projects": {
-      "hero": "I miei progetti",
+      "hero": "Progetti",
+      "links": {
+        "code": "Codice",
+        "live": "Sito online"
+      },
       "personalProjects": {
-        "tabLabel": "Progetti Personali",
-        "title": "Progetti Personali & Lavori Selezionati",
-        "description": "In questa sezione trovi una raccolta di progetti che raccontano il mio percorso di crescita come sviluppatore. Alcuni sono stati creati per sperimentare nuove tecnologie e affinare le mie competenze; altri sono lavori professionali realizzati per clienti che hanno scelto di affidarmi lo sviluppo delle loro piattaforme. Dove possibile è disponibile il prodotto finale online, mentre il codice rimane privato per tutelare la riservatezza dei committenti. Ogni progetto riflette il mio modo di lavorare: attenzione ai dettagli, cura dell’esperienza utente e la volontà di trasformare un’idea in qualcosa di concreto.",
+        "tabLabel": "Progetti",
+        "title": "Lavori per clienti e progetti personali",
+        "description": "Siti per clienti ed esperimenti personali. Link al sito online dove disponibile; il codice dei clienti resta privato.",
         "list": [
           {
             "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
+            "meta": "Progetto personale · 2026 · Spring Boot + Flutter",
             "title": "Sfrigola Project",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
@@ -232,6 +305,7 @@
           },
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
+            "meta": "Tesi di laurea · 2022 · Python",
             "title": "Comparazione algoritmi di Machine Learning per la classificazione di immagini",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
@@ -242,6 +316,7 @@
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
+            "meta": "Sito per cliente · 2025 · Nuxt",
             "title": "Studio Legale Romano (Website)",
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Demo Live" }
@@ -252,6 +327,7 @@
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
+            "meta": "Esercizio di un corso · 2022 · JavaScript",
             "title": "Guess My Number",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Guess-My-Number", "label": "GitHub" }
@@ -265,6 +341,7 @@
           },
           {
             "id": "70fa96e9-9283-4a48-8ac6-e1576e2949ce",
+            "meta": "Esercizio di un corso · 2022 · JavaScript",
             "title": "Pig Game",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Pig-Game", "label": "GitHub" }
@@ -278,6 +355,7 @@
           },
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
+            "meta": "Libreria open source · 2025 · Vue 3",
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -298,9 +376,10 @@
         "readLessCta": "Leggi meno"
       },
       "sbTemplatesProject": {
-        "tabLabel": "SB Templates Project",
-        "title": "Il modo più rapido e intelligente per avviare un nuovo progetto",
-        "description": "SB Templates nasce con un obiettivo molto semplice: eliminare la parte noiosa e ripetitiva dell’avvio di un progetto e permettere allo sviluppatore di concentrarsi subito sulla costruzione dell’applicazione. Ho raccolto in diverse repository pubbliche su GitHub una serie di template pronti all’uso — per web e mobile — progettati per offrire una struttura solida e già configurata con tutto ciò che serve: architettura pulita, strumenti di build, regole di formattazione, linting e un ambiente iniziale curato nei dettagli. L’idea è duplice: fornire un punto di partenza moderno e affidabile e ridurre drasticamente i tempi di setup. Tutto è completamente open source e totalmente personalizzabile, così ogni sviluppatore può adattare il template al proprio stile e al proprio flusso di lavoro. In sintesi, SB Templates vuole essere un alleato: una base veloce, comoda e flessibile che permette di concentrarsi su ciò che conta davvero — costruire.",
+        "tabLabel": "SB Templates",
+        "logoAlt": "Logo SB Templates",
+        "title": "Un modo più rapido per avviare un nuovo progetto",
+        "description": "Template open source per Nuxt, Astro e Flutter, con architettura, build, linting e formattazione già configurati: un nuovo progetto parte da codice funzionante.",
         "list": [
           {
             "id":"454b54e4-aaec-4b41-b03b-d39d5c0b7455",
@@ -338,14 +417,6 @@
           "title": "Template in Arrivo",
           "paragraph": "Sto lavorando a nuovi template per diversi framework e piattaforme. Resta sintonizzato per gli aggiornamenti!"
         }
-      },
-      "projectError": {
-        "title": "Errore nel caricamento dei progetti",
-        "message": "Si è verificato un errore durante il caricamento dei progetti. Per favore, riprova più tardi."
-      },
-      "templatesError": {
-        "title": "Errore nel caricamento dei template",
-        "message": "Si è verificato un errore durante il caricamento dei template. Per favore, riprova più tardi."
       }
     },
     "privacy": {
@@ -469,7 +540,6 @@
     "routeSection": "Link veloci",
     "routeFallback": "Navigazione presto disponibile",
     "contactSection": "Contatti & Social",
-    "creditSection": "© { year } Stefano Biddau - Tutti i diritti riservati.",
-    "madeWith": "Progettato e sviluppato con ❤ da Stefano Biddau"
+    "creditSection": "© { year } Stefano Biddau - Tutti i diritti riservati."
   }
 }

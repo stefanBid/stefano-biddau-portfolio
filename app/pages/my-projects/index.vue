@@ -18,53 +18,54 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const { projects } = useProjects()
+const { projects: projectsData } = useProjects()
+
+// Client work first, then open source and personal projects; course exercises last
+const PROJECT_ORDER = [
+  'bd6a7d77-d3e5-48be-a83c-28d290f788ec',
+  'acb2196a-5974-40ba-81c5-fccb58611c0b',
+  'c33faabb-84a8-4f40-8d20-d864162267d6',
+  'b5a5fa22-f5f0-4496-89ec-beebeb40d761',
+  'a3b5168c-315a-4627-a40b-7436130a5dc7',
+  '70fa96e9-9283-4a48-8ac6-e1576e2949ce',
+]
+
+const projects = computed(() => [...projectsData.value].sort((a, b) => {
+  const rank = (id: string) => {
+    const index = PROJECT_ORDER.indexOf(id)
+    return index === -1 ? PROJECT_ORDER.length : index
+  }
+  return rank(a.id) - rank(b.id)
+}))
 
 // State
-const expandedProjectIds = ref<Set<string>>(new Set())
+// Set on the client only: prerendered HTML has no hash, so it cannot drive the first render
+const linkedProjectId = ref<string | null>(null)
 
 // Events
-
-const onTriggerProject = (projectId: string, isExpanded: boolean) => {
-  const set = new Set(expandedProjectIds.value)
-  if (isExpanded) {
-    set.add(projectId)
-    // Scroll to milestone with offset for header
-    nextTick(() => {
-      if (!import.meta.client) {
-        return
-      }
-
-      const milestoneElement = document.querySelector(`[data-project-id="${projectId}"]`)
-      if (milestoneElement) {
-        const headerOffset = 80 // Header height + some padding
-        const elementPosition = milestoneElement.getBoundingClientRect().top
-        const offsetPosition = elementPosition + window.scrollY - headerOffset
-
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth',
-        })
-      }
-    })
-  }
-  else { set.delete(projectId) }
-  expandedProjectIds.value = set
-}
+onMounted(() => {
+  watch(() => route.hash, (hash) => {
+    linkedProjectId.value = hash.startsWith('#project-') ? decodeURIComponent(hash.slice('#project-'.length)) : null
+    if (linkedProjectId.value) {
+      // Keyboard and screen-reader users land on the linked project, not on <body>
+      nextTick(() => document.getElementById(`project-title-${linkedProjectId.value}`)?.focus({ preventScroll: true }))
+    }
+  }, { immediate: true })
+})
 </script>
 
 <template>
-  <div class="flex flex-col gap-20">
-    <div class="flex flex-col gap-3 md:gap-4">
-      <h2 class="ty-sb-h1 mb-0">
+  <div class="flex flex-col gap-10 md:gap-20">
+    <header class="flex flex-col gap-3">
+      <h2 class="sb-h1 mb-0 text-balance">
         {{ t('pages.projects.personalProjects.title') }}
       </h2>
-      <p class="ty-sb-p text-sb-muted">
+      <p class="sb-body text-ink-muted mb-0">
         {{ t('pages.projects.personalProjects.description') }}
       </p>
-    </div>
+    </header>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-x-12 gap-y-10 md:gap-y-16 items-start">
       <template v-if="!projects || projects.length === 0">
         <div class="col-span-2">
           <BaseEmptyBox
@@ -79,14 +80,14 @@ const onTriggerProject = (projectId: string, isExpanded: boolean) => {
           v-for="project in projects"
           :id="project.id"
           :key="project.id"
-          :class="{ 'lg:col-span-2': expandedProjectIds.has(project.id) }"
           :codebase-urls="project.codebaseUrls"
           :content="project.content"
           :deployment-urls="project.deploymentUrls"
           :image-alt="project.coverImageAlt"
           :image-src="project.coverImageSrc"
+          :initially-expanded="project.id === linkedProjectId"
+          :meta="project.meta"
           :title="project.title"
-          @toggle-description="onTriggerProject(project.id, $event)"
         />
       </template>
     </div>

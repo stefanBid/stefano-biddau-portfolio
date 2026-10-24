@@ -18,7 +18,9 @@ useSeoMeta({
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
 
-const { milestones } = useMilestones()
+const { milestones: milestonesByDate } = useMilestones()
+// Most recent first: the current role is what a visitor needs to see
+const milestones = computed(() => [...milestonesByDate.value].reverse())
 
 // State
 const userSelectedId = ref<string | null>(null)
@@ -57,14 +59,15 @@ const onSelectMilestone = (id: string | number) => {
   <div>
     <ThePageHero
       id="about-me"
+      image-src="/images/3d-avatar/avatar-pose-3.webp"
       :text="t('pages.about.hero')"
     />
     <!-- Timeline Section -->
-    <section aria-label="Professional Timeline" class="relative w-full py-20">
+    <section :aria-label="t('a11y.timelineSection')" class="relative w-full py-20">
       <div
-        class="relative flex w-full flex-col gap-10 u-sb-soft-transition"
+        class="relative flex w-full flex-col gap-10 sb-transition"
         :class="{
-          'border-l-2 border-sb-contrast/30 pl-6 md:pl-10 ': milestones.length,
+          'border-l-2 border-ink/30 pl-6 md:pl-10 ': milestones.length,
         }"
       >
         <!-- Milestones -->

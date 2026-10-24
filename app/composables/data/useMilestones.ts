@@ -8,6 +8,10 @@ interface Milestone {
   imageHeight?: number
   imageCaption?: string
   date?: string
+  endDate?: string
+  role?: string
+  organization?: string
+  type?: MilestoneType
 }
 
 export default function useMilestones() {
@@ -33,6 +37,10 @@ export default function useMilestones() {
       imageHeight: item.imageHeight,
       imageCaption: item.imageCaption ? _rt(item.imageCaption) : undefined,
       date: item.date ? _rt(item.date) : undefined,
+      endDate: item.endDate ? _rt(item.endDate) : undefined,
+      role: item.role ? _rt(item.role) : undefined,
+      organization: item.organization ? _rt(item.organization) : undefined,
+      type: item.type ? _rt(item.type) as MilestoneType : undefined,
     } as Milestone))
   })
 

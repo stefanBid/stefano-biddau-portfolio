@@ -20,13 +20,13 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
 
 <template>
   <div
-    class="flex flex-col justify-center rounded-xl border border-sb-border shadow-[0_4px_20px_var(--color-sb-shadow)] u-sb-soft-transition"
+    class="flex flex-col justify-center rounded-lg border border-border shadow-sm sb-transition"
     :class="{
       'p-4 md:p-6': props.fullCustomContent,
-      'bg-sb-surface': props.variant === 'dark',
-      'bg-sb-surface hover:bg-sb-surface-2 focus-within:bg-sb-surface-2': props.variant === 'dark-hover',
-      'bg-sb-surface-2': props.variant === 'light',
-      'bg-sb-surface-2 hover:bg-sb-surface focus-within:bg-sb-surface   ': props.variant === 'light-hover',
+      'bg-surface': props.variant === 'dark',
+      'bg-surface hover:bg-surface-2 focus-within:bg-surface-2': props.variant === 'dark-hover',
+      'bg-surface-2': props.variant === 'light',
+      'bg-surface-2 hover:bg-surface focus-within:bg-surface   ': props.variant === 'light-hover',
     }"
   >
     <template v-if="props.fullCustomContent">
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
       <!-- Header slot -->
       <div
         v-if="$slots['card-header']"
-        class="flex items-start px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 u-sb-soft-transition"
+        class="flex items-start px-4 md:px-6 pt-4 md:pt-6 pb-3 md:pb-4 sb-transition"
         :class="{
           'justify-center md:justify-start': props.align === 'left',
           'justify-center': props.align === 'center',
@@ -47,7 +47,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
       </div>
       <!-- Body content -->
       <div
-        class="flex-1 flex flex-col px-4 md:px-6 u-sb-soft-transition"
+        class="flex-1 flex flex-col px-4 md:px-6 sb-transition"
         :class="{
           'pt-4 md:pt-6': !$slots['card-header'],
           'pt-0': $slots['card-header'],
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
         <template v-else>
           <h2
             v-if="props.title"
-            class="ty-sb-h3 mb-0 u-sb-soft-transition"
+            class="sb-h3 mb-0 sb-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -72,7 +72,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </h2>
           <p
             v-if="props.subtitle"
-            class="ty-sb-h4 text-sb-muted mt-2 mb-0 u-sb-soft-transition"
+            class="sb-h4 text-ink-muted mt-2 mb-0 sb-transition"
             :class="{
               'text-center md:text-left': props.align === 'left',
               'text-center': props.align === 'center',
@@ -83,7 +83,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           </p>
           <p
             v-if="props.paragraph"
-            class="ty-sb-p text-justify mt-5 md:mt-6 u-sb-soft-transition"
+            class="sb-body mt-5 md:mt-6 sb-transition"
           >
             {{ props.paragraph }}
           </p>
@@ -92,7 +92,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
       <!-- Footer slot -->
       <div
         v-if="$slots['card-footer']"
-        class="flex flex-1 items-end px-4 md:px-6 pb-4 md:pb-6 pt-6 md:pt-8 u-sb-soft-transition"
+        class="flex flex-1 items-end px-4 md:px-6 pb-4 md:pb-6 pt-6 md:pt-8 sb-transition"
         :class="{
           'justify-center md:justify-start': props.align === 'left',
           'justify-center': props.align === 'center',

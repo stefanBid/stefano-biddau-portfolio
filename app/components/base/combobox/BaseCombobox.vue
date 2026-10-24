@@ -12,6 +12,7 @@ interface BaseComboboxProps {
   hint?: string
   error?: string | null
   prefixIcon?: string
+  hideLabelOnMobile?: boolean
 }
 
 // Input / Output
@@ -23,6 +24,7 @@ const props = withDefaults(defineProps<BaseComboboxProps>(), {
   hint: undefined,
   error: null,
   prefixIcon: undefined,
+  hideLabelOnMobile: false,
 })
 
 const model = defineModel<T[]>('input', {
@@ -47,7 +49,12 @@ const menu = ref<HTMLElement | null>(null)
 const menuWidth = ref<string | null>(null)
 const resizeRafId = ref<number | null>(null)
 
+const { t } = useI18n()
+
 const valuesWithCommas = computed<string>(() => {
+  if (model.value.length > 1) {
+    return t('a11y.selectedCount', { count: model.value.length })
+  }
   return model.value.map((v) => {
     const item = props.items.find(i => i.value === v)
     return item ? item.label : ''
@@ -106,10 +113,29 @@ onClickOutside(
   { ignore: [reference] },
 )
 
+const _options = () => Array.from(menu.value?.querySelectorAll<HTMLElement>('[role="option"]') ?? [])
+
+// Capture phase + stopPropagation: Escape closes only the list, not the dialog around it
 const onKeydown = (e: KeyboardEvent) => {
+  if (!open.value) {
+    return
+  }
   if (e.key === 'Escape') {
     e.preventDefault()
+    e.stopPropagation()
     toggleFloating(false)
+    ;(reference.value as HTMLElement | null)?.focus()
+    return
+  }
+  if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
+    const options = _options()
+    if (!options.length) {
+      return
+    }
+    e.preventDefault()
+    const index = options.indexOf(document.activeElement as HTMLElement)
+    const step = e.key === 'ArrowDown' ? 1 : -1
+    options[(index + step + options.length) % options.length]?.focus()
   }
 }
 
@@ -130,7 +156,7 @@ onMounted(() => {
   if (!import.meta.client) {
     return
   }
-  window.addEventListener('keydown', onKeydown)
+  window.addEventListener('keydown', onKeydown, true)
   window.addEventListener('resize', onResize)
   // Initial width sync (in case the menu opens immediately)
   updateMenuWidth()
@@ -140,7 +166,7 @@ onBeforeUnmount(() => {
   if (!import.meta.client) {
     return
   }
-  window.removeEventListener('keydown', onKeydown)
+  window.removeEventListener('keydown', onKeydown, true)
   window.removeEventListener('resize', onResize)
   if (resizeRafId.value !== null) {
     cancelAnimationFrame(resizeRafId.value)
@@ -157,9 +183,7 @@ watch(open, (newVal) => {
     nextTick(() => {
       updateMenuWidth()
 
-      // Focus the first menu item
-      const first = menu.value?.querySelector<HTMLElement>('[role="menuitem"]')
-      first?.focus()
+      _options()[0]?.focus()
     })
   }
 })
@@ -169,7 +193,8 @@ watch(open, (newVal) => {
   <div>
     <label
       v-if="props.label"
-      class="block text-sb-muted mb-2 md:mb-3 u-sb-soft-transition"
+      class="block text-ink-muted mb-2 md:mb-3 sb-transition"
+      :class="{ 'max-md:sr-only': props.hideLabelOnMobile }"
       :for="props.id"
     >
       {{ props.label }}
@@ -178,14 +203,14 @@ watch(open, (newVal) => {
     <div class="relative">
       <span
         v-if="props.prefixIcon"
-        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-sb-muted u-sb-soft-transition pointer-events-none"
+        class="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-ink-muted sb-transition pointer-events-none"
       >
         <Icon class="size-5" :name="props.prefixIcon" />
       </span>
 
-      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-sb-contrast u-sb-soft-transition pointer-events-none">
+      <span class="absolute top-1/2 right-3 md:right-4 transform -translate-y-1/2 text-ink sb-transition pointer-events-none">
         <Icon
-          class="size-6 u-sb-soft-transition"
+          class="size-6 sb-transition"
           :class="{
             'rotate-0': !open,
             'rotate-180': open,
@@ -198,21 +223,27 @@ watch(open, (newVal) => {
       <input
         :id="props.id"
         ref="reference"
+        :aria-controls="`${props.id}-listbox`"
         :aria-describedby="describedBy"
+        :aria-expanded="open ? 'true' : 'false'"
+        aria-haspopup="listbox"
         :aria-invalid="props.error ? 'true' : 'false'"
-        class="w-full rounded-xl bg-sb-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-sb-contrast ty-sb-p focus:outline-none focus:ring-2 focus:ring-sb-accent truncate"
+        class="w-full rounded-lg bg-surface-2 border pl-3 pr-10 py-2 md:pl-4 md:pr-11 md:py-2.5 text-ink sb-body focus:outline-none focus:ring-2 focus:ring-focus-ring truncate"
         :class="{
-          'border-sb-error': props.error,
-          'border-sb-border': !props.error,
+          'border-error': props.error,
+          'border-border-strong': !props.error,
           'pl-9! md:pl-10!': props.prefixIcon,
         }"
         :name="props.name || `${props.id}-name`"
         :placeholder="props.placeholder"
         readonly
+        role="combobox"
         type="text"
         :value="valuesWithCommas"
         @click="toggleFloating(!open)"
+        @keydown.down.prevent="toggleFloating(true)"
         @keydown.enter.prevent="toggleFloating(!open)"
+        @keydown.space.prevent="toggleFloating(!open)"
       />
     </div>
 
@@ -220,7 +251,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.hint"
       :id="`${props.id}-hint`"
-      class="ty-sb-label normal-case! text-sb-muted mt-1 md:mt-1.5 u-sb-soft-transition"
+      class="sb-small text-ink-muted mt-1.5 sb-transition"
     >
       {{ props.hint }}
     </p>
@@ -229,8 +260,7 @@ watch(open, (newVal) => {
     <p
       v-if="props.error"
       :id="`${props.id}-error`"
-      class="ty-sb-label normal-case! text-red-500 mt-1 md:mt-1.5 u-sb-soft-transition"
-      role="alert"
+      class="sb-small text-error mt-1.5 sb-transition"
     >
       {{ props.error }}
     </p>
@@ -240,33 +270,34 @@ watch(open, (newVal) => {
         <div
           v-if="open"
           ref="floating"
-          class="z-300 rounded-xl border border-sb-border/60 bg-sb-surface shadow-[0_12px_32px_rgba(0,0,0,0.45)]"
+          class="z-300 rounded-lg border border-border/60 bg-surface shadow-md"
           :style="[
             floatingStyles,
             { width: menuWidth ? menuWidth : 'auto' },
           ]"
         >
           <ul
+            :id="`${props.id}-listbox`"
             ref="menu"
+            :aria-label="props.label"
+            :aria-multiselectable="props.type === 'multiple' ? 'true' : undefined"
             class="outline-none max-h-80 overflow-y-auto p-1 mb-0"
-            role="menu"
+            role="listbox"
           >
-            <li v-for="item in props.items" :key="item.label">
+            <li v-for="item in props.items" :key="item.label" role="none">
               <button
-                :aria-current="model.includes(item.value) ? 'true' : 'false'"
-                class="relative inline-flex w-full text-left px-3 py-2 md:px-3.5 md:py-2.5 h-9 sm:h-10 gap-1 text-sb-contrast cursor-pointer ty-sb-label normal-case! u-sb-focus u-sb-soft-transition"
-                :class="{
-                  'bg-sb-border': model.includes(item.value),
-                  'hover:bg-sb-surface-2': !model.includes(item.value),
-                }"
-                role="menuitem"
+                :aria-selected="model.includes(item.value) ? 'true' : 'false'"
+                class="inline-flex w-full items-center gap-2 min-h-11 px-3 rounded-md text-left sb-label cursor-pointer sb-transition sb-focus"
+                :class="model.includes(item.value) ? 'bg-surface-2 text-ink' : 'text-ink-muted hover:bg-surface-2 hover:text-ink'"
+                role="option"
                 type="button"
                 @click="onSelect(item.value)"
               >
-                <span class="ty-sb-label truncate flex-1">{{ item.label }}</span>
+                <span class="truncate flex-1">{{ item.label }}</span>
                 <Icon
                   v-if="model.includes(item.value)"
-                  class="size-5 text-sb-accent u-sb-soft-transition"
+                  aria-hidden="true"
+                  class="size-5 text-primary-ink sb-transition"
                   name="solar:check-circle-bold-duotone"
                 />
               </button>

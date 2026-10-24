@@ -22,28 +22,28 @@ const { templates } = useTemplates()
 </script>
 
 <template>
-  <div class="flex flex-col gap-20">
-    <div class="flex flex-col gap-3 md:gap-4">
-      <div class="flex items-center justify-center mb-4 md:mb-6 ">
-        <div class="w-33 md:w-52 h-auto bg-sb-contrast rounded-xl p-4 md:p-6 shadow-[0_8px_30px_var(--color-sb-shadow)] flex items-center justify-center">
-          <NuxtImg
-            alt="SBT Logo"
-            class="w-full h-auto"
-            fetchpriority="high"
-            height="187"
-            loading="eager"
-            src="/images/sbt-logos/sbt-logo.webp"
-            width="160"
-          />
-        </div>
+  <div class="flex flex-col gap-10 md:gap-20">
+    <header class="flex flex-col sm:flex-row sm:items-center gap-5 md:gap-6">
+      <div class="shrink-0 w-20 md:w-24 bg-ink rounded-lg p-3 md:p-4 shadow-md">
+        <NuxtImg
+          :alt="t('pages.projects.sbTemplatesProject.logoAlt')"
+          class="w-full h-auto"
+          fetchpriority="high"
+          height="187"
+          loading="eager"
+          src="/images/sbt-logos/sbt-logo.webp"
+          width="160"
+        />
       </div>
-      <h2 class="ty-sb-h1 mb-0">
-        {{ t('pages.projects.sbTemplatesProject.title') }}
-      </h2>
-      <p class="ty-sb-p text-sb-muted">
-        {{ t('pages.projects.sbTemplatesProject.description') }}
-      </p>
-    </div>
+      <div class="flex flex-col gap-3">
+        <h2 class="sb-h1 mb-0 text-balance">
+          {{ t('pages.projects.sbTemplatesProject.title') }}
+        </h2>
+        <p class="sb-body text-ink-muted mb-0">
+          {{ t('pages.projects.sbTemplatesProject.description') }}
+        </p>
+      </div>
+    </header>
 
     <div
       v-if="templates && templates.length > 0"
@@ -63,16 +63,16 @@ const { templates } = useTemplates()
       />
     </div>
     <div
-      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-xl border bg-sb-info-bg border-sb-info"
+      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-lg border border-border bg-surface"
     >
-      <div class="shrink-0 flex items-center justify-center w-8 h-8 md:w-10 md:h-10 rounded-xl bg-sb-surface text-sb-info">
-        <Icon class="size-5 md:size-6" name="solar:code-circle-bold-duotone" />
+      <div class="shrink-0 flex items-center justify-center size-10 rounded-lg bg-surface-2 text-primary-ink">
+        <Icon aria-hidden="true" class="size-6" name="solar:code-circle-bold-duotone" />
       </div>
       <div class="flex-1 min-w-0">
-        <h3 class="ty-sb-h4 text-sb-contrast">
+        <h3 class="sb-h4 text-ink">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
         </h3>
-        <p class="ty-sb-p text-sb-muted">
+        <p class="sb-body text-ink-muted">
           {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
         </p>
       </div>

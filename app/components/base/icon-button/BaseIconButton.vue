@@ -3,12 +3,14 @@ interface BaseIconButtonProps {
   icon: string
   ariaLabel?: string
   isActive?: boolean
+  text?: string
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseIconButtonProps>(), {
   ariaLabel: undefined,
   isActive: false,
+  text: undefined,
 })
 
 const emit = defineEmits<{
@@ -23,23 +25,24 @@ const onClick = () => {
 </script>
 
 <template>
-  <button
-    :aria-label="props.ariaLabel"
-    class="group relative inline-flex items-center justify-center rounded-lg border border-sb-border u-sb-soft-transition u-sb-focus cursor-pointer size-7 md:size-8"
-    :class="{
-      'bg-sb-surface-2': props.isActive,
-      'bg-sb-surface border hover:bg-sb-surface-2': !props.isActive,
-    }"
-    type="button"
+  <BaseButton
+    :aria-label="props.text ? `${props.text} – ${props.ariaLabel}` : props.ariaLabel"
+    class="border border-border"
+    :icon-only="!props.text"
+    :is-active="props.isActive"
+    size="sm"
+    variant="ghost"
     @click="onClick"
   >
     <Icon
-      class="size-4.5 md:size-5"
-      :class="{
-        'text-sb-contrast': props.isActive,
-        'text-sb-muted group-hover:text-sb-contrast': !props.isActive,
-      }"
+      aria-hidden="true"
+      class="size-5"
       :name="props.icon"
     />
-  </button>
+    <span
+      v-if="props.text"
+      aria-hidden="true"
+      class="uppercase"
+    >{{ props.text }}</span>
+  </BaseButton>
 </template>

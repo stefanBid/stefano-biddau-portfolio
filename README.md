@@ -5,8 +5,8 @@
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
   ![Version](https://img.shields.io/badge/version-1.7.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.5.2-00DC82?logo=nuxt.js)](https://nuxt.com)
-  [![Vue](https://img.shields.io/badge/vue-3.5.42-4FC08D?logo=vue.js)](https://vuejs.org)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.6.2-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
   ![License](https://img.shields.io/badge/license-Proprietary-red)
@@ -23,13 +23,13 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
-### ✅ Resolved — `nuxt` upgraded to `4.5.2` (exact, no caret)
+### ✅ Resolved — `nuxt` upgraded to `4.6.2` (exact, no caret)
 
-`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
+`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `4.6.x` (Nuxt CLI v4, opt-in `nuxt/server` imports) needs no migration — validated the same way (typecheck + build + prerender clean); CLI v4 requires Node 24.11+, met by the `24.19.0` pin. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
-Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.4.8` — not yet re-verified on the current `4.5.2` pin. If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.6.2` (both `npm run build` and `nuxt dev`). If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
 
 ### ✅ Resolved — `@nuxt/image` `ipx` provider 500s on Netlify
 
@@ -95,6 +95,7 @@ NUXT_EMAILJS_SERVICE_ID=your_emailjs_service_id
 NUXT_EMAILJS_TEMPLATE_ADMIN_ID=your_admin_template_id
 NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID=your_reply_to_template_id
 NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
+NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
 ```
 
 ### Available commands
@@ -120,6 +121,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 ── tsconfig.json            ← TypeScript config — extends .nuxt/tsconfig.app.json
 ── eslint.config.mjs        ← ESLint flat config (extends @nuxt/eslint, stylistic rules)
 ── .nvmrc                   ← pinned Node.js version (24.19.0)
+── .sb-context/             ← sb-context-fe Claude Code plugin state (project profile + settings)
 ── i18n/
      locales/
        en.json              ← English translations (source of truth)
@@ -129,11 +131,10 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
      error.vue             ← global error page
      assets/
        css/
-         main.css          ← entry point: imports all CSS layers in order
-         theme.css         ← @theme block: CSS custom properties (always dark)
-         typography.css    ← @utility ty-sb-* classes
-         utilities.css     ← @utility u-sb-* classes
-         animations.css    ← Vue transition classes (fade, slide-down, scale-fade)
+         main.css          ← entry point: imports Tailwind + the 3 files below, page-level base styles
+         theme.css         ← colours (raw --sb-* per theme + @theme inline), shadows, radii, breakpoints
+         typography.css    ← font families, --text-* role scale, sb-* type utilities, tag styles
+         animation.css     ← durations, easings, keyframes, sb-transition/sb-focus, Vue transitions, reduced motion
      components/
        base/               ← reusable design-system components (zero business logic)
        custom/             ← portfolio-specific components (data fetching + business logic)
@@ -143,6 +144,7 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        the-page-hero/      ThePageHero.vue
      composables/
        data/                ← content-source composables (i18n- or local-data-backed)
+         useGithubStats.ts  ← GitHub profile stats from the prerendered /api/github-stats.json
          useMilestones.ts   ← reads pages.about.milestones from i18n
          useProjects.ts     ← reads pages.projects.personalProjects.list from i18n
          useSkills.ts       ← hardcoded local skills list + filtering/pagination
@@ -177,6 +179,8 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
        generateUuid.ts     ← UUID v4 generator
        markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`)
 ── server/
+     api/
+       github-stats.json.ts ← GitHub profile stats, prerendered to a static JSON once per build
      routes/
        robots.txt.ts       ← per-request robots.txt, varies by Netlify deploy context
 ```
@@ -185,78 +189,97 @@ NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
 
 ## 4. Design System
 
-The design system lives entirely in `app/assets/css/`. It provides a single source of truth for colours, typography, spacing and transitions. The app is **always dark** — no `dark:` Tailwind variants are ever needed.
+The design system lives entirely in `app/assets/css/`, in four files (`main.css`, `theme.css`, `typography.css`, `animation.css`). It is a **closed** Tailwind v4 theme: the default palette, text sizes, weights, radii, shadows, easings, animations and breakpoints are reset, so only the tokens below generate utilities. The app is **always dark** — no `dark:` Tailwind variants are ever needed. Prefix: `sb`.
 
-### Colours — `--color-sb-*`
+### Colours
 
-All colours are CSS custom properties defined inside an `@theme` block in `theme.css`, auto-mapped to Tailwind utilities.
+Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to Tailwind roles with `@theme inline`. `@nuxtjs/color-mode` writes `data-theme="dark"` on `<html>`; the palette is the same for every theme. The default layout forces `dark` (`data-color-mode-forced` + `colorMode.preference = 'dark'`), overriding any stale preference saved in `localStorage`.
 
-| Token | Tailwind utility | Value | Usage |
+| Raw variable | Tailwind utility | Value | Usage |
 |---|---|---|---|
-| `--color-sb-main` | `bg-sb-main` | `#0f0f20` | Page background |
-| `--color-sb-surface` | `bg-sb-surface` | `#1a1a2e` | Card / elevated surface |
-| `--color-sb-surface-2` | `bg-sb-surface-2` | `#232342` | Nested surfaces, inputs |
-| `--color-sb-border` | `border-sb-border` | `#2a2a44` | Default borders |
-| `--color-sb-shadow` | `shadow-[0_4px_20px_var(--color-sb-shadow)]` | `rgba(0,0,0,0.45)` | Shadows (always via `var()`) |
-| `--color-sb-accent` | `bg-sb-accent / text-sb-accent` | `#e95905` | Primary CTA, highlights |
-| `--color-sb-accent-hover` | `hover:bg-sb-accent-hover` | `#d24f05` | Hover state of accent |
-| `--color-sb-accent-border` | `border-sb-accent-border` | `#b34704` | Border on accent elements |
-| `--color-sb-contrast` | `text-sb-contrast` | `#f1f1f1` | Primary text |
-| `--color-sb-muted` | `text-sb-muted` | `#9ca3af` | Secondary / placeholder text |
-| `--color-sb-success/warning/error/info` | `text-sb-success` etc. | — | Status colours |
-| `--color-sb-*-bg` | `bg-sb-success-bg` etc. | — | Status background tints |
+| `--sb-bg` | `bg-bg` | `#0f0f20` | Page background |
+| `--sb-surface` | `bg-surface` | `#1a1a2e` | Card / elevated surface |
+| `--sb-surface-2` | `bg-surface-2` | `#232342` | Nested surfaces, inputs |
+| `--sb-border` | `border-border` | `#2a2a44` | Default (decorative) borders |
+| `--sb-border-strong` | `border-border-strong` | `#6e7299` | Input and control borders (3.26:1 on `surface-2`) |
+| `--sb-ink` | `text-ink` | `#f1f1f1` | Primary text |
+| `--sb-ink-muted` | `text-ink-muted` | `#9ca3af` | Secondary / placeholder text |
+| `--sb-primary` | `bg-primary` / `text-primary` | `#e95905` | CTA, links, highlights |
+| `--sb-primary-hover` | `hover:bg-primary-hover` | `#f06a1c` | Hover state of primary |
+| `--sb-primary-border` | `border-primary-border` | `#b34704` | Border on primary elements |
+| `--sb-on-primary` | `text-on-primary` | `#0f0f20` | Text on a primary fill |
+| `--sb-primary-ink` | `text-primary-ink` | `#f47a32` | Orange **as text** (links, CTAs, dates): 5.52:1 on `surface-2`, 6.24:1 on `surface` |
+| `--sb-primary-ink-hover` | `hover:text-primary-ink-hover` | `#f8904d` | Hover state of orange text |
+| `--sb-success/warning/error/info` | `text-success` etc. | — | Status colours (text) |
+| `--sb-*-soft` | `bg-success-soft` etc. | — | Status background tints |
+| `--sb-focus-ring` | `ring-focus-ring` | = ink | Focus ring |
 
-Tailwind opacity modifiers are allowed: `bg-sb-main/80`, `text-sb-muted/70`.
+Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-### Typography — `ty-sb-*`
+`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`.
 
-Custom `@utility` classes defined in `typography.css`. Apply them as regular Tailwind classes.
+### Shapes and shadows
 
-| Class | Font | Usage |
+| Token | Value | Usage |
 |---|---|---|
-| `ty-sb-hero` | Bebas Neue, uppercase | Full-bleed hero text |
-| `ty-sb-impact` | Bebas Neue, uppercase | `ThePageHero` full-viewport opening title only (~1.75x `ty-sb-hero`) |
-| `ty-sb-h1` | Bebas Neue, uppercase | Page-level heading (matches `h1`) |
-| `ty-sb-h2` | Bebas Neue, uppercase | Section heading (matches `h2`) |
-| `ty-sb-h3` | Bebas Neue | Sub-section heading (matches `h3`) |
-| `ty-sb-h4` | Space Mono semibold | Smallest heading level (matches `h4`/`h5`/`h6`) |
-| `ty-sb-p` | Space Mono | Body text (matches `p`) |
-| `ty-sb-span` | Space Mono | Generic inline text (matches `span`) |
-| `ty-sb-label` | Space Mono, uppercase, tracked | Form labels, tags |
-| `ty-sb-btn-label` | Space Mono bold, uppercase | Button text |
-| `ty-sb-caption` | Space Mono italic | Captions, secondary notes |
-| `ty-sb-code` | Space Mono | Inline code snippets (matches `code`) |
+| `rounded-sm` / `md` / `lg` / `xl` | 4 / 8 / 12 / 16px | code & links / buttons & inputs / cards & dialogs / logo blocks |
+| `shadow-sm` | `0 4px 20px` | Cards, banners |
+| `shadow-md` | `0 12px 32px` | Menus, logo blocks |
+| `shadow-lg` | `0 20px 60px` | Dialogs, side menu |
+| `drop-shadow-md` | `0 0 10px` | Text over images |
+
+All shadows use `--sb-shadow-color` (`rgba(0,0,0,0.45)`). Breakpoints: `sm` 640 · `md` 768 · `lg` 1024 · `xl` 1280 (no `2xl`).
+
+### Typography — `sb-*`
+
+One utility per role, defined in `typography.css`; each carries family, size, line height, weight and tracking (never colour). Only `sb-display`, `sb-h1`, `sb-h2` change size, in one step at `lg`; `sb-hero` scales fluidly with `clamp()`.
+
+| Class | Font | Size (mobile → desktop) | Usage |
+|---|---|---|---|
+| `sb-hero` | Bebas Neue | 56 → 120px (fluid) | `ThePageHero` title, 404 code |
+| `sb-display` | Bebas Neue | 66 → 75px | Big page titles (legal pages, error, home) |
+| `sb-h1` | Bebas Neue | 39 → 44px | Page-level heading (`h1`) |
+| `sb-h2` | Bebas Neue | 31 → 35px | Section heading (`h2`) |
+| `sb-h3` | Bebas Neue | 27px | Sub-section / card title (`h3`) |
+| `sb-h4` | Bebas Neue | 21px | Smallest heading (`h4`–`h6`) |
+| `sb-lead` | Space Mono | 19px | Intro paragraph below a title |
+| `sb-body` | Space Mono | 17px | Body text (`p`, `body`, inputs) |
+| `sb-body-strong` | Space Mono bold | 17px | Emphasis, button text (add `uppercase` for buttons) |
+| `sb-label` | Space Mono | 14px | Nav items, chips, tabs (add `uppercase` for nav) |
+| `sb-small` | Space Mono | 12px | Captions, help, metadata (add `italic` for captions) |
+| `sb-overline` | Space Mono, uppercase, tracked | 12px | Labels (`label`), tags, badges |
 
 ```vue
-<h1 class="ty-sb-h3 text-sb-contrast">My Skills</h1>
-<p class="ty-sb-p text-sb-muted">Some description.</p>
+<h2 class="sb-h3 text-ink">My Skills</h2>
+<p class="text-ink-muted">Some description.</p>
 ```
 
-Non-semantic tags need the matching `ty-sb-*` utility. Semantic tags (`h1`–`h4`, `p`, `span`, `label`, `small`, `code`) get the same look for free from `base.css` — no class needed.
+Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`); use `text-center`/`text-left` to opt out. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
-**Font families:**
-- `font-bebas-neue` — Bebas Neue: all titles and display text
-- `font-space-mono` — Space Mono: body, UI text, buttons
+**Font families:** `font-display` (Bebas Neue, 400) · `font-body` / `font-mono` (Space Mono, 400 and 700). Weights: `font-normal`, `font-bold` only.
 
-### Utility classes — `u-sb-*`
+### Motion and focus — `sb-*`
 
-| Class | Effect |
+| Class / token | Effect |
 |---|---|
-| `u-sb-soft-transition` | `transition-all duration-200 ease-in-out` |
-| `u-sb-hard-transition` | `transition-all duration-500 ease-in-out` |
-| `u-sb-focus` | `outline-none ring-sb-contrast focus-visible:ring-2` |
-| `u-sb-focus-within` | `outline-none ring-sb-contrast focus-within:ring-2` |
-| `u-sb-no-focus` | Removes all focus outlines (use only on elements with custom focus handling) |
+| `sb-transition` | colour, background, border, outline, shadow, opacity, transform · `--sb-duration-feedback` (150ms) |
+| `sb-transition-slow` | same properties · `--sb-duration-layout` (400ms) |
+| `sb-focus` | `outline-none focus-visible:ring-2 ring-focus-ring` |
+| `sb-focus-within` | same, on `focus-within` |
+| `sb-no-focus` | Removes focus ring (only with custom focus handling) |
 
-Always add `u-sb-soft-transition` to interactive elements.
+Always add `sb-transition` to interactive elements. It does not animate width/height — avoid animating layout properties.
+
+Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`. Under `prefers-reduced-motion`, `--sb-motion-distance` drops to 0, removing all movement while keeping opacity and colour changes.
 
 ### Animations — Vue `<Transition>`
 
-| Name | Effect | Duration |
+| Name | Effect | Enter / leave |
 |---|---|---|
-| `fade` | Opacity + slight Y offset | 800ms |
-| `slide-down` | Opacity + slides from top | 200ms |
-| `scale-fade` | Opacity + scale from 0.95 | 200ms |
+| `fade` | Opacity + slight Y offset | 800ms / 150ms |
+| `slide-down` | Opacity + slides from top | 200ms / 150ms |
+| `scale-fade` | Opacity + scale from 0.95 | 200ms / 150ms |
+| `page` | Opacity + blur (page change) | 400ms / 150ms |
 
 ```vue
 <Transition name="scale-fade">
@@ -276,12 +299,16 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 | `flagpack` | Country flags |
 
 ```vue
-<Icon name="solar:box-minimalistic-bold-duotone" class="size-5 text-sb-accent" />
+<Icon name="solar:box-minimalistic-bold-duotone" class="size-5 text-primary" />
 <Icon name="logos:vue" class="size-5" />
 <Icon name="flagpack:it" class="size-5" />
 ```
 
 ---
+
+### 3D avatars
+
+`public/images/3d-avatar/avatar-pose-{1..5}.webp` — full-resolution (1024×1536) WebP with transparent background, quality 92 / alpha 100. One per page: home 4 (waving), About 3 (on a planet), Skills 1 (laptop), Projects 5 (presenting); 2 is unused. They are rendered with `<NuxtImg provider="none">` (registered in `nuxt.config.ts` → `image.providers.none`) so they are served untouched instead of being re-encoded at the global quality 80.
 
 ## 5. Components
 
@@ -297,23 +324,43 @@ All reusable components live in `app/components/`. Three component tiers:
 
 ### `BaseButton`
 
+Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu and listbox options (`BaseIconMenu`, `BaseCombobox`), timeline dots (`CustomMilestone`) and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
+
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | Visual style |
-| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a target="_blank">` |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = text only |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The **only** prop that changes dimensions (see table below) |
+| `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
+| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab, show an ↗ icon and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
-| `ariaLabel` | `string` | `undefined` | For icon-only usage |
+| `ariaLabel` | `string` | `undefined` | Required with `iconOnly` |
 | `isDisabled` | `boolean` | `false` | |
 | `isLoading` | `boolean` | `false` | Shows spinner |
+| `isActive` | `boolean` | `false` | Selected state for `ghost` |
+| `iconOnly` | `boolean` | `false` | Square button (36 / 44 / 52px by `size`) |
+| `externalIconClass` | `string` | `undefined` | Extra classes on the external-link arrow (e.g. `hidden @xs:inline` to drop it in a narrow container) |
 
-Slot: `default` (button label / content)
+Every variant and `type` produces the same box at a given size; `variant`/`tone` only change colours (a `ghost` keeps a transparent 1px border). Text is always uppercase.
+
+| Size | Height | Padding x | Text | `iconOnly` | Use for |
+|---|---|---|---|---|---|
+| `sm` | 36px (hit area 44px) | 14px | `sb-label` bold | 36×36 | Supporting or compact actions: on images, toolbars, pagination, filter chips, header controls, language switch, close, secondary form actions ("Clear form") |
+| `md` | 44px | 24px | `sb-body-strong` | 44×44 | Default. Actions in page or dialog content: card CTAs, form submit, "Back to home", "Read more" |
+| `lg` | 52px | 32px | `sb-body-strong` | 52×52 | The page's main call to action, one per screen, in the first viewport (home CTAs, 404 "Back to home") |
+
+Never resize a `BaseButton` with classes: pick a `size`. Buttons that stack on narrow screens share one width (one-column grid sized to the widest, e.g. the home CTAs). A `ghost` aligned under text compensates its padding with a negative margin (`-ml-6` at `md`).
+
+Slot: `default` (button label / content). Icons inside are spaced by the built-in `gap-2`.
 
 ```vue
 <BaseButton variant="primary" :is-loading="isSaving" type="submit">
   Save
 </BaseButton>
-<BaseButton type="link" to="https://github.com/stefanoBid" variant="outline">
+<BaseButton size="sm" type="link" to="https://github.com/stefanBid" variant="outline">
   <Icon name="mdi:github" class="size-4" /> GitHub
+</BaseButton>
+<BaseButton variant="ghost" tone="accent" class="uppercase" @click="toggle">
+  Read more
 </BaseButton>
 ```
 
@@ -357,6 +404,7 @@ Model: `defineModel<string>('input')`
 | `hint` | `string` | `undefined` | |
 | `error` | `string \| null` | `null` | |
 | `maxLength` | `number` | `undefined` | Shows character counter when set |
+| `minLength` | `number` | `undefined` | Below it, the counter tracks the minimum (`4 / 10`), then the maximum. The hint is replaced by the error when there is one |
 
 Model: `defineModel<string>('input')`
 
@@ -367,10 +415,10 @@ Model: `defineModel<string>('input')`
 | `id` | `string` | — | Required |
 | `name` | `string` | `undefined` | |
 | `label` | `string` | `undefined` | Shown if no `default` slot |
-| `error` | `string \| null` | `null` | |
+| `error` | `string \| null` | `null` | Rendered below, linked via `aria-describedby` (no live region: the form announces one summary and moves focus) |
 
 Model: `defineModel<boolean>('input')`
-Slot: `default` (custom label content)
+Slot: `default` (custom label content, rendered inside a `<label for>` so the text toggles the box)
 
 ### `BaseCombobox`
 
@@ -389,6 +437,8 @@ Generic component (`generic="T"`).
 | `prefixIcon` | `string` | `undefined` | |
 
 Model: `defineModel<T[]>('input', { default: () => [] })`
+`hideLabelOnMobile` (`boolean`, default `false`) keeps the label for screen readers but hides it below `md` (compact filter rows).
+Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode); with more than one value the input reads "N selected" (`a11y.selectedCount`) instead of a truncated list; Enter/Space/↓ open, ↑/↓ move between options, Escape closes only the list and returns focus to the input.
 
 ### `BaseChip`
 
@@ -413,7 +463,7 @@ Emits: `chip-click` (only when `clickable: true`)
 
 Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header`, `footer`
-Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="body">`.
+Behaviour: closes on `Escape`, locks scroll, traps Tab inside and restores focus on close (`useFocusTrap`), uses `<Teleport to="body">`.
 
 ### `BaseIconButton`
 
@@ -422,6 +472,7 @@ Behaviour: closes on `Escape`, locks scroll, traps focus, uses `<Teleport to="bo
 | `icon` | `string` | — | Required. Iconify name |
 | `ariaLabel` | `string` | `undefined` | Always set it |
 | `isActive` | `boolean` | `false` | Active/pressed state styling |
+| `text` | `string` | `undefined` | Optional short label next to the icon (e.g. the current language code) |
 
 Emits: `(e: 'click'): void`
 
@@ -430,24 +481,31 @@ Emits: `(e: 'click'): void`
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `icon` | `string` | — | Required. Trigger icon |
+| `label` | `string` | — | Required. Accessible name of the trigger and the menu |
 | `items` | `MenuItem[]` | — | Required |
-| `selectedItemId` | `string \| null` | `null` | Highlighted item |
+| `selectedItemId` | `string \| null` | `null` | Checked item (`menuitemradio`, check icon); also shown uppercase on the trigger (`EN` / `IT`) |
 
 Emits: `(e: 'select', itemId: string): void`
+Slot: `trigger` (`{ isOpen, toggle }`). ↑/↓ move between items; Escape closes only the menu and returns focus to the trigger.
 
 ### `BaseCloseButton`
 
-No props. Emits: `(e: 'close', value: false): void`. Renders a `mdi:close` icon button.
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `label` | `string` | — | Required. Accessible name (`aria-label`) |
+
+Emits: `(e: 'close', value: false): void`. Renders a `solar:close-circle-bold-duotone` icon button (`type="button"`).
 
 ### `BaseTabs`
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required |
-| `variant` | `'primary' \| 'secondary'` | `'primary'` | `primary` = accent fill; `secondary` = surface fill |
+| `tabs` | `{ label: string, icon?: string, id: string \| number }[]` | — | Required. Rendered as native underlined text tabs; `icon` is not shown |
 | `align` | `'left' \| 'center' \| 'right'` | `'left'` | |
+| `selectedTabId` | `string \| number` | first tab | |
+| `panelId` | `string` | `undefined` | `id` of the `role="tabpanel"` the tabs control |
 
-Model: `defineModel<string | number>('selectedTabId')`
+Emits: `(e: 'select', tabId: string | number): void`. Roving tabindex; ←/→/↑/↓/Home/End move and select.
 
 ### `BaseEmptyBox`
 
@@ -457,6 +515,15 @@ Model: `defineModel<string | number>('selectedTabId')`
 | `message` | `string` | — | Required |
 | `icon` | `string` | `'solar:box-minimalistic-bold-duotone'` | |
 | `dimension` | `'normal' \| 'small'` | `'normal'` | |
+
+### `BaseCountUp`
+
+| Prop | Type | Default | Notes |
+|---|---|---|---|
+| `value` | `number` | — | Required. Final value, formatted with `Intl.NumberFormat` for the active locale |
+| `duration` | `number` | `1400` | Milliseconds, exponential ease-out |
+
+Counts from 0 to `value` the first time it is 60% in view. SSR and no-JS render the final value; `prefers-reduced-motion` skips the animation. The animated digits are `aria-hidden`, screen readers get the final value only.
 
 ### `BaseRichText`
 
@@ -487,6 +554,7 @@ Uses `useEmailJs` for dual send (admin + reply-to-user), `zod` for validation, `
 | `level` | `number` | — | Required. 0–5 scale shown as filled squares |
 | `icon` | `string` | — | Required. Iconify name |
 | `gold` | `boolean` | `false` | Gold ring highlight (top skill) |
+| `compact` | `boolean` | `false` | Vertical tile (icon above name), no level bar — home "Core stack" grid |
 
 ### `CustomSkillsDialog`
 
@@ -496,12 +564,19 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 
 | Prop | Type | Notes |
 |---|---|---|
+| `id` | `string \| number` | Required. Renders the article as `#project-<id>` (deep-link target) |
 | `title` | `string` | Required |
-| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText` |
-| `coverImageSrc` | `string` | Optional project cover |
-| `coverImageAlt` | `string` | Optional alt text |
-| `codebaseUrl` | `string` | Optional GitHub link |
-| `deployUrl` | `string` | Optional live demo link |
+| `meta` | `string` | Optional `type · year · stack` line under the title (from `pages.projects.personalProjects.list[].meta`) |
+| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText`; first block as preview, "Read more" expands in place |
+| `imageSrc` | `string` | Optional project cover |
+| `imageAlt` | `string` | Optional alt text |
+| `codebaseUrls` | `MenuItem[]` | Optional source links ("Code" button, or a menu when more than one) |
+| `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site" button, or a menu) |
+| `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
+
+Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
+
+The header is a size container (`@container`): below 20rem of card width (`@xs`) the "Code" / "Live site" labels become `sr-only` and the external-link arrow is hidden (`externalIconClass`), so the buttons shrink to their icons while keeping their accessible name.
 
 ### `CustomSbTemplatesCard`
 
@@ -525,6 +600,18 @@ Opens a `BaseDialog` with extended skill details. Pairs with `CustomSkillsCard`.
 | `imageCaption` | `string` | Optional |
 | `date` | `string` | Optional |
 
+### `CustomGithubStats`
+
+| Prop | Type | Notes |
+|---|---|---|
+| `stats` | `GithubStats` | Required |
+
+Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — contributions in the last year (only when the build had a token), public repositories, stars received, years on GitHub — next to the three most-starred own repositories. The page hides the whole section when `useGithubStats()` returns `null`.
+
+### `CustomExperienceList`
+
+No props. LinkedIn-style list of `useMilestones()` entries, newest first: role, `organization · type`, then `start – end · duration` (months counted inclusively, as LinkedIn does; no `endDate` means "Present"). The "Present" duration is refreshed on mount so a stale prerender corrects itself.
+
 ### `CustomSolarSystem`
 
 Decorative animated orbit component used in `index.vue`, visualising tech categories as orbiting planets.
@@ -541,7 +628,7 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ### `TheHeader` / `TheHeaderMenuToggle`
 
-Top navigation bar. Renders `RouteItem[]` links and a language switcher (`BaseIconMenu`). `TheHeaderMenuToggle` is the hamburger button on mobile.
+Top navigation bar. Desktop: logo left; nav and language menu (`BaseIconMenu`, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
 
 ### `TheFooter`
 
@@ -553,7 +640,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Full-screen entry animation. After the animation ends it emits `hero-animations-ended` — use this to reveal page content.
+Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`. On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (name, role, CTAs, avatar, selected work).
 
 ---
 
@@ -625,6 +712,8 @@ useSeoMeta({
 ```
 
 ### Layouts
+
+`default.vue` also renders a "Skip to content" link (first focusable element, visible on focus) targeting `<main id="main">`; `app.vue` mounts `<NuxtRouteAnnouncer />` so client-side page changes are announced.
 
 The only layout is `default.vue`. Structure: `TheHeader` → `<slot>` → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`. A `useLocaleHead()` call injects the correct `hreflang` alternate links on every page automatically.
 
@@ -705,7 +794,8 @@ const { el, elStyle } = useTypedText(computed(() => [t('key.0'), t('key.1')]))
 
 - Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace)
 - Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing)
-- Respects `prefers-reduced-motion` automatically
+- Under `prefers-reduced-motion` typed.js is skipped and the first string is written as static text
+- Home types its single role once (`contentType: 'null'` so `&` survives) and removes the cursor in `onComplete`, so nothing keeps moving next to the heading
 
 ### `useFloatingUi(config?)`
 
@@ -729,6 +819,15 @@ lock()    // adds scroll-locked class to <html>
 unlock()  // removes it only when no other caller holds a lock
 ```
 
+### `useFocusTrap(container)`
+
+Keeps Tab / Shift+Tab inside `container` while active and restores focus to the previously focused element on deactivate. `deactivate(false)` skips the restore (used when a navigation moves focus elsewhere). Used by `BaseDialog` and the mobile drawer in `TheHeader`. Client-side only.
+
+```ts
+const panel = ref<HTMLElement | null>(null)
+const { activate, deactivate } = useFocusTrap(panel)
+```
+
 ### `usePageTransition(isSubPage?)`
 
 Shared skip-transition state, driven by `plugins/pageTransition.client.ts` on every navigation.
@@ -738,7 +837,7 @@ const { pageTransition } = usePageTransition() // app.vue — outer NuxtPage
 const { pageTransition } = usePageTransition(true) // my-projects.vue — inner NuxtPage (tabs)
 ```
 
-Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
+Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). A third flag, `menuSkipTransition`, skips the transition for any navigation started from the full-screen mobile menu: `TheHeader` sets `navigatingFromMenu` on the link click and the plugin turns it into `menuSkipTransition` for that navigation only; `router.options.ts` then scrolls to the top immediately instead of waiting for the transition end. Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
 
 ### `useSanitize()`
 
@@ -763,7 +862,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization` and `type` (`MilestoneType`), used by `CustomExperienceList` on the home page.
 
 ### `useProjects()`
 
@@ -784,13 +883,21 @@ Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.lis
 ### `useSkills()`
 
 ```ts
-const { filters, skills, pagination } = useSkills()
+const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack` is the home page "Core stack": `FEATURED_STACK` names grouped by area (`frontend`, `backend`, `database`), in authored order, regardless of filters and of `isGod`.
+
+### `useGithubStats()`
+
+```ts
+const { stats } = await useGithubStats()
+```
+
+The one async content source: `useFetch('/api/github-stats.json')`, which is prerendered at build time, so visitors never call GitHub and client-side navigation reads the same static file. `stats` is `GithubStats | null` — `null` when GitHub was unreachable during the build.
 
 ---
 
@@ -816,6 +923,9 @@ All interfaces are declared globally — no import needed
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
 | `NotificationItem` | `{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }` |
 | `SkillsFilterPreset` | `{ key, filters: SkillType[] }` — preset filter buttons in `my-skills.vue` |
+| `MilestoneType` | `'education' \| 'internship' \| 'fullTime'` |
+| `GithubRepo` | `{ name, url, description, language, stars }` |
+| `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |
 | `RichBlock` | Union of `RichBlockParagraph \| RichBlockHeading \| RichBlockList \| RichBlockQuote \| RichBlockCode` |
 
 ---
@@ -824,9 +934,17 @@ All interfaces are declared globally — no import needed
 
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file.
 
+### `server/api/github-stats.json.ts`
+
+Serves `/api/github-stats.json`, prerendered (`routeRules['/api/github-stats.json'] = { prerender: true }`), so GitHub is queried once per deploy and the result ships as a static file. Reads the public profile and owned repositories of `stefanBid` over REST; with `NUXT_GITHUB_TOKEN` set it also reads contributions in the last year over GraphQL (anonymous GraphQL is refused). Any GitHub failure returns `{ stats: null }` instead of failing the build. Totals and top repositories exclude forks.
+
+In dev only, the GitHub fetch is wrapped in `defineCachedFunction` (10 min, keyed by token presence): dev renders the home and its `_payload.json` on every visit, and without the cache each navigation to `/` waited ~0.5s on GitHub (and spent rate limit). Builds bypass the cache and always fetch fresh; errors are never cached.
+
+The token lives in `runtimeConfig.githubToken` (server-only, default `''`) and is filled at runtime from `NUXT_GITHUB_TOKEN`. Never assign `process.env.…` to it in `nuxt.config.ts`: that value gets inlined into the Netlify Function bundle.
+
 ### `server/routes/robots.txt.ts`
 
-Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, since it must run per-request to read `CONTEXT`.
+Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts, `Allow: /` + sitemap link on `production`. Netlify's `CONTEXT` is only set at build time, not in the Function runtime, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, so each deploy serves its own rules.
 
 ### Adding new server code
 
@@ -882,16 +1000,18 @@ One file, all context: stack, npm install policy, project structure, naming rule
 
 ### Maintenance workflows
 
-Ask Claude Code in plain language (English or Italian) to run any of these — defined in `CLAUDE.md`'s "Maintenance workflows" section:
+Run through the sb-context-fe Claude Code plugins (project profile and settings in `.sb-context/`), listed in `CLAUDE.md`'s "Maintenance workflows" section:
 
-| Workflow | What it does |
+| Command | What it does |
 |---|---|
-| Dependency check | Runs `npm outdated`, classifies safe vs needs-attention updates, applies safe ones, runs `npm audit` / `npm audit fix` |
-| Lint check | Runs `eslint --fix`, reports remaining warnings/errors |
-| Build check | Runs `nuxt typecheck` + `nuxt build`, categorises errors |
-| SEO / GSC readiness check | Validates `sitemap.xml`, `robots.txt`, and per-page SEO meta against `nuxt.config.ts` |
-| Full checkup | Runs dependency → SEO → build → lint checks in order, stops on blocking errors, then decides if docs need updating |
-| Update documentation | Diffs `README.md` against the actual codebase and rewrites only the affected sections |
+| `/sb-health:deps` | Outdated/vulnerable dependencies, safe updates, major-version migrations |
+| `/sb-health:lint` | Runs `eslint --fix`, reports remaining warnings/errors |
+| `/sb-health:build` | Type check + production build, categorises errors |
+| `/sb-health:seo` | Validates `robots.txt`, sitemap and per-page SEO meta |
+| `/sb-health:checkup` | Full maintenance pass |
+| `/sb-health:docs` | Syncs `README.md` with the codebase, editing only affected sections |
+| `/sb-design:check` | Read-only check that the global style is still aligned |
+| `/sb-design:migrate` | Finds template classes the theme no longer generates and proposes replacements |
 
 ### Documentation sync rule
 
@@ -932,6 +1052,7 @@ Add all variables under **Site settings → Environment variables** on Netlify. 
 | `NUXT_EMAILJS_TEMPLATE_ADMIN_ID` | Yes | EmailJS template ID — admin notification email |
 | `NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID` | Yes | EmailJS template ID — reply-to-user email |
 | `NUXT_PUBLIC_CLOUDINARY_BASE` | Optional | Cloudinary base URL for `@nuxt/image` cloud provider |
+| `NUXT_GITHUB_TOKEN` | Optional | GitHub fine-grained token, *Public repositories* access, no permissions. Mark it secret, Builds scope only. Without it the home page drops the contributions counter, and REST calls are anonymous (60 requests/h per IP) |
 
 ### Versioning
 
@@ -945,39 +1066,43 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 
 | Package | Version | Purpose |
 |---|---|---|
-| `nuxt` | `4.5.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
-| `vue` | `^3.5.42` | UI framework |
-| `vue-router` | `^5.3.1` | Routing |
+| `nuxt` | `4.6.2` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
+| `vue` | `^3.5.44` | UI framework |
+| `vue-router` | `^5.4.0` | Routing |
 | `tailwindcss` | `^4.3.3` | Utility-first CSS |
 | `@tailwindcss/vite` | `^4.3.3` | Tailwind v4 Vite plugin |
 | `@nuxt/eslint` | `^1.17.0` | ESLint + stylistic rules |
-| `@nuxt/fonts` | `^0.14.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) |
-| `@nuxt/icon` | `^2.5.1` | SVG icon system |
-| `@nuxt/image` | `^2.1.0` | Image optimisation |
+| `@nuxt/fonts` | `^1.1.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) — served from `/_nuxt/fonts/` in production; a provider/download failure fails the build (`throwOnError` default) |
+| `@nuxt/icon` | `^2.6.0` | SVG icon system |
+| `@nuxt/image` | `^2.2.0` | Image optimisation |
 | `@nuxtjs/color-mode` | `^4.0.1` | Centralised colour-mode config, fixed to dark |
 | `@nuxtjs/i18n` | `^10.6.0` | Multi-language support (EN + IT) |
-| `@vueuse/core` | `^14.4.0` | Vue composition utilities |
-| `@vueuse/nuxt` | `^14.4.0` | Nuxt integration for VueUse |
+| `@vueuse/core` | `^15.0.0` | Vue composition utilities |
+| `@vueuse/nuxt` | `^15.0.0` | Nuxt integration for VueUse |
 | `@floating-ui/vue` | `^2.0.1` | Floating element positioning |
-| `isomorphic-dompurify` | `^4.1.0` | XSS-safe HTML sanitisation |
-| `@emailjs/browser` | `^4.4.1` | Contact form email sending |
+| `isomorphic-dompurify` | `^4.6.0` | XSS-safe HTML sanitisation |
+| `@emailjs/browser` | `^5.0.3` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |
-| `zod` | `^4.5.4` | Runtime form validation |
-| `eslint` | `^10.9.1` | Linter |
+| `zod` | `^4.6.7` | Runtime form validation |
+| `eslint` | `^10.13.0` | Linter |
 
-`esbuild` is pinned via `overrides` (`^0.28.0`) across all transient deps — dev-server CORS security fix (GHSA-67mh), see `package.json`.
+`esbuild` is pinned via `overrides` (`^0.28.0`) for dedup only — the dev-server CORS advisory (GHSA-67mh) is now fixed upstream by every consumer; without the override npm would install two esbuild copies, see `package.json`.
+
+Open advisory: `node-forge` ≤ 1.4.0 (GHSA-86w9-cpqp-85rv, high) reaches the project only through `nuxt` → `nitropack` → `listhen` (dev-server self-signed HTTPS), not the prerendered output. No patched `node-forge` exists yet; `npm audit`'s suggested fix is a downgrade of `nuxt` and is not applied. Tracked in `.sb-context/dependency-notes.json`.
 
 ### Dev dependencies
 
 | Package | Version | Purpose |
 |---|---|---|
-| `@iconify-json/solar` | `^1.2.10` | Solar icon set |
+| `@iconify-json/solar` | `^1.2.13` | Solar icon set |
 | `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
-| `@iconify-json/logos` | `^1.2.13` | Brand/tech logo icons |
+| `@iconify-json/logos` | `^1.2.17` | Brand/tech logo icons |
 | `@iconify-json/flagpack` | `^1.2.8` | Flag icons |
-| `@types/node` | `^26.4.1` | Node.js type definitions |
-| `typescript` | `^6.0.3` | TypeScript compiler |
-| `vue-tsc` | `^3.3.11` | Vue TypeScript type checking |
+| `@types/node` | `^26.6.5` | Node.js type definitions |
+| `typescript` | `^6.0.3` | TypeScript compiler — held on 6.x, see below |
+| `vue-tsc` | `^3.3.13` | Vue TypeScript type checking |
+
+`typescript` is intentionally held on `^6` (`_comment_typescript` in `package.json`): TS 7 is the native Go compiler and ships no classic JS compiler API, which `vue-tsc`/`@volar` (`nuxt typecheck`) relies on — Vue support is planned with TS 7.1 — and `@typescript-eslint` peers `typescript <6.1.0`. Tracked in `.sb-context/dependency-notes.json`.
 
 ---
 

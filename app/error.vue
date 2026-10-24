@@ -8,66 +8,60 @@ const props = defineProps<{
   }
 }>()
 
-const is404 = props.error.statusCode === 404
+// Dependencies
+const { t } = useI18n()
+const localePath = useLocalePath()
 
-const handleBackHome = () => {
-  clearError({ redirect: '/' })
+// Data
+const is404 = computed(() => props.error.statusCode === 404)
+const showDetails = import.meta.dev
+
+useSeoMeta({
+  title: () => (is404.value ? t('errorPage.notFoundTitle') : t('errorPage.genericTitle')),
+  robots: 'noindex',
+})
+
+// Events
+const onBackHome = () => {
+  clearError({ redirect: localePath('index') })
 }
 </script>
 
 <template>
-  <div
-    class="min-h-dvh bg-sb-main text-sb-contrast flex items-center justify-center pt-16 px-6 md:px-10 u-sb-soft-transition"
-  >
-    <main class="w-full max-w-350 mx-auto">
-      <section
-        class="flex flex-col items-center text-center gap-6 py-20"
-      >
-        <!-- Badge status -->
-        <p
-          class="ty-sb-caption uppercase tracking-[0.2em] text-sb-muted bg-sb-surface/60 border border-sb-border rounded-xl px-4 py-1 u-sb-soft-transition"
-        >
-          {{ is404 ? 'Page not found' : 'Something went wrong' }}
+  <NuxtLayout>
+    <section class="min-h-[calc(100dvh-4rem)] flex flex-col items-center justify-center text-center gap-6 py-20">
+      <h1 class="sb-hero text-primary-ink mb-0 tabular-nums">
+        {{ is404 ? '404' : (props.error.statusCode ?? 500) }}
+      </h1>
+
+      <div class="space-y-3 max-w-xl">
+        <h2 class="sb-h3 mb-0">
+          {{ is404 ? t('errorPage.notFoundTitle') : t('errorPage.genericTitle') }}
+        </h2>
+        <p class="text-ink-muted text-center">
+          {{ is404 ? t('errorPage.notFoundMessage') : t('errorPage.genericMessage') }}
+        </p>
+        <p class="text-ink-muted text-center">
+          {{ t('errorPage.hint') }}
         </p>
 
-        <!-- Big code -->
-        <h1 class="ty-sb-hero text-sb-accent drop-shadow mb-2 u-sb-soft-transition">
-          {{ is404 ? '404' : 'Error' }}
-        </h1>
+        <details v-if="showDetails && !is404" class="text-left mt-4">
+          <summary class="sb-label text-ink-muted cursor-pointer hover:text-ink sb-transition">
+            {{ t('errorPage.technicalDetails') }}
+          </summary>
+          <pre class="sb-small text-ink-muted bg-surface border border-border rounded-lg p-3 mt-2 overflow-auto">{{ JSON.stringify(props.error, null, 2) }}</pre>
+        </details>
+      </div>
 
-        <!-- Title / message -->
-        <div class="space-y-3 max-w-xl">
-          <p class="ty-sb-h4 text-sb-contrast u-sb-soft-transition">
-            {{ is404 ? 'The page you are looking for does not exist.' : (props.error.statusMessage || props.error.message || 'An unexpected error occurred.') }}
-          </p>
-
-          <!-- DEBUG: Show full error in dev -->
-          <details v-if="!is404" class="text-left mt-4">
-            <summary class="ty-sb-label text-sb-muted cursor-pointer hover:text-sb-contrast u-sb-soft-transition">
-              Technical Details (debug)
-            </summary>
-            <pre class="ty-sb-caption text-sb-muted bg-sb-surface border border-sb-border rounded-xl p-3 mt-2 overflow-auto u-sb-soft-transition">{{ JSON.stringify(props.error, null, 2) }}</pre>
-          </details>
-
-          <p class="ty-sb-p text-sb-muted u-sb-soft-transition">
-            Check the URL for mistakes, or go back to the homepage and continue exploring my work.
-          </p>
-        </div>
-
-        <!-- Actions -->
-        <div class="flex flex-col sm:flex-row items-center justify-center gap-8 md:gap-10 mt-4 u-sb-soft-transition">
-          <BaseButton type="button" variant="outline" @click="handleBackHome">
-            Back to Home
-          </BaseButton>
-
-          <NuxtLink
-            class="ty-sb-btn-label text-sb-muted underline underline-offset-4 hover:text-sb-contrast u-sb-soft-transition"
-            to="/"
-          >
-            Go to stefanobiddau.com
-          </NuxtLink>
-        </div>
-      </section>
-    </main>
-  </div>
+      <BaseButton
+        class="mt-4"
+        size="lg"
+        type="button"
+        variant="primary"
+        @click="onBackHome"
+      >
+        {{ t('errorPage.backHome') }}
+      </BaseButton>
+    </section>
+  </NuxtLayout>
 </template>

@@ -42,10 +42,11 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue`, `CustomSkillsCard.vue` |
 | Composable | camelCase + `use` | `useNotification.ts` |
 | Utility / type | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-sb-*` / `u-sb-*` | `ty-sb-h3`, `u-sb-soft-transition` |
-| CSS variable | `--color-sb-*` | `--color-sb-accent` |
+| CSS utility | `sb-*` | `sb-h3`, `sb-transition` |
+| CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
+- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `iconOnly`, `isActive`, `tone`). **Only `size` changes dimensions** — same box for every variant/type: `sm` 36px (hit 44) for supporting/compact actions (on images, toolbars, pagination, chips, header controls, close, secondary form actions); `md` 44px default for actions in content and dialogs (card CTAs, submit, back, read more); `lg` 52px for the page's single main CTA in the first viewport. Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, timeline dots, hamburger. Never resize a `BaseButton` with classes
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 
@@ -110,6 +111,7 @@ const emit = defineEmits<{
 - No custom CSS classes unless explicitly requested
 - No `<style>` blocks unless explicitly requested
 - Never hardcode raw hex values — use design tokens
+- Closed theme: only theme tokens generate utilities — no default palette (`text-white`, `bg-gray-*`), text sizes (`text-sm`), `font-semibold`/`font-medium`, `2xl:`, arbitrary values (`text-[15px]`, `shadow-[…]`)
 - No `dark:` Tailwind variants needed
 - Dynamic classes via `:class` with arrays/objects — never string concatenation
 
@@ -128,30 +130,25 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 
 ## Design system
 
-### Colours (`--color-sb-*` / Tailwind `bg-sb-*`, `text-sb-*`, `border-sb-*`)
-Token values and usage: `app/assets/css/theme.css` (`@theme` block). Opacity modifiers allowed: `bg-sb-main/80`.
+Four files in `app/assets/css/`, prefix `sb`, structure maintained by the sb-design plugin (`/sb-design:check`, `/sb-design:align`): `main.css` (entry, page base styles), `theme.css`, `typography.css`, `animation.css`. Values and full tables: README §4.
 
-### Typography (`ty-sb-*`)
-Class definitions: `app/assets/css/typography.css`. Semantic hierarchy: `ty-sb-hero`, `ty-sb-impact`, `ty-sb-h1`–`ty-sb-h3` are Bebas Neue; `ty-sb-h4`, `ty-sb-p`, `ty-sb-span`, `ty-sb-label`, `ty-sb-btn-label`, `ty-sb-caption`, `ty-sb-code` are Space Mono. `h1`–`h4`, `p`, `span`, `label`, `small`, `code` tags get matching styles for free from `base.css` — no class needed unless the element isn't the matching tag.
+### Colours (`theme.css`)
+Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `border-strong` (inputs, ≥ 3:1), `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `primary-ink` / `primary-ink-hover` (orange as text), `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Orange text is always `text-primary-ink`, never `text-primary` (fails AA on `surface-2`). `--sb-gold-100…900` are raw-only illustration colours for the gold skill cards.
 
-### Utility classes (`u-sb-*`)
-Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transition` to interactive elements.
+### Shapes and shadows (`theme.css`)
+`rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
 
-### Animations (Vue `<Transition>`)
-Keyframe/duration definitions: `app/assets/css/animations.css` (`fade`, `slide-down`, `scale-fade`).
+### Typography (`sb-*`, `typography.css`)
+One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-label`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Running text (`p`, `li`, `blockquote`) is justified site-wide with `hyphens: auto` (base layer in `typography.css`); centered copy opts out with `text-center`. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
-### Proportions audit
-When asked to audit or refactor a file's typography/spacing/padding against the design system
-(dead `ty-sb-*`/`u-sb-*` classes, wrong heading tags, margins/padding not proportioned to the
-`--fs-sb-*` scale), use the `design-system-proportions-audit` skill. It re-reads the 5 CSS files
-fresh every time, covers the target file element by element (no sampling), always shows the full
-report before applying any fix, and never touches color tokens.
+### Motion and focus (`animation.css`)
+Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance`.
 
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
 - Collections: `solar` (bold duotone UI), `mdi` (general UI), `logos` (brand/tech), `flagpack` (flags)
 - Size via Tailwind: `size-4` to `size-7`
-- Colour via token: `text-sb-contrast`, `text-sb-muted`, `text-sb-accent`
+- Colour via token: `text-ink`, `text-ink-muted`, `text-primary-ink`
 - Always `aria-label` on icon-only interactive elements
 - **Do not use `lucide`** — not installed
 
@@ -170,7 +167,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` |
 
-Creating a new page: see the `add-page` skill.
+Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
 Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
@@ -208,12 +205,18 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination } = useSkills()
+const { filters, skills, pagination, featuredStack, countByTypes } = useSkills()
 filters.value.name = 'vue'
 filters.value.types = ['feFramework']
 filters.value.page = 1
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`. `countByTypes(types)` returns how many skills belong to the given categories (used by the Skills page CTAs). `featuredStack`: home "Core stack", `FEATURED_STACK` names grouped `frontend`/`backend`/`database`, ignores filters and `isGod`.
+
+### `useGithubStats()`
+```ts
+const { stats } = await useGithubStats()
+```
+The one async content source — `useFetch('/api/github-stats.json')`, prerendered once per build (see Server API). `stats` is `GithubStats | null`; `null` when GitHub was unreachable, hide the UI then.
 
 ### `useTemplates()`
 ```ts
@@ -240,6 +243,12 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 const { lock, unlock, isLocked } = useLockScroll()
 ```
 SSR-safe, multiple concurrent owners safe.
+
+### `useFocusTrap(container)`
+```ts
+const { activate, deactivate } = useFocusTrap(panelRef)
+```
+Traps Tab inside `panelRef` while active, restores focus on deactivate. Use for every modal surface (dialog, drawer). Client-side only.
 
 ### `useSanitize()`
 ```ts
@@ -277,7 +286,8 @@ Add new shared interfaces to `global.d.ts` inside `declare global {}` — never 
 
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file:
 
-- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy` (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — it must run per-request to read `CONTEXT`.
+- `server/api/github-stats.json.ts` — GitHub profile stats, prerendered to a static JSON (`routeRules['/api/github-stats.json'] = { prerender: true }`); contributions need `NUXT_GITHUB_TOKEN`. Token is `runtimeConfig.githubToken: ''`, filled from env at runtime — never assign `process.env` to it in `nuxt.config.ts` (it gets inlined into the function bundle). The fetch is cached 10 min in dev only (`shouldBypassCache: () => !import.meta.dev`), so dev navigations don't wait on GitHub
+- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy`, `Allow: /` + sitemap link on `production`. Netlify's `CONTEXT` exists only at build time, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)` — never `process.env.CONTEXT` in the route. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — each deploy must serve its own rules.
 
 New server code goes in `server/routes/<name>.ts` (served at `/<name>`) or `server/api/<name>.ts` (served at `/api/<name>`), depending on whether the path needs the `/api` prefix.
 
@@ -314,7 +324,7 @@ Fully delegated to auto-generated `.nuxt/tsconfig.app.json` / `.nuxt/tsconfig.se
 
 ## Maintenance workflows
 
-On request, run these checks (`dependency-check`, `lint-check`, `build-check`, `seo-check`, `full-checkup`, `update-documentation`, `design-system-proportions-audit` skills). Report results in the same language the user asked in.
+Handled by the sb-context-fe plugins (project state in `.sb-context/`): `/sb-health:deps`, `/sb-health:lint`, `/sb-health:build`, `/sb-health:seo`, `/sb-health:checkup` (full pass), `/sb-health:docs` (README sync); `/sb-design:check` (style still aligned?), `/sb-design:migrate` (templates using classes the theme no longer generates). Report results in the same language the user asked in.
 
 ---
 

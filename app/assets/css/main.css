@@ -1,20 +1,22 @@
+/* ==========================================================================
+   main.css — entry point of the global style
+   The only file registered as the global style (css in nuxt.config.ts). Prefix "sb".
+   ========================================================================== */
+
 @import "tailwindcss";
 @import "./theme.css";
 @import "./typography.css";
-@import './utilities.css';
-@import './animations.css';
+@import "./animation.css";
 
-/* Global, document-level rules: html/body plus the cross-cutting
-   stuff that doesn't belong to a single tag (not typography,
-   handled in typography.css) or to a specific component. */
+/* The dark theme follows data-theme on <html>, written by @nuxtjs/color-mode */
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 @layer base {
   html {
     overflow-x: hidden;
     box-sizing: border-box;
     scroll-behavior: smooth;
     scrollbar-gutter: stable;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     -webkit-text-size-adjust: 100%; /* prevent iOS Safari text inflation */
   }
 
@@ -29,13 +31,7 @@
   }
 
   body {
-    margin: 0;
-    background-color: var(--color-sb-main);
-    color: var(--color-sb-contrast);
-    font-family: var(--font-space-mono);
-    font-size: var(--fs-sb-p);
-    font-weight: 400;
-    line-height: 1.5;
+    @apply bg-bg text-ink antialiased sb-body;
     text-rendering: optimizeLegibility;
   }
 
@@ -52,18 +48,19 @@
   }
 
   ::selection {
-    background: color-mix(in oklab, var(--color-sb-accent) 50%, #000 70%);
-    color: var(--color-sb-contrast);
+    background-color: var(--sb-selection);
+    color: var(--sb-ink);
   }
 
+  /* Scrollbar (webkit only, subtle) */
   *::-webkit-scrollbar {
     width: 5px;
     height: 5px;
   }
   *::-webkit-scrollbar-thumb {
-    background: color-mix(in oklab, var(--color-sb-accent) 70%, #000 65%);
-    border: 1px solid color-mix(in oklab, var(--color-sb-accent) 70%, #000 65%);
-    border-radius: 999px;
+    @apply rounded-full;
+    background: var(--sb-scrollbar);
+    border: 1px solid var(--sb-scrollbar);
   }
   *::-webkit-scrollbar-track {
     background: transparent;

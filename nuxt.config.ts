@@ -57,6 +57,7 @@ export default defineNuxtConfig({
   },
   css: ['~/assets/css/main.css'],
   colorMode: {
+    dataValue: 'theme',
     classSuffix: '',
     // Fixed, no OS-following and no toggle — this app is always dark (see CLAUDE.md)
     preference: 'dark',
@@ -67,6 +68,8 @@ export default defineNuxtConfig({
   // Runtime config & routing
   // ---------------------------------------------------------------------------
   runtimeConfig: {
+    // Server-only, filled at runtime from NUXT_GITHUB_TOKEN — never read process.env here, the value would be inlined into the function bundle
+    githubToken: '',
     public: {
       siteUrl: 'https://stefanobiddau.com',
       // Netlify's CONTEXT env var is only set during the build, not at Function runtime —
@@ -96,6 +99,9 @@ export default defineNuxtConfig({
     '/it/my-projects/sb-templates': { prerender: true },
     '/it/privacy-policy': { prerender: true },
     '/it/terms-and-conditions': { prerender: true },
+
+    // Static JSON built once per deploy — GitHub is never called from the browser
+    '/api/github-stats.json': { prerender: true },
 
     // Dynamic, must run per-request — never prerender
     '/robots.txt': { prerender: false },
@@ -191,5 +197,9 @@ export default defineNuxtConfig({
     quality: 80,
     format: ['webp', 'avif', 'png'],
     screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
+    // Passthrough for assets already optimised by hand (3D avatars): served as-is, no re-encoding
+    providers: {
+      none: { provider: 'none' },
+    },
   },
 })

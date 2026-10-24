@@ -1,97 +1,165 @@
-@theme {
-  /* =======================================
-     FONT FAMILIES
-     ======================================= */
-  --font-bebas-neue: 'Bebas Neue', system-ui, sans-serif;
-  --font-space-mono: 'Space Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
+/* ==========================================================================
+   theme.css — colors, shadows, radii, breakpoints
+   Prefix "sb". Literal colors live ONLY in this file.
+   ========================================================================== */
 
-  --font-sans: initial;
-  --font-serif: initial;
-  --font-mono: initial;
+/* --------------------------------------------------------------------------
+   1. Raw values per theme
+   The app is dark-only (CLAUDE.md: no light theme, no toggle): the light
+   block carries the dark palette, and [data-theme="dark"] inherits it.
+   -------------------------------------------------------------------------- */
+:root,
+[data-theme="light"] {
+  color-scheme: dark;
 
-  /* =======================================
-     BASE COLORS
-     ======================================= */
-  --color-sb-main: #0f0f20;          /* main background: deep blue-black */
-  --color-sb-surface: #1a1a2e;       /* elevated surface: cards, sections */
-  --color-sb-surface-2: #232342;     /* nested surface: elements inside cards */
-  --color-sb-shadow: rgba(0, 0, 0, 0.45); /* soft shadow for depth */
-  --color-sb-border: #2a2a44;        /* borders, outlines, dividers */
+  /* Surfaces */
+  --sb-bg: #0f0f20;            /* page: deep blue-black */
+  --sb-surface: #1a1a2e;       /* cards, sections */
+  --sb-surface-2: #232342;     /* nested surfaces, elements inside cards */
 
-  /* =======================================
-     ACCENTS & CONTRAST
-     ======================================= */
-  --color-sb-accent: #e95905;        /* new accent: vivid orange */
-  --color-sb-accent-hover: #d24f05;  /* slightly darker hover tone */
-  --color-sb-accent-border: #b34704; /* deeper accent for borders */
-  --color-sb-contrast: #f1f1f1;      /* main text on dark backgrounds */
-  --color-sb-muted: #9ca3af;         /* secondary or subdued text */
-  --color-sb-error: #ef4444;         /* alert or error */
+  /* Borders */
+  --sb-border: #2a2a44;        /* dividers, outlines (decorative) */
+  --sb-border-strong: #6e7299; /* input and control borders: 3.26:1 on surface-2 */
 
+  /* Text */
+  --sb-ink: #f1f1f1;
+  --sb-ink-muted: #9ca3af;
 
-  /* =======================================
-     STATUS COLORS - LIGHT MODE
-     ======================================= */
-  --color-sb-success: #22c55e;  /* success state: bright green */
-  --color-sb-warning: #fb923c;  /* warning state: orange */
-  --color-sb-error: #ef4444;    /* error state: red */
-  --color-sb-info: #60a5fa;     /* info state: blue */
+  /* Primary: actions, links, selection */
+  --sb-primary: #e95905;       /* vivid orange */
+  --sb-primary-hover: #f06a1c; /* lighter on hover: dark theme */
+  --sb-primary-border: #b34704; /* deeper tone for primary borders */
+  --sb-on-primary: #0f0f20;    /* provisional: 5.31:1 on primary */
+  --sb-primary-ink: #f47a32;       /* primary as text: 5.52:1 on surface-2, 6.24:1 on surface */
+  --sb-primary-ink-hover: #f8904d; /* 6.54:1 on surface-2 */
 
-  --color-sb-success-bg: #14532d;  /* dark green background */
-  --color-sb-warning-bg: #78350f;  /* dark amber background */
-  --color-sb-error-bg: #7f1d1d;    /* dark red background */
-  --color-sb-info-bg: #1e3a8a;     /* dark blue background */
+  /* States: text color paired with its soft tint */
+  --sb-success: #4ade80;
+  --sb-success-soft: #14532d;
+  --sb-warning: #fdba74;
+  --sb-warning-soft: #78350f;
+  --sb-error: #fca5a5;
+  --sb-error-soft: #7f1d1d;
+  --sb-info: #93c5fd;
+  --sb-info-soft: #1e3a8a;
 
-  /* =======================================
-     TYPOGRAPHIC SCALE — --fs-sb-*
-     =======================================
-     6 distinct sizes: h1 → h4 (headings), p (body), small
-     (everything tiny: label / caption / code / btn-label).
+  --sb-focus-ring: var(--sb-ink);
 
-     Single FIXED ratio (1.25, "major third") applied to a
-     fluid base — not a different ratio per breakpoint. Only
-     --fs-sb-p is a real clamp(); every other step is
-     calc(p * ratio^n), so the whole scale grows smoothly with
-     the viewport (no snapping at breakpoints) AND the
-     relationship between levels never drifts: h1 is always
-     ~2.44x p, at 320px and at 2560px alike. That's the fix for
-     the "sproporzionato" issue — before, h1/p went from 2.07x
-     on mobile to 3.17x on 2xl, so the hierarchy itself changed
-     shape across breakpoints, not just its absolute size.
+  /* Gold tier: top-level skill cards only (illustrative, no Tailwind mapping) */
+  --sb-gold-100: #f3e29b;
+  --sb-gold-200: #f0d58c;
+  --sb-gold-300: #d4af37;
+  --sb-gold-400: #b3861a;
+  --sb-gold-500: #8b6b1f;
+  --sb-gold-600: #7a5a1f;
+  --sb-gold-700: #5a4216;
+  --sb-gold-800: #4a3210;
+  --sb-gold-900: #3a280e;
 
-     step(n) = p * 1.25^n   —   n: p=0, h4=1, h3=2, h2=3, h1=4
+  /* Solar system illustration (Skills page): raw-only, no Tailwind mapping */
+  --sb-sun-100: #fff9c4;
+  --sb-sun-200: #fde68a;
+  --sb-sun-250: #fde047;
+  --sb-sun-300: #fbbf24;
+  --sb-sun-350: #facc15;
+  --sb-sun-400: #f59e0b;
+  --sb-sun-500: #f97316;
+  --sb-sun-corona-inner: #ffbf78;
+  --sb-sun-corona-mid: #ff8822;
+  --sb-sun-corona-outer: #ff5e00;
+  --sb-orbit: #94a3b8;
+  --sb-planet-shadow: #0f172a;
+  --sb-moon-100: #e5e7eb;
+  --sb-planet-1: #b6b6b6;
+  --sb-planet-2: #d8c18f;
+  --sb-planet-3: #3c82f6;
+  --sb-planet-4: #c1440e;
+  --sb-planet-5: #d9a066;
+  --sb-planet-6: #e7d9a4;
+  --sb-planet-7: #7dd3fc;
+  --sb-planet-8: #2563eb;
+  --sb-planet-atmo-1: #e5e7eb;
+  --sb-planet-atmo-2: #f5e7c4;
+  --sb-planet-atmo-3: #93c5fd;
+  --sb-planet-atmo-4: #f9735b;
+  --sb-planet-atmo-5: #f2c58b;
+  --sb-planet-atmo-6: #f8f5d4;
+  --sb-planet-atmo-7: #bae6fd;
+  --sb-planet-atmo-8: #60a5fa;
 
-     --fs-sb-hero and --fs-sb-impact are intentionally OUTSIDE
-     this chain — they're not heading steps, they're special
-     "moment" sizes (page hero / full-viewport opener). But
-     instead of their own independent curve (which used to
-     drift out of proportion with h1 across breakpoints too),
-     they're now pinned to a fixed multiple of h1, so they
-     scale in lockstep with the rest of the hierarchy.
-     ======================================= */
+  /* Selection and scrollbar: darkened primary */
+  --sb-selection: color-mix(in oklab, var(--sb-primary) 50%, #000 70%);
+  --sb-scrollbar: color-mix(in oklab, var(--sb-primary) 70%, #000 65%);
 
-  /* static, non-fluid — legibility floor. Shared by label,
-     caption, code and btn-label: none of these are "headings",
-     they're all small UI/meta text, so they share one size. */
-  --fs-sb-small: 0.75rem;     /* 12px, base */
-  --fs-sb-small-lg: 0.875rem; /* 14px, md+ */
+  /* Shadows: soft and wide, one shadow color */
+  --sb-shadow-color: rgba(0, 0, 0, 0.45);
+  --sb-shadow-sm: 0 4px 20px var(--sb-shadow-color);   /* cards, banners */
+  --sb-shadow-md: 0 12px 32px var(--sb-shadow-color);  /* menus, logo blocks */
+  --sb-shadow-lg: 0 20px 60px var(--sb-shadow-color);  /* dialogs, side menu */
+  --sb-drop-shadow-md: 0 0 10px var(--sb-shadow-color); /* text over images */
 }
 
-:root {
-  /* Fluid body: 16px @ 320px viewport → 18px @ 1536px viewport,
-     linear in between. Formula: clamp(min, min - slope*minVw/100 + slope*vw, max)
-     slope = (max-min)/(maxVw-minVw)*100 = (18-16)/(1536-320)*100 ≈ 0.1645 */
-  --fs-sb-p: clamp(1rem, 0.967rem + 0.1645vw, 1.125rem);
+[data-theme="dark"] {
+  color-scheme: dark;
+}
 
-  --fs-sb-h4: calc(var(--fs-sb-p) * 1.25);     /* ratio^1 */
-  --fs-sb-h3: calc(var(--fs-sb-p) * 1.5625);   /* ratio^2 */
-  --fs-sb-h2: calc(var(--fs-sb-p) * 1.9531);   /* ratio^3 */
-  --fs-sb-h1: calc(var(--fs-sb-p) * 2.4414);   /* ratio^4 */
+/* --------------------------------------------------------------------------
+   2. Tailwind tokens that change with the theme
+   inline: utilities read var(--sb-*) on the element, so they follow a
+   nested data-theme. The reset closes the system.
+   -------------------------------------------------------------------------- */
+@theme inline {
+  --color-*: initial;
+  --shadow-*: initial;
+  --inset-shadow-*: initial;
+  --drop-shadow-*: initial;
 
-  --fs-sb-hero: calc(var(--fs-sb-h1) * 1.7);   /* ~66px → ~75px */
-  /* Direct fluid clamp, not a multiplier of h1: calc() can't mix
-     a unitless number with vw (invalid CSS, silently dropped —
-     that was the earlier bug). Same target as before: ~86px on
-     small screens, growing to ~120.7px on large screens. */
-  --fs-sb-impact: clamp(5.375rem, 4.804rem + 2.854vw, 7.545rem);
+  --color-bg: var(--sb-bg);
+  --color-surface: var(--sb-surface);
+  --color-surface-2: var(--sb-surface-2);
+  --color-border: var(--sb-border);
+  --color-border-strong: var(--sb-border-strong);
+  --color-ink: var(--sb-ink);
+  --color-ink-muted: var(--sb-ink-muted);
+  --color-primary: var(--sb-primary);
+  --color-primary-hover: var(--sb-primary-hover);
+  --color-primary-border: var(--sb-primary-border);
+  --color-on-primary: var(--sb-on-primary);
+  --color-primary-ink: var(--sb-primary-ink);
+  --color-primary-ink-hover: var(--sb-primary-ink-hover);
+  --color-success: var(--sb-success);
+  --color-success-soft: var(--sb-success-soft);
+  --color-warning: var(--sb-warning);
+  --color-warning-soft: var(--sb-warning-soft);
+  --color-error: var(--sb-error);
+  --color-error-soft: var(--sb-error-soft);
+  --color-info: var(--sb-info);
+  --color-info-soft: var(--sb-info-soft);
+  --color-focus-ring: var(--sb-focus-ring);
+
+  --shadow-sm: var(--sb-shadow-sm);
+  --shadow-md: var(--sb-shadow-md);
+  --shadow-lg: var(--sb-shadow-lg);
+
+  --drop-shadow-md: var(--sb-drop-shadow-md);
+}
+
+/* --------------------------------------------------------------------------
+   3. Fixed tokens: radii and breakpoints
+   rounded-none and rounded-full are always available.
+   -------------------------------------------------------------------------- */
+@theme {
+  --radius-*: initial;
+  --radius-sm: 4px;   /* code, small chips */
+  --radius-md: 8px;   /* buttons, inputs */
+  --radius-lg: 12px;  /* cards, dialogs */
+  --radius-xl: 16px;  /* logo blocks, feature panels */
+
+  --spacing: 0.25rem;
+
+  --breakpoint-*: initial;
+  --breakpoint-sm: 40rem;  /* 640px */
+  --breakpoint-md: 48rem;  /* 768px */
+  --breakpoint-lg: 64rem;  /* 1024px: headings switch to desktop size */
+  --breakpoint-xl: 80rem;  /* 1280px */
 }

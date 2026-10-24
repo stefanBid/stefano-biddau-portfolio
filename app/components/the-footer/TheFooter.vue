@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 </script>
 
 <template>
-  <footer class="border-t border-sb-border bg-sb-main/95 text-sb-contrast mt-16 px-6 md:px-10">
+  <footer class="border-t border-border bg-bg/95 text-ink mt-16 px-6 md:px-10">
     <div
       class="max-w-350 mx-auto grid gap-8 md:gap-10
              grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start py-10 md:py-12"
@@ -32,43 +32,43 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
       <!-- 1) Logo + descrizione -->
       <section class="space-y-4">
         <NuxtLink
-          class="inline-flex items-center gap-2 u-sb-soft-transition u-sb-focus rounded hover:opacity-90"
+          class="inline-flex items-center gap-2 sb-transition sb-focus rounded-sm hover:opacity-90"
           :to="props.quickLinks[0]?.path || '/'"
         >
           <NuxtImg
-            alt="Logo"
+            alt=""
             class="object-contain size-7 sm:size-8 md:size-9"
             src="/images/logo.webp"
           />
-          <span class="ty-sb-h3">
+          <span class="sb-h3">
             Stefano Biddau
           </span>
         </NuxtLink>
 
-        <p class="ty-sb-label normal-case! text-sb-muted max-w-md">
+        <p class="sb-label text-ink-muted max-w-md">
           {{ t('footer.tagline') }}
         </p>
       </section>
 
       <!-- 2) Link veloci -->
       <section class="space-y-3">
-        <h2 class="ty-sb-nav-label text-sb-muted tracking-[0.22em]">
+        <h2 class="sb-label uppercase text-ink-muted tracking-[0.22em]">
           {{ t('footer.routeSection') }}
         </h2>
 
-        <nav class="flex flex-col gap-2">
+        <nav class="flex flex-col">
           <template v-if="props.quickLinks.length">
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit ty-sb-label normal-case! text-sb-contrast/80 hover:text-sb-contrast u-sb-soft-transition u-sb-focus rounded"
+                class="w-fit inline-flex items-center min-h-8 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
                 :to="link.path"
               >
                 {{ link.name }}
               </NuxtLink>
               <span
                 v-else
-                class="ty-sb-label normal-case! text-sb-contrast/40 cursor-not-allowed"
+                class="sb-label text-ink/40 cursor-not-allowed"
               >
                 {{ link.name }}
               </span>
@@ -76,7 +76,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           </template>
           <p
             v-else
-            class="ty-sb-caption text-sb-muted/70"
+            class="sb-small italic text-ink-muted/70"
           >
             {{ t('footer.routeFallback') }}
           </p>
@@ -85,18 +85,18 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
-        <h2 class="ty-sb-nav-label text-sb-muted tracking-[0.22em]">
+        <h2 class="sb-label uppercase text-ink-muted tracking-[0.22em]">
           {{ t('footer.contactSection') }}
         </h2>
 
         <div class="space-y-2">
           <span
             v-if="props.email"
-            class="ty-sb-label normal-case! text-sb-contrast/85 flex items-center"
+            class="sb-label text-ink/85 flex items-center"
           >
-            <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:letter-opened-bold-duotone" />
+            <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:letter-opened-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus rounded"
+              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`mailto:${props.email}`"
             >
               {{ props.email }}
@@ -105,11 +105,11 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
           <span
             v-if="props.phone"
-            class="ty-sb-label normal-case! text-sb-contrast/85 flex items-center"
+            class="sb-label text-ink/85 flex items-center"
           >
-            <Icon class="size-4.5 inline-block mr-1.5 text-sb-muted" name="solar:smartphone-2-bold-duotone" />
+            <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:smartphone-2-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-sb-accent u-sb-soft-transition u-sb-focus rounded"
+              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`tel:${props.phone}`"
             >
               {{ props.phone }}
@@ -159,37 +159,33 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     </div>
 
     <!-- Bottom bar -->
-    <div class="border-t border-sb-border bg-sb-main/98">
+    <div class="border-t border-border bg-bg/98">
       <div
-        class="max-w-350 mx-auto px-6 md:px-10 py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
+        class="max-w-350 mx-auto py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
       >
         <!-- Left side: credit + made with -->
-        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 text-sb-muted text-center lg:text-left [&>p]:mb-0">
-          <p class="ty-sb-caption">
+        <div class="flex flex-col flex-1 items-center lg:items-start gap-1 text-ink-muted text-center lg:text-left [&>p]:mb-0">
+          <p class="sb-small italic">
             {{ t('footer.creditSection', { year: new Date().getFullYear() }) }}
-          </p>
-
-          <p class="ty-sb-caption text-sb-muted/80">
-            {{ t('footer.madeWith') }}
           </p>
         </div>
 
         <!-- Right side: legal links -->
-        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 ty-sb-caption text-sb-muted/80 not-italic text-center lg:text-right">
+        <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
-            class="hover:text-sb-accent underline underline-offset-4 u-sb-focus rounded w-fit u-sb-soft-transition"
+            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('privacy-policy')"
           >
             {{ t('nav.privacy-policy') }}
           </NuxtLink>
 
           <!-- Separator -->
-          <span class="ty-sb-caption not-italic opacity-40 select-none">|</span>
+          <span class="sb-small italic opacity-40 select-none">|</span>
 
           <!-- Terms -->
           <NuxtLink
-            class="hover:text-sb-accent underline underline-offset-4 u-sb-focus rounded w-fit u-sb-soft-transition"
+            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('terms-and-conditions')"
           >
             {{ t('nav.terms-and-conditions') }}
