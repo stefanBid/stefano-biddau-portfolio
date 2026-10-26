@@ -28,16 +28,22 @@ const props = withDefaults(defineProps<ThePageHeroProps>(), {
       </p>
     </div>
     <!-- Decorative: the page title already names the page. provider="none" serves the full-resolution WebP (1024×1536, q92) untouched -->
-    <NuxtImg
+    <div
       v-if="props.imageSrc"
-      alt=""
-      class="order-1 md:order-2 justify-self-start md:justify-self-end w-32 sm:w-40 md:w-48 lg:w-60 h-auto animate-fade-in"
-      fetchpriority="high"
-      :height="1536"
-      loading="eager"
-      provider="none"
-      :src="props.imageSrc"
-      :width="1024"
-    />
+      class="order-1 md:order-2 justify-self-start md:justify-self-end w-32 sm:w-40 md:w-48 lg:w-60 animate-drift-in"
+    >
+      <BaseFloat class="sb-delay-800">
+        <NuxtImg
+          alt=""
+          class="w-full h-auto"
+          fetchpriority="high"
+          :height="1536"
+          loading="eager"
+          provider="none"
+          :src="props.imageSrc"
+          :width="1024"
+        />
+      </BaseFloat>
+    </div>
   </section>
 </template>

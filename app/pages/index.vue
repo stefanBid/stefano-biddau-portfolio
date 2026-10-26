@@ -36,6 +36,8 @@ const { el, elStyle } = useTypedText(
   typedRole,
   {
     contentType: 'null',
+    // Starts once the name has risen (animate-mask-up)
+    startDelay: 700,
     onComplete: self => self.cursor?.remove(),
   },
 )
@@ -60,10 +62,10 @@ const STACK_GROUP_LAYOUT = {
     <!-- Pulled under the sticky header so the first screen is exactly one viewport; selected work starts below the fold -->
     <section class="relative -mt-16 grid min-h-svh items-center content-center gap-6 pt-20 pb-24 md:grid-cols-[1.2fr_1fr] md:gap-10 lg:pt-24 lg:pb-28 lg:gap-16">
       <div class="order-2 md:order-1 flex flex-col items-center text-center md:items-start md:text-left">
-        <h1 class="sb-display mb-0 text-balance">
+        <h1 class="sb-display mb-0 text-balance animate-mask-up sb-delay-150">
           {{ t('pages.home.title') }}
         </h1>
-        <p class="sb-h3 mt-4 min-h-14 text-ink-muted">
+        <p class="sb-h3 mt-4 min-h-14 text-ink-muted animate-fade-in sb-delay-500">
           {{ t('pages.home.subtitle.costant') }}
           <span class="sr-only">{{ typedRole }}</span>
           <span
@@ -73,11 +75,11 @@ const STACK_GROUP_LAYOUT = {
             :style="elStyle"
           ></span>
         </p>
-        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none md:text-left">
+        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none md:text-left animate-rise-in sb-delay-650">
           {{ t('pages.home.lead') }}
         </p>
         <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
-        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex md:grid lg:flex">
+        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex md:grid lg:flex animate-rise-in sb-delay-750">
           <BaseButton size="lg" variant="primary" @click="isContactFormOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
@@ -90,24 +92,26 @@ const STACK_GROUP_LAYOUT = {
           />
         </div>
       </div>
-      <div class="order-1 md:order-2 flex justify-center">
-        <NuxtImg
-          alt=""
-          class="w-24 sm:w-48 md:w-full md:max-w-sm h-auto"
-          fetchpriority="high"
-          :height="1536"
-          loading="eager"
-          provider="none"
-          src="/images/3d-avatar/avatar-pose-4.webp"
-          :width="1024"
-        />
+      <div class="order-1 md:order-2 flex justify-center animate-drift-in">
+        <BaseFloat class="sb-delay-800 w-24 sm:w-48 md:w-full md:max-w-sm">
+          <NuxtImg
+            alt=""
+            class="w-full h-auto"
+            fetchpriority="high"
+            :height="1536"
+            loading="eager"
+            provider="none"
+            src="/images/3d-avatar/avatar-pose-4.webp"
+            :width="1024"
+          />
+        </BaseFloat>
       </div>
       <a
-        class="absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center min-h-11 gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
+        class="group absolute bottom-6 left-1/2 -translate-x-1/2 animate-fade-in sb-delay-1000 inline-flex items-center min-h-11 gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
         href="#selected-work"
       >
         {{ t('pages.home.selectedWork.title') }}
-        <Icon aria-hidden="true" class="size-4" name="solar:arrow-down-linear" />
+        <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-y-0.5" name="solar:arrow-down-linear" />
       </a>
     </section>
 
@@ -116,20 +120,24 @@ const STACK_GROUP_LAYOUT = {
       aria-labelledby="selected-work-title"
       class="scroll-mt-24 pt-8 pb-24"
     >
-      <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
+      <div v-reveal class="flex flex-wrap items-end justify-between gap-4 mb-8">
         <h2 id="selected-work-title" class="mb-0 scroll-mt-24">
           {{ t('pages.home.selectedWork.title') }}
         </h2>
         <NuxtLink
-          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-projects')"
         >
           {{ t('pages.home.selectedWork.viewAll') }}
-          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+          <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
       <ul class="grid gap-6 md:grid-cols-3 mb-0 p-0 list-none">
-        <li v-for="item in selectedWork" :key="item.key">
+        <li
+          v-for="(item, index) in selectedWork"
+          :key="item.key"
+          v-reveal="index + 1"
+        >
           <NuxtLink
             class="group block h-full rounded-lg overflow-hidden border border-border bg-surface hover:border-ink-muted sb-transition sb-focus"
             :to="item.to"
@@ -159,7 +167,7 @@ const STACK_GROUP_LAYOUT = {
       </ul>
     </section>
 
-    <section aria-labelledby="clients-title" class="pb-24">
+    <section v-reveal aria-labelledby="clients-title" class="pb-24">
       <h2 id="clients-title" class="mb-8 scroll-mt-24">
         {{ t('pages.home.clients.title') }}
       </h2>
@@ -186,7 +194,7 @@ const STACK_GROUP_LAYOUT = {
       </div>
     </section>
 
-    <section aria-labelledby="top-skills-title" class="pb-24">
+    <section v-reveal aria-labelledby="top-skills-title" class="pb-24">
       <div class="flex flex-wrap items-end justify-between gap-4 mb-8">
         <div>
           <h2 id="top-skills-title" class="mb-0 scroll-mt-24">
@@ -197,11 +205,11 @@ const STACK_GROUP_LAYOUT = {
           </p>
         </div>
         <NuxtLink
-          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-skills')"
         >
           {{ t('pages.home.topSkills.viewAll') }}
-          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+          <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
       <div class="grid grid-cols-3 gap-x-3 gap-y-8 md:grid-cols-5 md:gap-x-4 lg:grid-cols-8">
@@ -231,6 +239,7 @@ const STACK_GROUP_LAYOUT = {
 
     <section
       v-if="githubStats"
+      v-reveal
       aria-labelledby="github-title"
       class="pb-24"
     >
@@ -239,21 +248,21 @@ const STACK_GROUP_LAYOUT = {
           {{ t('pages.home.github.title') }}
         </h2>
         <a
-          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :href="githubStats.profileUrl"
           rel="noopener noreferrer"
           target="_blank"
         >
           <Icon aria-hidden="true" class="size-4" name="mdi:github" />
           {{ t('pages.home.github.viewProfile') }}
-          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-up-linear" />
+          <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5 motion-safe:group-hover:-translate-y-0.5" name="solar:arrow-right-up-linear" />
           <span class="sr-only">({{ t('a11y.newTab') }})</span>
         </a>
       </div>
       <CustomGithubStats :stats="githubStats" />
     </section>
 
-    <section aria-labelledby="experience-title" class="pb-24 grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
+    <section v-reveal aria-labelledby="experience-title" class="pb-24 grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
       <div class="flex flex-col items-start gap-4">
         <h2 id="experience-title" class="mb-0 scroll-mt-24">
           {{ t('pages.home.experience.title') }}
@@ -262,11 +271,11 @@ const STACK_GROUP_LAYOUT = {
           {{ t('pages.home.experience.lead') }}
         </p>
         <NuxtLink
-          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('about-me')"
         >
           {{ t('pages.home.experience.viewAll') }}
-          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+          <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
       <CustomExperienceList />

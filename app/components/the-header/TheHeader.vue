@@ -21,6 +21,8 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
 const rootRef = ref<HTMLElement | null>(null)
+// Menu links arrive one after another, as a list; closing is immediate
+const MENU_STAGGER_MS = 50
 const drawerRef = ref<HTMLElement | null>(null)
 // The trap spans header + panel so the close toggle stays reachable with Tab
 const { activate, deactivate } = useFocusTrap(rootRef)
@@ -215,19 +217,23 @@ watch(isMdUp, (newVal) => {
     >
       <div class="min-h-full flex flex-col justify-end gap-10 px-4 sm:px-6 pt-10 pb-10">
         <nav class="flex flex-col">
-          <template v-for="r in routes" :key="r.path">
+          <template v-for="(r, index) in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
               :aria-current="isActiveRoute(r) ? 'page' : undefined"
-              class="relative flex items-center min-h-14 sb-h2 uppercase cursor-pointer rounded-sm sb-transition sb-focus"
-              :class="isActiveRoute(r) ? 'text-ink' : 'text-ink-muted hover:text-ink'"
+              class="relative flex items-center min-h-14 sb-h2 uppercase cursor-pointer rounded-sm sb-transition-slow sb-focus"
+              :class="[
+                isActiveRoute(r) ? 'text-ink' : 'text-ink-muted hover:text-ink',
+                open ? 'opacity-100' : 'opacity-0 motion-safe:translate-y-3',
+              ]"
+              :style="{ transitionDelay: open ? `${index * MENU_STAGGER_MS}ms` : '0ms' }"
               :to="r.path"
               @click="onNavigateFromMenu(r)"
             >
               <span
                 aria-hidden="true"
-                class="absolute left-0 top-1/2 -translate-y-1/2 h-0.5 rounded-full bg-primary sb-transition"
-                :class="isActiveRoute(r) ? 'w-6' : 'w-0'"
+                class="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-0.5 rounded-full bg-primary origin-left sb-transition"
+                :class="isActiveRoute(r) ? 'scale-x-100' : 'scale-x-0'"
               ></span>
               <span class="sb-transition" :class="{ 'translate-x-9': isActiveRoute(r) }">{{ r.name }}</span>
             </NuxtLink>
@@ -241,7 +247,11 @@ watch(isMdUp, (newVal) => {
           </template>
         </nav>
 
-        <div class="grid gap-3">
+        <div
+          class="grid gap-3 sb-transition-slow"
+          :class="open ? 'opacity-100' : 'opacity-0 motion-safe:translate-y-3'"
+          :style="{ transitionDelay: open ? `${routes.length * MENU_STAGGER_MS}ms` : '0ms' }"
+        >
           <BaseButton variant="primary" @click="onContactFromMenu">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>

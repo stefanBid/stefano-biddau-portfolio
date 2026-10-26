@@ -24,7 +24,7 @@ const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
 
 <template>
   <section aria-labelledby="closing-cta-title" class="pb-24">
-    <div class="grid items-center overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-[1.6fr_1fr]">
+    <div v-reveal class="grid items-center overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-[1.6fr_1fr]">
       <div class="flex flex-col items-start p-6 md:p-12">
         <h2 id="closing-cta-title" class="mb-0 text-balance">
           {{ t('pages.home.closingCta.title') }}
@@ -52,11 +52,11 @@ const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
         </p>
         <NuxtLink
           v-if="props.showProjectsLink"
-          class="inline-flex items-center min-h-11 gap-2 mt-6 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex items-center min-h-11 gap-2 mt-6 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-projects')"
         >
           {{ t('pages.home.closingCta.projectsLink') }}
-          <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+          <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
       <div class="hidden md:flex justify-center self-end pt-8">

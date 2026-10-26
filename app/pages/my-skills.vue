@@ -82,6 +82,7 @@ const onHighlightSkill = (id: string | null) => {
     <section
       v-for="(area, index) in areas"
       :key="area.key"
+      v-reveal
       :aria-labelledby="`skills-${area.key}-title`"
       class="grid items-center gap-12 py-16 border-b border-border md:py-20 lg:gap-16"
       :class="index % 2 === 1 ? 'lg:grid-cols-[minmax(0,30rem)_minmax(0,1fr)]' : 'lg:grid-cols-[minmax(0,1fr)_minmax(0,30rem)]'"

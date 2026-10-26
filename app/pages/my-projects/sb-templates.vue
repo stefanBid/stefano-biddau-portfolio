@@ -55,9 +55,10 @@ const { templates } = useTemplates()
       class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20"
     >
       <CustomSbTemplatesCard
-        v-for="template in templates"
+        v-for="(template, index) in templates"
         :id="template.id"
         :key="template.id"
+        v-reveal="index"
         :codebase-url="template.codebaseUrl"
         :description="template.description"
         :icons="template.langIcons"

@@ -170,28 +170,37 @@ const onToggle = () => {
           class="max-w-prose"
         />
 
-        <figure
-          v-if="props.isOpen && props.imageSrc"
-          class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md md:mt-8 md:p-4 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:mt-0"
+        <!-- Enter only: on close the two-column grid goes away at once, a leaving photo would drop under the text -->
+        <Transition
+          enter-active-class="fade-enter-active"
+          enter-from-class="fade-enter-from"
+          leave-active-class=""
+          leave-from-class=""
+          leave-to-class=""
         >
-          <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden">
-            <NuxtImg
-              :alt="props.imageCaption ? '' : props.role"
-              class="w-full h-full object-cover"
-              :height="imageHeight"
-              loading="lazy"
-              sizes="320px sm:352px"
-              :src="props.imageSrc"
-              :width="imageWidth"
-            />
-          </div>
-          <figcaption
-            v-if="props.imageCaption"
-            class="sb-small italic text-center text-balance text-bg mt-3"
+          <figure
+            v-if="props.isOpen && props.imageSrc"
+            class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md md:mt-8 md:p-4 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:mt-0"
           >
-            {{ props.imageCaption }}
-          </figcaption>
-        </figure>
+            <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden">
+              <NuxtImg
+                :alt="props.imageCaption ? '' : props.role"
+                class="w-full h-full object-cover"
+                :height="imageHeight"
+                loading="lazy"
+                sizes="320px sm:352px"
+                :src="props.imageSrc"
+                :width="imageWidth"
+              />
+            </div>
+            <figcaption
+              v-if="props.imageCaption"
+              class="sb-small italic text-center text-balance text-bg mt-3"
+            >
+              {{ props.imageCaption }}
+            </figcaption>
+          </figure>
+        </Transition>
 
         <div v-if="isExpandable" class="flex lg:col-start-1 lg:row-start-2">
           <BaseButton

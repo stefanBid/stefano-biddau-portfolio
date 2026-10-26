@@ -58,7 +58,7 @@ const classes = computed(() => {
 
   return [
     'inline-flex items-center justify-center gap-2 rounded-lg border uppercase whitespace-nowrap sb-transition sb-focus',
-    isInteractive.value ? 'cursor-pointer' : 'cursor-not-allowed opacity-45',
+    isInteractive.value ? 'cursor-pointer motion-safe:active:scale-98' : 'cursor-not-allowed opacity-45',
 
     // Size
     props.iconOnly ? `${size.icon} shrink-0` : size.box,

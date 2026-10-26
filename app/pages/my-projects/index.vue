@@ -92,9 +92,10 @@ onMounted(() => {
 
     <div v-if="mainProjects.length" class="grid grid-cols-1 lg:grid-cols-2 items-start gap-x-10 gap-y-10 md:gap-y-12">
       <CustomProjectsCard
-        v-for="project in mainProjects"
+        v-for="(project, index) in mainProjects"
         :id="project.id"
         :key="project.id"
+        v-reveal="index % 2"
         :codebase-urls="project.codebaseUrls"
         :content="project.content"
         :deployment-urls="project.deploymentUrls"
@@ -111,6 +112,7 @@ onMounted(() => {
 
     <section
       v-if="archivedProjects.length"
+      v-reveal
       aria-labelledby="projects-archive-title"
       class="flex flex-col gap-4"
     >

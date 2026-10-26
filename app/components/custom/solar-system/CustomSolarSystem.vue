@@ -12,6 +12,10 @@ const props = withDefaults(defineProps<CustomSolarSystemProps>(), {
 })
 
 // Data
+const frameRef = ref<HTMLElement | null>(null)
+// Four orbits per area keep spinning forever: only while the figure is on screen
+const isVisible = useElementVisibility(frameRef)
+
 // Tier is encoded three ways: orbit distance, planet size (orbit--* scale) and body treatment
 const ORBITS: Record<SkillTier, { ratio: number, duration: number, direction: 'normal' | 'reverse' }> = {
   core: { ratio: 0.46, duration: 70, direction: 'normal' },
@@ -39,7 +43,12 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
 
 <template>
   <!-- Rotating orbits have square bounding boxes wider than the circle drawn; the frame clips them -->
-  <div aria-hidden="true" class="solar-system-frame">
+  <div
+    ref="frameRef"
+    aria-hidden="true"
+    class="solar-system-frame"
+    :class="{ 'solar-system-frame--paused': !isVisible }"
+  >
     <div class="solar-system relative w-full aspect-square">
       <div class="sun">
         <div class="sun-glow"></div>
@@ -295,6 +304,12 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
   height: 60%;
   color: var(--sb-ink);
   filter: drop-shadow(0 0 2px var(--sb-shadow-color));
+}
+
+.solar-system-frame--paused .solar-system *,
+.solar-system-frame--paused .solar-system *::before,
+.solar-system-frame--paused .solar-system *::after {
+  animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {

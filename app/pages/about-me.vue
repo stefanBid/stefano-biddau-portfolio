@@ -65,6 +65,7 @@ const onToggleMilestone = (id: string | number) => {
         <li
           v-for="step in upcoming"
           :key="step.id"
+          v-reveal
           class="text-left"
         >
           <article :aria-labelledby="`milestone-title-${step.id}`" class="relative rounded-lg border border-dashed border-border-strong px-4 py-3 md:px-6 md:py-4">
@@ -92,6 +93,7 @@ const onToggleMilestone = (id: string | number) => {
         <li
           v-for="milestone in milestones"
           :key="milestone.id"
+          v-reveal
           class="text-left"
         >
           <CustomMilestone
@@ -116,6 +118,7 @@ const onToggleMilestone = (id: string | number) => {
 
     <section
       v-if="selectedWork.length"
+      v-reveal
       aria-labelledby="alongside-title"
       class="pb-24"
     >

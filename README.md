@@ -174,6 +174,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        terms-and-conditions.vue ← /terms-and-conditions (CustomLegalDocument)
      plugins/
        pageTransition.client.ts ← drives usePageTransition state on navigation (skips fades for locale-only/tab changes)
+       reveal.ts            ← v-reveal directive: first entrance of below-the-fold elements in the viewport
      router.options.ts     ← custom scrollBehavior, waits for page transition to finish
      types/
        global.d.ts         ← cross-cutting TS types (navigation, rich text, GitHub)
@@ -265,15 +266,21 @@ Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyp
 
 | Class / token | Effect |
 |---|---|
-| `sb-transition` | colour, background, border, outline, shadow, opacity, transform · `--sb-duration-feedback` (150ms) |
+| `sb-transition` | colour, background, border, outline, shadow, opacity, transform and Tailwind 4's separate `translate` / `scale` / `rotate` · `--sb-duration-feedback` (150ms) |
 | `sb-transition-slow` | same properties · `--sb-duration-layout` (400ms) |
 | `sb-focus` | `outline-none focus-visible:ring-2 ring-focus-ring` |
 | `sb-focus-within` | same, on `focus-within` |
 | `sb-no-focus` | Removes focus ring (only with custom focus handling) |
+| `sb-delay-<ms>` | `animation-delay` in ms (`sb-delay-150`), to sequence an entrance |
+| `sb-paused` | `animation-play-state: paused` |
 
 Always add `sb-transition` to interactive elements. It does not animate width/height — avoid animating layout properties.
 
-Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`. Under `prefers-reduced-motion`, `--sb-motion-distance` drops to 0, removing all movement while keeping opacity and colour changes.
+**Motion language.** The site's world is the astronaut, so its one authored moment is a weightless arrival on the home hero: the avatar drifts up and settles (`animate-drift-in`), the name rises out of its line (`animate-mask-up`, clip-path + transform), the typed role starts at 700ms, lead and CTAs follow (`animate-rise-in` with `sb-delay-*`), all within about 1s. Afterwards every hero avatar floats slowly (`animate-float` via `BaseFloat`, paused offscreen). Supporting motion only explains state: mobile menu links arrive in sequence (50ms apart) and close at once, the open milestone photo enters with the `fade` transition (enter only: on close the two-column grid goes at once, a leaving photo would drop under the text), buttons press (`motion-safe:active:scale-98`), arrows on text links and skill chips nudge on hover (`motion-safe:group-hover:translate-*`), the Skills orbits pause offscreen.
+
+**First entrance in the viewport — `v-reveal`** (`app/plugins/reveal.ts`, CSS in `animation.css` §5). Put `v-reveal` on a section or card; `v-reveal="index"` staggers a list (80ms per index, max 320ms). On mount the directive hides only elements still below the fold (`.sb-reveal`: opacity 0, `--sb-motion-distance` × 3 down), reveals each one once when it scrolls in (`.sb-reveal--in`, `--sb-duration-entrance`, ease-out) and removes both classes at the end so the element's own hover transitions come back. Server HTML never carries the classes: without JS everything is visible, and nothing above the fold flashes. Under reduced motion it is a plain fade. Used on the home sections and Selected work cards, About milestones and "Alongside", Skills areas, project and template cards, the closing CTA and the legal sections.
+
+Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`, `animate-drift-in` (avatar arrival), `animate-float` (weightless loop), `animate-mask-up` (hero name reveal). Under `prefers-reduced-motion`, `--sb-motion-distance` and `--sb-float-tilt` drop to 0, removing all movement while keeping opacity and colour changes.
 
 ### Animations — Vue `<Transition>`
 
@@ -500,6 +507,10 @@ Emits: `(e: 'select', tabId: string | number): void`. Roving tabindex; ←/→/�
 | `message` | `string` | — | Required |
 | `icon` | `string` | `'solar:box-minimalistic-bold-duotone'` | |
 | `dimension` | `'normal' \| 'small'` | `'normal'` | |
+
+### `BaseFloat`
+
+No props, default slot. Wraps content in `animate-float` (slow weightless drift: up `--sb-motion-distance` × 1.5 with `--sb-float-tilt` rotation and back, 8s; starts and ends at rest so it takes over from `animate-drift-in` without a jump) and pauses it while off screen (`useElementVisibility` → `sb-paused`). Under reduced motion distance and tilt are 0, so nothing moves. Put the size classes on `BaseFloat` and `w-full` on the child; delay the start with `sb-delay-*` when an entrance runs first. Used by the home hero and `ThePageHero` avatars.
 
 ### `BaseCountUp`
 

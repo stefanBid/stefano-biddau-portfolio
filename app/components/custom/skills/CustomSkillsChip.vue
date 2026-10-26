@@ -49,7 +49,7 @@ const NuxtLink = resolveComponent('NuxtLink')
     <template v-if="props.to">
       <Icon
         aria-hidden="true"
-        class="size-4 shrink-0 text-ink-muted group-hover:text-primary-ink sb-transition"
+        class="size-4 shrink-0 text-ink-muted group-hover:text-primary-ink motion-safe:group-hover:translate-x-0.5 sb-transition"
         name="solar:arrow-right-linear"
       />
       <span v-if="props.seenIn" class="sr-only">, {{ t('pages.skills.chipSeenIn', { place: props.seenIn }) }}</span>

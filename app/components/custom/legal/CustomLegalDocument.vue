@@ -120,6 +120,7 @@ onMounted(onScroll)
             v-for="(section, index) in props.legalDocument.sections"
             :id="section.id"
             :key="section.id"
+            v-reveal
             :aria-labelledby="`${section.id}-title`"
             class="max-w-prose scroll-mt-24"
           >
@@ -140,18 +141,18 @@ onMounted(onScroll)
               {{ t('pages.home.contactCard.buttonText') }}
             </BaseButton>
             <NuxtLink
-              class="inline-flex min-h-11 items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline rounded-sm sb-transition sb-focus"
+              class="group inline-flex min-h-11 items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline rounded-sm sb-transition sb-focus"
               :to="localePath(props.related)"
             >
               {{ t(`nav.${props.related}`) }}
-              <Icon aria-hidden="true" class="size-4" name="solar:arrow-right-linear" />
+              <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
             </NuxtLink>
             <a
-              class="inline-flex min-h-11 items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline rounded-sm sb-transition sb-focus"
+              class="group inline-flex min-h-11 items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline rounded-sm sb-transition sb-focus"
               :href="`#${props.id}-hero`"
             >
               {{ t('pages.legal.backToTop') }}
-              <Icon aria-hidden="true" class="size-4" name="solar:arrow-up-linear" />
+              <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:-translate-y-0.5" name="solar:arrow-up-linear" />
             </a>
           </div>
         </div>
