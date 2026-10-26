@@ -3,6 +3,10 @@ import useSkillReferences from '~/composables/data/useSkillReferences'
 import useSkills from '~/composables/data/useSkills'
 import type { SkillTier } from '~/composables/data/useSkills'
 
+definePageMeta({
+  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 0.9 },
+})
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()

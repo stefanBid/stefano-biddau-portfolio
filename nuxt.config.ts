@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   // ---------------------------------------------------------------------------
   // Modules
   // ---------------------------------------------------------------------------
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n', '@nuxt/fonts', '@nuxtjs/color-mode'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n', '@nuxt/fonts', '@nuxtjs/color-mode', '@nuxtjs/sitemap'],
 
   // ---------------------------------------------------------------------------
   // Environment overrides — merged in based on the actual Nuxt CLI command
@@ -56,6 +56,10 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  site: {
+    url: 'https://stefanobiddau.com',
+    name: 'Stefano Biddau',
+  },
   colorMode: {
     dataValue: 'theme',
     classSuffix: '',
@@ -209,5 +213,10 @@ export default defineNuxtConfig({
     // server-side, caches it on the edge and serves it from our own origin — Cloudinary is only hit
     // on a cache miss. Production also needs the matching `remote_images` entry in netlify.toml.
     domains: ['res.cloudinary.com'],
+  },
+  sitemap: {
+    // Every page is static: prerender the sitemaps at build and ship no sitemap code in the server bundle.
+    // Pages come from app sources, hreflang alternates from @nuxtjs/i18n, priority/changefreq/lastmod from definePageMeta.
+    zeroRuntime: true,
   },
 })

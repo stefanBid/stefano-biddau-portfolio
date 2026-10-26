@@ -727,7 +727,8 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 2. Call `useSeoMeta()` with translated meta tags.
 3. Add translation keys to both `i18n/locales/en.json` and `i18n/locales/it.json`.
 4. Add `prerender: true` in `nuxt.config.ts` for **both** EN and IT routes.
-5. Add a `RouteItem` entry in `TheHeader` and `TheFooter` if the page should appear in navigation.
+5. Add `definePageMeta({ sitemap: { lastmod, changefreq, priority } })` — the page reaches the sitemap automatically (both locales, with hreflang); the meta only tunes its entry. `sitemap: false` keeps it out.
+6. Add a `RouteItem` entry in `TheHeader` and `TheFooter` if the page should appear in navigation.
 
 ### Minimal page template
 
@@ -1017,7 +1018,15 @@ The token lives in `runtimeConfig.githubToken` (server-only, default `''`) and i
 
 ### `server/routes/robots.txt.ts`
 
-Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts, `Allow: /` + sitemap link on `production`. Netlify's `CONTEXT` is only set at build time, not in the Function runtime, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, so each deploy serves its own rules.
+Serves `/robots.txt`. `Disallow: /` on `deploy-preview`/`branch-deploy` Netlify contexts, `Allow: /` + `Sitemap: …/sitemap_index.xml` on `production`. Netlify's `CONTEXT` is only set at build time, not in the Function runtime, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)`. Never prerendered — `routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`, so each deploy serves its own rules.
+
+### Sitemap (`@nuxtjs/sitemap`)
+
+No hand-written `sitemap.xml`. The module builds it from the app pages; `@nuxtjs/i18n` (`prefix_except_default`) makes it a multi-sitemap: `/sitemap_index.xml` → `/__sitemap__/en.xml` + `/__sitemap__/it-IT.xml`, each URL with `hreflang` alternates (`en`, `it-IT`, `x-default`). `/sitemap.xml` redirects (302) to the index. Every `<loc>` resolves against `site.url` in `nuxt.config.ts`. Prerendered pages also contribute their `<img>` inside `<main>` as image entries.
+
+- `sitemap.zeroRuntime: true` — all sitemap files are prerendered at build, no sitemap code at runtime. Content is static, so nothing changes between deploys.
+- Per-page `lastmod` / `changefreq` / `priority` live in each page's `definePageMeta({ sitemap })` and apply to both locales. `lastmod` is set by hand: bump it when the page content really changes (file mtime would be the checkout time on Netlify).
+- Future dynamic content: add a `sources: ['/api/__sitemap__/urls']` endpoint (`defineSitemapEventHandler`) instead of listing URLs by hand, and drop `zeroRuntime` if it must change without a rebuild.
 
 ### Adding new server code
 
@@ -1150,6 +1159,7 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | `@nuxt/image` | `^2.2.0` | Image optimisation |
 | `@nuxtjs/color-mode` | `^4.0.1` | Centralised colour-mode config, fixed to dark |
 | `@nuxtjs/i18n` | `^10.6.0` | Multi-language support (EN + IT) |
+| `@nuxtjs/sitemap` | `^9.1.0` | Sitemap generated from pages + i18n hreflang, prerendered (`zeroRuntime`) |
 | `@vueuse/core` | `^15.0.0` | Vue composition utilities |
 | `@vueuse/nuxt` | `^15.0.0` | Nuxt integration for VueUse |
 | `@floating-ui/vue` | `^2.0.1` | Floating element positioning |

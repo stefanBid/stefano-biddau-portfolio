@@ -2,6 +2,10 @@
 import useMilestones from '~/composables/data/useMilestones'
 import useSelectedWork from '~/composables/data/useSelectedWork'
 
+definePageMeta({
+  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 0.9 },
+})
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()

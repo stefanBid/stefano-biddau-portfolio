@@ -3,6 +3,10 @@ import useGithubStats from '~/composables/data/useGithubStats'
 import useSelectedWork from '~/composables/data/useSelectedWork'
 import useSkills from '~/composables/data/useSkills'
 
+definePageMeta({
+  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 1 },
+})
+
 // Dependencies
 const { t, locale } = useI18n()
 const route = useRoute()

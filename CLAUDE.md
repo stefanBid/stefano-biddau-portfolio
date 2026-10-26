@@ -13,6 +13,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **@nuxt/fonts** — self-hosts Bebas Neue + Space Mono from Google, no external `fonts.googleapis.com` request
 - **@nuxtjs/color-mode** — `preference`/`fallback` fixed to `'dark'`, no `'system'` — app has no light theme and no toggle, module exists only for a centralized config point
 - **@nuxtjs/i18n** — `en` (default, no prefix) + `it` (`/it/...`); `prefix_except_default`
+- **@nuxtjs/sitemap** — sitemap from app pages, hreflang from i18n, `zeroRuntime: true` (prerendered); `site.url` in `nuxt.config.ts`; per-page `definePageMeta({ sitemap: { lastmod, changefreq, priority } })`, `lastmod` bumped by hand; no `public/sitemap.xml`
 - **@vueuse/nuxt** — Vue composition utilities
 - **@floating-ui/vue** — dropdowns, menus
 - **isomorphic-dompurify** — HTML sanitisation (client-side only)
@@ -167,7 +168,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` |
 
-Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
+Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, `definePageMeta({ sitemap })`, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
 Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
@@ -304,7 +305,7 @@ Types exposed by a composable live in, and are exported from, that composable (e
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file:
 
 - `server/api/github-stats.json.ts` — GitHub profile stats, prerendered to a static JSON (`routeRules['/api/github-stats.json'] = { prerender: true }`); contributions need `NUXT_GITHUB_TOKEN`. Token is `runtimeConfig.githubToken: ''`, filled from env at runtime — never assign `process.env` to it in `nuxt.config.ts` (it gets inlined into the function bundle). The fetch is cached 10 min in dev only (`shouldBypassCache: () => !import.meta.dev`), so dev navigations don't wait on GitHub
-- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy`, `Allow: /` + sitemap link on `production`. Netlify's `CONTEXT` exists only at build time, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)` — never `process.env.CONTEXT` in the route. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — each deploy must serve its own rules.
+- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy`, `Allow: /` + `sitemap_index.xml` link on `production`. Netlify's `CONTEXT` exists only at build time, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)` — never `process.env.CONTEXT` in the route. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — each deploy must serve its own rules.
 
 New server code goes in `server/routes/<name>.ts` (served at `/<name>`) or `server/api/<name>.ts` (served at `/api/<name>`), depending on whether the path needs the `/api` prefix.
 

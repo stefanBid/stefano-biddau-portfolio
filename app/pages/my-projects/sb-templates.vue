@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import useTemplates from '~/composables/data/useTemplates'
 
+definePageMeta({
+  sitemap: { lastmod: '2026-09-03', changefreq: 'monthly', priority: 0.8 },
+})
+
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
