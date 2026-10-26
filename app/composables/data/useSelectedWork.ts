@@ -20,6 +20,7 @@ export default function useSelectedWork() {
   const { t } = useI18n()
   const localePath = useLocalePath()
   const { projects } = useProjects()
+  const { cloudinaryUrl } = useCloudinary()
 
   // State
   const selectedWork = computed<SelectedWorkItem[]>(() => {
@@ -35,7 +36,7 @@ export default function useSelectedWork() {
           title: project.title,
           imageSrc: project.coverImageSrc,
           imageAlt: project.coverImageAlt || '',
-          imageFit: 'cover' as const,
+          imageFit: project.coverImageFit,
           meta: t(`pages.home.selectedWork.meta.${metaKey}`),
           to: { path: localePath('my-projects'), hash: `#project-${id}` },
         }
@@ -46,7 +47,7 @@ export default function useSelectedWork() {
       key: 'sb-templates',
       slug: 'sbTemplates' as const,
       title: t('nav.sb-templates'),
-      imageSrc: '/images/sbt-logos/sbt-logo.webp',
+      imageSrc: cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg'),
       imageAlt: t('pages.projects.sbTemplatesProject.logoAlt'),
       imageFit: 'contain' as const,
       meta: t('pages.home.selectedWork.meta.sbTemplates'),

@@ -29,7 +29,7 @@
     },
     "projects": {
       "title": "Progetti Web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Guarda una selezione dei miei progetti web: soluzioni digitali moderne, responsive e orientate all’esperienza utente. Ogni lavoro riflette il mio approccio al design e allo sviluppo."
+      "description": "Lavori per clienti, una libreria Vue open source e progetti personali di Stefano Biddau, con link al sito online e al codice dove disponibili."
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -221,7 +221,7 @@
           "type": "education",
           "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "Python"],
           "skills": ["java", "html", "css", "javascript", "python"],
-          "imageSrc": "/images/milestones/unisa.webp",
+          "imageSrc": "v1793013189/unisa_cz1oxe.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Io durante la presentazione della mia tesi di laurea, mentre illustro il progetto dedicato alla comparazione di algoritmi di Machine Learning per la classificazione di immagini.",
@@ -252,7 +252,7 @@
           "type": "fullTime",
           "stack": ["Java", "Spring Boot", "Spring Batch", "PostgreSQL", "Vue.js", "Angular", "Flutter"],
           "skills": ["java", "spring", "postgresql", "vue", "angular", "flutter"],
-          "imageSrc": "/images/milestones/workstation.webp",
+          "imageSrc": "v1793013189/workstation_mkagtf.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
           "imageCaption": "Io dalla mia postazione remota, tra monitor e codice.",
@@ -308,27 +308,34 @@
     },
     "projects": {
       "hero": "Progetti",
+      "lead": "Lavori per clienti, una libreria Vue open source, template starter ed esperimenti personali. Link al sito online dove disponibile; il codice dei clienti resta privato.",
       "links": {
         "code": "Codice",
-        "live": "Sito online"
+        "live": "Sito online",
+        "package": "npm"
       },
       "personalProjects": {
         "tabLabel": "Progetti",
-        "title": "Lavori per clienti e progetti personali",
-        "description": "Siti per clienti ed esperimenti personali. Link al sito online dove disponibile; il codice dei clienti resta privato.",
         "list": [
           {
-            "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
-            "meta": "Progetto personale · 2026 · Spring Boot + Flutter",
-            "skills": ["spring", "flutter"],
-            "title": "Sfrigola Project",
+            "id": "85156f53-d423-4b49-9561-4e0d46e18976",
+            "meta": "Esercizio personale · 2026 · Spring Boot",
+            "skills": ["spring"],
+            "title": "Sfrigola Core",
             "codebaseUrls": [
-              { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
-              { "code": "https://github.com/stefanBid/sfrigola-app", "label": "Sfrigola App" }
+              { "code": "https://github.com/stefanBid/sfrigola-core", "label": "GitHub" }
             ],
-            "coverImageSrc": "/images/projects/sfrigola-project-banner.webp",
-            "coverImageAlt": "Sfrigola Project cover",
-            "content": "**Sfrigola** è un progetto personale nato per reimmaginare il modo in cui chi cucina in casa scopre, salva e segue le ricette — un ricettario completamente digitale costruito da zero come un piccolo ecosistema di applicazioni collegate tra loro.\n\nAl centro c'è **Sfrigola Core**, una REST API realizzata in **Spring Boot** che orchestra ogni dominio della piattaforma: ricette, ingredienti, categorie e tag — tutti multilingua e ricercabili — oltre a valutazioni, preferiti e un flusso di pubblicazione completo (dalla bozza alla pubblicazione) con accessi differenziati per utenti, contributor e admin.\n\n**Sfrigola App** è il prodotto vero e proprio: un'applicazione mobile in **Flutter** per iOS e Android dove chi cucina può esplorare feed di ricette curati, cercare per categoria e migliorare le proprie competenze in cucina, tra piatti veloci di tutti i giorni e ricette più elaborate. È costruita su un'architettura feature-based, con un design system personalizzato e routing type-safe.\n\nCi sono altri due tasselli ancora in lavorazione. **Sfrigola Manager**, un gestionale in **React**, permetterà agli admin di gestire ricette, ingredienti e categorie che alimentano i contenuti dell'app. **Sfrigola AI** aggiungerà invece un chatbot in grado di consultare il database delle ricette e, in base agli ingredienti e ai ricettari coinvolti, suggerire le ricette giuste direttamente dai dati della piattaforma.\n\nSfrigola è il progetto dove sperimento la costruzione e la connessione di un intero ecosistema prodotto, end to end — dal design delle API e dalla UX mobile fino a (presto) un pannello di amministrazione e un assistente basato su AI."
+            "content": "**Sfrigola Core** è la REST API di Sfrigola, un ricettario digitale che sviluppo come esercizio personale. Realizzata con **Spring Boot**, gestisce ricette, ingredienti, categorie e tag (multilingua e ricercabili), valutazioni, preferiti e un flusso di pubblicazione da bozza a ricetta pubblicata, con accesso basato su ruoli per utenti, contributor e admin."
+          },
+          {
+            "id": "e6eea13e-56a7-4150-ac8e-8a01410ca60d",
+            "meta": "Esercizio personale · 2026 · Flutter",
+            "skills": ["flutter"],
+            "title": "Sfrigola App",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/sfrigola-app", "label": "GitHub" }
+            ],
+            "content": "**Sfrigola App** è l'app mobile **Flutter** di Sfrigola, per iOS e Android: feed di ricette selezionate, ricerca per categoria e preferiti, su un'architettura per feature con un design system dedicato e routing tipizzato. Usa le API di Sfrigola Core."
           },
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
@@ -338,8 +345,6 @@
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
             ],
-            "coverImageSrc": "/images/projects/image-classification-cover.webp",
-            "coverImageAlt": "Image Classification project cover",
             "content": "**L'Intelligenza Artificiale** si sta diffondendo in numerosi ambiti e offre un'ampia varietà di contesti applicativi.\n\nIl riconoscimento e la classificazione delle immagini rappresentano uno dei settori che consentono di ottenere alcuni dei risultati più significativi.\n\nLo scopo di questa ricerca è analizzare i più noti algoritmi di classificazione, come **K-Nearest Neighbors (KNN)**, **Decision Tree**, **Random Forest**, **Support Vector Machine (SVM)** e **Reti Neurali Artificiali (ANN)**.\n\nL'obiettivo è valutarne l'efficienza nella classificazione delle immagini campione contenute nei dataset **MNIST** e **Fashion-MNIST (F-MNIST)**.\n\nLo studio è stato condotto utilizzando librerie **Python**, in particolare **Scikit-learn**.\n\nQueste librerie forniscono implementazioni degli algoritmi e consentono di ottimizzarne i parametri.\n\nCiò permette di identificare quali parametri influenzano maggiormente la capacità di apprendimento e di migliorare l'accuratezza della classificazione quando i modelli vengono addestrati sui dataset forniti.\n\nIl comportamento degli algoritmi ha contribuito a chiarire le ragioni del passaggio da **MNIST** — oggi considerato datato e ampiamente sfruttato — al suo successore, **Fashion-MNIST**.\n\nA parità di configurazione dei parametri, gli algoritmi analizzati mostrano una precisione di classificazione inferiore su **F-MNIST** rispetto a **MNIST**.\n\nQuesto evidenzia come **F-MNIST** rappresenti una sfida maggiore e richieda quindi una valutazione più attenta delle caratteristiche degli algoritmi per raggiungere livelli elevati di accuratezza.\n\nNonostante questa maggiore complessità, gli algoritmi continuano a ottenere risultati molto positivi quando vengono addestrati su **F-MNIST**.\n\nCiò conferma la loro capacità di generalizzare e di fornire prestazioni efficaci anche su altri dataset esistenti."
           },
           {
@@ -351,9 +356,10 @@
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Demo Live" }
             ],
-            "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
-            "coverImageAlt": "Romano Law Firm - Website project cover",
-            "content": "Dopo il lancio del sito nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti. **PraticaSicura** è un portale per richiedere i rimborsi dei voli; **Domus** (front-end) e **Cardo** (back-end) compongono il gestionale interno con cui lo studio segue le sue pratiche.\n\nIl sito dello **Studio Legale Romano** è un progetto che mi è stato commissionato dagli avvocati Romano con l’obiettivo di creare una vetrina digitale moderna e professionale.\n\nDoveva rappresentare al meglio l’identità dello studio e offrire ai visitatori un punto di riferimento chiaro, elegante e credibile.\n\nHo curato ogni dettaglio dell’interfaccia, scegliendo uno stile pulito e contemporaneo, adatto al settore legale.\n\nL’esperienza di navigazione è stata progettata per essere semplice e immediata, così da accompagnare l’utente nella scoperta dei contenuti più importanti.\n\nAll’interno del sito è presente una sezione dedicata alla storia dello studio, al percorso dei professionisti e ai valori che guidano il loro lavoro.\n\nOgni avvocato dispone di un profilo completo, costruito per mettere in risalto competenze e specializzazioni.\n\nHo realizzato anche un’area dedicata ai servizi offerti, dove le principali prestazioni vengono presentate in modo chiaro e intuitivo.\n\nQuesto permette agli utenti di individuare rapidamente l’ambito di interesse e comprendere come lo studio può supportarli.\n\nNon mancano le informazioni di contatto, sempre ben visibili e facilmente accessibili da qualsiasi pagina del sito.\n\nInoltre, ho integrato un sistema per mostrare in tempo reale gli orari di apertura dello studio, così da migliorare la comunicazione con i clienti.\n\nIl risultato è un sito vetrina che unisce cura estetica, funzionalità e professionalità.\n\nUn progetto costruito su misura per lo Studio Legale Romano, pensato per valorizzare la loro immagine e rendere più efficace il rapporto con i visitatori."
+            "coverImageSrc": "v1793011552/romano-logo_z2ert6.svg",
+            "coverImageFit": "contain",
+            "coverImageAlt": "Logo dello Studio Legale Romano",
+            "content": "Dopo il lancio del sito nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti.\n\n- **PraticaSicura**, un portale per richiedere i rimborsi dei voli\n- **Domus** (front-end) e **Cardo** (back-end), il gestionale interno con cui lo studio segue le sue pratiche\n\nLo studio mi ha commissionato il sito dello **Studio Legale Romano** come vetrina digitale moderna e professionale. Ho progettato e sviluppato l’intera interfaccia: la storia e i valori dello studio, un profilo completo per ogni avvocato con le sue specializzazioni e una sezione servizi che aiuta i visitatori a trovare subito l’ambito di interesse.\n\nI contatti sono visibili da ogni pagina e gli orari di apertura si aggiornano in tempo reale."
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -365,8 +371,6 @@
             "deploymentUrls": [
               { "code": "https://stefanbid.github.io/Guess-My-Number/", "label": "Demo Live" }
             ],
-            "coverImageSrc": "/images/projects/guess-my-number.webp",
-            "coverImageAlt": "Guess My Number project cover",
             "content": "Il gioco segue un sistema di progressione a livelli: ogni partita inizia con **cinque vite** e l'obiettivo è indovinare un numero generato casualmente tra **1 e 20** prima di esaurire tutti i tentativi.\n\nOgni partita comincia con cinque vite e il tuo scopo è trovare il numero corretto entro questo limite.\n\nOgni **cinque livelli** si sblocca un **livello bonus**, nel quale dovrai individuare il numero corretto tra tre possibili scelte.\n\n**Prova a superare il tuo record personale!**"
           },
           {
@@ -379,8 +383,6 @@
             "deploymentUrls": [
               { "code": "https://stefanbid.github.io/Pig-Game/", "label": "Demo Live" }
             ],
-            "coverImageSrc": "/images/projects/pig-game.webp",
-            "coverImageAlt": "Pig Game project cover",
             "content": "Il gioco è una **sfida 1 contro 1** tra due giocatori, configurata all'inizio di ogni nuova partita.\n\nIl giocatore attivo inizia il proprio turno lanciando un dado. Il valore ottenuto può essere salvato e aggiunto al punteggio totale, oppure il giocatore può scegliere di rilanciare per cercare di accumulare ancora più punti.\n\nAttenzione però a sfidare troppo la fortuna: se il dado mostra **1**, il giocatore perde tutti i punti accumulati durante quel turno e non ancora salvati, e il turno passa immediatamente all'avversario.\n\nLa partita termina quando uno dei due giocatori raggiunge per primo **esattamente 100 punti**."
           },
           {
@@ -394,9 +396,10 @@
             "deploymentUrls": [
               { "code": "https://www.npmjs.com/package/sb-floating-panel-vue", "label": "Pacchetto NPM" }
             ],
-            "coverImageSrc": "/images/projects/sb-floating-panel-vue.webp",
-            "coverImageAlt": "sb-floating-panel-vue project cover",
-            "content": "Un sistema di **floating panel per Vue 3**, flessibile e leggero, basato su **{'@'}floating-ui/vue**.\n\nInclude hook composable e componenti plug-and-play con supporto per **frecce** e **ridimensionamento**."
+            "coverImageSrc": "e_trim/v1793013336/sb-floating-panel-vue-logo_hzlpmf.webp",
+            "coverImageFit": "contain",
+            "coverImageAlt": "Logo di sb-floating-panel-vue",
+            "content": "**sb-floating-panel-vue** è una libreria headless per **Vue 3** dedicata ai pannelli flottanti (dropdown, menu, listbox, popover e tooltip), basata su **{'@'}floating-ui/vue**.\n\nScrivi tre componenti, **SbContainer**, **SbReference** e **SbFloating**; la libreria gestisce posizionamento, flip, collisioni con il viewport, stato di apertura, tastiera e accessibilità. Non include CSS: i tuoi stili leggono i suoi data attribute e le sue variabili CSS, quindi si adatta a CSS semplice, Tailwind o CSS modules.\n\n- **Accessibile di default**: nomi ARIA, il modello da tastiera WAI-ARIA di menu e listbox, tooltip conformi a WCAG 1.4.13, ordine di Tab mantenuto nonostante il teleport, gestione del focus, Escape e clic all'esterno\n- **Reattiva**: tutte le prop, **v-model:open**, pannelli annidati e sottomenu\n- **Tipizzata**: ogni tipo di prop, slot prop, evento e opzione è esportato\n\nÈ pubblicata su npm, con CI e copertura dei test monitorate su GitHub."
           }
         ],
         "noProjects": {
@@ -405,53 +408,52 @@
         },
         "readMoreCta": "Leggi di più",
         "readLessCta": "Leggi meno",
-        "ongoing": "In corso"
+        "ongoing": "In corso",
+        "archiveTitle": "Studi ed esercizi"
       },
       "sbTemplatesProject": {
-        "tabLabel": "SB Templates",
+        "tabLabel": "Template starter",
         "logoAlt": "Logo SB Templates",
         "title": "Un modo più rapido per avviare un nuovo progetto",
         "description": "Template open source per Nuxt, Astro e Flutter, con architettura, build, linting e formattazione già configurati: un nuovo progetto parte da codice funzionante.",
         "list": [
           {
-            "id":"454b54e4-aaec-4b41-b03b-d39d5c0b7455",
+            "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
             "title": "SB-Template Nuxt",
             "description": "Template Nuxt rapido e pronto all’uso, progettato per lanciare progetti moderni senza complicazioni.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
-            "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
+            "logoSrc": "v1793011185/sbt-nuxt-logo_rxp0hc.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
             "langIcons": ["logos:nuxt-icon"],
             "skills": ["nuxt"]
           },
           {
-            "id":"2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
+            "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
             "title": "SB-Template Flutter",
             "description": "Un template Flutter pulito e pronto all'uso, progettato esclusivamente per mobile iOS e Android per avviare rapidamente i tuoi progetti di app native con strumenti moderni e automazione.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
-            "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
+            "logoSrc": "v1793011184/sbt-flutter-logo_pzhtj1.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
             "langIcons": ["logos:flutter", "logos:ios", "logos:android-icon"],
             "skills": ["flutter", "dart"]
           },
           {
-            "id":"9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
             "title": "SB-Template Astro",
             "description": "Un template Astro leggero e orientato ai contenuti, pensato per avviare rapidamente siti statici veloci e ottimizzati per la SEO.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
-            "logoSrc": "/images/sbt-logos/sb-template-astro.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
+            "logoSrc": "v1793011184/sbt-astro-logo_pg6io2.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
             "langIcons": ["logos:astro-icon"],
             "skills": ["astro"]
           }
         ],
         "linkToCta": "Usa questo template",
-        "comingSoonCard": {
-          "title": "Template in Arrivo",
-          "paragraph": "Sto lavorando a nuovi template per diversi framework e piattaforme. Resta sintonizzato per gli aggiornamenti!"
-        }
+        "templateLogoAlt": "Logo {title}",
+        "inProgress": "Sono in lavorazione template per altri framework."
       }
     },
     "privacy": {

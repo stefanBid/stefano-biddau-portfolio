@@ -9,7 +9,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **Nuxt 4** (Vue 3, `<script setup>`, SSR + prerender)
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — SVG mode; collections: `logos`, `mdi`, `solar`, `flagpack`
-- **@nuxt/image** — `ipx` local + Cloudinary provider
+- **@nuxt/image** — `ipx` in dev, Netlify Image CDN in production; Cloudinary images are remote sources pulled through them (`image.domains`, `netlify.toml` `remote_images`), never linked directly
 - **@nuxt/fonts** — self-hosts Bebas Neue + Space Mono from Google, no external `fonts.googleapis.com` request
 - **@nuxtjs/color-mode** — `preference`/`fallback` fixed to `'dark'`, no `'system'` — app has no light theme and no toggle, module exists only for a centralized config point
 - **@nuxtjs/i18n** — `en` (default, no prefix) + `it` (`/it/...`); `prefix_except_default`
@@ -201,7 +201,7 @@ No backend — reads `pages.about.milestones` from the active i18n locale via `t
 ```ts
 const { projects } = useProjects()
 ```
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. `skills` (ids) only link skills to projects on the Skills page; `meta` stays the authored line.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. `coverImageSrc` optional (archived projects have none); `coverImageFit: 'contain'` for transparent logos (shown on `bg-ink`). `skills` (ids) only link skills to projects on the Skills page; `meta` stays the authored line.
 
 ### `useSkillReferences()`
 ```ts
@@ -246,6 +246,13 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
   placement: 'bottom-start', offset: 8, strategy: 'absolute',
 })
 ```
+
+### `useCloudinary()`
+```ts
+const { cloudinaryUrl, resolveImageSrc } = useCloudinary()
+cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
+```
+Full delivery URL from `runtimeConfig.public.cloudinaryCloudName`. `resolveImageSrc` is for locale values: `/…` stays in `public/`, anything else is a Cloudinary path. Pass it to `<NuxtImg>` with the default provider, never `provider="none"` — Netlify caches it on the edge, so Cloudinary is hit only on a cache miss. Keep the version segment in the path.
 
 ### `useLockScroll()`
 ```ts

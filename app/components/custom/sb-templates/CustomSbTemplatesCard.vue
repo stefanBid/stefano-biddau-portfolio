@@ -54,18 +54,19 @@ const techLabel = computed(() => (props.icons ?? [])
       <!-- Card Header: Logo -->
       <template #card-header>
         <div class="flex items-center justify-center p-4 bg-surface-2 w-full rounded-lg sb-transition">
-          <div class="logo-container size-28 md:size-32 flex items-center justify-center rounded-xl bg-ink shadow-md ring-1 ring-ink/5 sb-transition transition-transform">
+          <div class="size-28 md:size-32 flex items-center justify-center rounded-xl bg-ink shadow-md ring-1 ring-ink/5 sb-transition group-hover:shadow-lg group-focus-within:shadow-lg">
             <NuxtImg
               v-if="props.imageSrc"
-              :alt="`${props.title} logo`"
-              class="size-20 md:size-24 object-contain sb-transition transition-transform"
+              :alt="t('pages.projects.sbTemplatesProject.templateLogoAlt', { title: props.title })"
+              class="size-20 md:size-24 object-contain sb-transition group-hover:scale-105 group-focus-within:scale-105"
               :height="imageHeight"
               :src="props.imageSrc"
               :width="imageWidth"
             />
             <Icon
               v-else
-              class="template-icon size-20 md:size-24 text-ink-muted sb-transition transition-transform"
+              aria-hidden="true"
+              class="size-20 md:size-24 text-ink-muted sb-transition group-hover:scale-105 group-focus-within:scale-105"
               name="solar:box-bold"
             />
           </div>
@@ -105,7 +106,7 @@ const techLabel = computed(() => (props.icons ?? [])
         </div>
 
         <!-- Description -->
-        <p class="sb-body text-center text-ink-muted mt-3 sb-transition">
+        <p class="sb-body text-center text-ink-muted text-pretty hyphens-none mt-3 sb-transition">
           {{ props.description }}
         </p>
       </template>
@@ -113,13 +114,14 @@ const techLabel = computed(() => (props.icons ?? [])
       <!-- Card Footer: CTA -->
       <template #card-footer>
         <BaseButton
-          class="w-full cta-button transition-transform"
+          class="w-full"
           :is-disabled="!props.codebaseUrl"
           :to="props.codebaseUrl"
           :type="props.codebaseUrl ? 'link' : 'button'"
-          variant="primary"
+          variant="secondary"
         >
           <Icon
+            aria-hidden="true"
             class="size-5"
             name="solar:rocket-2-bold-duotone"
           />
@@ -129,29 +131,3 @@ const techLabel = computed(() => (props.icons ?? [])
     </BaseCard>
   </article>
 </template>
-
-<style scoped>
-/* Enhanced glow on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover .logo-container,
-article:has(a[href]):focus-within .logo-container {
-  box-shadow:
-    0 8px 40px var(--sb-shadow-color),
-    0 0 40px color-mix(in oklab, var(--color-primary) 50%, transparent),
-    0 0 60px color-mix(in oklab, var(--color-primary) 30%, transparent);
-  transform: scale(1.05);
-}
-
-/* Scale effect on logo on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover img,
-article:has(a[href]):hover .template-icon,
-article:has(a[href]):focus-within img,
-article:has(a[href]):focus-within .template-icon {
-  transform: scale(1.08);
-}
-
-/* Scale effect on button on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover .cta-button,
-article:has(a[href]):focus-within .cta-button {
-  transform: scale(1.05);
-}
-</style>

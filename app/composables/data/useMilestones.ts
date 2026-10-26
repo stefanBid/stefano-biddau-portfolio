@@ -58,6 +58,7 @@ const STACK_BRANDS: Record<string, Omit<MilestoneStackItem, 'name'>> = {
 
 export default function useMilestones() {
   const { t: _t, tm: _tm, rt: _rt, locale } = useI18n()
+  const { resolveImageSrc } = useCloudinary()
 
   // Shared with the client so hydration matches the prerendered text, then refreshed on mount for "Present" durations
   const now = useState('milestones-now', () => Date.now())
@@ -121,7 +122,7 @@ export default function useMilestones() {
         title: _rt(item.title || ''),
         content: markdownToRichBlocks(_rt(item.content || '')),
         subtitle: item.subtitle ? _rt(item.subtitle) : undefined,
-        imageSrc: item.imageSrc ? _rt(item.imageSrc) : undefined,
+        imageSrc: item.imageSrc ? resolveImageSrc(_rt(item.imageSrc)) : undefined,
         imageWidth: item.imageWidth,
         imageHeight: item.imageHeight,
         imageCaption: item.imageCaption ? _rt(item.imageCaption) : undefined,

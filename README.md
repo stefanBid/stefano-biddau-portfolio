@@ -94,7 +94,7 @@ NUXT_EMAILJS_PUBLIC_KEY=your_emailjs_public_key
 NUXT_EMAILJS_SERVICE_ID=your_emailjs_service_id
 NUXT_EMAILJS_TEMPLATE_ADMIN_ID=your_admin_template_id
 NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID=your_reply_to_template_id
-NUXT_PUBLIC_CLOUDINARY_BASE=https://res.cloudinary.com/your-cloud/image/upload/
+NUXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
 NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
 ```
 
@@ -151,6 +151,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
          useSkillReferences.ts ← where each skill is used (milestones, projects, templates)
          useSkills.ts       ← hardcoded local skills list, grouped by area and tier
          useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
+       useCloudinary.ts     ← builds Cloudinary delivery URLs from runtimeConfig
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
        useFloatingUi.ts     ← @floating-ui/vue wrapper
        useLockScroll.ts     ← scroll lock with multi-caller safety
@@ -164,9 +165,9 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        index.vue            ← / — Homepage
        about-me.vue         ← /about-me — Career milestones
        my-skills.vue        ← /my-skills — Skills by area and tier
-       my-projects.vue      ← nested-route parent — hero + BaseTabs + <NuxtPage/>
+       my-projects.vue      ← nested-route parent — hero + BaseTabs + <NuxtPage/> + CustomClosingCta
        my-projects/
-         index.vue           ← /my-projects — Personal projects grid
+         index.vue           ← /my-projects — featured project, projects grid, studies/exercises list
          sb-templates.vue    ← /my-projects/sb-templates — SB Templates showcase
        privacy-policy.vue   ← /privacy-policy
        terms-and-conditions.vue ← /terms-and-conditions
@@ -311,6 +312,14 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 ### 3D avatars
 
 `public/images/3d-avatar/avatar-pose-{1..5}.webp` — full-resolution (1024×1536) WebP with transparent background, quality 92 / alpha 100. One per page: home 4 (waving), About 3 (on a planet), Skills 1 (laptop), Projects 5 (presenting); 2 is unused. They are rendered with `<NuxtImg provider="none">` (registered in `nuxt.config.ts` → `image.providers.none`) so they are served untouched instead of being re-encoded at the global quality 80.
+
+### Cloudinary images
+
+Content images live on Cloudinary, not in `public/`: the SB Templates logos (`sbt-logo`, `sbt-nuxt-logo`, `sbt-flutter-logo`, `sbt-astro-logo` — optimised SVG, viewBox cropped to the artwork, 680×796), the Romano and sb-floating-panel-vue project logos, and the milestone photos (`unisa`, `workstation`). In the locale files `imageSrc` / `coverImageSrc` / `logoSrc` hold only the path after `image/upload/` (`v<version>/<public-id>.<ext>`); `useCloudinary().resolveImageSrc()` turns it into the full URL, while a value starting with `/` stays a file in `public/`. `sbt-logo` is the umbrella logo (SB Templates page header, home "Selected work").
+
+The browser never fetches them from Cloudinary: `<NuxtImg>` uses the default provider (ipx in dev, Netlify Image CDN in production), allowed by `image.domains: ['res.cloudinary.com']` in `nuxt.config.ts` and `[images] remote_images` in `netlify.toml` (scoped to our cloud). Netlify pulls the original server-side, stores it on the edge and serves it from `/.netlify/images` (SVG passes through untouched); Cloudinary is only hit on an edge cache miss. Resizing is left to Netlify; the only Cloudinary transformation is `e_trim` on the sb-floating-panel-vue logo (cuts the transparent margin of the uploaded file — generated once, then cached as a derived asset). Keep the version segment in the path — re-uploading a file gives a new version, hence a new cache key.
+
+Logos with a transparent background set `"coverImageFit": "contain"` on their project: the card (and home "Selected work" / About "Alongside") then shows them whole on a `bg-ink` panel instead of cropping them as a cover.
 
 ## 5. Components
 
@@ -584,17 +593,19 @@ Three concentric rings with the given tier's ring highlighted (inner = `core`, m
 | `id` | `string \| number` | Required. Renders the article as `#project-<id>` (deep-link target) |
 | `title` | `string` | Required |
 | `meta` | `string` | Optional `type · year · stack` line under the title (from `pages.projects.personalProjects.list[].meta`) |
-| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText`; first block as preview, "Read more" expands in place |
-| `imageSrc` | `string` | Optional project cover |
+| `content` | `RichBlock[]` | Rich text rendered via `BaseRichText`. Up to 2 blocks are shown in full; longer text shows the first block and "Read more" expands in place |
+| `imageSrc` | `string` | Optional project cover. Without it the card has no image panel, the "Ongoing" chip moves above the title and `featured` stays one column |
 | `imageAlt` | `string` | Optional alt text |
+| `imageFit` | `'cover' \| 'contain'` | `'cover'`. `contain` shows the image whole on a `bg-ink` panel — for logos with a transparent background (from `coverImageFit`) |
 | `codebaseUrls` | `MenuItem[]` | Optional source links ("Code" button, or a menu when more than one) |
-| `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site" button, or a menu) |
+| `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site" button, or a menu); npmjs.com links are labelled "npm" |
 | `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
-| `isOngoing` | `boolean` | `false`. Shows an "Ongoing" chip on the cover; `my-projects/index.vue` sorts ongoing projects first |
+| `isOngoing` | `boolean` | `false`. Shows an "Ongoing" chip on the cover (above the title when there is no cover); `my-projects/index.vue` sorts ongoing projects first |
+| `featured` | `boolean` | `false`. Spans both grid columns with cover and full text side by side (`lg`), no "Read more". `my-projects/index.vue` sets it for ongoing projects and for a regular card left alone in the last grid row |
 
 Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
 
-The header is a size container (`@container`): below 20rem of card width (`@xs`) the "Code" / "Live site" labels become `sr-only` and the external-link arrow is hidden (`externalIconClass`), so the buttons shrink to their icons while keeping their accessible name.
+Each card keeps its own height in the grid (`items-start`), so expanding one never stretches its neighbour. The cover shows only the image (and the "Ongoing" chip); title, meta, text and the `secondary` link buttons sit below it, always with visible labels. The thesis, personal exercises (Sfrigola Core, Sfrigola App) and course exercises (`ARCHIVED_PROJECT_IDS` in `my-projects/index.vue`) are not cards: they are listed after the grid as compact rows (title, meta, links) under `pages.projects.personalProjects.archiveTitle`, keeping their `#project-<id>` anchors.
 
 ### `CustomSbTemplatesCard`
 
@@ -705,7 +716,7 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 | `index.vue` | `/` | `/it` | Hero + skills preview + contact form |
 | `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline + "Alongside the day job" proof list |
 | `my-skills.vue` | `/my-skills` | `/it/my-skills` | Tier legend, one section per area (tier lists + `CustomSolarSystem`), `CustomClosingCta` |
-| `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Personal projects showcase grid |
+| `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Featured project, projects grid, studies/exercises list, `CustomClosingCta` (both tabs) |
 | `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates showcase grid |
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` | Legal |
@@ -840,6 +851,17 @@ const { reference, floating, floatingStyles, open, toggleFloating } = useFloatin
 })
 ```
 
+### `useCloudinary()`
+
+Builds a Cloudinary delivery URL from a path relative to `image/upload/` (version included), using `runtimeConfig.public.cloudinaryCloudName`. `resolveImageSrc()` is what the content composables use on locale values: `/…` stays a `public/` path, anything else goes through `cloudinaryUrl()`. Pass the result to `<NuxtImg>` with the default provider — never link it directly (see [Cloudinary images](#cloudinary-images)).
+
+```ts
+const { cloudinaryUrl, resolveImageSrc } = useCloudinary()
+cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
+// → https://res.cloudinary.com/dsmtyu2iw/image/upload/v1793011184/sbt-logo_wgjk4u.svg
+resolveImageSrc('/images/logo.webp') // → unchanged (file in public/)
+```
+
 ### `useLockScroll()`
 
 Prevents page scroll. Multi-caller safe — each instance holds its own owner ID.
@@ -909,7 +931,7 @@ The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title,
 const { projects } = useProjects()
 ```
 
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. An entry with `status: "ongoing"` gets `isOngoing: true`. `skills` (skill ids) resolve to `Skill` objects, used only to link skills to projects on the Skills page ("Seen in"); `meta` stays the authored line.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. An entry with `status: "ongoing"` gets `isOngoing: true`. `skills` (skill ids) resolve to `Skill` objects, used only to link skills to projects on the Skills page ("Seen in"); `meta` stays the authored line. `coverImageSrc`/`coverImageAlt` are optional — the archived thesis and course exercises have none, and `CustomProjectsCard` drops the image panel when it is missing. `coverImageFit` is `'cover'` unless the entry sets `"contain"` (logos on a transparent background).
 
 ### `useTemplates()`
 
@@ -1102,7 +1124,7 @@ Add all variables under **Site settings → Environment variables** on Netlify. 
 | `NUXT_EMAILJS_SERVICE_ID` | Yes | EmailJS service ID |
 | `NUXT_EMAILJS_TEMPLATE_ADMIN_ID` | Yes | EmailJS template ID — admin notification email |
 | `NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID` | Yes | EmailJS template ID — reply-to-user email |
-| `NUXT_PUBLIC_CLOUDINARY_BASE` | Optional | Cloudinary base URL for `@nuxt/image` cloud provider |
+| `NUXT_PUBLIC_CLOUDINARY_CLOUD_NAME` | Optional | Overrides `runtimeConfig.public.cloudinaryCloudName` (default `dsmtyu2iw`), the Cloudinary account `useCloudinary()` builds URLs for |
 | `NUXT_GITHUB_TOKEN` | Optional | GitHub fine-grained token, *Public repositories* access, no permissions. Mark it secret, Builds scope only. Without it the home page drops the contributions counter, and REST calls are anonymous (60 requests/h per IP) |
 
 ### Versioning

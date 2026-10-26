@@ -4,6 +4,7 @@ import useTemplates from '~/composables/data/useTemplates'
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
+const { cloudinaryUrl } = useCloudinary()
 
 useSeoMeta({
   // LOCALIZED
@@ -22,7 +23,7 @@ const { templates } = useTemplates()
 </script>
 
 <template>
-  <div class="flex flex-col gap-10 md:gap-20">
+  <div class="flex flex-col gap-10 md:gap-16">
     <header class="flex flex-col sm:flex-row sm:items-center gap-5 md:gap-6">
       <div class="shrink-0 w-20 md:w-24 bg-ink rounded-lg p-3 md:p-4 shadow-md">
         <NuxtImg
@@ -31,7 +32,7 @@ const { templates } = useTemplates()
           fetchpriority="high"
           height="187"
           loading="eager"
-          src="/images/sbt-logos/sbt-logo.webp"
+          :src="cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')"
           width="160"
         />
       </div>
@@ -62,20 +63,8 @@ const { templates } = useTemplates()
         :title="template.title"
       />
     </div>
-    <div
-      class="flex items-start gap-3 md:gap-4 w-full p-4 md:p-6 rounded-lg border border-border bg-surface"
-    >
-      <div class="shrink-0 flex items-center justify-center size-10 rounded-lg bg-surface-2 text-primary-ink">
-        <Icon aria-hidden="true" class="size-6" name="solar:code-circle-bold-duotone" />
-      </div>
-      <div class="flex-1 min-w-0">
-        <h3 class="sb-h4 text-ink">
-          {{ t('pages.projects.sbTemplatesProject.comingSoonCard.title') }}
-        </h3>
-        <p class="sb-body text-ink-muted">
-          {{ t('pages.projects.sbTemplatesProject.comingSoonCard.paragraph') }}
-        </p>
-      </div>
-    </div>
+    <p class="sb-body text-ink-muted text-left mb-0">
+      {{ t('pages.projects.sbTemplatesProject.inProgress') }}
+    </p>
   </div>
 </template>

@@ -15,3 +15,9 @@
   for = "/.netlify/images/*"
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
+
+# Remote sources the Netlify Image CDN may fetch (logos on Cloudinary). Without this entry
+# /.netlify/images refuses the URL. Scoped to our own cloud so the CDN cannot be used as an
+# open proxy for other Cloudinary accounts.
+[images]
+  remote_images = ["https://res\\.cloudinary\\.com/dsmtyu2iw/image/upload/.*"]

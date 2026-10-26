@@ -6,10 +6,12 @@ interface CustomProjectsCardProps {
   content: RichBlock[]
   imageSrc?: string
   imageAlt?: string
+  imageFit?: 'cover' | 'contain'
   codebaseUrls?: Array<MenuItem>
   deploymentUrls?: Array<MenuItem>
   initiallyExpanded?: boolean
   isOngoing?: boolean
+  featured?: boolean
 }
 
 // Input / Output
@@ -18,9 +20,11 @@ const props = withDefaults(
   {
     imageSrc: undefined,
     imageAlt: undefined,
+    imageFit: 'cover',
     meta: undefined,
     initiallyExpanded: false,
     isOngoing: false,
+    featured: false,
   },
 )
 
@@ -34,7 +38,9 @@ const { t } = useI18n()
 
 // State
 const isDescriptionExpanded = ref(props.initiallyExpanded)
-const MAX_CONTENT_BLOCKS = 1
+const PREVIEW_BLOCKS = 1
+// Up to this many blocks the whole text is short enough to show without a toggle
+const MAX_BLOCKS_WITHOUT_TOGGLE = 2
 
 watch(() => props.initiallyExpanded, (value) => {
   if (value) {
@@ -42,17 +48,17 @@ watch(() => props.initiallyExpanded, (value) => {
   }
 })
 
-const needsExpansion = computed(() => {
-  const hasManyBlocks = props.content?.length > MAX_CONTENT_BLOCKS
-  return hasManyBlocks
-})
+const hasImage = computed(() => Boolean(props.imageSrc))
+const isSplitLayout = computed(() => props.featured && hasImage.value)
+
+const needsExpansion = computed(() => !props.featured && props.content.length > MAX_BLOCKS_WITHOUT_TOGGLE)
 
 const getContentPreview = computed(() => {
   if (!props.content || !Array.isArray(props.content)) {
     return []
   }
-  if (!isDescriptionExpanded.value && props.content.length > MAX_CONTENT_BLOCKS) {
-    return props.content.slice(0, MAX_CONTENT_BLOCKS)
+  if (needsExpansion.value && !isDescriptionExpanded.value) {
+    return props.content.slice(0, PREVIEW_BLOCKS)
   }
   return props.content
 })
@@ -63,6 +69,8 @@ interface UrlGroup {
   icon: string
   label: string
 }
+
+const _isNpmPackage = (urls: MenuItem[]) => urls.every(url => url.code.includes('npmjs.com'))
 
 const urlGroups = computed<UrlGroup[]>(() => {
   const groups: UrlGroup[] = []
@@ -77,11 +85,12 @@ const urlGroups = computed<UrlGroup[]>(() => {
   }
 
   if (props.deploymentUrls?.length) {
+    const isPackage = _isNpmPackage(props.deploymentUrls)
     groups.push({
       key: 'deployment',
       urls: props.deploymentUrls,
-      icon: 'solar:global-line-duotone',
-      label: t('pages.projects.links.live'),
+      icon: isPackage ? 'mdi:npm' : 'solar:global-line-duotone',
+      label: isPackage ? t('pages.projects.links.package') : t('pages.projects.links.live'),
     })
   }
 
@@ -103,140 +112,143 @@ const onSelectUrl = (url: string) => {
   <article
     :id="`project-${props.id}`"
     class="scroll-mt-24"
+    :class="{ 'lg:col-span-2': props.featured }"
     :data-project-id="props.id"
   >
     <BaseCard
       class="h-full"
-      :variant="isDescriptionExpanded ? 'light' : 'dark'"
+      full-custom-content
+      variant="dark"
     >
-      <!-- Card Header -->
-      <template #card-header>
-        <div class="relative w-full h-72 md:h-80 rounded-t-lg sb-transition">
-          <!-- Background image layer: clipped by overflow-hidden -->
-          <div class="absolute inset-0 overflow-hidden rounded-t-lg">
-            <div class="w-full h-full">
-              <NuxtImg
-                :alt="props.imageAlt || props.title"
-                class="w-full h-full min-h-full object-cover object-center"
-                :src="props.imageSrc"
-              />
-            </div>
-            <div class="absolute inset-0 bg-linear-to-t from-bg/90 via-bg/40 to-transparent"></div>
-          </div>
+      <div
+        class="h-full gap-5 md:gap-6"
+        :class="isSplitLayout ? 'flex flex-col lg:grid lg:grid-cols-5 lg:gap-10' : 'flex flex-col'"
+      >
+        <div
+          v-if="hasImage"
+          class="relative shrink-0 h-56 md:h-72 overflow-hidden rounded-md"
+          :class="[
+            props.imageFit === 'contain' ? 'bg-ink flex items-center justify-center p-8 md:p-12' : 'bg-surface-2',
+            { 'lg:col-span-3 lg:h-full lg:min-h-96': isSplitLayout },
+          ]"
+        >
+          <NuxtImg
+            :alt="props.imageAlt || props.title"
+            class="size-full object-center"
+            :class="props.imageFit === 'contain' ? 'object-contain' : 'object-cover'"
+            :src="props.imageSrc"
+          />
+          <BaseChip
+            v-if="props.isOngoing"
+            class="absolute top-3 right-3 md:top-4 md:right-4"
+            icon="solar:record-circle-bold-duotone"
+            :text="t('pages.projects.personalProjects.ongoing')"
+          />
+        </div>
 
-          <!-- Content wrapper -->
-          <!-- Container query: the card width depends on the grid, not the viewport -->
-          <div class="@container relative z-10 flex flex-col justify-between h-full p-4 md:p-6 sb-transition">
-            <!-- Top row: actions -->
-            <div class="flex items-center justify-end gap-2 sb-transition">
-              <BaseChip
-                v-if="props.isOngoing"
-                class="mr-auto"
-                icon="solar:record-circle-bold-duotone"
-                :text="t('pages.projects.personalProjects.ongoing')"
-              />
-              <template v-for="group in urlGroups" :key="group.key">
-                <BaseButton
-                  v-if="group.urls.length === 1"
-                  class="shrink-0"
-                  external-icon-class="hidden @xs:inline"
-                  size="sm"
-                  :to="group.urls[0]!.code"
-                  type="link"
-                  variant="primary"
-                >
-                  <Icon
-                    aria-hidden="true"
-                    class="size-5"
-                    :name="group.icon"
-                  />
-                  <span class="sr-only @xs:not-sr-only">{{ group.label }}</span>
-                </BaseButton>
-                <BaseIconMenu
-                  v-else
-                  :icon="group.icon"
-                  :items="group.urls"
-                  :label="group.label"
-                  @select="onSelectUrl"
-                >
-                  <template #trigger="{ isOpen, toggle }">
-                    <BaseButton
-                      :aria-expanded="isOpen ? 'true' : 'false'"
-                      aria-haspopup="menu"
-                      class="shrink-0"
-                      size="sm"
-                      type="button"
-                      variant="primary"
-                      @click="toggle(!isOpen)"
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        class="size-5"
-                        :name="group.icon"
-                      />
-                      <span class="sr-only @xs:not-sr-only">{{ group.label }}</span>
-                    </BaseButton>
-                  </template>
-                </BaseIconMenu>
-              </template>
-            </div>
+        <div
+          class="flex flex-1 flex-col min-w-0"
+          :class="{ 'lg:col-span-2 lg:py-2': isSplitLayout }"
+        >
+          <BaseChip
+            v-if="props.isOngoing && !hasImage"
+            class="self-start mb-3"
+            icon="solar:record-circle-bold-duotone"
+            :text="t('pages.projects.personalProjects.ongoing')"
+          />
+          <h2
+            :id="`project-title-${props.id}`"
+            class="mb-0 text-ink text-balance outline-none"
+            :class="props.featured ? 'sb-h2' : 'sb-h3'"
+            tabindex="-1"
+          >
+            {{ props.title }}
+          </h2>
+          <p
+            v-if="props.meta"
+            class="sb-small text-ink-muted text-left mt-1 mb-0"
+          >
+            {{ props.meta }}
+          </p>
 
-            <!-- Bottom row: title - absolute positioned -->
-            <div>
-              <h2
-                :id="`project-title-${props.id}`"
-                class="sb-h3 mb-0 text-ink drop-shadow-md outline-none sb-transition"
-                tabindex="-1"
+          <BaseRichText
+            v-if="props.content.length > 0"
+            :id="`project-body-${props.id}`"
+            :blocks="getContentPreview"
+            class="mt-4 text-ink-muted"
+          />
+
+          <BaseButton
+            v-if="needsExpansion"
+            :aria-controls="`project-body-${props.id}`"
+            :aria-describedby="`project-title-${props.id}`"
+            :aria-expanded="isDescriptionExpanded ? 'true' : 'false'"
+            class="-ml-6 self-start"
+            tone="accent"
+            variant="ghost"
+            @click="onTriggerDescription"
+          >
+            {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
+            <Icon
+              aria-hidden="true"
+              class="size-5 sb-transition"
+              :class="{ 'rotate-180': isDescriptionExpanded }"
+              name="solar:alt-arrow-down-bold-duotone"
+            />
+          </BaseButton>
+
+          <div
+            v-if="urlGroups.length"
+            class="flex flex-wrap items-center gap-3 mt-auto pt-6"
+          >
+            <template v-for="group in urlGroups" :key="group.key">
+              <BaseButton
+                v-if="group.urls.length === 1"
+                :to="group.urls[0]!.code"
+                type="link"
+                variant="secondary"
               >
-                {{ props.title }}
-              </h2>
-              <p
-                v-if="props.meta"
-                class="sb-small text-ink/80 text-left mt-1 mb-0"
+                <Icon
+                  aria-hidden="true"
+                  class="size-5"
+                  :name="group.icon"
+                />
+                {{ group.label }}
+              </BaseButton>
+              <BaseIconMenu
+                v-else
+                :icon="group.icon"
+                :items="group.urls"
+                :label="group.label"
+                @select="onSelectUrl"
               >
-                {{ props.meta }}
-              </p>
-            </div>
+                <template #trigger="{ isOpen, toggle }">
+                  <BaseButton
+                    :aria-expanded="isOpen ? 'true' : 'false'"
+                    aria-haspopup="menu"
+                    type="button"
+                    variant="secondary"
+                    @click="toggle(!isOpen)"
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      class="size-5"
+                      :name="group.icon"
+                    />
+                    {{ group.label }}
+                    <Icon
+                      aria-hidden="true"
+                      class="size-4 sb-transition"
+                      :class="{ 'rotate-180': isOpen }"
+                      name="solar:alt-arrow-down-linear"
+                    />
+                  </BaseButton>
+                </template>
+              </BaseIconMenu>
+            </template>
           </div>
         </div>
-      </template>
-
-      <!-- Card Body -->
-      <template #card-body>
-        <!-- Collapsed cards share one height: fixed 4-line preview, faded at the bottom -->
-        <BaseRichText
-          v-if="props.content.length > 0"
-          :id="`project-body-${props.id}`"
-          :blocks="getContentPreview"
-          :class="{ 'h-27 overflow-hidden mask-b-from-50%': !isDescriptionExpanded }"
-        />
-      </template>
-
-      <!-- Card Footer -->
-      <template #card-footer>
-        <BaseButton
-          v-if="needsExpansion"
-          :aria-controls="`project-body-${props.id}`"
-          :aria-expanded="isDescriptionExpanded ? 'true' : 'false'"
-          class="-ml-6"
-          tone="accent"
-          variant="ghost"
-          @click="onTriggerDescription"
-        >
-          {{ isDescriptionExpanded ? t('pages.projects.personalProjects.readLessCta') : t('pages.projects.personalProjects.readMoreCta') }}
-          <Icon
-            aria-hidden="true"
-            class="size-5 sb-transition"
-            :class="{ 'rotate-180': isDescriptionExpanded }"
-            name="solar:alt-arrow-down-bold-duotone"
-          />
-        </BaseButton>
-        <div
-          v-else
-          aria-hidden="true"
-          class="min-h-11"
-        ></div>
-      </template>
+      </div>
     </BaseCard>
   </article>
 </template>

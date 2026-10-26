@@ -8,10 +8,12 @@ const route = useRoute()
 // Data
 type TabType = 'personalProjects' | 'templateProject'
 
-const tabs = computed<{ id: TabType, icon: string, label: string }[]>(() => [
-  { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
-  { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.sbTemplatesProject.tabLabel') },
+const tabs = computed<{ id: TabType, label: string }[]>(() => [
+  { id: 'personalProjects', label: t('pages.projects.personalProjects.tabLabel') },
+  { id: 'templateProject', label: t('pages.projects.sbTemplatesProject.tabLabel') },
 ])
+
+const contactFormIsOpen = ref(false)
 
 const currentTabId = computed<TabType>(() => route.path.includes('/sb-templates') ? 'templateProject' : 'personalProjects')
 
@@ -26,6 +28,7 @@ const onSelectTab = (tabId: string | number) => {
     <ThePageHero
       id="my-projects"
       image-src="/images/3d-avatar/avatar-pose-5.webp"
+      :lead="t('pages.projects.lead')"
       :text="t('pages.projects.hero')"
     />
     <BaseTabs
@@ -44,5 +47,9 @@ const onSelectTab = (tabId: string | number) => {
     >
       <NuxtPage :transition="pageTransition" />
     </section>
+
+    <CustomClosingCta @contact="contactFormIsOpen = true" />
+
+    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>

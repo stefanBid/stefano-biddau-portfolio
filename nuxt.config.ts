@@ -79,6 +79,9 @@ export default defineNuxtConfig({
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
+      // Cloudinary account that hosts the logos. Public (it is in every delivery URL);
+      // override per environment with NUXT_PUBLIC_CLOUDINARY_CLOUD_NAME.
+      cloudinaryCloudName: 'dsmtyu2iw',
     },
   },
   routeRules: {
@@ -201,5 +204,10 @@ export default defineNuxtConfig({
     providers: {
       none: { provider: 'none' },
     },
+    // Logos live on Cloudinary but are never fetched by the browser from there: they go through
+    // the default provider (ipx in dev, Netlify Image CDN in production), which pulls the original
+    // server-side, caches it on the edge and serves it from our own origin — Cloudinary is only hit
+    // on a cache miss. Production also needs the matching `remote_images` entry in netlify.toml.
+    domains: ['res.cloudinary.com'],
   },
 })
