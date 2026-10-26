@@ -83,8 +83,10 @@ const onNavigateFromMenu = (r: RouteItem) => {
   onClose(false)
 }
 
-const onSelectLang = (langCode: string) => {
-  // Emit lang change
+const onSelectLang = (langCode: string | null) => {
+  if (!langCode) {
+    return
+  }
   emit('change-lang', langCode)
 }
 
@@ -171,12 +173,16 @@ watch(isMdUp, (newVal) => {
         </nav>
 
         <div class="hidden md:flex">
-          <BaseIconMenu
+          <BaseMenu
             icon="solar:globus-bold-duotone"
             :items="props.langs"
+            kind="select"
             :label="t('a11y.changeLanguage')"
-            :selected-item-id="props.selectedLangId"
-            @select="itemId => onSelectLang(itemId)"
+            placement="bottom-start"
+            :selected="props.selectedLangId"
+            size="sm"
+            variant="ghost"
+            @update:selected="onSelectLang"
           />
         </div>
 

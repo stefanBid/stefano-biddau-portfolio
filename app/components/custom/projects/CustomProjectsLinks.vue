@@ -69,7 +69,7 @@ const links = computed<MenuItem[]>(() => {
     />
     {{ links[0]!.label }}
   </BaseButton>
-  <BaseMenuButton
+  <BaseMenu
     v-else-if="links.length > 1"
     icon="solar:link-line-duotone"
     :items="links"

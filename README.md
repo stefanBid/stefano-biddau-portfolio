@@ -334,7 +334,7 @@ All reusable components live in `app/components/`. Three component tiers:
 
 ### `BaseButton`
 
-Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu and listbox options (`BaseIconMenu`, `BaseMenuButton`, `BaseCombobox`), and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
+Every **action** (submit, download, open, "Read more", links styled as buttons, pagination, close, language switch) uses `BaseButton`. A native `<button type="button">` is allowed only inside controls with their own semantics or drawing: tabs (`BaseTabs`), menu options (`BaseMenu`), and the hamburger (`TheHeaderMenuToggle`). ARIA attributes, `role`, `tabindex` and listeners pass through to the root element.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -430,25 +430,6 @@ Model: `defineModel<string>('input')`
 Model: `defineModel<boolean>('input')`
 Slot: `default` (custom label content, rendered inside a `<label for>` so the text toggles the box)
 
-### `BaseCombobox`
-
-Generic component (`generic="T"`).
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `id` | `string` | — | Required |
-| `type` | `'single' \| 'multiple'` | `'single'` | Selection mode |
-| `items` | `{ label: string, value: T }[]` | — | Required |
-| `label` | `string` | `undefined` | |
-| `placeholder` | `string` | `'Insert a value...'` | |
-| `hint` | `string` | `undefined` | |
-| `error` | `string \| null` | `null` | |
-| `prefixIcon` | `string` | `undefined` | |
-
-Model: `defineModel<T[]>('input', { default: () => [] })`
-`hideLabelOnMobile` (`boolean`, default `false`) keeps the label for screen readers but hides it below `md` (compact filter rows).
-Behaviour: built on `sb-floating-panel-vue` — a field-styled button (`SbReference`, labelled by the label plus its own text, so the value is announced) opens a `listbox` (`SbFloating`, `aria-multiselectable` in `multiple` mode, as wide as the button). With more than one value the button reads "N selected" (`a11y.selectedCount`) instead of a truncated list. The library handles the keyboard (↓/↑ open on the selected option, ↑/↓/Home/End/typing move), closes on click outside and on Escape (only the list, focus back to the button), and `single` mode closes on pick (`closeOnSelect`). Not used by any page yet.
-
 ### `BaseChip`
 
 | Prop | Type | Default | Notes |
@@ -475,40 +456,21 @@ Emits: `(e: 'close', value: false): void`
 Slots: `default` (body), `header`, `footer`
 Behaviour: closes on `Escape` (unless a floating panel inside already handled it — `defaultPrevented`), locks scroll, traps Tab inside and restores focus on close (`useFocusTrap`), uses `<Teleport to="body">`.
 
-### `BaseIconButton`
+### `BaseMenu`
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
-| `icon` | `string` | — | Required. Iconify name |
-| `ariaLabel` | `string` | `undefined` | Always set it |
-| `isActive` | `boolean` | `false` | Active/pressed state styling |
-| `text` | `string` | `undefined` | Optional short label next to the icon (e.g. the current language code) |
-
-Emits: `(e: 'click'): void`
-
-### `BaseIconMenu`
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `icon` | `string` | — | Required. Trigger icon |
-| `label` | `string` | — | Required. Accessible name of the trigger and the menu |
-| `items` | `MenuItem[]` | — | Required |
-| `selectedItemId` | `string \| null` | `null` | Checked item (`menuitemradio`, check icon); also shown uppercase on the trigger (`EN` / `IT`) |
-
-Emits: `(e: 'select', itemId: string): void`
-Built on `sb-floating-panel-vue`: `SbReference` renders `BaseIconButton` as the trigger, `SbFloating` the `role="menu"` panel. A click opens it on the checked item (`autofocus`), ↓/↑ on the trigger on the first/last item; the library handles ↑/↓/Home/End/typing, click outside and Escape (only the menu, focus back to the trigger). The library's `closeOnSelect` skips `menuitemradio`, so the menu calls the container's `close()` after `select`. Used by `TheHeader` (language switcher).
-
-### `BaseMenuButton`
-
-| Prop | Type | Default | Notes |
-|---|---|---|---|
-| `label` | `string` | — | Required. Trigger text and accessible name of the menu |
-| `items` | `MenuItem[]` | — | Required. `code` is the `href`; `icon` + `iconType` optional |
-| `icon` | `string` | `undefined` | Iconify name before the label |
+| `label` | `string` | — | Required. Accessible name of the menu; trigger text (its `aria-label` with `iconOnly`) |
+| `items` | `MenuItem[]` | — | Required. `links`: `code` is the `href`; `select`: `code` is the value. `icon` + `iconType` optional, shown before the label |
+| `kind` | `'links' \| 'select'` | `'links'` | `links`: `role="menuitem"` anchors; `select`: `role="menuitemradio"` buttons with a check on the selected item, and the trigger shows the selected `code` (like a native `<select>`, `aria-label` = `code – label`) |
+| `icon` | `string` | `undefined` | Trigger icon, before the text |
+| `iconOnly` | `boolean` | `false` | Same as `BaseButton`: square trigger with the icon only, `label` as `aria-label`, no chevron |
 | `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'secondary'` | `BaseButton` variant of the trigger |
-| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | `BaseButton` size of the trigger (icon `size-4` at `sm`, `size-5` otherwise) |
+| `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | `BaseButton` size of the trigger (icon `size-4` at `sm` with text, `size-5` otherwise) |
+| `placement` | `SbPlacement` | `'bottom-start'` | Panel placement; flips when there is no room |
 
-A `BaseButton` trigger (label + chevron that flips while open) that opens a menu of links (`role="menuitem"` anchors, at least as wide as the trigger). External links open in a new tab with the arrow icon and the `a11y.newTab` hint. Built on `sb-floating-panel-vue`: keyboard, click outside, Escape and close-on-pick (`closeOnSelect`, focus back to the trigger) come from the library. Used by `CustomProjectsLinks` when a project has more than one link.
+Model: `defineModel<string | null>('selected', { default: null })` — used by `kind="select"`, `null` = nothing selected (the trigger shows `label`); ignored by `links`.
+The trigger is always a `BaseButton` (`isActive` while open): icon and text on the left, chevron (flips while open) pushed to the far right (`ml-auto`), so it stays at the edge when the trigger is stretched. Built on `sb-floating-panel-vue`: `SbFloating` renders the `role="menu"` panel (`fixed`, at least as wide as the trigger). The library handles ↓/↑ on the trigger, ↑/↓/Home/End/typing, click outside and Escape (only the menu, focus back to the trigger) and close-on-pick for links (`closeOnSelect`). `select` opens on the checked item (`autofocus`) and calls the container's `close()` after a pick, since `closeOnSelect` skips `menuitemradio`. External links open in a new tab with the arrow icon and the `a11y.newTab` hint. Used by `TheHeader` (language switcher: `kind="select"`, `ghost`, `sm`, `bottom-end`) and `CustomProjectsLinks` (more than one link).
 
 ### `BaseCloseButton`
 
@@ -627,7 +589,7 @@ Each card keeps its own height in the grid (`items-start`), so expanding one nev
 | `deploymentUrls` | `MenuItem[]` | `[]` | Live links ("Live site"); all-npmjs.com links are labelled "npm" with the `mdi:npm` icon |
 | `size` | `'sm' \| 'md'` | `'md'` | `md` in `CustomProjectsCard`, `sm` in the studies rows of `my-projects/index.vue` |
 
-Code and live links form one list: a single link is a `secondary` `BaseButton` link, two or more go into one `BaseMenuButton` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), plus the link's own label when a kind has more than one link (`Code · GitHub`). Renders nothing without links; the caller owns the wrapper and its spacing.
+Code and live links form one list: a single link is a `secondary` `BaseButton` link, two or more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), plus the link's own label when a kind has more than one link (`Code · GitHub`). Renders nothing without links; the caller owns the wrapper and its spacing.
 
 ### `CustomSbTemplatesCard`
 
@@ -692,7 +654,7 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ### `TheHeader` / `TheHeaderMenuToggle`
 
-Top navigation bar. Desktop: logo left; nav and language menu (`BaseIconMenu`, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
+Top navigation bar. Desktop: logo left; nav and language menu (`BaseMenu` `kind="select"`, ghost, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
 
 ### `TheFooter`
 
@@ -1006,7 +968,7 @@ Types a composable exposes are exported from that composable and imported with `
 
 | Type | Description |
 |---|---|
-| `MenuItem` | `{ code, label, iconType, icon }` — language switcher, `BaseIconMenu` and `BaseMenuButton` items (`code` = href in `BaseMenuButton`) |
+| `MenuItem` | `{ code, label, iconType, icon }` — language switcher and `BaseMenu` items (`code` = href with `kind="links"`, value with `kind="select"`) |
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
 | `GithubRepo` | `{ name, url, description, language, stars }` |
 | `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |
@@ -1172,7 +1134,7 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | `@nuxtjs/sitemap` | `^9.1.0` | Sitemap generated from pages + i18n hreflang, prerendered (`zeroRuntime`) |
 | `@vueuse/core` | `^15.0.0` | Vue composition utilities |
 | `@vueuse/nuxt` | `^15.0.0` | Nuxt integration for VueUse |
-| `sb-floating-panel-vue` | `^5.3.1` | Headless floating panels (`SbContainer`, `SbReference`, `SbFloating`) for `BaseIconMenu`, `BaseMenuButton`, `BaseCombobox` — placement, keyboard, ARIA, dismissal. Brings `@floating-ui/vue` as an auto-installed peer (not in `package.json`) |
+| `sb-floating-panel-vue` | `^5.3.1` | Headless floating panels (`SbContainer`, `SbReference`, `SbFloating`) for `BaseMenu` — placement, keyboard, ARIA, dismissal. Brings `@floating-ui/vue` as an auto-installed peer (not in `package.json`) |
 | `isomorphic-dompurify` | `^4.6.0` | XSS-safe HTML sanitisation |
 | `@emailjs/browser` | `^5.0.3` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |

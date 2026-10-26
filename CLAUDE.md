@@ -15,7 +15,7 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **@nuxtjs/i18n** — `en` (default, no prefix) + `it` (`/it/...`); `prefix_except_default`
 - **@nuxtjs/sitemap** — sitemap from app pages, hreflang from i18n, `zeroRuntime: true` (prerendered); `site.url` in `nuxt.config.ts`; per-page `definePageMeta({ sitemap: { lastmod, changefreq, priority } })`, `lastmod` bumped by hand; no `public/sitemap.xml`
 - **@vueuse/nuxt** — Vue composition utilities
-- **sb-floating-panel-vue** — headless floating panels (`SbContainer`, `SbReference`, `SbFloating`) behind `BaseIconMenu`, `BaseMenuButton`, `BaseCombobox`; it owns placement, keyboard, ARIA, click outside and Escape. `@floating-ui/vue` is only its auto-installed peer — never import it. Escape handlers of our own surfaces skip `e.defaultPrevented` (the library already closed a panel)
+- **sb-floating-panel-vue** — headless floating panels (`SbContainer`, `SbReference`, `SbFloating`) behind `BaseMenu` (`kind` `links`/`select`, trigger always `BaseButton`: `variant`/`size`/`iconOnly` mean what they mean there, `placement` explicit); it owns placement, keyboard, ARIA, click outside and Escape. `@floating-ui/vue` is only its auto-installed peer — never import it. Escape handlers of our own surfaces skip `e.defaultPrevented` (the library already closed a panel)
 - **isomorphic-dompurify** — HTML sanitisation (client-side only)
 - **@emailjs/browser** — contact form (client-side only)
 - **typed.js** — typewriter animation (client-side only)
