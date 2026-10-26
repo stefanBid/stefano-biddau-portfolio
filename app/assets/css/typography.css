@@ -156,8 +156,8 @@
     -webkit-hyphenate-limit-after: 3;
   }
 
-  /* Names in bold (JavaScript, PostgreSQL) never split */
-  :is(p, li, blockquote) :is(strong, b) {
+  /* Names in bold (JavaScript, PostgreSQL), emails and URLs never split */
+  :is(p, li, blockquote) :is(strong, b, a) {
     hyphens: manual;
   }
 

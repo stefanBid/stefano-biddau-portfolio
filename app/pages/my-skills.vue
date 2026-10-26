@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useSkillReferences from '~/composables/data/useSkillReferences'
+import type { SkillReference } from '~/composables/data/useSkillReferences'
 import useSkills from '~/composables/data/useSkills'
 import type { SkillTier } from '~/composables/data/useSkills'
 
@@ -11,7 +12,7 @@ definePageMeta({
 const { t } = useI18n()
 const route = useRoute()
 const { areas } = useSkills()
-const { referencesByArea } = useSkillReferences()
+const { references, referencesByArea } = useSkillReferences()
 const { isFormOpen: isContactFormOpen } = useContact()
 
 useSeoMeta({
@@ -31,6 +32,17 @@ useSeoMeta({
 const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
 const activeSkillId = ref<string | null>(null)
+
+// Each chip links to the first place the skill shows up (work, then projects); the area line lists them all
+const firstReferenceBySkill = computed<Record<string, SkillReference>>(() => {
+  const map: Record<string, SkillReference> = {}
+  references.value.forEach((reference) => {
+    reference.skills.forEach((skill) => {
+      map[skill.id] ??= reference
+    })
+  })
+  return map
+})
 
 // Events
 const onHighlightSkill = (id: string | null) => {
@@ -118,6 +130,9 @@ const onHighlightSkill = (id: string | null) => {
                   :icon="skill.icon"
                   :name="skill.name"
                   :on-light="skill.onLight"
+                  :seen-in="firstReferenceBySkill[skill.id]?.title"
+                  :to="firstReferenceBySkill[skill.id]?.to"
+                  @focus="onHighlightSkill(skill.id)"
                 />
               </li>
             </ul>

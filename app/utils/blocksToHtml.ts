@@ -42,7 +42,9 @@ function childrenToHtml(children: RichBlockChild[]): string {
   return children.map((child) => {
     if (child.type === 'link') {
       const linkText = child.children.map(c => formatText(c)).join('')
-      return `<a href="${child.url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`
+      // mailto: and same-site paths stay in the tab
+      const newTab = /^https?:\/\//.test(child.url) ? ' target="_blank" rel="noopener noreferrer"' : ''
+      return `<a href="${child.url}"${newTab}>${linkText}</a>`
     }
 
     return formatText(child)

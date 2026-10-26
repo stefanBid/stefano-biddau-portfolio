@@ -234,7 +234,7 @@
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
-          "content": "From 2018 to December 2022 I studied Computer Science at UNISA: **object-oriented programming in Java**, **distributed programming with Java EE**, **web development with HTML, CSS and JavaScript**, and **mathematics and statistics** applied with **Python**.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the **Fashion-MNIST** dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
+          "content": "From 2018 to December 2022 I studied Computer Science at UNISA, with a focus on **object-oriented programming in Java**, **distributed programming with Java EE**, **web development with HTML, CSS and JavaScript**, and **mathematics and statistics** applied with **Python**.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the **Fashion-MNIST** dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
         },
         {
           "id": "2",
@@ -247,7 +247,7 @@
           "type": "internship",
           "stack": ["Spring Boot", "Angular", "REST API"],
           "skills": ["spring", "angular"],
-          "content": "Full-stack internship at **SI2001**, on web applications built with Spring Boot and Angular.\n\nI built front-end components, integrated REST APIs, wrote back-end business logic and managed databases, on real projects inside a structured team. In March 2023 I joined SI2001 permanently."
+          "content": "I did a full-stack internship at **SI2001**, working on web applications with Spring Boot and Angular.\n\nI built front-end components, integrated REST APIs, wrote back-end business logic and managed databases, on real projects inside a structured team. In March 2023 I joined SI2001 permanently."
         },
         {
           "id": "3",
@@ -286,6 +286,7 @@
       "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS. Below, the full stack by area and by how often I use it.",
       "orbitCaption": "Closer to the sun means I use it more often.",
       "seenIn": "Seen in:",
+      "chipSeenIn": "where I used it: {place}",
       "tiers": {
         "core": {
           "label": "Core",
@@ -317,7 +318,7 @@
     },
     "projects": {
       "hero": "Projects",
-      "lead": "Client work, an open-source Vue library, starter templates and personal experiments. Live links where available; client source code stays private.",
+      "lead": "Client work, an open-source Vue library, the SB Templates starters and personal experiments. Live links where available; client source code stays private.",
       "links": {
         "code": "Code",
         "live": "Live site",
@@ -422,10 +423,10 @@
         "archiveTitle": "Studies and exercises"
       },
       "sbTemplatesProject": {
-        "tabLabel": "Starter templates",
+        "tabLabel": "SB Templates",
         "logoAlt": "SB Templates logo",
-        "title": "A faster way to start a new project",
-        "description": "Open-source starter templates for Nuxt, Astro and Flutter, with architecture, build tools, linting and formatting already configured, so a new project starts from working code.",
+        "title": "SB Templates",
+        "description": "A faster way to start a new project: open-source starter templates for Nuxt, Astro and Flutter, with architecture, build tools, linting and formatting already configured, so a new project starts from working code.",
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
@@ -466,120 +467,111 @@
         "inProgress": "More templates for other frameworks are in progress."
       }
     },
+    "legal": {
+      "updated": "Last updated",
+      "toc": "On this page",
+      "summary": "At a glance",
+      "questions": "Questions about this page? Write to me, I reply personally.",
+      "backToTop": "Back to top"
+    },
     "privacy": {
       "title": "Privacy Policy",
-      "subtitle": "Your privacy is important to me",
-      "lastUpdate": "Last updated",
-      "backHome": "Back to Home",
-      "intro": {
-        "title": "Introduction",
-        "content": "This Privacy Policy describes how Stefano Biddau collects, uses, and protects your personal information when you use the contact form on this website (www.stefanobiddau.com). I am committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR)."
-      },
-      "dataController": {
-        "title": "1. Data Controller",
-        "name": "Name",
-        "email": "Email"
-      },
-      "dataCollected": {
-        "title": "2. Data I Collect",
-        "intro": "When you use the contact form on my website, I collect the following personal information:",
-        "name": "Name",
-        "nameDesc": "To identify you and personalize my response.",
-        "email": "Email Address",
-        "emailDesc": "To communicate with you and respond to your inquiry.",
-        "message": "Message Content",
-        "messageDesc": "The information you choose to share with me."
-      },
-      "purpose": {
-        "title": "3. Purpose of Data Processing",
-        "content": "I collect and process your personal data solely for the purpose of responding to your inquiries submitted through the contact form. I will not use your data for marketing purposes unless you explicitly consent to receive such communications."
-      },
-      "legalBasis": {
-        "title": "4. Legal Basis for Processing",
-        "content": "The legal basis for processing your personal data is your explicit consent, which you provide by submitting the contact form and agreeing to my Privacy Policy. You have the right to withdraw your consent at any time by contacting me."
-      },
-      "thirdParties": {
-        "title": "5. Third-Party Services",
-        "intro": "I use EmailJS, a third-party email service, to send and receive messages from the contact form. When you submit the form, your data is transmitted to EmailJS servers. EmailJS is a trusted service provider that complies with data protection regulations.",
-        "emailjs": "Used to process and deliver contact form submissions.",
-        "privacyPolicy": "EmailJS Privacy Policy"
-      },
-      "dataRetention": {
-        "title": "6. Data Retention",
-        "content": "I retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law. Once your inquiry has been resolved and there is no further need to retain your data, it will be securely deleted."
-      },
-      "yourRights": {
-        "title": "7. Your Rights",
-        "intro": "Under the GDPR, you have the following rights regarding your personal data:",
-        "access": "Access: Request a copy of the personal data I hold about you.",
-        "rectification": "Rectification: Request corrections to any inaccurate or incomplete data.",
-        "erasure": "Erasure: Request the deletion of your personal data.",
-        "restriction": "Restriction of Processing: Request that I limit the processing of your data.",
-        "portability": "Data Portability: Request a copy of your data in a structured, machine-readable format.",
-        "objection": "Objection: Object to the processing of your data under certain circumstances.",
-        "contact": "To exercise any of these rights, please contact me at"
-      },
-      "changes": {
-        "title": "8. Changes to This Privacy Policy",
-        "content": "I may update this Privacy Policy from time to time to reflect changes in my practices or legal requirements. Any updates will be posted on this page with a revised \"Last Updated\" date. I encourage you to review this policy periodically."
-      }
+      "lead": "How the contact form handles your data, in plain words. Short version: this site does not track you.",
+      "summary": "- **No cookies, no analytics, no trackers.** Fonts and images load from this site's own domain.\n- **Only the contact form collects data.** Your name, email and message, nothing else.\n- **EmailJS delivers your message.** It reaches my inbox and you get a copy.\n- **I use it only to reply to you.** No newsletter, no marketing, no selling or sharing.\n- **You can have it deleted at any time.** Write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
+      "sections": [
+        {
+          "id": "controller",
+          "title": "Data controller",
+          "content": "**Stefano Biddau**, who runs this site, is responsible for your data.\n\nEmail: [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "data",
+          "title": "Data I collect",
+          "content": "When you send the contact form I receive:\n- **Name** To know who I am talking to.\n- **Email address** To reply to you.\n- **Message** Whatever you choose to tell me.\n- **Date and time of your consent** Proof that you agreed to this policy.\n\nNothing else. The site sets no cookies and runs no analytics. It only saves the dark theme setting in your browser (local storage), which never leaves your device."
+        },
+        {
+          "id": "purpose",
+          "title": "Why I use it",
+          "content": "Only to read your message and reply, including any conversation that follows. I do not use your data for marketing, I do not add you to any list and I do not pass it on to anyone except the services below, which deliver the message."
+        },
+        {
+          "id": "legal-basis",
+          "title": "Legal basis",
+          "content": "Your consent (article 6(1)(a) of the GDPR), which you give by ticking the box before sending the form. You can withdraw it at any time by writing to me; this does not affect what happened before."
+        },
+        {
+          "id": "processors",
+          "title": "Services that handle your data",
+          "content": "- **EmailJS** Sends the form: it delivers your message to my inbox and emails you a copy at the address you entered. [EmailJS privacy policy](https://www.emailjs.com/legal/privacy-policy/)\n- **Google (Gmail)** Hosts the inbox where your message arrives. [Google privacy policy](https://policies.google.com/privacy)\n- **Netlify** Hosts this site. Like every web server, it may record technical data about each visit, such as IP address and browser, to keep the site secure and running. [Netlify privacy policy](https://www.netlify.com/privacy/)\n\nThese providers may process data outside the European Union, under the safeguards described in their own policies."
+        },
+        {
+          "id": "retention",
+          "title": "How long I keep it",
+          "content": "Only as long as our conversation needs it, or as long as the law requires. After that I delete it."
+        },
+        {
+          "id": "rights",
+          "title": "Your rights",
+          "content": "Under the GDPR you have these rights over your data:\n- **Access** Get a copy of the data I hold about you.\n- **Rectification** Correct it if it is wrong or incomplete.\n- **Erasure** Have it deleted.\n- **Restriction** Limit how I use it.\n- **Portability** Receive it in a structured, machine-readable format.\n- **Objection** Ask me to stop using it.\n\nI reply within one month, as the GDPR requires. You can also complain to the Italian data protection authority, the [Garante per la protezione dei dati personali](https://www.garanteprivacy.it).\n\nTo exercise a right, write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "changes",
+          "title": "Changes to this policy",
+          "content": "If something changes, I update this page and the date at the top."
+        }
+      ]
     },
     "terms": {
       "title": "Terms and Conditions",
-      "subtitle": "Please read these terms carefully before using my website",
-      "lastUpdate": "Last updated",
-      "backHome": "Back to Home",
-      "intro": {
-        "title": "Introduction",
-        "content": "Welcome to stefanobiddau.com (the \"Website\"). These Terms and Conditions (\"Terms\") govern your use of this Website. By accessing or using the Website, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the Website."
-      },
-      "acceptance": {
-        "title": "1. Acceptance of Terms",
-        "content": "By accessing and using this Website, you accept and agree to be bound by these Terms and my Privacy Policy. These Terms apply to all visitors, users, and others who access or use the Website."
-      },
-      "useOfWebsite": {
-        "title": "2. Use of the Website",
-        "intro": "You may use this Website for lawful purposes only. You agree not to:",
-        "point1": "Use the Website in any way that violates any applicable local, national, or international law or regulation.",
-        "point2": "Transmit, or procure the sending of, any unsolicited or unauthorized advertising or promotional material.",
-        "point3": "Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Website, the server on which the Website is stored, or any server, computer, or database connected to the Website.",
-        "point4": "Use the Website in any manner that could disable, overburden, damage, or impair the Website or interfere with any other party's use of the Website."
-      },
-      "intellectualProperty": {
-        "title": "3. Intellectual Property Rights",
-        "content": "All content on this Website, including but not limited to text, graphics, logos, images, and software, is the property of Stefano Biddau or its content suppliers and is protected by Italian and international copyright laws. You may not reproduce, distribute, modify, or create derivative works from any content on this Website without prior written permission."
-      },
-      "contactForm": {
-        "title": "4. Contact Form and User Submissions",
-        "intro": "When you submit information through the contact form on this Website, you agree that:",
-        "point1": "The information you provide is accurate, complete, and truthful.",
-        "point2": "You will not submit any content that is unlawful, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, or otherwise objectionable.",
-        "point3": "I may use the information you provide to respond to your inquiry and as described in my Privacy Policy."
-      },
-      "thirdPartyLinks": {
-        "title": "5. Third-Party Links",
-        "content": "This Website may contain links to third-party websites or services that are not owned or controlled by me. I have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that I shall not be responsible or liable for any damage or loss caused by your use of any third-party content, goods, or services."
-      },
-      "disclaimer": {
-        "title": "6. Disclaimer of Warranties",
-        "content": "This Website is provided on an \"as is\" and \"as available\" basis. I make no representations or warranties of any kind, express or implied, as to the operation of the Website or the information, content, or materials included on the Website. To the fullest extent permissible by law, I disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability and fitness for a particular purpose."
-      },
-      "liability": {
-        "title": "7. Limitation of Liability",
-        "content": "To the fullest extent permitted by law, Stefano Biddau shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of, or inability to use, the Website. This includes, but is not limited to, damages for loss of profits, data, or other intangible losses."
-      },
-      "changes": {
-        "title": "8. Changes to These Terms",
-        "content": "I reserve the right to modify or replace these Terms at any time. Any changes will be effective immediately upon posting on this page with a revised \"Last Updated\" date. Your continued use of the Website after any changes to these Terms constitutes your acceptance of the new Terms."
-      },
-      "governingLaw": {
-        "title": "9. Governing Law",
-        "content": "These Terms shall be governed and construed in accordance with the laws of Italy, without regard to its conflict of law provisions. Any disputes arising out of or relating to these Terms or your use of the Website shall be subject to the exclusive jurisdiction of the courts of Italy."
-      },
-      "contact": {
-        "title": "10. Contact Me",
-        "content": "If you have any questions about these Terms, please contact me at"
-      }
+      "lead": "The few rules for using this site. It is a personal portfolio: nothing to buy, no account to create.",
+      "summary": "- **Free to browse.** No account needed.\n- **My work stays mine.** Link to it freely, ask before reusing it.\n- **Use the contact form honestly.** Your real details, no spam.\n- **Italian law applies.**",
+      "sections": [
+        {
+          "id": "acceptance",
+          "title": "Accepting these terms",
+          "content": "By using stefanobiddau.com you accept these terms and the [Privacy Policy](/privacy-policy). If you do not agree, please do not use the site."
+        },
+        {
+          "id": "acceptable-use",
+          "title": "Acceptable use",
+          "content": "Use the site only for lawful purposes. Do not:\n- use it to break any law;\n- send spam or unsolicited advertising through the contact form;\n- try to access, disrupt or damage the site, its server or any connected system;\n- overload it or get in the way of other visitors."
+        },
+        {
+          "id": "content",
+          "title": "My work and its content",
+          "content": "The texts, illustrations, photos and design of this site belong to me, unless stated otherwise. You can link to any page and quote short extracts with a link back; to reuse anything else, ask me first.\n\nOpen-source projects shown here follow their own license on GitHub. Client names and logos belong to their owners and appear only to describe the work I did for them."
+        },
+        {
+          "id": "contact-form",
+          "title": "The contact form",
+          "content": "When you write to me, use your real name and an email address you can read, and do not send unlawful, offensive or harassing content. I use what you send only to reply, as described in the [Privacy Policy](/privacy-policy)."
+        },
+        {
+          "id": "external-links",
+          "title": "Links to other sites",
+          "content": "Some pages link to sites I do not control, such as GitHub, LinkedIn and the sites of projects I worked on. I am not responsible for their content or how they handle your data."
+        },
+        {
+          "id": "warranties",
+          "title": "No warranties",
+          "content": "The site is provided as is. I do my best to keep it accurate and online, but I cannot guarantee it is always available or free of errors."
+        },
+        {
+          "id": "liability",
+          "title": "Limitation of liability",
+          "content": "As far as the law allows, I am not liable for damage resulting from using the site or from being unable to use it."
+        },
+        {
+          "id": "changes",
+          "title": "Changes to these terms",
+          "content": "I may update these terms. The new version applies from the date shown at the top of this page."
+        },
+        {
+          "id": "law",
+          "title": "Governing law",
+          "content": "These terms are governed by Italian law. Disputes go to the competent Italian courts, without affecting the rights you have as a consumer where you live."
+        }
+      ]
     }
   },
   "footer": {

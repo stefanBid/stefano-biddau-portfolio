@@ -24,7 +24,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 </script>
 
 <template>
-  <footer class="border-t border-border bg-bg/95 text-ink mt-16 px-6 md:px-10">
+  <footer class="border-t border-border bg-bg/95 text-ink mt-16 px-4 sm:px-6 md:px-10">
     <div
       class="max-w-350 mx-auto grid gap-8 md:gap-10
              grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start py-10 md:py-12"

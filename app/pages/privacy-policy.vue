@@ -1,12 +1,14 @@
 <script setup lang="ts">
+import useLegalDocument from '~/composables/data/useLegalDocument'
+
 definePageMeta({
-  sitemap: { lastmod: '2026-04-12', changefreq: 'yearly', priority: 0.5 },
+  sitemap: { lastmod: '2026-10-26', changefreq: 'yearly', priority: 0.5 },
 })
 
 // Dependencies
-const { t, locale } = useI18n()
-const localePath = useLocalePath()
+const { t } = useI18n()
 const route = useRoute()
+const { legalDocument } = useLegalDocument('privacy')
 
 useSeoMeta({
   // LOCALIZED
@@ -20,218 +22,13 @@ useSeoMeta({
   // DYNAMIC BUT NOT TIED TO CONTENT LANGUAGE
   ogUrl: () => `https://stefanobiddau.com${route.fullPath}`,
 })
-
-const lastUpdate = computed(() => {
-  const date = new Date('2025-11-18')
-  return new Intl.DateTimeFormat(locale.value, {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(date)
-})
 </script>
 
 <template>
-  <article class="space-y-8 sm:space-y-10 md:space-y-12 pt-16 [&_li]:max-w-[75ch] [&_p]:max-w-[75ch]">
-    <!-- Header -->
-    <header class="space-y-4 sm:space-y-5 md:space-y-6 text-center">
-      <h1 class="sb-display mb-0">
-        {{ t('pages.privacy.title') }}
-      </h1>
-      <p class="sb-h4 text-ink-muted">
-        {{ t('pages.privacy.subtitle') }}
-      </p>
-      <p class="sb-overline text-ink-muted/70">
-        {{ t('pages.privacy.lastUpdate') }}: {{ lastUpdate }}
-      </p>
-    </header>
-
-    <hr class="border-border" />
-
-    <!-- Introduction -->
-    <section class="space-y-4 md:space-y-5">
-      <h2 class="sb-h1">
-        {{ t('pages.privacy.intro.title') }}
-      </h2>
-      <p class="sb-body text-ink-muted leading-relaxed">
-        {{ t('pages.privacy.intro.content') }}
-      </p>
-    </section>
-
-    <!-- Section 1: Data Controller -->
-    <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 md:space-y-5">
-        <h2 class="sb-h3">
-          {{ t('pages.privacy.dataController.title') }}
-        </h2>
-        <div class="space-y-3 md:space-y-4">
-          <p class="sb-body text-ink-muted leading-relaxed">
-            {{ t('pages.privacy.dataController.name') }}: <span class="text-ink">Stefano Biddau</span>
-          </p>
-          <p class="sb-body text-ink-muted leading-relaxed">
-            {{ t('pages.privacy.dataController.email') }}:
-            <a
-              class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
-              href="mailto:biddau.stefano99@gmail.com"
-            >
-              biddau.stefano99@gmail.com
-            </a>
-          </p>
-        </div>
-      </div>
-    </BaseCard>
-
-    <!-- Section 2: Data Collected -->
-    <section class="space-y-4 md:space-y-5">
-      <h2 class="sb-h3">
-        {{ t('pages.privacy.dataCollected.title') }}
-      </h2>
-      <p class="sb-body text-ink-muted leading-relaxed">
-        {{ t('pages.privacy.dataCollected.intro') }}
-      </p>
-      <ul class="space-y-3 md:space-y-4 ml-4 md:ml-6">
-        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary-ink shrink-0">•</span>
-          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.name') }}:</strong> {{ t('pages.privacy.dataCollected.nameDesc') }}</span>
-        </li>
-        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary-ink shrink-0">•</span>
-          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.email') }}:</strong> {{ t('pages.privacy.dataCollected.emailDesc') }}</span>
-        </li>
-        <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-          <span class="text-primary-ink shrink-0">•</span>
-          <span><strong class="text-ink">{{ t('pages.privacy.dataCollected.message') }}:</strong> {{ t('pages.privacy.dataCollected.messageDesc') }}</span>
-        </li>
-      </ul>
-    </section>
-
-    <!-- Section 3: Purpose -->
-    <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 md:space-y-5">
-        <h2 class="sb-h3">
-          {{ t('pages.privacy.purpose.title') }}
-        </h2>
-        <p class="sb-body text-ink-muted leading-relaxed">
-          {{ t('pages.privacy.purpose.content') }}
-        </p>
-      </div>
-    </BaseCard>
-
-    <!-- Section 4: Legal Basis -->
-    <section class="space-y-4 md:space-y-5">
-      <h2 class="sb-h3">
-        {{ t('pages.privacy.legalBasis.title') }}
-      </h2>
-      <p class="sb-body text-ink-muted leading-relaxed">
-        {{ t('pages.privacy.legalBasis.content') }}
-      </p>
-    </section>
-
-    <!-- Section 5: Third Parties -->
-    <BaseCard full-custom-content variant="dark">
-      <div class="space-y-4 md:space-y-5">
-        <h2 class="sb-h3">
-          {{ t('pages.privacy.thirdParties.title') }}
-        </h2>
-        <p class="sb-body text-ink-muted leading-relaxed">
-          {{ t('pages.privacy.thirdParties.intro') }}
-        </p>
-        <div class="space-y-2 md:space-y-3">
-          <p class="sb-body text-ink-muted leading-relaxed">
-            <strong class="text-ink">EmailJS</strong> - {{ t('pages.privacy.thirdParties.emailjs') }}
-          </p>
-          <p class="sb-overline text-ink-muted/70">
-            {{ t('pages.privacy.thirdParties.privacyPolicy') }}:
-            <a
-              class="text-primary-ink hover:text-primary-ink-hover wrap-break-word underline underline-offset-4 sb-transition sb-focus rounded-sm"
-              href="https://www.emailjs.com/legal/privacy-policy/"
-              rel="noopener noreferrer"
-              target="_blank"
-            >
-              https://www.emailjs.com/legal/privacy-policy/
-            </a>
-          </p>
-        </div>
-      </div>
-    </BaseCard>
-
-    <!-- Section 6: Data Retention -->
-    <section class="space-y-4 md:space-y-5">
-      <h2 class="sb-h3">
-        {{ t('pages.privacy.dataRetention.title') }}
-      </h2>
-      <p class="sb-body text-ink-muted leading-relaxed">
-        {{ t('pages.privacy.dataRetention.content') }}
-      </p>
-    </section>
-
-    <!-- Section 7: Your Rights -->
-    <BaseCard full-custom-content variant="light">
-      <div class="space-y-4 md:space-y-5">
-        <h2 class="sb-h3">
-          {{ t('pages.privacy.yourRights.title') }}
-        </h2>
-        <p class="sb-body text-ink-muted leading-relaxed">
-          {{ t('pages.privacy.yourRights.intro') }}
-        </p>
-        <ul class="space-y-2 md:space-y-3 ml-4 md:ml-6">
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.access') }}</span>
-          </li>
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.rectification') }}</span>
-          </li>
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.erasure') }}</span>
-          </li>
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.restriction') }}</span>
-          </li>
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.portability') }}</span>
-          </li>
-          <li class="sb-body text-ink-muted leading-relaxed flex gap-3">
-            <span class="text-primary-ink shrink-0">•</span>
-            <span>{{ t('pages.privacy.yourRights.objection') }}</span>
-          </li>
-        </ul>
-        <p class="sb-body text-ink-muted leading-relaxed">
-          {{ t('pages.privacy.yourRights.contact') }}:
-          <a
-            class="text-primary-ink hover:text-primary-ink-hover underline underline-offset-4 sb-transition sb-focus rounded-sm"
-            href="mailto:biddau.stefano99@gmail.com"
-          >
-            biddau.stefano99@gmail.com
-          </a>
-        </p>
-      </div>
-    </BaseCard>
-
-    <!-- Section 8: Changes -->
-    <section class="space-y-4 md:space-y-5">
-      <h2 class="sb-h3">
-        {{ t('pages.privacy.changes.title') }}
-      </h2>
-      <p class="sb-body text-ink-muted leading-relaxed">
-        {{ t('pages.privacy.changes.content') }}
-      </p>
-    </section>
-
-    <!-- Back to Home -->
-    <div class="flex justify-center pt-6 sm:pt-8 md:pt-10">
-      <BaseButton
-        type="button"
-        variant="outline"
-        @click="$router.push(localePath('index'))"
-      >
-        <Icon aria-hidden="true" class="size-5" name="solar:arrow-left-line-duotone" />
-        {{ t('pages.privacy.backHome') }}
-      </BaseButton>
-    </div>
-  </article>
+  <CustomLegalDocument
+    id="privacy"
+    :legal-document="legalDocument"
+    related="terms-and-conditions"
+    updated-iso="2026-10-26"
+  />
 </template>

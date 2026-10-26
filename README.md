@@ -151,6 +151,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
          useSkillReferences.ts ← where each skill is used (milestones, projects, templates)
          useSkills.ts       ← hardcoded local skills list, grouped by area and tier
          useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
+         useLegalDocument.ts ← reads pages.privacy / pages.terms (summary + sections) from i18n
        useCloudinary.ts     ← builds Cloudinary delivery URLs from runtimeConfig
        useContact.ts        ← shared contact-form open state + CV file for the active locale
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
@@ -169,8 +170,8 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        my-projects/
          index.vue           ← /my-projects — featured project, projects grid, studies/exercises list
          sb-templates.vue    ← /my-projects/sb-templates — SB Templates showcase
-       privacy-policy.vue   ← /privacy-policy
-       terms-and-conditions.vue ← /terms-and-conditions
+       privacy-policy.vue   ← /privacy-policy (CustomLegalDocument)
+       terms-and-conditions.vue ← /terms-and-conditions (CustomLegalDocument)
      plugins/
        pageTransition.client.ts ← drives usePageTransition state on navigation (skips fades for locale-only/tab changes)
      router.options.ts     ← custom scrollBehavior, waits for page transition to finish
@@ -179,7 +180,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
      utils/
        blocksToHtml.ts     ← Rich text blocks → HTML
        generateUuid.ts     ← UUID v4 generator
-       markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`)
+       markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`; headings, lists, bold, italic, links)
 ── server/
      api/
        github-stats.json.ts ← GitHub profile stats, prerendered to a static JSON once per build
@@ -256,7 +257,7 @@ One utility per role, defined in `typography.css`; each carries family, size, li
 <p class="text-ink-muted">Some description.</p>
 ```
 
-Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`, at least 3 letters each side of a break, never inside `strong`) and `text-wrap: pretty`; use `text-center`/`text-left` to opt out, which also turns hyphenation off. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
+Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`, at least 3 letters each side of a break, never inside `strong` or links) and `text-wrap: pretty`; use `text-center`/`text-left` to opt out, which also turns hyphenation off. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
 **Font families:** `font-display` (Bebas Neue, 400) · `font-body` / `font-mono` (Space Mono, 400 and 700). Weights: `font-normal`, `font-bold` only.
 
@@ -549,6 +550,10 @@ Inline skill chip (icon + name) for the Skills page tier lists.
 | `icon` | `string` | — | Required. Iconify name |
 | `gold` | `boolean` | `false` | Gold treatment — set for `core` tier skills: gold chip, gold rim around the dark logo tile |
 | `onLight` | `boolean` | `false` | Light logo tile for dark logos |
+| `to` | `RouteLocationRaw` | `undefined` | When set, the chip is a `NuxtLink` with a trailing arrow (orange on hover) to where the skill is used |
+| `seenIn` | `string` | `undefined` | Name of that place, read by screen readers after the skill name (`pages.skills.chipSeenIn`) |
+
+The Skills page passes each skill's first `useSkillReferences()` entry (work first, then projects, then SB Templates); skills with no reference stay plain chips.
 
 ### `CustomSkillsTierIcon`
 
@@ -632,6 +637,17 @@ Closing call to action shared by Home and About Me: contact (emits `contact`; pa
 | `stats` | `GithubStats` | Required |
 
 Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — contributions in the last year (only when the build had a token), public repositories, stars received, years on GitHub — next to the three most-starred own repositories. The page hides the whole section when `useGithubStats()` returns `null`.
+
+### `CustomLegalDocument`
+
+| Prop | Type | Notes |
+|---|---|---|
+| `id` | `string` | Required. Prefix for the hero (`<id>-hero`), summary and TOC ids |
+| `legalDocument` | `LegalDocument` | Required. From `useLegalDocument('privacy' \| 'terms')` |
+| `updatedIso` | `string` | Required. `YYYY-MM-DD` of the last content change, shown as "Last updated" (UTC, locale format); keep it equal to the page's sitemap `lastmod` |
+| `related` | `'privacy-policy' \| 'terms-and-conditions'` | Required. The other legal page, linked at the end |
+
+Shared layout of Privacy Policy and Terms and Conditions: `ThePageHero` (title + plain-language lead), "Last updated", an "At a glance" summary, then numbered sections (`<section id>` with `scroll-mt-24`, linkable as `#rights`, `#processors`…) rendered with `BaseRichText` at `max-w-prose`. Table of contents: a sticky left rail from `lg` (active section in `text-primary-ink`, `aria-current="location"`, computed from the scroll position), a collapsible `<details>` under the summary below `lg`. List items that start with a bold label (`**Access** Get a copy…`) show the label on its own line, and `mailto:` links sit on their own line so the justified line before them does not stretch. Ends with the contact `BaseButton` (opens the shared form via `useContact`), a link to the related page and "Back to top".
 
 ### `CustomExperienceList`
 
@@ -923,13 +939,21 @@ const { templates } = useTemplates()
 
 Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`. `skills` (skill ids) resolve to `Skill` objects; `langIcons` stay as platform icons.
 
+### `useLegalDocument(key)`
+
+```ts
+const { legalDocument } = useLegalDocument('privacy') // or 'terms'
+```
+
+Reads `pages.<key>` from the active locale: `title`, `lead`, `summary` (Markdown list) and `sections` (`{ id, title, content }`, content in Markdown, links allowed — write `@` as `{'@'}`). Section ids are the same in every locale so anchors survive a language switch. Shared labels live in `pages.legal`. Exports `LegalDocument`, `LegalSection`, `LegalDocumentKey`.
+
 ### `useSkillReferences()`
 
 ```ts
 const { references, referencesByArea } = useSkillReferences()
 ```
 
-Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor) and SB Templates (one entry). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line.
+Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor) and SB Templates (one entry). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line; the page also maps each skill to its first reference to link the chip (`CustomSkillsChip` `to`).
 
 ### `useSkills()`
 
@@ -955,7 +979,7 @@ The one async content source: `useFetch('/api/github-stats.json')`, which is pre
 |---|---|---|
 | `generateUuid` | `(): string` | Returns a random UUID v4 string |
 | `blocksToHtml` | `(blocks: RichBlock[]): string` | Converts `RichBlock[]` to HTML. Always pair with `useSanitize()` or use `BaseRichText` |
-| `markdownToRichBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text to `RichBlock[]` structure |
+| `markdownToRichBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text (`##`/`###`, `- ` lists, `**bold**`, `*italic*`, `[label](url)`) to `RichBlock[]`. `blocksToHtml` opens only `http(s)` links in a new tab; `mailto:` and site paths stay in the tab |
 
 ---
 

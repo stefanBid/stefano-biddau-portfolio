@@ -171,7 +171,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, `definePageMeta({ sitemap })`, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
-Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + contact form + notifications.
+Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-4 sm:px-6 md:px-10`, `max-w-350` container; header, mobile menu and footer use the same gutter — 16px on phones keeps the justified measure usable) + `TheFooter` + contact form + notifications.
 
 ---
 
@@ -234,6 +234,12 @@ const { templates } = useTemplates()
 ```
 Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`.
 
+### `useLegalDocument(key)`
+```ts
+const { legalDocument } = useLegalDocument('privacy') // or 'terms'
+```
+Same pattern — reads `pages.privacy` / `pages.terms` (`title`, `lead`, `summary` Markdown list, `sections: [{ id, title, content }]`), rendered by `CustomLegalDocument` (hero, "At a glance", TOC, numbered sections). Section ids are identical in both locales; write `@` as `{'@'}` in locale strings. When the legal text changes, bump `updated-iso` and the sitemap `lastmod` of that page together.
+
 ### `useTypedText(input, options?)`
 ```ts
 const { el, elStyle, isRunning } = useTypedText(['Frontend Dev', 'UI Craftsman'])
@@ -274,7 +280,7 @@ const clean = sanitizeHtml(dirtyHtml)
 Use with `v-html` only via `BaseRichText` — never write `v-html` directly with unsanitised content.
 
 ### Writing new composables
-- File: `app/composables/useSomething.ts` — content-source composables (backed by i18n or a local data array, like `useMilestones`/`useProjects`/`useSkills`/`useTemplates`) go in `app/composables/data/useSomething.ts` instead
+- File: `app/composables/useSomething.ts` — content-source composables (backed by i18n or a local data array, like `useMilestones`/`useProjects`/`useSkills`/`useTemplates`/`useLegalDocument`) go in `app/composables/data/useSomething.ts` instead
 - Export default function `useSomething`
 - Always type return values explicitly
 - Export the types the composable exposes from the same file
@@ -288,7 +294,7 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 
 - `generateUuid(): string` — random UUID v4
 - `blocksToHtml(blocks: RichBlock[]): string` — RichBlock[] → HTML; always pair with `useSanitize()`
-- `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files) → RichBlock[]
+- `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files: headings, lists, bold, italic, `[label](url)`) → RichBlock[]; `blocksToHtml` opens only `http(s)` links in a new tab
 
 ---
 

@@ -68,8 +68,8 @@ export function markdownToRichBlocks(markdown: string): RichBlock[] {
 function parseInlineFormatting(text: string): RichBlockChild[] {
   const children: RichBlockChild[] = []
 
-  // Regex per **bold** e *italic*
-  const regex = /(\*\*[^*]+\*\*|\*[^*]+\*|[^*]+)/g
+  // [label](url), **bold**, *italic*
+  const regex = /(\[[^\]]+\]\([^)]+\)|\*\*[^*]+\*\*|\*[^*]+\*|[^*[]+|\[)/g
   const matches = text.match(regex)
 
   if (!matches) {
@@ -77,7 +77,15 @@ function parseInlineFormatting(text: string): RichBlockChild[] {
   }
 
   matches.forEach((match) => {
-    if (match.startsWith('**') && match.endsWith('**')) {
+    const link = match.match(/^\[([^\]]+)\]\(([^)]+)\)$/)
+    if (link) {
+      children.push({
+        type: 'link',
+        url: link[2] ?? '',
+        children: [{ type: 'text', text: link[1] ?? '' }],
+      })
+    }
+    else if (match.startsWith('**') && match.endsWith('**')) {
       children.push({
         type: 'text',
         text: match.slice(2, -2),

@@ -132,7 +132,7 @@ watch(isMdUp, (newVal) => {
   <div ref="rootRef" class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur  px-6 md:px-10 sb-transition"
+      class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur px-4 sm:px-6 md:px-10 sb-transition"
       :class="{
         'bg-bg': open,
         'supports-backdrop-filter:bg-bg/60 bg-bg/80': !open,
@@ -213,7 +213,7 @@ watch(isMdUp, (newVal) => {
       :role="open ? 'dialog' : undefined"
       tabindex="-1"
     >
-      <div class="min-h-full flex flex-col justify-end gap-10 px-6 pt-10 pb-10">
+      <div class="min-h-full flex flex-col justify-end gap-10 px-4 sm:px-6 pt-10 pb-10">
         <nav class="flex flex-col">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink

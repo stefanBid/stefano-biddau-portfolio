@@ -36,7 +36,7 @@
       "description": "Template di progetto open source e pronti all'uso, per web e mobile: architettura pulita, tooling moderno, zero setup. Inizia subito a costruire."
     },
     "privacy": {
-      "title": "Privacy Policy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Informativa sulla privacy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
     },
     "terms": {
@@ -286,6 +286,7 @@
       "lead": "Ogni giorno: Vue, Angular, TypeScript e Tailwind CSS. Qui sotto lo stack completo, per area e per quanto spesso lo uso.",
       "orbitCaption": "Più è vicino al sole, più spesso lo uso.",
       "seenIn": "Lo trovi in:",
+      "chipSeenIn": "dove l'ho usato: {place}",
       "tiers": {
         "core": {
           "label": "Quotidiano",
@@ -317,7 +318,7 @@
     },
     "projects": {
       "hero": "Progetti",
-      "lead": "Lavori per clienti, una libreria Vue open source, template starter ed esperimenti personali. Link al sito online dove disponibile; il codice dei clienti resta privato.",
+      "lead": "Lavori per clienti, una libreria Vue open source, i template starter SB Templates ed esperimenti personali. Link al sito online dove disponibile; il codice dei clienti resta privato.",
       "links": {
         "code": "Codice",
         "live": "Sito online",
@@ -422,10 +423,10 @@
         "archiveTitle": "Studi ed esercizi"
       },
       "sbTemplatesProject": {
-        "tabLabel": "Template starter",
+        "tabLabel": "SB Templates",
         "logoAlt": "Logo SB Templates",
-        "title": "Un modo più rapido per avviare un nuovo progetto",
-        "description": "Template open source per Nuxt, Astro e Flutter, con architettura, build, linting e formattazione già configurati: un nuovo progetto parte da codice funzionante.",
+        "title": "SB Templates",
+        "description": "Un modo più rapido per avviare un nuovo progetto: template open source per Nuxt, Astro e Flutter, con architettura, build, linting e formattazione già configurati: un nuovo progetto parte da codice funzionante.",
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
@@ -466,120 +467,111 @@
         "inProgress": "Sono in lavorazione template per altri framework."
       }
     },
+    "legal": {
+      "updated": "Ultimo aggiornamento",
+      "toc": "In questa pagina",
+      "summary": "In breve",
+      "questions": "Domande su questa pagina? Scrivimi, rispondo di persona.",
+      "backToTop": "Torna su"
+    },
     "privacy": {
-      "title": "Informativa sulla Privacy",
-      "subtitle": "La tua privacy è importante per me",
-      "lastUpdate": "Ultimo aggiornamento",
-      "backHome": "Torna alla Home",
-      "intro": {
-        "title": "Introduzione",
-        "content": "Questa Privacy Policy descrive come Stefano Biddau raccoglie, utilizza e protegge le tue informazioni personali quando utilizzi il modulo di contatto su questo sito web (www.stefanobiddau.com). Mi impegno a proteggere la tua privacy e a rispettare le leggi applicabili sulla protezione dei dati, incluso il Regolamento Generale sulla Protezione dei Dati (GDPR)."
-      },
-      "dataController": {
-        "title": "1. Titolare del Trattamento",
-        "name": "Nome",
-        "email": "Email"
-      },
-      "dataCollected": {
-        "title": "2. Dati che Raccolgo",
-        "intro": "Quando utilizzi il modulo di contatto sul mio sito web, raccolgo le seguenti informazioni personali:",
-        "name": "Nome",
-        "nameDesc": "Per identificarti e personalizzare la mia risposta.",
-        "email": "Indirizzo Email",
-        "emailDesc": "Per comunicare con te e rispondere alla tua richiesta.",
-        "message": "Contenuto del Messaggio",
-        "messageDesc": "Le informazioni che scegli di condividere con me."
-      },
-      "purpose": {
-        "title": "3. Finalità del Trattamento dei Dati",
-        "content": "Raccolgo e tratto i tuoi dati personali esclusivamente per rispondere alle tue richieste inviate tramite il modulo di contatto. Non utilizzerò i tuoi dati per scopi di marketing a meno che tu non fornisca esplicito consenso per ricevere tali comunicazioni."
-      },
-      "legalBasis": {
-        "title": "4. Base Giuridica del Trattamento",
-        "content": "La base giuridica per il trattamento dei tuoi dati personali è il tuo consenso esplicito, che fornisci inviando il modulo di contatto e accettando la mia Privacy Policy. Hai il diritto di revocare il tuo consenso in qualsiasi momento contattandomi."
-      },
-      "thirdParties": {
-        "title": "5. Servizi di Terze Parti",
-        "intro": "Utilizzo EmailJS, un servizio email di terze parti, per inviare e ricevere messaggi dal modulo di contatto. Quando invii il modulo, i tuoi dati vengono trasmessi ai server di EmailJS. EmailJS è un fornitore di servizi affidabile che rispetta le normative sulla protezione dei dati.",
-        "emailjs": "Utilizzato per elaborare e consegnare gli invii del modulo di contatto.",
-        "privacyPolicy": "Privacy Policy di EmailJS"
-      },
-      "dataRetention": {
-        "title": "6. Conservazione dei Dati",
-        "content": "Conservo i tuoi dati personali solo per il tempo necessario a soddisfare gli scopi delineati in questa Privacy Policy o come richiesto dalla legge. Una volta risolta la tua richiesta e non essendoci più necessità di conservare i tuoi dati, questi verranno eliminati in modo sicuro."
-      },
-      "yourRights": {
-        "title": "7. I Tuoi Diritti",
-        "intro": "In base al GDPR, hai i seguenti diritti riguardo ai tuoi dati personali:",
-        "access": "Accesso: Richiedere una copia dei dati personali che detengo su di te.",
-        "rectification": "Rettifica: Richiedere correzioni a eventuali dati inesatti o incompleti.",
-        "erasure": "Cancellazione: Richiedere la cancellazione dei tuoi dati personali.",
-        "restriction": "Limitazione del Trattamento: Richiedere che limiti il trattamento dei tuoi dati.",
-        "portability": "Portabilità dei Dati: Richiedere una copia dei tuoi dati in un formato strutturato e leggibile da dispositivo automatico.",
-        "objection": "Opposizione: Opporti al trattamento dei tuoi dati in determinate circostanze.",
-        "contact": "Per esercitare uno qualsiasi di questi diritti, contattami all'indirizzo"
-      },
-      "changes": {
-        "title": "8. Modifiche a Questa Privacy Policy",
-        "content": "Potrei aggiornare questa Privacy Policy di tanto in tanto per riflettere cambiamenti nelle mie pratiche o requisiti legali. Eventuali aggiornamenti saranno pubblicati su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Ti incoraggio a rivedere periodicamente questa policy."
-      }
+      "title": "Informativa sulla privacy",
+      "lead": "Come il modulo di contatto tratta i tuoi dati, in parole semplici. In breve: questo sito non ti traccia.",
+      "summary": "- **Niente cookie, analytics o tracker.** Font e immagini arrivano dal dominio di questo sito.\n- **Solo il modulo di contatto raccoglie dati.** Nome, email e messaggio, nient'altro.\n- **EmailJS consegna il messaggio.** Arriva nella mia casella e tu ne ricevi una copia.\n- **Li uso solo per risponderti.** Niente newsletter, niente marketing, nessuna cessione a terzi.\n- **Puoi chiederne la cancellazione quando vuoi.** Scrivimi a [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
+      "sections": [
+        {
+          "id": "controller",
+          "title": "Titolare del trattamento",
+          "content": "**Stefano Biddau**, che gestisce questo sito, è responsabile dei tuoi dati.\n\nEmail: [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "data",
+          "title": "Dati che raccolgo",
+          "content": "Quando invii il modulo di contatto ricevo:\n- **Nome** Per sapere con chi parlo.\n- **Indirizzo email** Per risponderti.\n- **Messaggio** Quello che scegli di scrivermi.\n- **Data e ora del consenso** La prova che hai accettato questa informativa.\n\nNient'altro. Il sito non usa cookie e non fa analytics. Salva nel browser solo l'impostazione del tema scuro (local storage), che non lascia mai il tuo dispositivo."
+        },
+        {
+          "id": "purpose",
+          "title": "Perché li uso",
+          "content": "Solo per leggere il tuo messaggio e risponderti, compresa la conversazione che ne segue. Non uso i tuoi dati per marketing, non ti iscrivo a nessuna lista e non li passo a nessuno, tranne ai servizi qui sotto che consegnano il messaggio."
+        },
+        {
+          "id": "legal-basis",
+          "title": "Base giuridica",
+          "content": "Il tuo consenso (articolo 6, paragrafo 1, lettera a del GDPR), che dai spuntando la casella prima di inviare il modulo. Puoi revocarlo quando vuoi scrivendomi; la revoca non tocca quanto avvenuto prima."
+        },
+        {
+          "id": "processors",
+          "title": "Servizi che trattano i tuoi dati",
+          "content": "- **EmailJS** Invia il modulo: consegna il messaggio nella mia casella e ti manda una copia all'indirizzo che hai inserito. [Informativa privacy di EmailJS](https://www.emailjs.com/legal/privacy-policy/)\n- **Google (Gmail)** Ospita la casella in cui arriva il messaggio. [Informativa privacy di Google](https://policies.google.com/privacy?hl=it)\n- **Netlify** Ospita questo sito. Come ogni server web, può registrare dati tecnici di ogni visita, come indirizzo IP e browser, per mantenere il sito sicuro e funzionante. [Informativa privacy di Netlify](https://www.netlify.com/privacy/)\n\nQuesti fornitori possono trattare dati fuori dall'Unione europea, con le garanzie descritte nelle loro informative."
+        },
+        {
+          "id": "retention",
+          "title": "Per quanto tempo li conservo",
+          "content": "Solo finché serve alla nostra conversazione, o per il tempo richiesto dalla legge. Poi li cancello."
+        },
+        {
+          "id": "rights",
+          "title": "I tuoi diritti",
+          "content": "In base al GDPR hai questi diritti sui tuoi dati:\n- **Accesso** Ricevere una copia dei dati che ho su di te.\n- **Rettifica** Correggerli se sono sbagliati o incompleti.\n- **Cancellazione** Farli eliminare.\n- **Limitazione** Limitare l'uso che ne faccio.\n- **Portabilità** Riceverli in un formato strutturato e leggibile da un computer.\n- **Opposizione** Chiedermi di smettere di usarli.\n\nRispondo entro un mese, come prevede il GDPR. Puoi anche presentare reclamo al [Garante per la protezione dei dati personali](https://www.garanteprivacy.it).\n\nPer esercitare un diritto, scrivimi a [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "changes",
+          "title": "Modifiche a questa informativa",
+          "content": "Se qualcosa cambia, aggiorno questa pagina e la data in alto."
+        }
+      ]
     },
     "terms": {
-      "title": "Termini e Condizioni",
-      "subtitle": "Si prega di leggere attentamente questi termini prima di utilizzare il mio sito web",
-      "lastUpdate": "Ultimo aggiornamento",
-      "backHome": "Torna alla Home",
-      "intro": {
-        "title": "Introduzione",
-        "content": "Benvenuto su stefanobiddau.com (il \"Sito Web\"). Questi Termini e Condizioni (\"Termini\") regolano l'utilizzo di questo Sito Web. Accedendo o utilizzando il Sito Web, accetti di rispettare ed essere vincolato da questi Termini. Se non sei d'accordo con questi Termini, ti preghiamo di non utilizzare il Sito Web."
-      },
-      "acceptance": {
-        "title": "1. Accettazione dei Termini",
-        "content": "Accedendo e utilizzando questo Sito Web, accetti ed acconsenti ad essere vincolato da questi Termini e dalla mia Privacy Policy. Questi Termini si applicano a tutti i visitatori, utenti e altri che accedono o utilizzano il Sito Web."
-      },
-      "useOfWebsite": {
-        "title": "2. Utilizzo del Sito Web",
-        "intro": "Puoi utilizzare questo Sito Web solo per scopi leciti. Accetti di non:",
-        "point1": "Utilizzare il Sito Web in modo da violare qualsiasi legge o regolamento locale, nazionale o internazionale applicabile.",
-        "point2": "Trasmettere o procurare l'invio di qualsiasi materiale pubblicitario o promozionale non richiesto o non autorizzato.",
-        "point3": "Tentare di ottenere accesso non autorizzato, interferire, danneggiare o interrompere qualsiasi parte del Sito Web, il server su cui è memorizzato il Sito Web o qualsiasi server, computer o database connesso al Sito Web.",
-        "point4": "Utilizzare il Sito Web in modo da poter disabilitare, sovraccaricare, danneggiare o compromettere il Sito Web o interferire con l'utilizzo del Sito Web da parte di altri."
-      },
-      "intellectualProperty": {
-        "title": "3. Diritti di Proprietà Intellettuale",
-        "content": "Tutti i contenuti di questo Sito Web, inclusi ma non limitati a testo, grafica, loghi, immagini e software, sono di proprietà di Stefano Biddau o dei suoi fornitori di contenuti e sono protetti dalle leggi italiane e internazionali sul copyright. Non puoi riprodurre, distribuire, modificare o creare opere derivate da qualsiasi contenuto di questo Sito Web senza previa autorizzazione scritta."
-      },
-      "contactForm": {
-        "title": "4. Modulo di Contatto e Invii degli Utenti",
-        "intro": "Quando invii informazioni tramite il modulo di contatto su questo Sito Web, accetti che:",
-        "point1": "Le informazioni che fornisci siano accurate, complete e veritiere.",
-        "point2": "Non invierai contenuti che siano illeciti, dannosi, minacciosi, abusivi, molesti, diffamatori, volgari, osceni o altrimenti discutibili.",
-        "point3": "Posso utilizzare le informazioni che fornisci per rispondere alla tua richiesta e come descritto nella mia Privacy Policy."
-      },
-      "thirdPartyLinks": {
-        "title": "5. Link di Terze Parti",
-        "content": "Questo Sito Web può contenere link a siti web o servizi di terze parti che non sono di mia proprietà o sotto il mio controllo. Non ho alcun controllo e non mi assumo alcuna responsabilità per il contenuto, le politiche sulla privacy o le pratiche di siti web o servizi di terze parti. Riconosci e accetti che non sarò responsabile per eventuali danni o perdite causati dal tuo utilizzo di contenuti, beni o servizi di terze parti."
-      },
-      "disclaimer": {
-        "title": "6. Esclusione di Garanzie",
-        "content": "Questo Sito Web è fornito \"così com'è\" e \"come disponibile\". Non fornisco dichiarazioni o garanzie di alcun tipo, esplicite o implicite, riguardo al funzionamento del Sito Web o alle informazioni, contenuti o materiali inclusi nel Sito Web. Nella misura massima consentita dalla legge, escludo tutte le garanzie, esplicite o implicite, incluse ma non limitate alle garanzie implicite di commerciabilità e idoneità per uno scopo particolare."
-      },
-      "liability": {
-        "title": "7. Limitazione di Responsabilità",
-        "content": "Nella misura massima consentita dalla legge, Stefano Biddau non sarà responsabile per eventuali danni diretti, indiretti, incidentali, speciali, consequenziali o punitivi derivanti da o in connessione con il tuo utilizzo, o l'impossibilità di utilizzare, il Sito Web. Ciò include, ma non è limitato a, danni per perdita di profitti, dati o altre perdite immateriali."
-      },
-      "changes": {
-        "title": "8. Modifiche a Questi Termini",
-        "content": "Mi riservo il diritto di modificare o sostituire questi Termini in qualsiasi momento. Eventuali modifiche saranno efficaci immediatamente dopo la pubblicazione su questa pagina con una data di \"Ultimo Aggiornamento\" rivista. Il tuo uso continuato del Sito Web dopo eventuali modifiche a questi Termini costituisce la tua accettazione dei nuovi Termini."
-      },
-      "governingLaw": {
-        "title": "9. Legge Applicabile",
-        "content": "Questi Termini saranno disciplinati e interpretati in conformità con le leggi italiane, senza riguardo alle sue disposizioni sui conflitti di legge. Eventuali controversie derivanti da o relative a questi Termini o al tuo utilizzo del Sito Web saranno soggette alla giurisdizione esclusiva dei tribunali italiani."
-      },
-      "contact": {
-        "title": "10. Contattami",
-        "content": "Se hai domande su questi Termini, contattami all'indirizzo"
-      }
+      "title": "Termini e condizioni",
+      "lead": "Le poche regole per usare questo sito. È un portfolio personale: niente da comprare, nessun account da creare.",
+      "summary": "- **Navigazione libera.** Nessun account richiesto.\n- **Il mio lavoro resta mio.** Puoi linkarlo liberamente, chiedimi prima di riutilizzarlo.\n- **Usa il modulo di contatto in modo onesto.** Dati veri, niente spam.\n- **Vale la legge italiana.**",
+      "sections": [
+        {
+          "id": "acceptance",
+          "title": "Accettazione dei termini",
+          "content": "Usando stefanobiddau.com accetti questi termini e l'[Informativa sulla privacy](/it/privacy-policy). Se non sei d'accordo, ti chiedo di non usare il sito."
+        },
+        {
+          "id": "acceptable-use",
+          "title": "Uso consentito",
+          "content": "Usa il sito solo per scopi leciti. In particolare non puoi:\n- usarlo per violare la legge;\n- inviare spam o pubblicità non richiesta tramite il modulo di contatto;\n- tentare di accedere, interrompere o danneggiare il sito, il suo server o i sistemi collegati;\n- sovraccaricarlo o ostacolare gli altri visitatori."
+        },
+        {
+          "id": "content",
+          "title": "Il mio lavoro e i contenuti",
+          "content": "Testi, illustrazioni, foto e design di questo sito sono miei, salvo dove indicato diversamente. Puoi linkare qualsiasi pagina e citarne brevi estratti con un link alla fonte; per riutilizzare altro, chiedimelo prima.\n\nI progetti open source mostrati qui seguono la propria licenza su GitHub. I nomi e i loghi dei clienti appartengono ai rispettivi titolari e compaiono solo per descrivere il lavoro che ho svolto per loro."
+        },
+        {
+          "id": "contact-form",
+          "title": "Il modulo di contatto",
+          "content": "Quando mi scrivi, usa il tuo vero nome e un indirizzo email che leggi, e non inviare contenuti illeciti, offensivi o molesti. Uso quello che mi mandi solo per risponderti, come descritto nell'[Informativa sulla privacy](/it/privacy-policy)."
+        },
+        {
+          "id": "external-links",
+          "title": "Link ad altri siti",
+          "content": "Alcune pagine rimandano a siti che non controllo, come GitHub, LinkedIn e i siti dei progetti a cui ho lavorato. Non sono responsabile dei loro contenuti né di come trattano i tuoi dati."
+        },
+        {
+          "id": "warranties",
+          "title": "Nessuna garanzia",
+          "content": "Il sito è fornito così com'è. Faccio del mio meglio per tenerlo corretto e online, ma non posso garantire che sia sempre disponibile o privo di errori."
+        },
+        {
+          "id": "liability",
+          "title": "Limitazione di responsabilità",
+          "content": "Nei limiti consentiti dalla legge, non sono responsabile di danni derivanti dall'uso del sito o dall'impossibilità di usarlo."
+        },
+        {
+          "id": "changes",
+          "title": "Modifiche a questi termini",
+          "content": "Posso aggiornare questi termini. La nuova versione vale dalla data indicata in cima a questa pagina."
+        },
+        {
+          "id": "law",
+          "title": "Legge applicabile",
+          "content": "Questi termini sono regolati dalla legge italiana. Le controversie spettano ai tribunali italiani competenti, fatti salvi i tuoi diritti di consumatore nel paese in cui vivi."
+        }
+      ]
     }
   },
   "footer": {

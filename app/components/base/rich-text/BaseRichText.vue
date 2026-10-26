@@ -57,7 +57,7 @@ const htmlContent = computed(() => {
 .rich-text :deep(ol) {
   @apply sb-body;
   margin: 0 0 0.75em 0;
-  padding-left: 2rem;
+  padding-left: 1.25rem;
   list-style-position: outside;
 }
 
@@ -68,6 +68,10 @@ const htmlContent = computed(() => {
 
 .rich-text :deep(ul li) {
   list-style-type: disc;
+}
+
+.rich-text :deep(li::marker) {
+  color: var(--color-primary-ink);
 }
 
 .rich-text :deep(ol li) {
@@ -99,6 +103,8 @@ const htmlContent = computed(() => {
 .rich-text :deep(a) {
   color: var(--color-primary-ink);
   text-decoration: underline;
+  text-underline-offset: 4px;
+  overflow-wrap: anywhere;
   transition: opacity var(--sb-duration-feedback) var(--ease-in-out);
 }
 

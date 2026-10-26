@@ -81,7 +81,7 @@ const onCloseNotification = (id: string) => {
     />
     <main
       id="main"
-      class="pt-16 px-6 md:px-10 outline-none"
+      class="pt-16 px-4 sm:px-6 md:px-10 outline-none"
       tabindex="-1"
     >
       <div class="w-full max-w-350 mx-auto">
