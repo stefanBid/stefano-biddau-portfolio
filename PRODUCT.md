@@ -32,13 +32,13 @@ A front-end developer who also designs: the site itself is the portfolio piece (
 ## Capabilities and Constraints
 
 - Pages: Home, About Me (career milestones), Skills (by area and tier), Projects (+ SB Templates), Privacy, Terms.
-- Skills are a local curated list grouped by area (frontend, backend, tools) and tier: daily (gold), shipped, familiar. No numeric self-ratings on the page.
+- Skills are a local curated list grouped by area (frontend, backend, tools) and tier: core (gold, every day), solid (used across many projects), familiar (studied or used rarely). No numeric self-ratings on the page.
 - External data is acceptable only when resolved at build time (decided for GitHub stats, 2026-10-23).
 - Always dark; no light theme.
 
 ## Brand Commitments
 
-- Incumbent identity is binding: dark ground, orange primary, Bebas Neue display + Space Mono body, 3D avatar illustrations, gold treatment for daily-tier skills.
+- Incumbent identity is binding: dark ground, orange primary, Bebas Neue display + Space Mono body, 3D avatar illustrations, gold treatment for core-tier skills.
 - Voice: first person, direct, plain; no hype.
 
 ## Evidence on Hand

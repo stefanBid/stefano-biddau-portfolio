@@ -14,6 +14,7 @@ export interface MilestonePeriod {
 export interface MilestoneStackItem {
   name: string
   icon?: string
+  color?: string
 }
 
 export interface Milestone {
@@ -37,22 +38,22 @@ export interface Milestone {
   period: MilestonePeriod
 }
 
-// Stack keywords as authored in the locale files; keywords without a logo render as plain chips
-const STACK_ICONS: Record<string, string> = {
-  'Angular': 'logos:angular-icon',
-  'API REST': 'mdi:api',
-  'CSS': 'logos:css-3',
-  'Flutter': 'logos:flutter-icon',
-  'HTML': 'logos:html-5',
-  'Java': 'logos:java',
-  'Java EE': 'logos:java',
-  'JavaScript': 'logos:javascript',
-  'PostgreSQL': 'logos:postgresql',
-  'Python': 'logos:python',
-  'REST API': 'mdi:api',
-  'Spring Batch': 'logos:spring-icon',
-  'Spring Boot': 'logos:spring-icon',
-  'Vue.js': 'logos:vue',
+// Stack keywords as authored in the locale files; keywords without a brand render as neutral chips
+const STACK_BRANDS: Record<string, Omit<MilestoneStackItem, 'name'>> = {
+  'Angular': { icon: 'logos:angular-icon', color: 'var(--sb-tech-angular)' },
+  'API REST': { icon: 'mdi:api' },
+  'CSS': { icon: 'logos:css-3', color: 'var(--sb-tech-css)' },
+  'Flutter': { icon: 'logos:flutter-icon', color: 'var(--sb-tech-flutter)' },
+  'HTML': { icon: 'logos:html-5', color: 'var(--sb-tech-html)' },
+  'Java': { icon: 'logos:java', color: 'var(--sb-tech-java)' },
+  'Java EE': { icon: 'logos:java', color: 'var(--sb-tech-java)' },
+  'JavaScript': { icon: 'logos:javascript', color: 'var(--sb-tech-javascript)' },
+  'PostgreSQL': { icon: 'logos:postgresql', color: 'var(--sb-tech-postgresql)' },
+  'Python': { icon: 'logos:python', color: 'var(--sb-tech-python)' },
+  'REST API': { icon: 'mdi:api' },
+  'Spring Batch': { icon: 'logos:spring-icon', color: 'var(--sb-tech-spring)' },
+  'Spring Boot': { icon: 'logos:spring-icon', color: 'var(--sb-tech-spring)' },
+  'Vue.js': { icon: 'logos:vue', color: 'var(--sb-tech-vue)' },
 }
 
 export default function useMilestones() {
@@ -133,7 +134,7 @@ export default function useMilestones() {
         stack: Array.isArray(item.stack)
           ? item.stack.map((entry: Parameters<typeof _rt>[0]) => {
               const name = _rt(entry)
-              return { name, icon: STACK_ICONS[name] }
+              return { name, ...STACK_BRANDS[name] }
             })
           : [],
         skills: Array.isArray(item.skills) ? resolveSkills(item.skills.map((id: Parameters<typeof _rt>[0]) => _rt(id))) : [],

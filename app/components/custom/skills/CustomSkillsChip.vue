@@ -20,7 +20,7 @@ const props = withDefaults(defineProps<CustomSkillsChipProps>(), {
   >
     <span
       class="flex items-center justify-center size-8 shrink-0 rounded-sm"
-      :class="props.gold ? 'gold-icon' : (props.onLight ? 'bg-ink' : 'bg-surface-2')"
+      :class="[props.onLight ? 'bg-ink' : 'bg-surface-2', { 'gold-icon': props.gold }]"
     >
       <Icon
         aria-hidden="true"
@@ -38,8 +38,10 @@ const props = withDefaults(defineProps<CustomSkillsChipProps>(), {
   background: linear-gradient(135deg, var(--sb-gold-800) 0%, var(--sb-gold-900) 70%);
 }
 
+/* Gold rim around the tile, not behind the logo: brand colours keep their contrast */
 .gold-icon {
-  background: radial-gradient(circle at 30% 0%, var(--sb-gold-100) 0, var(--sb-gold-400) 45%, var(--sb-gold-800) 100%);
-  box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.35);
+  box-shadow:
+    0 0 0 2px var(--sb-gold-300),
+    0 1px 6px color-mix(in oklab, var(--sb-gold-300) 35%, transparent);
 }
 </style>

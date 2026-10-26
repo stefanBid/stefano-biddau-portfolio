@@ -23,7 +23,7 @@ useSeoMeta({
 })
 
 // Data
-const TIERS: SkillTier[] = ['daily', 'shipped', 'familiar']
+const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
 const activeSkillId = ref<string | null>(null)
 const contactFormIsOpen = ref<boolean>(false)
@@ -110,7 +110,7 @@ const onHighlightSkill = (id: string | null) => {
                 @mouseenter="onHighlightSkill(skill.id)"
               >
                 <CustomSkillsChip
-                  :gold="skill.tier === 'daily'"
+                  :gold="skill.tier === 'core'"
                   :icon="skill.icon"
                   :name="skill.name"
                   :on-light="skill.onLight"

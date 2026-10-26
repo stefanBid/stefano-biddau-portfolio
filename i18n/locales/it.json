@@ -278,17 +278,17 @@
       "orbitCaption": "Più è vicino al sole, più spesso lo uso.",
       "seenIn": "Lo trovi in:",
       "tiers": {
-        "daily": {
-          "label": "Ogni giorno",
+        "core": {
+          "label": "Quotidiano",
           "description": "Ciò con cui lavoro tutti i giorni. Evidenziato in oro."
         },
-        "shipped": {
-          "label": "Consegnato",
-          "description": "Usato in lavori consegnati: posso riprenderlo e consegnare."
+        "solid": {
+          "label": "Solido",
+          "description": "Usato in molti progetti: posso riprenderlo e consegnare."
         },
         "familiar": {
-          "label": "Familiare",
-          "description": "Usato in passato, non fa parte dei miei strumenti principali."
+          "label": "Conosciuto",
+          "description": "Studiato o usato di rado, non fa parte dei miei strumenti principali."
         }
       },
       "areas": {
@@ -298,7 +298,7 @@
         },
         "backend": {
           "title": "Backend",
-          "paragraph": "Ho consegnato back end in Java con Spring e in Node.js, e API in GraphQL. Ho lavorato anche con Hibernate, PostgreSQL e MySQL. Tengo API e modelli dati leggibili mentre il prodotto cresce."
+          "paragraph": "Ogni giorno lavoro sul back end in Java con Spring e PostgreSQL. Ho usato Hibernate, MySQL e GraphQL in diversi progetti e ho lavorato anche con Node.js, Python e Strapi. Tengo API e modelli dati leggibili mentre il prodotto cresce."
         },
         "tools": {
           "title": "Design e strumenti",

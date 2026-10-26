@@ -1,7 +1,7 @@
 // composables/data/useSkills.ts
 
 export type SkillArea = 'frontend' | 'backend' | 'tools'
-export type SkillTier = 'daily' | 'shipped' | 'familiar'
+export type SkillTier = 'core' | 'solid' | 'familiar'
 export type StackArea = 'frontend' | 'backend' | 'database'
 
 export interface Skill {
@@ -35,7 +35,7 @@ interface UseSkillsReturn {
 }
 
 const AREAS: SkillArea[] = ['frontend', 'backend', 'tools']
-const TIERS: SkillTier[] = ['daily', 'shipped', 'familiar']
+const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
 // Home page "Core stack": a curated full-stack profile, independent from tiers
 const FEATURED_STACK: Record<StackArea, string[]> = {
@@ -45,7 +45,7 @@ const FEATURED_STACK: Record<StackArea, string[]> = {
 }
 
 // id: stable slug referenced by `skills` in projects, templates and milestones (locale files)
-// daily: in use every day · shipped: used in delivered work · familiar: used, not core
+// core: in use every day · solid: used across many projects · familiar: studied or used rarely
 // onLight: dark logo that needs a light backing to stay visible
 const SKILLS_DATA: Skill[] = [
   {
@@ -53,98 +53,100 @@ const SKILLS_DATA: Skill[] = [
     name: 'Adobe XD',
     icon: 'logos:adobe-xd',
     area: 'tools',
-    tier: 'familiar',
+    tier: 'solid',
   },
   {
     id: 'angular',
     name: 'Angular',
     icon: 'logos:angular-icon',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'astro',
     name: 'Astro',
     icon: 'logos:astro-icon',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'solid',
+    onLight: true,
   },
   {
     id: 'bootstrap',
     name: 'Bootstrap',
     icon: 'logos:bootstrap',
     area: 'frontend',
-    tier: 'shipped',
+    tier: 'familiar',
+    onLight: true,
   },
   {
     id: 'chromatic',
     name: 'Chromatic',
     icon: 'logos:chromatic-icon',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'familiar',
   },
   {
     id: 'css',
     name: 'CSS',
     icon: 'logos:css-3',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'dart',
     name: 'Dart',
     icon: 'logos:dart',
     area: 'frontend',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'docker',
     name: 'Docker',
     icon: 'logos:docker-icon',
     area: 'tools',
-    tier: 'familiar',
+    tier: 'core',
   },
   {
     id: 'figma',
     name: 'Figma',
     icon: 'logos:figma',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'flutter',
     name: 'Flutter',
     icon: 'logos:flutter-icon',
     area: 'frontend',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'git',
     name: 'Git',
     icon: 'logos:git-icon',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'graphql',
     name: 'GraphQL',
     icon: 'logos:graphql',
     area: 'backend',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'headless-ui',
     name: 'Headless UI',
     icon: 'logos:headlessui-icon',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'solid',
   },
   {
     id: 'hibernate',
     name: 'Hibernate',
     icon: 'logos:hibernate',
     area: 'backend',
-    tier: 'familiar',
+    tier: 'solid',
     onLight: true,
   },
   {
@@ -152,14 +154,14 @@ const SKILLS_DATA: Skill[] = [
     name: 'HTML',
     icon: 'logos:html-5',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'java',
     name: 'Java',
     icon: 'logos:java',
     area: 'backend',
-    tier: 'shipped',
+    tier: 'core',
     onLight: true,
   },
   {
@@ -167,14 +169,14 @@ const SKILLS_DATA: Skill[] = [
     name: 'JavaScript',
     icon: 'logos:javascript',
     area: 'frontend',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'mysql',
     name: 'MySQL',
     icon: 'logos:mysql-icon',
     area: 'backend',
-    tier: 'familiar',
+    tier: 'solid',
     onLight: true,
   },
   {
@@ -182,49 +184,49 @@ const SKILLS_DATA: Skill[] = [
     name: 'Netlify',
     icon: 'logos:netlify-icon',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'nodejs',
     name: 'Node.js',
     icon: 'logos:nodejs-icon',
     area: 'backend',
-    tier: 'shipped',
+    tier: 'familiar',
   },
   {
     id: 'npm',
     name: 'npm',
     icon: 'logos:npm-icon',
     area: 'tools',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'nuxt',
     name: 'Nuxt',
     icon: 'logos:nuxt-icon',
     area: 'frontend',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'pnpm',
     name: 'pnpm',
     icon: 'logos:pnpm',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'postgresql',
     name: 'PostgreSQL',
     icon: 'logos:postgresql',
     area: 'backend',
-    tier: 'familiar',
+    tier: 'core',
   },
   {
     id: 'postman',
     name: 'Postman',
     icon: 'logos:postman-icon',
     area: 'tools',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'python',
@@ -245,21 +247,21 @@ const SKILLS_DATA: Skill[] = [
     name: 'Slack',
     icon: 'logos:slack-icon',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'spring',
     name: 'Spring',
     icon: 'logos:spring-icon',
     area: 'backend',
-    tier: 'shipped',
+    tier: 'core',
   },
   {
     id: 'storybook',
     name: 'Storybook',
     icon: 'logos:storybook-icon',
     area: 'tools',
-    tier: 'shipped',
+    tier: 'solid',
   },
   {
     id: 'strapi',
@@ -273,14 +275,14 @@ const SKILLS_DATA: Skill[] = [
     name: 'Tailwind CSS',
     icon: 'logos:tailwindcss-icon',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'turborepo',
     name: 'Turborepo',
     icon: 'logos:turborepo-icon',
     area: 'tools',
-    tier: 'familiar',
+    tier: 'solid',
     onLight: true,
   },
   {
@@ -288,21 +290,21 @@ const SKILLS_DATA: Skill[] = [
     name: 'TypeScript',
     icon: 'logos:typescript-icon',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'vite',
     name: 'Vite',
     icon: 'logos:vitejs',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
   {
     id: 'vue',
     name: 'Vue',
     icon: 'logos:vue',
     area: 'frontend',
-    tier: 'daily',
+    tier: 'core',
   },
 ]
 

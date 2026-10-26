@@ -278,17 +278,17 @@
       "orbitCaption": "Closer to the sun means I use it more often.",
       "seenIn": "Seen in:",
       "tiers": {
-        "daily": {
-          "label": "Daily",
+        "core": {
+          "label": "Core",
           "description": "What I work with every day. Shown as gold chips."
         },
-        "shipped": {
-          "label": "Shipped",
-          "description": "Used in delivered work; I can pick it up and ship."
+        "solid": {
+          "label": "Solid",
+          "description": "Used across many projects; I can pick it up and deliver."
         },
         "familiar": {
           "label": "Familiar",
-          "description": "Used before, not part of my main toolkit."
+          "description": "Studied or used occasionally, not part of my main toolkit."
         }
       },
       "areas": {
@@ -298,7 +298,7 @@
         },
         "backend": {
           "title": "Backend",
-          "paragraph": "I have shipped back ends in Java with Spring and in Node.js, and APIs in GraphQL. I have also worked with Hibernate, PostgreSQL and MySQL. I keep APIs and data models readable as the product grows."
+          "paragraph": "Every day I work on the back end in Java with Spring and PostgreSQL. I have used Hibernate, MySQL and GraphQL across several projects, and also worked with Node.js, Python and Strapi. I keep APIs and data models readable as the product grows."
         },
         "tools": {
           "title": "Design & tools",

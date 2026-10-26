@@ -56,6 +56,18 @@
   --sb-gold-800: #4a3210;
   --sb-gold-900: #3a280e;
 
+  /* Technology brand accents (milestone stack chips): raw-only, lifted to ≥4:1 on surface */
+  --sb-tech-angular: #e8365d;
+  --sb-tech-css: #3d7af5;
+  --sb-tech-flutter: #29b6f6;
+  --sb-tech-html: #e44d26;
+  --sb-tech-java: #e76f00;
+  --sb-tech-javascript: #f7df1e;
+  --sb-tech-postgresql: #5b8cc2;
+  --sb-tech-python: #4b8bbe;
+  --sb-tech-spring: #6db33f;
+  --sb-tech-vue: #41b883;
+
   /* Solar system illustration (Skills page): raw-only, no Tailwind mapping */
   --sb-sun-100: #fff9c4;
   --sb-sun-200: #fde68a;

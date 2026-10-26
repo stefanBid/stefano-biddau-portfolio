@@ -213,7 +213,7 @@ Where each skill is used: work milestones (one entry per organization, links to 
 ```ts
 const { areas, featuredStack } = useSkills()
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`daily` = every day, gold; `shipped` = delivered work; `familiar` = used, not core). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, independent from tiers.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`core` = every day, gold; `solid` = used across many projects; `familiar` = studied or used rarely). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, independent from tiers.
 
 ### `useGithubStats()`
 ```ts

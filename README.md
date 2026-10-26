@@ -218,7 +218,7 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 
 Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`.
+`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`. `--sb-tech-*` (angular, css, flutter, html, java, javascript, postgresql, python, spring, vue) are raw-only brand accents for the milestone stack chips, lifted to ≥ 4:1 on `surface`.
 
 ### Shapes and shadows
 
@@ -448,7 +448,8 @@ Behaviour: ARIA combobox + `listbox` (`aria-multiselectable` in `multiple` mode)
 |---|---|---|---|
 | `text` | `string` | — | Required |
 | `icon` | `string` | `undefined` | Iconify name |
-| `variant` | `'primary' \| 'secondary' \| 'outline'` | `'primary'` | |
+| `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = transparent, `border-strong` outline |
+| `accentColor` | `string` | `undefined` | CSS colour for the border (e.g. `var(--sb-tech-vue)`) |
 | `clickable` | `boolean` | `false` | Renders as `<button>` |
 | `linkable` | `{ href: string, target?: string, rel?: string }` | `undefined` | Renders as `<a>` |
 
@@ -565,11 +566,12 @@ Inline skill chip (icon + name) for the Skills page tier lists.
 |---|---|---|---|
 | `name` | `string` | — | Required |
 | `icon` | `string` | — | Required. Iconify name |
-| `gold` | `boolean` | `false` | Gold treatment — set for `daily` tier skills |
+| `gold` | `boolean` | `false` | Gold treatment — set for `core` tier skills: gold chip, gold rim around the dark logo tile |
+| `onLight` | `boolean` | `false` | Light logo tile for dark logos |
 
 ### `CustomSkillsTierIcon`
 
-Three concentric rings with the given tier's ring highlighted (inner = `daily`, middle = `shipped`, outer = `familiar`). Decorative (`aria-hidden`), used in the Skills legend and tier headings.
+Three concentric rings with the given tier's ring highlighted (inner = `core`, middle = `solid`, outer = `familiar`). Decorative (`aria-hidden`), used in the Skills legend and tier headings.
 
 | Prop | Type | Notes |
 |---|---|---|
@@ -614,7 +616,7 @@ The header is a size container (`@container`): below 20rem of card width (`@xs`)
 | `period` | `MilestonePeriod` | Required — `start – end` line, duration after `organization · type` |
 | `content` | `RichBlock[]` | Required — first block only while closed |
 | `organization` / `typeLabel` | `string` | Optional |
-| `stack` | `MilestoneStackItem[]` | Optional — rendered as `BaseChip`s, with the technology logo when known |
+| `stack` | `MilestoneStackItem[]` | Optional — rendered as `ghost` `BaseChip`s, with the technology logo and a brand-coloured border when known |
 | `imageSrc` / `imageWidth` / `imageHeight` | | Optional — polaroid `figure`, shown only when open |
 | `imageCaption` | `string` | Optional — `figcaption` (image `alt` is then empty) |
 
@@ -642,7 +644,7 @@ No props. LinkedIn-style list of `useMilestones()` entries, newest first: role, 
 
 ### `CustomSolarSystem`
 
-Animated orbit diagram on the Skills page (`lg` and up), one per area. Orbit distance encodes the tier: inner = `daily` (gold planets), middle = `shipped`, outer = `familiar`; each planet is a real skill and logos stay upright. Purely visual (`aria-hidden`) — the tier lists beside it carry the same data. Sized by its container; paused under `prefers-reduced-motion`.
+Animated orbit diagram on the Skills page (`lg` and up), one per area. The tier is encoded three ways: orbit distance (inner = `core`, middle = `solid`, outer = `familiar`), planet size (1 / 0.85 / 0.75) and body (`core`: gold medal rim around a dark face; `solid`: `surface-2` disc; `familiar`: dashed empty shell). Logos always sit on a dark face, or a light one for `onLight` skills, at full opacity; each planet is a real skill and logos stay upright. Purely visual (`aria-hidden`) — the tier lists beside it carry the same data. Sized by its container; paused under `prefers-reduced-motion`.
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -891,7 +893,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` (free keywords) and `clients` (string lists), and `skills` (skill ids, resolved to `Skill` objects). The composable maps each `stack` name to a `MilestoneStackItem` (logo from its `STACK_ICONS` table, none for unknown names) and adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` (free keywords) and `clients` (string lists), and `skills` (skill ids, resolved to `Skill` objects). The composable maps each `stack` name to a `MilestoneStackItem` (logo and `--sb-tech-*` brand colour from its `STACK_BRANDS` table, none for unknown names) and adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
 
 ### `useSelectedWork()`
 
@@ -931,7 +933,7 @@ Where each skill is used, built from the `skills` ids of the other content sourc
 const { areas, featuredStack } = useSkills()
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a readable slug `id` (`vue`, `spring`, `tailwind-css`), referenced by the `skills` arrays of projects, templates and milestones in the locale files, an `area` (`frontend`, `backend`, `tools`) and a `tier` (`daily`: used every day, gold; `shipped`: used in delivered work; `familiar`: used, not core). `areas` is the Skills page data: one `SkillAreaGroup` per area with its non-empty tiers in order, skills alphabetical. `resolveSkills(ids)` (named export) maps ids to skills and drops unknown ones. `featuredStack` is the home page "Core stack": `FEATURED_STACK` ids grouped by area (`frontend`, `backend`, `database`), in authored order, independent from tiers.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a readable slug `id` (`vue`, `spring`, `tailwind-css`), referenced by the `skills` arrays of projects, templates and milestones in the locale files, an `area` (`frontend`, `backend`, `tools`) and a `tier` (`core`: used every day, gold; `solid`: used across many projects; `familiar`: studied or used rarely). `areas` is the Skills page data: one `SkillAreaGroup` per area with its non-empty tiers in order, skills alphabetical. `resolveSkills(ids)` (named export) maps ids to skills and drops unknown ones. `featuredStack` is the home page "Core stack": `FEATURED_STACK` ids grouped by area (`frontend`, `backend`, `database`), in authored order, independent from tiers.
 
 ### `useGithubStats()`
 
@@ -962,7 +964,7 @@ Types a composable exposes are exported from that composable and imported with `
 |---|---|
 | `composables/data/useSkills` | `Skill` (`{ id, name, icon, area, tier, onLight? }`), `SkillArea`, `SkillTier`, `SkillTierGroup`, `SkillAreaGroup`, `StackArea`, `StackGroup` |
 | `composables/data/useSkillReferences` | `SkillReference` (`{ key, title, skills, to }`) |
-| `composables/data/useMilestones` | `Milestone`, `MilestoneType`, `MilestonePeriod` (`{ startIso?, startLabel?, endIso?, endLabel, duration? }`), `MilestoneStackItem` (`{ name, icon? }`) |
+| `composables/data/useMilestones` | `Milestone`, `MilestoneType`, `MilestonePeriod` (`{ startIso?, startLabel?, endIso?, endLabel, duration? }`), `MilestoneStackItem` (`{ name, icon?, color? }`) |
 | `composables/data/useProjects` | `Project` |
 | `composables/data/useTemplates` | `SbTemplate` |
 | `composables/useNotification` | `NotificationItem` (`{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }`) |

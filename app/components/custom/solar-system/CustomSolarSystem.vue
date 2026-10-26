@@ -12,10 +12,10 @@ const props = withDefaults(defineProps<CustomSolarSystemProps>(), {
 })
 
 // Data
-// Orbit distance is the data: the closer to the sun, the more often the skill is used
+// Tier is encoded three ways: orbit distance, planet size (orbit--* scale) and body treatment
 const ORBITS: Record<SkillTier, { ratio: number, duration: number, direction: 'normal' | 'reverse' }> = {
-  daily: { ratio: 0.46, duration: 70, direction: 'normal' },
-  shipped: { ratio: 0.7, duration: 110, direction: 'reverse' },
+  core: { ratio: 0.46, duration: 70, direction: 'normal' },
+  solid: { ratio: 0.7, duration: 110, direction: 'reverse' },
   familiar: { ratio: 0.94, duration: 160, direction: 'normal' },
 }
 
@@ -90,7 +90,7 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
 
 .solar-system {
   container-type: inline-size;
-  --planet-size: clamp(28px, 8.5cqi, 40px);
+  --planet-size: clamp(30px, 9.5cqi, 44px);
 }
 
 /* --- SUN --- */
@@ -192,6 +192,10 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
 
 /* --- PLANETS --- */
 
+.orbit--core { --planet-scale: 1; }
+.orbit--solid { --planet-scale: 0.85; }
+.orbit--familiar { --planet-scale: 0.75; }
+
 .slot {
   position: absolute;
   inset: 0;
@@ -202,8 +206,8 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
   position: absolute;
   left: 50%;
   top: 0;
-  width: var(--planet-size);
-  height: var(--planet-size);
+  width: calc(var(--planet-size) * var(--planet-scale, 1));
+  height: calc(var(--planet-size) * var(--planet-scale, 1));
   translate: -50% -50%;
   transition:
     scale var(--sb-duration-state) var(--ease-out),
@@ -255,9 +259,29 @@ const orbits = computed(() => props.tiers.map((tier, tierIndex) => ({
   background-color: var(--sb-ink);
 }
 
-.orbit--daily .planet-body {
-  border-color: color-mix(in oklab, var(--sb-gold-200) 60%, transparent);
-  background: radial-gradient(circle at 30% 0%, var(--sb-gold-100) 0, var(--sb-gold-400) 45%, var(--sb-gold-800) 100%);
+/* Core: gold medal rim around a dark face, so brand logos keep their contrast */
+.orbit--core .planet-body {
+  --planet-face: var(--sb-surface-2);
+  border: 3px solid transparent;
+  background:
+    linear-gradient(var(--planet-face), var(--planet-face)) padding-box,
+    radial-gradient(circle at 30% 0%, var(--sb-gold-100) 0, var(--sb-gold-300) 45%, var(--sb-gold-700) 100%) border-box;
+  box-shadow: 0 2px 10px color-mix(in oklab, var(--sb-gold-300) 35%, transparent);
+}
+
+.orbit--core .planet-body--light {
+  --planet-face: var(--sb-ink);
+}
+
+/* Familiar: empty dashed shell on the page ground */
+.orbit--familiar .planet-body {
+  border-style: dashed;
+  background-color: var(--sb-bg);
+  box-shadow: none;
+}
+
+.orbit--familiar .planet-body--light {
+  background-color: var(--sb-ink);
 }
 
 .planet.is-active .planet-body {

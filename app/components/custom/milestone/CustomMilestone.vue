@@ -136,9 +136,10 @@ const onToggle = () => {
       <ul v-if="props.stack.length" class="flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none">
         <li v-for="item in props.stack" :key="item.name">
           <BaseChip
+            :accent-color="item.color"
             :icon="item.icon"
             :text="item.name"
-            variant="secondary"
+            variant="ghost"
           />
         </li>
       </ul>

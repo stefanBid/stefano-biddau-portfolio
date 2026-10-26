@@ -10,8 +10,8 @@ const props = defineProps<CustomSkillsTierIconProps>()
 
 // Data
 const RINGS: { tier: SkillTier, r: number }[] = [
-  { tier: 'daily', r: 3 },
-  { tier: 'shipped', r: 6 },
+  { tier: 'core', r: 3 },
+  { tier: 'solid', r: 6 },
   { tier: 'familiar', r: 9 },
 ]
 </script>
