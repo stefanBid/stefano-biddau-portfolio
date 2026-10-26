@@ -43,7 +43,7 @@ const isActiveRoute = (r: RouteItem) => {
 // Events
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape' && open.value) {
+  if (e.key === 'Escape' && open.value && !e.defaultPrevented) {
     e.preventDefault()
     onClose()
   }

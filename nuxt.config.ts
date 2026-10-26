@@ -138,7 +138,7 @@ export default defineNuxtConfig({
         'zod',
         'typed.js',
         '@emailjs/browser',
-        '@floating-ui/vue',
+        'sb-floating-panel-vue',
         'isomorphic-dompurify',
       ],
     },

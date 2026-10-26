@@ -138,36 +138,11 @@ onMounted(() => {
             </p>
           </div>
           <div class="flex flex-wrap gap-3 shrink-0">
-            <BaseButton
-              v-for="url in project.codebaseUrls"
-              :key="url.code"
+            <CustomProjectsLinks
+              :codebase-urls="project.codebaseUrls"
+              :deployment-urls="project.deploymentUrls"
               size="sm"
-              :to="url.code"
-              type="link"
-              variant="secondary"
-            >
-              <Icon
-                aria-hidden="true"
-                class="size-4"
-                name="solar:code-2-line-duotone"
-              />
-              {{ t('pages.projects.links.code') }}
-            </BaseButton>
-            <BaseButton
-              v-for="url in project.deploymentUrls"
-              :key="url.code"
-              size="sm"
-              :to="url.code"
-              type="link"
-              variant="secondary"
-            >
-              <Icon
-                aria-hidden="true"
-                class="size-4"
-                name="solar:global-line-duotone"
-              />
-              {{ t('pages.projects.links.live') }}
-            </BaseButton>
+            />
           </div>
         </li>
       </ul>

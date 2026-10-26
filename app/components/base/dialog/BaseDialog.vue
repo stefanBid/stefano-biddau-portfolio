@@ -30,8 +30,9 @@ const onClose = () => {
   emit('close', false)
 }
 
+// defaultPrevented: Escape already closed a floating panel inside the dialog
 const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape' && props.isOpen) {
+  if (e.key === 'Escape' && props.isOpen && !e.defaultPrevented) {
     e.preventDefault()
     onClose()
   }

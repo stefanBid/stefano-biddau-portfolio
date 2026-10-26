@@ -312,7 +312,8 @@
       "links": {
         "code": "Codice",
         "live": "Sito online",
-        "package": "npm"
+        "package": "npm",
+        "menu": "Link"
       },
       "personalProjects": {
         "tabLabel": "Progetti",

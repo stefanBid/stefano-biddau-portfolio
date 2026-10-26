@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "@emailjs/browser": "^5.0.3",
-    "@floating-ui/vue": "^2.0.1",
     "@nuxt/eslint": "^1.17.0",
     "@nuxt/fonts": "^1.1.0",
     "@nuxt/icon": "^2.6.0",
@@ -30,6 +29,7 @@
     "eslint": "^10.13.0",
     "isomorphic-dompurify": "^4.6.0",
     "nuxt": "4.6.2",
+    "sb-floating-panel-vue": "^5.3.1",
     "tailwindcss": "^4.3.3",
     "typed.js": "^3.0.0",
     "vue": "^3.5.44",

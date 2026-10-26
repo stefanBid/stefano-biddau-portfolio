@@ -312,7 +312,8 @@
       "links": {
         "code": "Code",
         "live": "Live site",
-        "package": "npm"
+        "package": "npm",
+        "menu": "Links"
       },
       "personalProjects": {
         "tabLabel": "Projects",

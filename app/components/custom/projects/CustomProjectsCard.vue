@@ -63,48 +63,10 @@ const getContentPreview = computed(() => {
   return props.content
 })
 
-interface UrlGroup {
-  key: string
-  urls: MenuItem[]
-  icon: string
-  label: string
-}
-
-const _isNpmPackage = (urls: MenuItem[]) => urls.every(url => url.code.includes('npmjs.com'))
-
-const urlGroups = computed<UrlGroup[]>(() => {
-  const groups: UrlGroup[] = []
-
-  if (props.codebaseUrls?.length) {
-    groups.push({
-      key: 'codebase',
-      urls: props.codebaseUrls,
-      icon: 'solar:code-2-line-duotone',
-      label: t('pages.projects.links.code'),
-    })
-  }
-
-  if (props.deploymentUrls?.length) {
-    const isPackage = _isNpmPackage(props.deploymentUrls)
-    groups.push({
-      key: 'deployment',
-      urls: props.deploymentUrls,
-      icon: isPackage ? 'mdi:npm' : 'solar:global-line-duotone',
-      label: isPackage ? t('pages.projects.links.package') : t('pages.projects.links.live'),
-    })
-  }
-
-  return groups
-})
-
 // Events
 const onTriggerDescription = () => {
   isDescriptionExpanded.value = !isDescriptionExpanded.value
   emits('toggleDescription', isDescriptionExpanded.value)
-}
-
-const onSelectUrl = (url: string) => {
-  window.open(url, '_blank', 'noopener,noreferrer')
 }
 </script>
 
@@ -126,10 +88,10 @@ const onSelectUrl = (url: string) => {
       >
         <div
           v-if="hasImage"
-          class="relative shrink-0 h-56 md:h-72 overflow-hidden rounded-md"
+          class="relative shrink-0 h-48 md:h-60 overflow-hidden rounded-md"
           :class="[
             props.imageFit === 'contain' ? 'bg-ink flex items-center justify-center p-8 md:p-12' : 'bg-surface-2',
-            { 'lg:col-span-3 lg:h-full lg:min-h-96': isSplitLayout },
+            { 'lg:col-span-2 lg:h-72 lg:self-start': isSplitLayout },
           ]"
         >
           <NuxtImg
@@ -148,7 +110,7 @@ const onSelectUrl = (url: string) => {
 
         <div
           class="flex flex-1 flex-col min-w-0"
-          :class="{ 'lg:col-span-2 lg:py-2': isSplitLayout }"
+          :class="{ 'lg:col-span-3 lg:py-2': isSplitLayout }"
         >
           <BaseChip
             v-if="props.isOngoing && !hasImage"
@@ -198,54 +160,10 @@ const onSelectUrl = (url: string) => {
           </BaseButton>
 
           <div
-            v-if="urlGroups.length"
+            v-if="props.codebaseUrls?.length || props.deploymentUrls?.length"
             class="flex flex-wrap items-center gap-3 mt-auto pt-6"
           >
-            <template v-for="group in urlGroups" :key="group.key">
-              <BaseButton
-                v-if="group.urls.length === 1"
-                :to="group.urls[0]!.code"
-                type="link"
-                variant="secondary"
-              >
-                <Icon
-                  aria-hidden="true"
-                  class="size-5"
-                  :name="group.icon"
-                />
-                {{ group.label }}
-              </BaseButton>
-              <BaseIconMenu
-                v-else
-                :icon="group.icon"
-                :items="group.urls"
-                :label="group.label"
-                @select="onSelectUrl"
-              >
-                <template #trigger="{ isOpen, toggle }">
-                  <BaseButton
-                    :aria-expanded="isOpen ? 'true' : 'false'"
-                    aria-haspopup="menu"
-                    type="button"
-                    variant="secondary"
-                    @click="toggle(!isOpen)"
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      class="size-5"
-                      :name="group.icon"
-                    />
-                    {{ group.label }}
-                    <Icon
-                      aria-hidden="true"
-                      class="size-4 sb-transition"
-                      :class="{ 'rotate-180': isOpen }"
-                      name="solar:alt-arrow-down-linear"
-                    />
-                  </BaseButton>
-                </template>
-              </BaseIconMenu>
-            </template>
+            <CustomProjectsLinks :codebase-urls="props.codebaseUrls" :deployment-urls="props.deploymentUrls" />
           </div>
         </div>
       </div>
