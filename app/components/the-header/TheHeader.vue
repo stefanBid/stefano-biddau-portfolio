@@ -8,6 +8,7 @@ interface TheHeaderProps {
 // Dependencies
 const { lock, unlock } = useLockScroll()
 const { t } = useI18n()
+const { isFormOpen: isContactFormOpen, cvItems } = useContact()
 
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
@@ -83,6 +84,12 @@ const onNavigateFromMenu = (r: RouteItem) => {
   onClose(false)
 }
 
+// The form traps focus itself: the drawer lets go of it first
+const onContactFromMenu = () => {
+  onClose(false)
+  isContactFormOpen.value = true
+}
+
 const onSelectLang = (langCode: string | null) => {
   if (!langCode) {
     return
@@ -133,7 +140,7 @@ watch(isMdUp, (newVal) => {
     >
       <div class="h-full flex items-center gap-4 max-w-350 mx-auto">
         <NuxtLink
-          class="inline-flex items-center gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
+          class="inline-flex items-center min-h-11 gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
           :to="props.routes[0]?.path || '/'"
           @click="onClose(false)"
         >
@@ -153,7 +160,7 @@ watch(isMdUp, (newVal) => {
             <NuxtLink
               v-if="!r.disabled"
               :aria-current="isActiveRoute(r) ? 'page' : undefined"
-              class="sb-label uppercase relative py-1 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
+              class="sb-label uppercase relative py-1 before:absolute before:inset-x-0 before:-inset-y-2 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
               :class="{
                 'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
                 'text-ink font-bold after:scale-x-100': isActiveRoute(r),
@@ -233,6 +240,18 @@ watch(isMdUp, (newVal) => {
             </span>
           </template>
         </nav>
+
+        <div class="grid gap-3">
+          <BaseButton variant="primary" @click="onContactFromMenu">
+            {{ t('pages.home.contactCard.buttonText') }}
+          </BaseButton>
+          <BaseMenu
+            icon="solar:download-minimalistic-bold-duotone"
+            :items="cvItems"
+            :label="t('pages.home.cvCard.buttonText')"
+            placement="top-start"
+          />
+        </div>
 
         <div
           :aria-label="t('a11y.changeLanguage')"

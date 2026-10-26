@@ -152,6 +152,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
          useSkills.ts       ← hardcoded local skills list, grouped by area and tier
          useTemplates.ts    ← reads pages.projects.sbTemplatesProject.list from i18n
        useCloudinary.ts     ← builds Cloudinary delivery URLs from runtimeConfig
+       useContact.ts        ← shared contact-form open state + CV file for the active locale
        useEmailJs.ts        ← EmailJS dual-send (admin + reply-to-user)
        useLockScroll.ts     ← scroll lock with multi-caller safety
        useNotification.ts   ← global notification system
@@ -159,7 +160,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        useSanitize.ts       ← XSS-safe HTML sanitisation
        useTypedText.ts      ← typed.js wrapper for typewriter animations
      layouts/
-       default.vue         ← TheHeader + <slot> + TheFooter + notifications
+       default.vue         ← TheHeader + <slot> + TheFooter + contact form + notifications
      pages/
        index.vue            ← / — Homepage
        about-me.vue         ← /about-me — Career milestones
@@ -177,7 +178,6 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        global.d.ts         ← cross-cutting TS types (navigation, rich text, GitHub)
      utils/
        blocksToHtml.ts     ← Rich text blocks → HTML
-       downloadFile.ts     ← browser file download trigger (client-side only)
        generateUuid.ts     ← UUID v4 generator
        markdownToBlocks.ts ← Markdown → RichBlock[] converter (exports `markdownToRichBlocks`)
 ── server/
@@ -256,7 +256,7 @@ One utility per role, defined in `typography.css`; each carries family, size, li
 <p class="text-ink-muted">Some description.</p>
 ```
 
-Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`); use `text-center`/`text-left` to opt out. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
+Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyphenation (language from `<html lang>`, at least 3 letters each side of a break, never inside `strong`) and `text-wrap: pretty`; use `text-center`/`text-left` to opt out, which also turns hyphenation off. Tags `h1`–`h6`, `p`, `label`, `small`, `code` get their role for free; use the class only when the look must differ from the tag. Inside a component `<style>`, use `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
 **Font families:** `font-display` (Bebas Neue, 400) · `font-body` / `font-mono` (Space Mono, 400 and 700). Weights: `font-normal`, `font-bold` only.
 
@@ -461,7 +461,7 @@ Behaviour: closes on `Escape` (unless a floating panel inside already handled it
 | Prop | Type | Default | Notes |
 |---|---|---|---|
 | `label` | `string` | — | Required. Accessible name of the menu; trigger text (its `aria-label` with `iconOnly`) |
-| `items` | `MenuItem[]` | — | Required. `links`: `code` is the `href`; `select`: `code` is the value. `icon` + `iconType` optional, shown before the label |
+| `items` | `MenuItem[]` | — | Required. `links`: `code` is the `href`; `select`: `code` is the value. `icon` + `iconType` optional, shown in a tile before the label; `description` optional second line; `download` (links only) = filename for the anchor's `download` attribute, with a download icon |
 | `kind` | `'links' \| 'select'` | `'links'` | `links`: `role="menuitem"` anchors; `select`: `role="menuitemradio"` buttons with a check on the selected item, and the trigger shows the selected `code` (like a native `<select>`, `aria-label` = `code – label`) |
 | `icon` | `string` | `undefined` | Trigger icon, before the text |
 | `iconOnly` | `boolean` | `false` | Same as `BaseButton`: square trigger with the icon only, `label` as `aria-label`, no chevron |
@@ -470,7 +470,7 @@ Behaviour: closes on `Escape` (unless a floating panel inside already handled it
 | `placement` | `SbPlacement` | `'bottom-start'` | Panel placement; flips when there is no room |
 
 Model: `defineModel<string | null>('selected', { default: null })` — used by `kind="select"`, `null` = nothing selected (the trigger shows `label`); ignored by `links`.
-The trigger is always a `BaseButton` (`isActive` while open): icon and text on the left, chevron (flips while open) pushed to the far right (`ml-auto`), so it stays at the edge when the trigger is stretched. Built on `sb-floating-panel-vue`: `SbFloating` renders the `role="menu"` panel (`fixed`, at least as wide as the trigger). The library handles ↓/↑ on the trigger, ↑/↓/Home/End/typing, click outside and Escape (only the menu, focus back to the trigger) and close-on-pick for links (`closeOnSelect`). `select` opens on the checked item (`autofocus`) and calls the container's `close()` after a pick, since `closeOnSelect` skips `menuitemradio`. External links open in a new tab with the arrow icon and the `a11y.newTab` hint. Used by `TheHeader` (language switcher: `kind="select"`, `ghost`, `sm`, `bottom-end`) and `CustomProjectsLinks` (more than one link).
+The trigger is always a `BaseButton` (`isActive` while open): icon and text on the left, chevron (flips while open) pushed to the far right (`ml-auto`), so it stays at the edge when the trigger is stretched. Built on `sb-floating-panel-vue`: `SbFloating` renders the `role="menu"` panel (`fixed`, at least as wide as the trigger). The library handles ↓/↑ on the trigger, ↑/↓/Home/End/typing, click outside and Escape (only the menu, focus back to the trigger) and close-on-pick for links (`closeOnSelect`). Each item: icon tile (`bg-bg`, border) + label and optional description; hover/focus tints the row (`bg-primary/8`) and turns the tile orange, the selected `select` item keeps the tint (`bg-primary/12`, orange tile, bold label, check). `select` opens on the checked item (`autofocus`) and calls the container's `close()` after a pick, since `closeOnSelect` skips `menuitemradio`. External links open in a new tab with the arrow icon and the `a11y.newTab` hint. Used by `TheHeader` (language switcher: `kind="select"`, `ghost`, `sm`, `bottom-end`) `CustomProjectsLinks` (more than one link) and the CV download (`useContact().cvItems`, in the home hero, `CustomClosingCta` and the mobile menu).
 
 ### `BaseCloseButton`
 
@@ -573,7 +573,7 @@ Three concentric rings with the given tier's ring highlighted (inner = `core`, m
 | `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site"); npmjs.com links are labelled "npm" |
 | `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
 | `isOngoing` | `boolean` | `false`. Shows an "Ongoing" chip on the cover (above the title when there is no cover); `my-projects/index.vue` sorts ongoing projects first |
-| `featured` | `boolean` | `false`. Spans both grid columns with cover and full text side by side (`lg`: cover 2/5 at a fixed `h-72`, top-aligned, text 3/5), no "Read more". `my-projects/index.vue` sets it for ongoing projects and for a regular card left alone in the last grid row |
+| `featured` | `boolean` | `false`. Spans both grid columns with cover and full text side by side (`lg`: cover 2/5 at a fixed `h-72`, top-aligned and sticky under the header (`top-24`) while the text scrolls, text 3/5), no "Read more". `my-projects/index.vue` sets it for ongoing projects and for a regular card left alone in the last grid row |
 
 Links render through `CustomProjectsLinks` (see below).
 
@@ -589,7 +589,7 @@ Each card keeps its own height in the grid (`items-start`), so expanding one nev
 | `deploymentUrls` | `MenuItem[]` | `[]` | Live links ("Live site"); all-npmjs.com links are labelled "npm" with the `mdi:npm` icon |
 | `size` | `'sm' \| 'md'` | `'md'` | `md` in `CustomProjectsCard`, `sm` in the studies rows of `my-projects/index.vue` |
 
-Code and live links form one list: a single link is a `secondary` `BaseButton` link, two or more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), plus the link's own label when a kind has more than one link (`Code · GitHub`). Renders nothing without links; the caller owns the wrapper and its spacing.
+Code and live links form one list: a single link is a `secondary` `BaseButton` link, two or more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), with the link's own label as `description` when a kind has more than one link. Renders nothing without links; the caller owns the wrapper and its spacing.
 
 ### `CustomSbTemplatesCard`
 
@@ -623,7 +623,7 @@ Emits `toggle(id)`. Each milestone opens and closes on its own (Read more ↔ Sh
 |---|---|---|
 | `showProjectsLink` | `boolean` | Optional — adds a link to My Projects |
 
-Closing call to action shared by Home and About Me: contact (emits `contact`, the page owns the `CustomContactForm`), CV download for the active locale, mailto fallback.
+Closing call to action shared by Home and About Me: contact (emits `contact`; pages set `useContact().isFormOpen`, the layout owns the single `CustomContactForm`), CV download menu (EN/IT, active locale first), mailto fallback.
 
 ### `CustomGithubStats`
 
@@ -654,7 +654,7 @@ Each `Custom*` component ships with a matching `*Skeleton.vue` for loading state
 
 ### `TheHeader` / `TheHeaderMenuToggle`
 
-Top navigation bar. Desktop: logo left; nav and language menu (`BaseMenu` `kind="select"`, ghost, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
+Top navigation bar. Desktop: logo left; nav and language menu (`BaseMenu` `kind="select"`, ghost, showing `EN`/`IT`) right. The nav has a fixed width (fits the longest locale) with labels spread evenly (`justify-between`), so it never resizes on a language switch; the active link's underline matches its text width. Mobile: `TheHeaderMenuToggle` opens a full-screen menu under the header, with large Bebas links in the lower half (active one marked by the orange rule) then "Get in touch" `BaseButton` (closes the menu and opens the contact form) and the "Download CV" `BaseMenu` (`top-start`, EN/IT), and `EN | IT` `BaseButton`s (`aria-pressed`); switching language keeps the menu open. Focus is trapped in the panel and returns to the toggle on close; Escape closes it; page scroll is locked.
 
 ### `TheFooter`
 
@@ -742,7 +742,7 @@ useSeoMeta({
 
 `default.vue` also renders a "Skip to content" link (first focusable element, visible on focus) targeting `<main id="main">`; `app.vue` mounts `<NuxtRouteAnnouncer />` so client-side page changes are announced.
 
-The only layout is `default.vue`. Structure: `TheHeader` → `<slot>` → `TheFooter` → `TheNotificationBanner` + `TheNotificationBox`. A `useLocaleHead()` call injects the correct `hreflang` alternate links on every page automatically.
+The only layout is `default.vue`. Structure: `TheHeader` → `<slot>` → `TheFooter` → `CustomContactForm` (one instance, opened through `useContact()`) → `TheNotificationBanner` + `TheNotificationBox`. A `useLocaleHead()` call injects the correct `hreflang` alternate links on every page automatically.
 
 ### i18n routing
 
@@ -833,6 +833,15 @@ const { cloudinaryUrl, resolveImageSrc } = useCloudinary()
 cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
 // → https://res.cloudinary.com/dsmtyu2iw/image/upload/v1793011184/sbt-logo_wgjk4u.svg
 resolveImageSrc('/images/logo.webp') // → unchanged (file in public/)
+```
+
+### `useContact()`
+
+The single contact form lives in `default.vue`; page CTAs and the mobile menu open it through shared state. `cvItems` are the `BaseMenu` items of the CV download (EN and IT, active locale first, flag icon, `download` filename).
+
+```ts
+const { isFormOpen, cvItems } = useContact()
+isFormOpen.value = true
 ```
 
 ### `useLockScroll()`
@@ -946,7 +955,6 @@ The one async content source: `useFetch('/api/github-stats.json')`, which is pre
 |---|---|---|
 | `generateUuid` | `(): string` | Returns a random UUID v4 string |
 | `blocksToHtml` | `(blocks: RichBlock[]): string` | Converts `RichBlock[]` to HTML. Always pair with `useSanitize()` or use `BaseRichText` |
-| `downloadFile` | `(publicUrl: string, filename: string): void` | Triggers a browser file download. **Client-side only** |
 | `markdownToRichBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text to `RichBlock[]` structure |
 
 ---
@@ -968,7 +976,7 @@ Types a composable exposes are exported from that composable and imported with `
 
 | Type | Description |
 |---|---|
-| `MenuItem` | `{ code, label, iconType, icon }` — language switcher and `BaseMenu` items (`code` = href with `kind="links"`, value with `kind="select"`) |
+| `MenuItem` | `{ code, label, iconType, icon, description, download }` — language switcher and `BaseMenu` items (`code` = href with `kind="links"`, value with `kind="select"`) |
 | `RouteItem` | `{ name, path, disabled? }` — navigation links |
 | `GithubRepo` | `{ name, url, description, language, stars }` |
 | `GithubStats` | `{ login, profileUrl, publicRepos, totalStars, yearsOnGithub, contributionsLastYear, topRepos }` — `contributionsLastYear` is `null` without a token |

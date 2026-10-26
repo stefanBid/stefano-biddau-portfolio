@@ -47,7 +47,8 @@ const links = computed<MenuItem[]>(() => {
 
   return groups.flatMap(group => group.urls.map(url => ({
     code: url.code,
-    label: group.urls.length > 1 ? `${group.label} · ${url.label}` : group.label,
+    label: group.label,
+    description: group.urls.length > 1 ? url.label : undefined,
     icon: group.icon,
     iconType: 'nuxt-icon' as const,
   })))

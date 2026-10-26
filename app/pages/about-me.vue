@@ -11,6 +11,7 @@ const { t } = useI18n()
 const route = useRoute()
 const { milestones: milestonesByDate } = useMilestones()
 const { selectedWork } = useSelectedWork()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 useSeoMeta({
   // LOCALIZED
@@ -31,7 +32,6 @@ const upcoming = computed(() => [...milestonesByDate.value].reverse().filter(mil
 const milestones = computed(() => [...milestonesByDate.value].reverse().filter(milestone => milestone.type !== 'upcoming'))
 
 const openIds = ref<string[]>(milestones.value[0] ? [milestones.value[0].id] : [])
-const contactFormIsOpen = ref(false)
 
 // Events
 const onToggleMilestone = (id: string | number) => {
@@ -61,7 +61,7 @@ const onToggleMilestone = (id: string | number) => {
         :message="t('pages.about.noMilestones.message')"
         :title="t('pages.about.noMilestones.title')"
       />
-      <ol v-else class="m-0 flex list-none flex-col gap-10 border-l-2 border-ink/30 p-0 pl-6 md:pl-10">
+      <ol v-else class="m-0 flex list-none flex-col gap-10 border-l-2 border-ink/30 p-0 pl-3 md:pl-10">
         <li
           v-for="step in upcoming"
           :key="step.id"
@@ -70,7 +70,7 @@ const onToggleMilestone = (id: string | number) => {
           <article :aria-labelledby="`milestone-title-${step.id}`" class="relative rounded-lg border border-dashed border-border-strong px-4 py-3 md:px-6 md:py-4">
             <div
               aria-hidden="true"
-              class="absolute -left-8.25 md:-left-12.75 top-4 md:top-5 flex items-center justify-center"
+              class="absolute -left-5.25 md:-left-12.75 top-4 md:top-5 flex items-center justify-center"
             >
               <span class="block size-4 md:size-5 rounded-full border-2 border-primary bg-bg"></span>
             </div>
@@ -85,7 +85,7 @@ const onToggleMilestone = (id: string | number) => {
             <BaseRichText
               v-if="step.content.length"
               :blocks="step.content"
-              class="mt-1 max-w-[75ch] text-ink-muted *:sb-small *:text-left *:mb-0"
+              class="mt-1 max-w-prose text-ink-muted *:sb-small *:text-left *:mb-0"
             />
           </article>
         </li>
@@ -163,8 +163,6 @@ const onToggleMilestone = (id: string | number) => {
       </ul>
     </section>
 
-    <CustomClosingCta show-projects-link @contact="contactFormIsOpen = true" />
-
-    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
+    <CustomClosingCta show-projects-link @contact="isContactFormOpen = true" />
   </div>
 </template>

@@ -12,6 +12,7 @@ const { t } = useI18n()
 const route = useRoute()
 const { areas } = useSkills()
 const { referencesByArea } = useSkillReferences()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 useSeoMeta({
   // LOCALIZED
@@ -30,7 +31,6 @@ useSeoMeta({
 const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
 const activeSkillId = ref<string | null>(null)
-const contactFormIsOpen = ref<boolean>(false)
 
 // Events
 const onHighlightSkill = (id: string | null) => {
@@ -134,9 +134,7 @@ const onHighlightSkill = (id: string | null) => {
     </section>
 
     <div class="pt-24">
-      <CustomClosingCta show-projects-link @contact="contactFormIsOpen = true" />
+      <CustomClosingCta show-projects-link @contact="isContactFormOpen = true" />
     </div>
-
-    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
   </div>
 </template>

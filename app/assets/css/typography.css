@@ -145,15 +145,31 @@
   p { @apply sb-body; }
 
   /* Running text is justified site-wide; hyphenation (from <html lang>) keeps narrow monospace lines without rivers.
-     Centered or single-line copy opts out with text-center / text-left. */
+     Centered or single-line copy opts out with text-center / text-left.
+     At least 3 letters on each side of a break: no "al-l'UNISA", "ri-spondo". */
   p, li, blockquote {
     text-align: justify;
+    text-wrap: pretty;
     hyphens: auto;
+    hyphenate-limit-chars: 6 3 3;
+    -webkit-hyphenate-limit-before: 3;
+    -webkit-hyphenate-limit-after: 3;
+  }
+
+  /* Names in bold (JavaScript, PostgreSQL) never split */
+  :is(p, li, blockquote) :is(strong, b) {
+    hyphens: manual;
   }
 
   /* Inside a centered container (text-center, lg:text-left, …) running text follows the container */
   [class*="text-center"] :is(p, li, blockquote) {
     text-align: inherit;
+  }
+
+  /* Ragged copy gains nothing from hyphenation, it only breaks words */
+  :is(p, li, blockquote):is([class*="text-left"], [class*="text-center"]),
+  [class*="text-center"] :is(p, li, blockquote) {
+    hyphens: manual;
   }
   label { @apply sb-label; }
   small { @apply sb-small; }

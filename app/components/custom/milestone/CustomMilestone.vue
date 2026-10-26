@@ -43,6 +43,7 @@ const emits = defineEmits<{
 
 // State
 const MAX_CONTENT_BLOCKS = 1 // max number of blocks to show when collapsed
+const COLLAPSED_STACK_ITEMS = 3 // chips shown on mobile when collapsed, the rest stay for screen readers
 const DEFAULT_IMAGE_WIDTH = 800 // fallback to keep width/height always set for NuxtImg (avoids CLS on lazy load)
 const DEFAULT_IMAGE_HEIGHT = 1000
 
@@ -53,6 +54,8 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
 
 // The photo only shows when open, so a milestone with an image is always expandable
 const isExpandable = computed(() => props.content.length > MAX_CONTENT_BLOCKS || Boolean(props.imageSrc))
+
+const hiddenStackCount = computed(() => props.isOpen ? 0 : Math.max(props.stack.length - COLLAPSED_STACK_ITEMS, 0))
 
 const visibleContent = computed(() => props.isOpen ? props.content : props.content.slice(0, MAX_CONTENT_BLOCKS))
 
@@ -87,7 +90,7 @@ const onToggle = () => {
   >
     <div
       aria-hidden="true"
-      class="absolute -left-8.25 md:-left-12.75 top-5 md:top-7.5 flex items-center justify-center pointer-events-none"
+      class="absolute -left-5.25 md:-left-12.75 top-5 md:top-7.5 flex items-center justify-center pointer-events-none"
     >
       <span
         class="absolute inset-0 rounded-full sb-transition"
@@ -97,6 +100,7 @@ const onToggle = () => {
     </div>
 
     <BaseCard
+      class="max-md:px-3"
       :class="{ 'bg-transparent!': !props.isOpen }"
       full-custom-content
       variant="dark"
@@ -121,10 +125,10 @@ const onToggle = () => {
       <p v-if="subline || props.period.duration" class="sb-body text-ink-muted text-left hyphens-none mt-1 mb-0">
         {{ subline }}
         <template v-if="props.period.duration">
-          <template v-if="subline">
+          <span v-if="subline" class="hidden sm:inline">
             ·
-          </template>
-          <span class="whitespace-nowrap">{{ props.period.duration }}</span>
+          </span>
+          <span class="block whitespace-nowrap sm:inline">{{ props.period.duration }}</span>
         </template>
       </p>
 
@@ -134,13 +138,24 @@ const onToggle = () => {
       </p>
 
       <ul v-if="props.stack.length" class="flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none">
-        <li v-for="item in props.stack" :key="item.name">
+        <li
+          v-for="(item, index) in props.stack"
+          :key="item.name"
+          :class="{ 'max-md:sr-only': !props.isOpen && index >= COLLAPSED_STACK_ITEMS }"
+        >
           <BaseChip
             :accent-color="item.color"
             :icon="item.icon"
             :text="item.name"
             variant="ghost"
           />
+        </li>
+        <li
+          v-if="hiddenStackCount"
+          aria-hidden="true"
+          class="md:hidden"
+        >
+          <BaseChip :text="`+${hiddenStackCount}`" variant="ghost" />
         </li>
       </ul>
 
@@ -152,7 +167,7 @@ const onToggle = () => {
         <BaseRichText
           v-if="visibleContent.length"
           :blocks="visibleContent"
-          class="max-w-[75ch] *:text-left *:text-pretty md:*:text-justify"
+          class="max-w-prose"
         />
 
         <figure

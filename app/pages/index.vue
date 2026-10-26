@@ -8,11 +8,12 @@ definePageMeta({
 })
 
 // Dependencies
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const route = useRoute()
 const localePath = useLocalePath()
 const { selectedWork } = useSelectedWork()
 const { featuredStack } = useSkills()
+const { isFormOpen: isContactFormOpen, cvItems } = useContact()
 const { stats: githubStats } = await useGithubStats()
 
 useSeoMeta({
@@ -45,27 +46,20 @@ const CLIENT_GROUPS = [
   { key: 'freelance', names: ['Studio Legale Romano'] },
 ] as const
 
-// State
-const contactFormIsOpen = ref(false)
-
+// Data
 // Each group spans as many outer columns as it has tiles, so every tile keeps the same width and backend + database share a row on mobile
 const STACK_GROUP_LAYOUT = {
   frontend: { span: 'col-span-3 md:col-span-5', cols: 'grid-cols-3 md:grid-cols-5' },
   backend: { span: 'col-span-2', cols: 'grid-cols-2' },
   database: { span: 'col-span-1', cols: 'grid-cols-1' },
 } as const
-
-const getFile = computed<{ name: string, path: string }>(() => ({
-  name: `Stefano_Biddau_CV_${locale.value}.pdf`,
-  path: `/files/Stefano_Biddau_CV_${locale.value}.pdf`,
-}))
 </script>
 
 <template>
   <div>
     <!-- Pulled under the sticky header so the first screen is exactly one viewport; selected work starts below the fold -->
-    <section class="relative -mt-16 grid min-h-svh items-center content-center gap-6 pt-20 pb-24 lg:pt-24 lg:pb-28 lg:grid-cols-[1.2fr_1fr] lg:gap-16">
-      <div class="order-2 lg:order-1 flex flex-col items-center text-center lg:items-start lg:text-left">
+    <section class="relative -mt-16 grid min-h-svh items-center content-center gap-6 pt-20 pb-24 md:grid-cols-[1.2fr_1fr] md:gap-10 lg:pt-24 lg:pb-28 lg:gap-16">
+      <div class="order-2 md:order-1 flex flex-col items-center text-center md:items-start md:text-left">
         <h1 class="sb-display mb-0 text-balance">
           {{ t('pages.home.title') }}
         </h1>
@@ -79,28 +73,27 @@ const getFile = computed<{ name: string, path: string }>(() => ({
             :style="elStyle"
           ></span>
         </p>
-        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none lg:text-left hidden lg:block">
+        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none md:text-left">
           {{ t('pages.home.lead') }}
         </p>
         <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
-        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex">
-          <BaseButton size="lg" variant="primary" @click="contactFormIsOpen = true">
+        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex md:grid lg:flex">
+          <BaseButton size="lg" variant="primary" @click="isContactFormOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
-          <BaseButton size="lg" variant="secondary" @click="downloadFile(getFile.path, getFile.name)">
-            <Icon
-              aria-hidden="true"
-              class="size-5"
-              name="solar:download-minimalistic-bold-duotone"
-            />
-            {{ t('pages.home.cvCard.buttonText') }}
-          </BaseButton>
+          <BaseMenu
+            icon="solar:download-minimalistic-bold-duotone"
+            :items="cvItems"
+            :label="t('pages.home.cvCard.buttonText')"
+            placement="bottom-start"
+            size="lg"
+          />
         </div>
       </div>
-      <div class="order-1 lg:order-2 flex justify-center">
+      <div class="order-1 md:order-2 flex justify-center">
         <NuxtImg
           alt=""
-          class="w-32 sm:w-64 lg:w-full lg:max-w-sm h-auto"
+          class="w-24 sm:w-48 md:w-full md:max-w-sm h-auto"
           fetchpriority="high"
           :height="1536"
           loading="eager"
@@ -110,7 +103,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
         />
       </div>
       <a
-        class="absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
+        class="absolute bottom-6 left-1/2 -translate-x-1/2 inline-flex items-center min-h-11 gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
         href="#selected-work"
       >
         {{ t('pages.home.selectedWork.title') }}
@@ -128,7 +121,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           {{ t('pages.home.selectedWork.title') }}
         </h2>
         <NuxtLink
-          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-projects')"
         >
           {{ t('pages.home.selectedWork.viewAll') }}
@@ -204,7 +197,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           </p>
         </div>
         <NuxtLink
-          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-skills')"
         >
           {{ t('pages.home.topSkills.viewAll') }}
@@ -246,7 +239,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           {{ t('pages.home.github.title') }}
         </h2>
         <a
-          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :href="githubStats.profileUrl"
           rel="noopener noreferrer"
           target="_blank"
@@ -269,7 +262,7 @@ const getFile = computed<{ name: string, path: string }>(() => ({
           {{ t('pages.home.experience.lead') }}
         </p>
         <NuxtLink
-          class="inline-flex items-center gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('about-me')"
         >
           {{ t('pages.home.experience.viewAll') }}
@@ -279,8 +272,6 @@ const getFile = computed<{ name: string, path: string }>(() => ({
       <CustomExperienceList />
     </section>
 
-    <CustomClosingCta @contact="contactFormIsOpen = true" />
-
-    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
+    <CustomClosingCta @contact="isContactFormOpen = true" />
   </div>
 </template>

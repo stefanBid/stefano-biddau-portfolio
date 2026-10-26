@@ -140,7 +140,7 @@ Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind r
 `rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
 
 ### Typography (`sb-*`, `typography.css`)
-One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-label`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Running text (`p`, `li`, `blockquote`) is justified site-wide with `hyphens: auto` (base layer in `typography.css`); centered copy opts out with `text-center`. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
+One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-label`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Running text (`p`, `li`, `blockquote`) is justified site-wide with `hyphens: auto` (min 3 letters each side, never inside `strong`) and `text-wrap: pretty` (base layer in `typography.css`); centered copy opts out with `text-center`, `text-left`/`text-center` also turn hyphenation off. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
 ### Motion and focus (`animation.css`)
 Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance`.
@@ -171,7 +171,7 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, `definePageMeta({ sitemap })`, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
-Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
+Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + contact form + notifications.
 
 ---
 
@@ -248,6 +248,12 @@ cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
 ```
 Full delivery URL from `runtimeConfig.public.cloudinaryCloudName`. `resolveImageSrc` is for locale values: `/…` stays in `public/`, anything else is a Cloudinary path. Pass it to `<NuxtImg>` with the default provider, never `provider="none"` — Netlify caches it on the edge, so Cloudinary is hit only on a cache miss. Keep the version segment in the path.
 
+### `useContact()`
+```ts
+const { isFormOpen, cvItems } = useContact()
+```
+Shared `useState` for the one `CustomContactForm` mounted in `default.vue` — page CTAs and the mobile menu set `isFormOpen`, never mount their own form. `cvItems` = `MenuItem[]` for the CV download `BaseMenu` (EN + IT, active locale first, `download` filename).
+
 ### `useLockScroll()`
 ```ts
 const { lock, unlock, isLocked } = useLockScroll()
@@ -282,7 +288,6 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 
 - `generateUuid(): string` — random UUID v4
 - `blocksToHtml(blocks: RichBlock[]): string` — RichBlock[] → HTML; always pair with `useSanitize()`
-- `downloadFile(publicUrl: string, filename: string): void` — browser download, client-side only
 - `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files) → RichBlock[]
 
 ---

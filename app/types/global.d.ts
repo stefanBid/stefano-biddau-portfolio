@@ -6,6 +6,8 @@ declare global {
     label: string
     iconType?: 'nuxt-icon' | 'custom'
     icon?: string
+    description?: string
+    download?: string
   }
 
   interface RouteItem {

@@ -91,7 +91,7 @@ const onTriggerDescription = () => {
           class="relative shrink-0 h-48 md:h-60 overflow-hidden rounded-md"
           :class="[
             props.imageFit === 'contain' ? 'bg-ink flex items-center justify-center p-8 md:p-12' : 'bg-surface-2',
-            { 'lg:col-span-2 lg:h-72 lg:self-start': isSplitLayout },
+            { 'lg:col-span-2 lg:h-72 lg:self-start lg:sticky lg:top-24': isSplitLayout },
           ]"
         >
           <NuxtImg

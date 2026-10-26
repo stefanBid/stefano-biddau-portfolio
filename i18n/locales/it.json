@@ -78,7 +78,17 @@
       },
       "lead": "In SI2001 dal 2023 e disponibile per progetti freelance. Costruisco prodotti web completi, dall'interfaccia al database.",
       "cvCard": {
-        "buttonText": "Scarica CV"
+        "buttonText": "Scarica CV",
+        "versions": {
+          "en": {
+            "label": "English",
+            "description": "PDF in inglese"
+          },
+          "it": {
+            "label": "Italiano",
+            "description": "PDF in italiano"
+          }
+        }
       },
       "contactCard": {
         "buttonText": "Mettiti in contatto"
@@ -237,7 +247,7 @@
           "type": "internship",
           "stack": ["Spring Boot", "Angular", "API REST"],
           "skills": ["spring", "angular"],
-          "content": "Stage da sviluppatore full-stack in **SI2001**, su web application basate su Spring Boot e Angular.\n\nHo sviluppato componenti front-end, integrato API REST, scritto logica back-end e gestito database, su progetti reali e dentro un team strutturato. A marzo 2023 sono entrato in SI2001 a tempo indeterminato."
+          "content": "Stage da sviluppatore full-stack in **SI2001**, su applicazioni web basate su Spring Boot e Angular.\n\nHo sviluppato componenti front-end, integrato API REST, scritto logica back-end e gestito database, su progetti reali e dentro un team strutturato. A marzo 2023 sono entrato in SI2001 a tempo indeterminato."
         },
         {
           "id": "3",

@@ -4,8 +4,9 @@ interface CustomClosingCtaProps {
 }
 
 // Dependencies
-const { t, locale } = useI18n()
+const { t } = useI18n()
 const localePath = useLocalePath()
+const { cvItems } = useContact()
 
 // Input / Output
 const props = withDefaults(defineProps<CustomClosingCtaProps>(), {
@@ -19,11 +20,6 @@ const emit = defineEmits<{
 
 // Data
 const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
-
-const cvFile = computed<{ name: string, path: string }>(() => ({
-  name: `Stefano_Biddau_CV_${locale.value}.pdf`,
-  path: `/files/Stefano_Biddau_CV_${locale.value}.pdf`,
-}))
 </script>
 
 <template>
@@ -40,14 +36,12 @@ const cvFile = computed<{ name: string, path: string }>(() => ({
           <BaseButton variant="primary" @click="emit('contact')">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
-          <BaseButton variant="secondary" @click="downloadFile(cvFile.path, cvFile.name)">
-            <Icon
-              aria-hidden="true"
-              class="size-5"
-              name="solar:download-minimalistic-bold-duotone"
-            />
-            {{ t('pages.home.cvCard.buttonText') }}
-          </BaseButton>
+          <BaseMenu
+            icon="solar:download-minimalistic-bold-duotone"
+            :items="cvItems"
+            :label="t('pages.home.cvCard.buttonText')"
+            placement="bottom-start"
+          />
         </div>
         <p class="sb-body text-ink-muted text-left mt-6 mb-0">
           {{ t('pages.home.closingCta.emailPrefix') }}
@@ -58,7 +52,7 @@ const cvFile = computed<{ name: string, path: string }>(() => ({
         </p>
         <NuxtLink
           v-if="props.showProjectsLink"
-          class="inline-flex items-center gap-2 mt-6 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="inline-flex items-center min-h-11 gap-2 mt-6 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('my-projects')"
         >
           {{ t('pages.home.closingCta.projectsLink') }}

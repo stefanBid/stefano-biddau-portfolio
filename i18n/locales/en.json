@@ -78,7 +78,17 @@
       },
       "lead": "At SI2001 since 2023 and open to freelance projects. I build complete web products, from interface to database.",
       "cvCard": {
-        "buttonText": "Download CV"
+        "buttonText": "Download CV",
+        "versions": {
+          "en": {
+            "label": "English",
+            "description": "PDF in English"
+          },
+          "it": {
+            "label": "Italiano",
+            "description": "PDF in Italian"
+          }
+        }
       },
       "contactCard": {
         "buttonText": "Get in Touch"

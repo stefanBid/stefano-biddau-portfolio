@@ -18,6 +18,7 @@ colorMode.preference = 'dark'
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
 const { notifications, removeNotification } = useNotification()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 // State
 
@@ -95,6 +96,7 @@ const onCloseNotification = (id: string) => {
       phone="+39 3297247711"
       :quick-links="footerLinks"
     />
+    <LazyCustomContactForm :open-form="isContactFormOpen" @close-form="value => isContactFormOpen = value" />
     <ClientOnly>
       <TheNotificationBox>
         <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">

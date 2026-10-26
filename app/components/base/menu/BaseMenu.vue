@@ -42,6 +42,8 @@ const triggerAriaLabel = computed(() => {
 
 const _isExternal = (href: string) => /^https?:\/\//.test(href)
 
+const _isSelected = (item: MenuItem) => props.kind === 'select' && item.code === selected.value
+
 // Events
 // closeOnSelect skips menuitemradio, so the menu closes itself after a pick
 const onItemClick = (itemId: string, close: () => void) => {
@@ -89,7 +91,7 @@ const onItemClick = (itemId: string, close: () => void) => {
       <SbFloating
         :aria-label="props.label"
         as="ul"
-        class="p-2 space-y-2 mb-0 rounded-lg border border-border-strong bg-surface-2 w-fit shadow-md outline-none"
+        class="p-1.5 space-y-1 mb-0 rounded-lg border border-border-strong bg-surface-2 w-fit shadow-md outline-none"
         close-on-select
         role="menu"
         transition="scale-fade"
@@ -98,10 +100,11 @@ const onItemClick = (itemId: string, close: () => void) => {
         <li v-for="item in props.items" :key="item.code" role="none">
           <component
             :is="props.kind === 'select' ? 'button' : 'a'"
-            :aria-checked="props.kind === 'select' ? (item.code === selected ? 'true' : 'false') : undefined"
-            :autofocus="props.kind === 'select' && item.code === selected"
-            class="flex w-full items-center gap-2 min-h-11 px-3 rounded-md text-left sb-label cursor-pointer sb-transition sb-focus"
-            :class="props.kind === 'select' && item.code === selected ? 'bg-ink/10 text-ink' : 'text-ink-muted hover:bg-ink/8 hover:text-ink'"
+            :aria-checked="props.kind === 'select' ? (_isSelected(item) ? 'true' : 'false') : undefined"
+            :autofocus="_isSelected(item)"
+            class="group flex w-full items-center gap-3 min-h-11 py-1.5 pl-1.5 pr-3 rounded-md text-left text-ink cursor-pointer sb-transition sb-focus"
+            :class="_isSelected(item) ? 'bg-primary/12' : 'hover:bg-primary/8 focus-visible:bg-primary/8'"
+            :download="props.kind === 'links' ? item.download : undefined"
             :href="props.kind === 'links' ? item.code : undefined"
             :rel="props.kind === 'links' && _isExternal(item.code) ? 'noopener noreferrer' : undefined"
             :role="props.kind === 'select' ? 'menuitemradio' : 'menuitem'"
@@ -109,31 +112,45 @@ const onItemClick = (itemId: string, close: () => void) => {
             :type="props.kind === 'select' ? 'button' : undefined"
             @click="onItemClick(item.code, close)"
           >
-            <template v-if="item.icon && item.iconType">
+            <span
+              v-if="item.icon && item.iconType"
+              aria-hidden="true"
+              class="flex size-9 shrink-0 items-center justify-center rounded-md border sb-transition"
+              :class="_isSelected(item) ? 'border-primary-border bg-primary/15 text-primary-ink' : 'border-border bg-bg text-ink-muted group-hover:border-primary-border group-hover:text-primary-ink group-focus-visible:border-primary-border group-focus-visible:text-primary-ink'"
+            >
               <Icon
                 v-if="item.iconType === 'nuxt-icon'"
-                aria-hidden="true"
-                class="size-5 shrink-0"
+                class="size-5"
                 :name="item.icon"
               />
               <NuxtImg
                 v-else-if="item.iconType === 'custom'"
                 alt=""
-                class="size-5 shrink-0"
+                class="size-5"
                 :src="item.icon"
               />
-            </template>
-            <span class="flex-1 whitespace-nowrap">{{ item.label }}</span>
+            </span>
+            <span class="flex flex-1 flex-col whitespace-nowrap">
+              <span class="sb-label" :class="{ 'font-bold': _isSelected(item) }">{{ item.label }}</span>
+              <span v-if="item.description" class="sb-small text-ink-muted">{{ item.description }}</span>
+            </span>
             <span
-              v-if="props.kind === 'select' && item.code === selected"
+              v-if="_isSelected(item)"
               aria-hidden="true"
               class="inline-flex shrink-0 ml-auto pl-2"
             >
-              <Icon class="size-4 text-primary-ink" name="solar:check-circle-bold-duotone" />
+              <Icon class="size-5 text-primary-ink" name="solar:check-circle-bold-duotone" />
+            </span>
+            <span
+              v-else-if="props.kind === 'links' && item.download"
+              aria-hidden="true"
+              class="inline-flex shrink-0 ml-auto pl-2 text-ink-muted group-hover:text-primary-ink sb-transition"
+            >
+              <Icon class="size-5" name="solar:download-minimalistic-linear" />
             </span>
             <template v-else-if="props.kind === 'links' && _isExternal(item.code)">
-              <span aria-hidden="true" class="inline-flex shrink-0 ml-auto pl-2">
-                <Icon class="size-4" name="solar:arrow-right-up-linear" />
+              <span aria-hidden="true" class="inline-flex shrink-0 ml-auto pl-2 text-ink-muted group-hover:text-primary-ink sb-transition">
+                <Icon class="size-5" name="solar:arrow-right-up-linear" />
               </span>
               <span class="sr-only">({{ t('a11y.newTab') }})</span>
             </template>

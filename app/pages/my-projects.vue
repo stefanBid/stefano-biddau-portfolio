@@ -4,6 +4,7 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 const { pageTransition } = usePageTransition(true)
 const route = useRoute()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 // Data
 type TabType = 'personalProjects' | 'templateProject'
@@ -12,8 +13,6 @@ const tabs = computed<{ id: TabType, label: string }[]>(() => [
   { id: 'personalProjects', label: t('pages.projects.personalProjects.tabLabel') },
   { id: 'templateProject', label: t('pages.projects.sbTemplatesProject.tabLabel') },
 ])
-
-const contactFormIsOpen = ref(false)
 
 const currentTabId = computed<TabType>(() => route.path.includes('/sb-templates') ? 'templateProject' : 'personalProjects')
 
@@ -48,8 +47,6 @@ const onSelectTab = (tabId: string | number) => {
       <NuxtPage :transition="pageTransition" />
     </section>
 
-    <CustomClosingCta @contact="contactFormIsOpen = true" />
-
-    <LazyCustomContactForm :open-form="contactFormIsOpen" @close-form="value => contactFormIsOpen = value" />
+    <CustomClosingCta @contact="isContactFormOpen = true" />
   </div>
 </template>

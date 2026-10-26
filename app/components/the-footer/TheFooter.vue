@@ -27,12 +27,12 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
   <footer class="border-t border-border bg-bg/95 text-ink mt-16 px-6 md:px-10">
     <div
       class="max-w-350 mx-auto grid gap-8 md:gap-10
-             grid-cols-1 md:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start py-10 md:py-12"
+             grid-cols-1 md:grid-cols-2 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.5fr)_minmax(0,1.8fr)] items-start py-10 md:py-12"
     >
       <!-- 1) Logo + descrizione -->
-      <section class="space-y-4">
+      <section class="space-y-4 md:col-span-2 lg:col-span-1">
         <NuxtLink
-          class="inline-flex items-center gap-2 sb-transition sb-focus rounded-sm hover:opacity-90"
+          class="inline-flex items-center min-h-9 gap-2 sb-transition sb-focus rounded-sm hover:opacity-90"
           :to="props.quickLinks[0]?.path || '/'"
         >
           <NuxtImg
@@ -52,7 +52,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 2) Link veloci -->
       <section class="space-y-3">
-        <h2 class="sb-label uppercase text-ink-muted tracking-[0.22em]">
+        <h2 class="sb-overline text-ink-muted">
           {{ t('footer.routeSection') }}
         </h2>
 
@@ -61,7 +61,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
             <template v-for="link in props.quickLinks" :key="link.path">
               <NuxtLink
                 v-if="!link.disabled"
-                class="w-fit inline-flex items-center min-h-8 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
+                class="w-fit inline-flex items-center min-h-9 sb-label text-ink/80 hover:text-ink sb-transition sb-focus rounded-sm"
                 :to="link.path"
               >
                 {{ link.name }}
@@ -85,18 +85,18 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
       <!-- 3) Contact + Social -->
       <section class="space-y-4">
-        <h2 class="sb-label uppercase text-ink-muted tracking-[0.22em]">
+        <h2 class="sb-overline text-ink-muted">
           {{ t('footer.contactSection') }}
         </h2>
 
-        <div class="space-y-2">
+        <div>
           <span
             v-if="props.email"
             class="sb-label text-ink/85 flex items-center"
           >
             <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:letter-opened-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
+              class="inline-flex items-center min-h-9 underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`mailto:${props.email}`"
             >
               {{ props.email }}
@@ -109,7 +109,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           >
             <Icon aria-hidden="true" class="size-4.5 inline-block mr-1.5 text-ink-muted" name="solar:smartphone-2-bold-duotone" />
             <a
-              class="underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
+              class="inline-flex items-center min-h-9 underline underline-offset-4 hover:text-primary-ink sb-transition sb-focus rounded-sm"
               :href="`tel:${props.phone}`"
             >
               {{ props.phone }}
@@ -174,7 +174,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
-            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="inline-flex items-center min-h-9 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('privacy-policy')"
           >
             {{ t('nav.privacy-policy') }}
@@ -185,7 +185,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
 
           <!-- Terms -->
           <NuxtLink
-            class="hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="inline-flex items-center min-h-9 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('terms-and-conditions')"
           >
             {{ t('nav.terms-and-conditions') }}

@@ -24,11 +24,11 @@ const statRows = computed(() => [
       <h3 class="sb-label uppercase text-ink-muted mb-3">
         {{ t('pages.home.github.statsTitle') }}
       </h3>
-      <dl class="m-0 border-t border-border">
+      <dl class="m-0 border-t border-border md:grid md:grid-cols-4 md:gap-x-6 md:border-t-0 lg:grid-cols-2">
         <div
           v-for="row in statRows"
           :key="row.key"
-          class="flex items-baseline justify-between gap-6 py-4 md:py-5 border-b border-border"
+          class="flex items-baseline justify-between gap-6 py-4 border-b border-border md:flex-col-reverse md:items-start md:justify-end md:gap-1 md:py-5 md:border-t md:border-b-0"
         >
           <dt class="sb-body text-ink">
             {{ t(`pages.home.github.stats.${row.key}`) }}
