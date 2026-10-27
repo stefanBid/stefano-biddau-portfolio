@@ -5,14 +5,20 @@ const i18nHead = useLocaleHead({
 })
 
 useHead(() => ({
-  htmlAttrs: i18nHead.value.htmlAttrs,
+  // Dark-only app: forcing the mode ignores any stale preference left in localStorage
+  htmlAttrs: { ...i18nHead.value.htmlAttrs, 'data-color-mode-forced': 'dark' },
   meta: i18nHead.value.meta,
   link: i18nHead.value.link,
 }))
 
+const colorMode = useColorMode()
+// Dark-only app: overwrite any stale preference (e.g. "light" saved by an older version) on every load
+colorMode.preference = 'dark'
+
 const { t, setLocale, locale } = useI18n()
 const localePath = useLocalePath()
 const { notifications, removeNotification } = useNotification()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 // State
 
@@ -61,15 +67,25 @@ const onCloseNotification = (id: string) => {
 
 <template>
   <div>
+    <a
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-400 focus:px-4 focus:py-2 focus:rounded-lg focus:bg-ink focus:text-bg sb-label"
+      href="#main"
+    >
+      {{ t('a11y.skipToContent') }}
+    </a>
     <TheHeader
       :langs="langs"
       :routes="routes"
       :selected-lang-id="locale"
       @change-lang="langCode => onChangeLang(langCode)"
     />
-    <main class="pt-16 px-6 md:px-10">
+    <main
+      id="main"
+      class="pt-16 px-4 sm:px-6 md:px-10 outline-none"
+      tabindex="-1"
+    >
       <div class="w-full max-w-350 mx-auto">
-        <slot></slot>
+        <slot />
       </div>
     </main>
     <TheFooter
@@ -80,6 +96,7 @@ const onCloseNotification = (id: string) => {
       phone="+39 3297247711"
       :quick-links="footerLinks"
     />
+    <LazyCustomContactForm :open-form="isContactFormOpen" @close-form="value => isContactFormOpen = value" />
     <ClientOnly>
       <TheNotificationBox>
         <transition-group class="flex flex-col gap-3" name="slide-down" tag="div">

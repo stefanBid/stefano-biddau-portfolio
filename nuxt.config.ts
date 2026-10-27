@@ -5,7 +5,7 @@ export default defineNuxtConfig({
   // ---------------------------------------------------------------------------
   // Modules
   // ---------------------------------------------------------------------------
-  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n', '@nuxt/fonts', '@nuxtjs/color-mode'],
+  modules: ['@nuxt/eslint', '@nuxt/icon', '@nuxt/image', '@vueuse/nuxt', '@nuxtjs/i18n', '@nuxt/fonts', '@nuxtjs/color-mode', '@nuxtjs/sitemap'],
 
   // ---------------------------------------------------------------------------
   // Environment overrides — merged in based on the actual Nuxt CLI command
@@ -56,7 +56,12 @@ export default defineNuxtConfig({
     },
   },
   css: ['~/assets/css/main.css'],
+  site: {
+    url: 'https://stefanobiddau.com',
+    name: 'Stefano Biddau',
+  },
   colorMode: {
+    dataValue: 'theme',
     classSuffix: '',
     // Fixed, no OS-following and no toggle — this app is always dark (see CLAUDE.md)
     preference: 'dark',
@@ -67,6 +72,8 @@ export default defineNuxtConfig({
   // Runtime config & routing
   // ---------------------------------------------------------------------------
   runtimeConfig: {
+    // Server-only, filled at runtime from NUXT_GITHUB_TOKEN — never read process.env here, the value would be inlined into the function bundle
+    githubToken: '',
     public: {
       siteUrl: 'https://stefanobiddau.com',
       // Netlify's CONTEXT env var is only set during the build, not at Function runtime —
@@ -76,6 +83,9 @@ export default defineNuxtConfig({
       emailjsServiceId: process.env.NUXT_EMAILJS_SERVICE_ID,
       emailjsTemplateAdminId: process.env.NUXT_EMAILJS_TEMPLATE_ADMIN_ID,
       emailjsTemplateReplyToId: process.env.NUXT_EMAILJS_TEMPLATE_REPLY_TO_ID,
+      // Cloudinary account that hosts the logos. Public (it is in every delivery URL);
+      // override per environment with NUXT_PUBLIC_CLOUDINARY_CLOUD_NAME.
+      cloudinaryCloudName: 'dsmtyu2iw',
     },
   },
   routeRules: {
@@ -96,6 +106,9 @@ export default defineNuxtConfig({
     '/it/my-projects/sb-templates': { prerender: true },
     '/it/privacy-policy': { prerender: true },
     '/it/terms-and-conditions': { prerender: true },
+
+    // Static JSON built once per deploy — GitHub is never called from the browser
+    '/api/github-stats.json': { prerender: true },
 
     // Dynamic, must run per-request — never prerender
     '/robots.txt': { prerender: false },
@@ -125,7 +138,7 @@ export default defineNuxtConfig({
         'zod',
         'typed.js',
         '@emailjs/browser',
-        '@floating-ui/vue',
+        'sb-floating-panel-vue',
         'isomorphic-dompurify',
       ],
     },
@@ -191,5 +204,19 @@ export default defineNuxtConfig({
     quality: 80,
     format: ['webp', 'avif', 'png'],
     screens: { 'sm': 640, 'md': 768, 'lg': 1024, 'xl': 1280, '2xl': 1536 },
+    // Passthrough for assets already optimised by hand (3D avatars): served as-is, no re-encoding
+    providers: {
+      none: { provider: 'none' },
+    },
+    // Logos live on Cloudinary but are never fetched by the browser from there: they go through
+    // the default provider (ipx in dev, Netlify Image CDN in production), which pulls the original
+    // server-side, caches it on the edge and serves it from our own origin — Cloudinary is only hit
+    // on a cache miss. Production also needs the matching `remote_images` entry in netlify.toml.
+    domains: ['res.cloudinary.com'],
+  },
+  sitemap: {
+    // Every page is static: prerender the sitemaps at build and ship no sitemap code in the server bundle.
+    // Pages come from app sources, hreflang alternates from @nuxtjs/i18n, priority/changefreq/lastmod from definePageMeta.
+    zeroRuntime: true,
   },
 })

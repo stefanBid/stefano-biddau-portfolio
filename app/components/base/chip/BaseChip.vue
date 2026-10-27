@@ -2,7 +2,8 @@
 interface BaseChipProps {
   text: string
   icon?: string
-  variant?: 'primary' | 'secondary' | 'outline'
+  variant?: 'primary' | 'secondary' | 'outline' | 'ghost'
+  accentColor?: string
   clickable?: boolean
   linkable?: {
     href: string
@@ -11,10 +12,14 @@ interface BaseChipProps {
   }
 }
 
+// Dependencies
+const { t } = useI18n()
+
 // Input / Output
 const props = withDefaults(defineProps<BaseChipProps>(), {
   icon: undefined,
   variant: 'primary',
+  accentColor: undefined,
   clickable: false,
   linkable: undefined,
 })
@@ -50,26 +55,30 @@ const onClick = () => {
 <template>
   <component
     :is="componentTag"
-    class="inline-flex items-center gap-1.5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-xl u-sb-soft-transition"
+    class="inline-flex items-center gap-1.5 px-2.5 py-1.5 md:px-3 md:py-1.5 rounded-lg sb-transition"
     :class="{
-      'bg-sb-accent text-white': props.variant === 'primary',
-      'bg-sb-surface border border-sb-border text-sb-contrast': props.variant === 'secondary',
-      'bg-transparent border border-sb-accent text-sb-accent': props.variant === 'outline',
+      'bg-primary text-on-primary': props.variant === 'primary',
+      'bg-surface border border-border text-ink': props.variant === 'secondary',
+      'bg-transparent border border-primary text-primary-ink': props.variant === 'outline',
+      'bg-transparent border border-border-strong text-ink': props.variant === 'ghost',
       'cursor-pointer hover:scale-105 active:scale-95': isInteractive && props.variant === 'primary',
-      'cursor-pointer hover:bg-sb-surface-2 active:bg-sb-border': isInteractive && props.variant === 'secondary',
-      'cursor-pointer hover:bg-sb-accent hover:text-white active:opacity-90': isInteractive && props.variant === 'outline',
+      'cursor-pointer hover:bg-surface-2 active:bg-border': isInteractive && props.variant === 'secondary',
+      'cursor-pointer hover:bg-primary hover:text-on-primary active:opacity-90': isInteractive && props.variant === 'outline',
     }"
     :href="props.linkable?.href"
     :rel="props.linkable?.rel"
+    :style="props.accentColor ? { borderColor: props.accentColor } : undefined"
     :target="props.linkable?.target"
     :type="props.clickable ? 'button' : undefined"
     @click="onClick"
   >
     <Icon
       v-if="props.icon"
+      aria-hidden="true"
       class="size-3.5 md:size-4"
       :name="props.icon"
     />
-    <span class="ty-sb-label truncate">{{ props.text }}</span>
+    <span class="sb-overline truncate">{{ props.text }}</span>
+    <span v-if="props.linkable?.target === '_blank'" class="sr-only">({{ t('a11y.newTab') }})</span>
   </component>
 </template>

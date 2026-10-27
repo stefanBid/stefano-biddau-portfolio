@@ -1,7 +1,4 @@
 declare global {
-  // ------------------------ Types ------------------------ /
-  type SkillType = 'beLang' | 'feLang' | 'beFramework' | 'feFramework' | 'database' | 'tool' | 'other'
-
   // --------------------------------- Interfaces ------------------------ /
 
   interface MenuItem {
@@ -9,6 +6,8 @@ declare global {
     label: string
     iconType?: 'nuxt-icon' | 'custom'
     icon?: string
+    description?: string
+    download?: string
   }
 
   interface RouteItem {
@@ -16,24 +15,6 @@ declare global {
     path: string
     disabled?: true
     routeName?: string
-  }
-
-  interface NotificationItem {
-    id: string
-    type: 'success' | 'warning' | 'error' | 'info'
-    icon?: string
-    title?: string
-    message: string
-    dismissible?: boolean
-    autoClose?: boolean
-    duration?: number
-  }
-
-  interface Pagination {
-    page: number
-    pageSize: number
-    pageCount: number
-    total: number
   }
 
   // Rich Text Blocks types
@@ -88,6 +69,24 @@ declare global {
   }
 
   type RichBlock = RichBlockParagraph | RichBlockHeading | RichBlockList | RichBlockQuote | RichBlockCode
+
+  interface GithubRepo {
+    name: string
+    url: string
+    description: string | null
+    language: string | null
+    stars: number
+  }
+
+  interface GithubStats {
+    login: string
+    profileUrl: string
+    publicRepos: number
+    totalStars: number
+    yearsOnGithub: number
+    contributionsLastYear: number | null
+    topRepos: GithubRepo[]
+  }
 }
 
 export {}

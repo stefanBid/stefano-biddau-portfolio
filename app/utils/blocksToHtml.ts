@@ -1,40 +1,40 @@
 /**
  * Converts Rich Text Blocks to HTML string
  */
-export function blocksToHtml(blocks: RichBlock[]): string {
+export function blocksToHtml(blocks: RichBlock[], newTabLabel?: string): string {
   if (!blocks || !Array.isArray(blocks)) {
     return ''
   }
 
-  return blocks.map(block => blockToHtml(block)).join('')
+  return blocks.map(block => blockToHtml(block, newTabLabel)).join('')
 }
 
-function blockToHtml(block: RichBlock): string {
+function blockToHtml(block: RichBlock, newTabLabel?: string): string {
   switch (block.type) {
     case 'paragraph':
-      return `<p>${childrenToHtml(block.children)}</p>`
+      return `<p>${childrenToHtml(block.children, newTabLabel)}</p>`
 
     case 'heading':
-      return `<h${block.level}>${childrenToHtml(block.children)}</h${block.level}>`
+      return `<h${block.level}>${childrenToHtml(block.children, newTabLabel)}</h${block.level}>`
 
     case 'list': {
       const tag = block.format === 'ordered' ? 'ol' : 'ul'
-      const items = block.children.map(item => `<li>${childrenToHtml(item.children)}</li>`).join('')
+      const items = block.children.map(item => `<li>${childrenToHtml(item.children, newTabLabel)}</li>`).join('')
       return `<${tag}>${items}</${tag}>`
     }
 
     case 'quote':
-      return `<blockquote>${childrenToHtml(block.children)}</blockquote>`
+      return `<blockquote>${childrenToHtml(block.children, newTabLabel)}</blockquote>`
 
     case 'code':
-      return `<pre><code>${childrenToHtml(block.children)}</code></pre>`
+      return `<pre><code>${childrenToHtml(block.children, newTabLabel)}</code></pre>`
 
     default:
       return ''
   }
 }
 
-function childrenToHtml(children: RichBlockChild[]): string {
+function childrenToHtml(children: RichBlockChild[], newTabLabel?: string): string {
   if (!children || !Array.isArray(children)) {
     return ''
   }
@@ -42,7 +42,12 @@ function childrenToHtml(children: RichBlockChild[]): string {
   return children.map((child) => {
     if (child.type === 'link') {
       const linkText = child.children.map(c => formatText(c)).join('')
-      return `<a href="${child.url}" target="_blank" rel="noopener noreferrer">${linkText}</a>`
+      // mailto: and same-site paths stay in the tab
+      if (!/^https?:\/\//.test(child.url)) {
+        return `<a href="${child.url}">${linkText}</a>`
+      }
+      const srNote = newTabLabel ? `<span class="sr-only"> (${newTabLabel})</span>` : ''
+      return `<a href="${child.url}" target="_blank" rel="noopener noreferrer">${linkText}${srNote}</a>`
     }
 
     return formatText(child)

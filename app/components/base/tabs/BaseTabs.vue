@@ -2,15 +2,15 @@
 interface BaseTabsProps {
   tabs: Array<{ label: string, icon?: string, id: string | number }>
   selectedTabId?: string | number
-  variant?: 'primary' | 'secondary'
   align?: 'left' | 'center' | 'right'
+  panelId?: string
 }
 
 // Input / Output
 const props = withDefaults(defineProps<BaseTabsProps>(), {
   selectedTabId: undefined,
-  variant: 'primary',
   align: 'left',
+  panelId: undefined,
 })
 
 const emit = defineEmits<{
@@ -18,7 +18,9 @@ const emit = defineEmits<{
   (e: 'select', tabId: string | number): void
 }>()
 
-// Computed
+// Data
+const tablistRef = ref<HTMLElement | null>(null)
+
 const safeSelectedTabId = computed(() => props.selectedTabId ?? props.tabs[0]?.id ?? '')
 
 // Events
@@ -28,44 +30,55 @@ const onSelectTab = (tabId: string | number) => {
   }
   emit('select', tabId)
 }
+
+const onKeydown = (e: KeyboardEvent, index: number) => {
+  const keys: Record<string, number> = {
+    ArrowRight: index + 1,
+    ArrowDown: index + 1,
+    ArrowLeft: index - 1,
+    ArrowUp: index - 1,
+    Home: 0,
+    End: props.tabs.length - 1,
+  }
+  const target = keys[e.key]
+  if (target === undefined) {
+    return
+  }
+  e.preventDefault()
+  const next = (target + props.tabs.length) % props.tabs.length
+  tablistRef.value?.querySelectorAll<HTMLElement>('[role="tab"]')[next]?.focus()
+  const tab = props.tabs[next]
+  if (tab) {
+    onSelectTab(tab.id)
+  }
+}
 </script>
 
 <template>
   <div
-    class="flex flex-col sm:flex-row sm:flex-wrap gap-3 justify-center md:gap-4 pb-4 md:pb-6 border-b border-sb-border u-sb-soft-transition"
+    ref="tablistRef"
+    class="flex flex-row flex-wrap gap-x-6 md:gap-x-8 border-b border-border"
     :class="{
-      'sm:justify-start': props.align === 'left',
-      'sm:justify-end': props.align === 'right',
+      'justify-center': props.align === 'center',
+      'justify-end': props.align === 'right',
     }"
     role="tablist"
   >
     <button
-      v-for="tab in props.tabs"
+      v-for="(tab, index) in props.tabs"
+      :id="props.panelId ? `${props.panelId}-tab-${tab.id}` : undefined"
       :key="tab.id"
+      :aria-controls="props.panelId"
       :aria-selected="safeSelectedTabId === tab.id"
-      class="ty-sb-btn-label border gap-2 px-5 py-2.5 md:px-6 md:py-3 rounded-xl u-sb-soft-transition inline-flex items-center justify-center cursor-pointer u-sb-focus"
-      :class="[
-        // Primary variant
-        props.variant === 'primary'
-          ? safeSelectedTabId === tab.id
-            ? 'bg-sb-accent hover:bg-sb-accent-hover border-sb-accent-border text-sb-contrast'
-            : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
-          : '',
-
-        // Secondary variant
-        props.variant === 'secondary'
-          ? safeSelectedTabId === tab.id
-            ? 'bg-sb-surface-2 hover:bg-sb-surface border-sb-border text-sb-contrast'
-            : 'bg-transparent hover:bg-sb-surface-2 border-sb-border text-sb-text hover:text-sb-contrast'
-          : '',
-
-      ]"
+      class="relative inline-flex items-center min-h-11 px-1 sb-label uppercase cursor-pointer rounded-sm sb-transition sb-focus after:absolute after:inset-x-0 after:-bottom-px after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
+      :class="safeSelectedTabId === tab.id ? 'text-ink after:scale-x-100' : 'text-ink-muted hover:text-ink after:scale-x-0'"
       role="tab"
+      :tabindex="safeSelectedTabId === tab.id ? 0 : -1"
       type="button"
       @click="onSelectTab(tab.id)"
+      @keydown="onKeydown($event, index)"
     >
-      <Icon v-if="tab.icon" class="size-5 md:size-6" :name="tab.icon" />
-      <span>{{ tab.label }}</span>
+      {{ tab.label }}
     </button>
   </div>
 </template>

@@ -18,7 +18,7 @@ const props = withDefaults(
     imageWidth: undefined,
     imageHeight: undefined,
     icons: undefined,
-    deploymentUrl: undefined,
+    codebaseUrl: undefined,
   },
 )
 
@@ -31,6 +31,18 @@ const DEFAULT_IMAGE_HEIGHT = 400
 
 const imageWidth = computed(() => props.imageWidth ?? DEFAULT_IMAGE_WIDTH)
 const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
+
+const TECH_NAMES: Record<string, string> = {
+  'logos:nuxt-icon': 'Nuxt',
+  'logos:flutter': 'Flutter',
+  'logos:ios': 'iOS',
+  'logos:android-icon': 'Android',
+  'logos:astro-icon': 'Astro',
+}
+
+const techLabel = computed(() => (props.icons ?? [])
+  .map(icon => TECH_NAMES[icon] ?? icon.split(':').pop()?.replace(/-icon$/, '') ?? icon)
+  .join(' + '))
 </script>
 
 <template>
@@ -41,19 +53,20 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
     >
       <!-- Card Header: Logo -->
       <template #card-header>
-        <div class="flex items-center justify-center p-4 bg-sb-surface-2 w-full rounded-xl u-sb-soft-transition">
-          <div class="logo-container size-28 md:size-32 flex items-center justify-center rounded-2xl bg-sb-contrast shadow-[0_8px_30px_var(--color-sb-shadow)] ring-1 ring-white/5 u-sb-soft-transition transition-transform">
+        <div class="flex items-center justify-center p-4 bg-surface-2 w-full rounded-lg sb-transition">
+          <div class="size-28 md:size-32 flex items-center justify-center rounded-xl bg-ink shadow-md ring-1 ring-ink/5 sb-transition group-hover:shadow-lg group-focus-within:shadow-lg">
             <NuxtImg
               v-if="props.imageSrc"
-              :alt="`${props.title} logo`"
-              class="size-20 md:size-24 object-contain u-sb-soft-transition transition-transform"
+              :alt="t('pages.projects.sbTemplatesProject.templateLogoAlt', { title: props.title })"
+              class="size-20 md:size-24 object-contain sb-transition group-hover:scale-105 group-focus-within:scale-105"
               :height="imageHeight"
               :src="props.imageSrc"
               :width="imageWidth"
             />
             <Icon
               v-else
-              class="template-icon size-20 md:size-24 text-sb-muted u-sb-soft-transition transition-transform"
+              aria-hidden="true"
+              class="size-20 md:size-24 text-ink-muted sb-transition group-hover:scale-105 group-focus-within:scale-105"
               name="solar:box-bold"
             />
           </div>
@@ -63,25 +76,29 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
       <!-- Card Body: Title, Description, Technologies -->
       <template #card-body>
         <!-- Title -->
-        <h3 class="ty-sb-h3 mb-0 text-center text-sb-contrast u-sb-soft-transition">
+        <h3 class="sb-h3 mb-0 text-center text-ink sb-transition">
           {{ props.title }}
         </h3>
 
         <!-- Technologies -->
         <div
           v-if="props.icons && props.icons.length > 0"
-          class="flex items-center justify-center gap-2 mt-6 u-sb-soft-transition"
+          :aria-label="techLabel"
+          class="flex items-center justify-center gap-2 mt-6 sb-transition"
+          role="img"
         >
           <template v-for="(icon, index) in props.icons" :key="index">
-            <div class="flex items-center justify-center p-2 rounded-md bg-sb-contrast h-10 md:h-12">
+            <div class="flex items-center justify-center p-2 rounded-md bg-ink h-10 md:h-12">
               <Icon
-                class="size-6 md:size-7 text-sb-accent u-sb-soft-transition"
+                aria-hidden="true"
+                class="size-6 md:size-7 text-primary-ink sb-transition"
                 :name="icon"
               />
             </div>
             <span
               v-if="index < props.icons.length - 1"
-              class="ty-sb-span text-sb-muted"
+              aria-hidden="true"
+              class="sb-body text-ink-muted"
             >
               +
             </span>
@@ -89,7 +106,7 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
         </div>
 
         <!-- Description -->
-        <p class="ty-sb-p text-center text-sb-muted mt-3 u-sb-soft-transition">
+        <p class="sb-body text-ink-muted mt-3 sb-transition">
           {{ props.description }}
         </p>
       </template>
@@ -97,15 +114,15 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
       <!-- Card Footer: CTA -->
       <template #card-footer>
         <BaseButton
-          aria-label="Use template"
-          class="w-full cta-button transition-transform"
+          class="w-full"
           :is-disabled="!props.codebaseUrl"
           :to="props.codebaseUrl"
           :type="props.codebaseUrl ? 'link' : 'button'"
-          variant="primary"
+          variant="secondary"
         >
           <Icon
-            class="size-5 md:size-6 mr-2"
+            aria-hidden="true"
+            class="size-5"
             name="solar:rocket-2-bold-duotone"
           />
           {{ t('pages.projects.sbTemplatesProject.linkToCta') }}
@@ -114,29 +131,3 @@ const imageHeight = computed(() => props.imageHeight ?? DEFAULT_IMAGE_HEIGHT)
     </BaseCard>
   </article>
 </template>
-
-<style scoped>
-/* Enhanced glow on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover .logo-container,
-article:has(a[href]):focus-within .logo-container {
-  box-shadow:
-    0 8px 40px var(--color-sb-shadow),
-    0 0 40px rgba(233, 89, 5, 0.5),
-    0 0 60px rgba(233, 89, 5, 0.3);
-  transform: scale(1.05);
-}
-
-/* Scale effect on logo on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover img,
-article:has(a[href]):hover .template-icon,
-article:has(a[href]):focus-within img,
-article:has(a[href]):focus-within .template-icon {
-  transform: scale(1.08);
-}
-
-/* Scale effect on button on hover and focus - only when codebaseUrl exists */
-article:has(a[href]):hover .cta-button,
-article:has(a[href]):focus-within .cta-button {
-  transform: scale(1.05);
-}
-</style>

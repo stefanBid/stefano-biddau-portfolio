@@ -9,12 +9,13 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 - **Nuxt 4** (Vue 3, `<script setup>`, SSR + prerender)
 - **Tailwind CSS v4** via `@tailwindcss/vite` — no config file, tokens in CSS `@theme`
 - **@nuxt/icon** — SVG mode; collections: `logos`, `mdi`, `solar`, `flagpack`
-- **@nuxt/image** — `ipx` local + Cloudinary provider
+- **@nuxt/image** — `ipx` in dev, Netlify Image CDN in production; Cloudinary images are remote sources pulled through them (`image.domains`, `netlify.toml` `remote_images`), never linked directly
 - **@nuxt/fonts** — self-hosts Bebas Neue + Space Mono from Google, no external `fonts.googleapis.com` request
 - **@nuxtjs/color-mode** — `preference`/`fallback` fixed to `'dark'`, no `'system'` — app has no light theme and no toggle, module exists only for a centralized config point
 - **@nuxtjs/i18n** — `en` (default, no prefix) + `it` (`/it/...`); `prefix_except_default`
+- **@nuxtjs/sitemap** — sitemap from app pages, hreflang from i18n, `zeroRuntime: true` (prerendered); `site.url` in `nuxt.config.ts`; per-page `definePageMeta({ sitemap: { lastmod, changefreq, priority } })`, `lastmod` bumped by hand; no `public/sitemap.xml`
 - **@vueuse/nuxt** — Vue composition utilities
-- **@floating-ui/vue** — dropdowns, menus
+- **sb-floating-panel-vue** — headless floating panels (`SbContainer`, `SbReference`, `SbFloating`) behind `BaseMenu` (`kind` `links`/`select`, trigger always `BaseButton`: `variant`/`size`/`iconOnly` mean what they mean there, `placement` explicit); it owns placement, keyboard, ARIA, click outside and Escape. `@floating-ui/vue` is only its auto-installed peer — never import it. Escape handlers of our own surfaces skip `e.defaultPrevented` (the library already closed a panel)
 - **isomorphic-dompurify** — HTML sanitisation (client-side only)
 - **@emailjs/browser** — contact form (client-side only)
 - **typed.js** — typewriter animation (client-side only)
@@ -42,10 +43,11 @@ Nuxt 4 personal portfolio for Stefano Biddau. Production SSG/SSR app on Netlify.
 | Vue file | PascalCase + prefix | `BaseButton.vue`, `TheHeader.vue`, `CustomSkillsCard.vue` |
 | Composable | camelCase + `use` | `useNotification.ts` |
 | Utility / type | camelCase | `generateUuid.ts` |
-| CSS utility | `ty-sb-*` / `u-sb-*` | `ty-sb-h3`, `u-sb-soft-transition` |
-| CSS variable | `--color-sb-*` | `--color-sb-accent` |
+| CSS utility | `sb-*` | `sb-h3`, `sb-transition` |
+| CSS variable | `--sb-*` (raw) → Tailwind role | `--sb-primary` → `bg-primary` |
 
 - `Base*` — fully reusable, zero business logic, no API calls
+- **Actions use `BaseButton`** (variants `primary`, `secondary`, `outline`, `ghost`; `iconOnly`, `isActive`, `tone`). **Only `size` changes dimensions** — same box for every variant/type: `sm` 36px (hit 44) for supporting/compact actions (on images, toolbars, pagination, chips, header controls, close, secondary form actions); `md` 44px default for actions in content and dialogs (card CTAs, submit, back, read more); `lg` 52px for the page's single main CTA in the first viewport. Native `<button type="button">` only inside controls with their own semantics or drawing: tabs, menu/listbox options, hamburger. Never resize a `BaseButton` with classes
 - `Custom*` — portfolio-specific, may use composables; in `app/components/custom/<feature>/`
 - `The*` — singletons (one per layout); in `app/components/the-<name>/`
 
@@ -103,13 +105,14 @@ const emit = defineEmits<{
 ### TypeScript
 - Strict mode — no `any`, use `unknown` and narrow
 - `interface` for object shapes, `type` for unions/utility types
-- Global interfaces → `app/types/global.d.ts` — never inline in components
+- Types a composable exposes are declared and exported in that composable file; consumers use `import type { X } from '~/composables/...'`. `app/types/global.d.ts` only holds cross-cutting types (`MenuItem`, `RouteItem`, `RichBlock*`) and types shared with `server/` (`GithubRepo`, `GithubStats`) — never inline shared interfaces in components
 
 ### Styling
 - Default: inline Tailwind utility classes directly in templates
 - No custom CSS classes unless explicitly requested
 - No `<style>` blocks unless explicitly requested
 - Never hardcode raw hex values — use design tokens
+- Closed theme: only theme tokens generate utilities — no default palette (`text-white`, `bg-gray-*`), text sizes (`text-sm`), `font-semibold`/`font-medium`, `2xl:`, arbitrary values (`text-[15px]`, `shadow-[…]`)
 - No `dark:` Tailwind variants needed
 - Dynamic classes via `:class` with arrays/objects — never string concatenation
 
@@ -128,30 +131,25 @@ Write no comments. Only add one when the WHY is non-obvious. Never explain WHAT 
 
 ## Design system
 
-### Colours (`--color-sb-*` / Tailwind `bg-sb-*`, `text-sb-*`, `border-sb-*`)
-Token values and usage: `app/assets/css/theme.css` (`@theme` block). Opacity modifiers allowed: `bg-sb-main/80`.
+Four files in `app/assets/css/`, prefix `sb`, structure maintained by the sb-design plugin (`/sb-design:check`, `/sb-design:align`): `main.css` (entry, page base styles), `theme.css`, `typography.css`, `animation.css`. Values and full tables: README §4.
 
-### Typography (`ty-sb-*`)
-Class definitions: `app/assets/css/typography.css`. Semantic hierarchy: `ty-sb-hero`, `ty-sb-impact`, `ty-sb-h1`–`ty-sb-h3` are Bebas Neue; `ty-sb-h4`, `ty-sb-p`, `ty-sb-span`, `ty-sb-label`, `ty-sb-btn-label`, `ty-sb-caption`, `ty-sb-code` are Space Mono. `h1`–`h4`, `p`, `span`, `label`, `small`, `code` tags get matching styles for free from `base.css` — no class needed unless the element isn't the matching tag.
+### Colours (`theme.css`)
+Raw `--sb-*` variables (the only place for literal colours) mapped to Tailwind roles in `@theme inline`: `bg`, `surface`, `surface-2`, `border`, `border-strong` (inputs, ≥ 3:1), `ink`, `ink-muted`, `primary`, `primary-hover`, `primary-border`, `on-primary`, `primary-ink` / `primary-ink-hover` (orange as text), `success|warning|error|info` + `-soft`, `focus-ring`. Use `bg-bg`, `text-ink`, `text-ink-muted`, `bg-primary text-on-primary`, `bg-error-soft text-error`. Opacity modifiers allowed: `bg-bg/80`. Orange text is always `text-primary-ink`, never `text-primary` (fails AA on `surface-2`). `--sb-gold-100…900` are raw-only illustration colours for the gold skill cards.
 
-### Utility classes (`u-sb-*`)
-Class definitions: `app/assets/css/utilities.css`. Always add `u-sb-soft-transition` to interactive elements.
+### Shapes and shadows (`theme.css`)
+`rounded-sm|md|lg|xl` (4/8/12/16px), `rounded-full`; `shadow-sm|md|lg`; `drop-shadow-md` (text over images). Breakpoints `sm` `md` `lg` `xl` only.
 
-### Animations (Vue `<Transition>`)
-Keyframe/duration definitions: `app/assets/css/animations.css` (`fade`, `slide-down`, `scale-fade`).
+### Typography (`sb-*`, `typography.css`)
+One class per role, carrying family, size, line height, weight, tracking (never colour): `sb-hero` (fluid, `ThePageHero` only), `sb-display`, `sb-h1`–`sb-h4` (Bebas Neue); `sb-lead`, `sb-body`, `sb-body-strong`, `sb-label`, `sb-small`, `sb-overline` (Space Mono). Only `sb-display`/`sb-h1`/`sb-h2` step down below `lg`. `h1`–`h6`, `p`, `label` (→ `sb-label`), `small`, `code` get their role for free — add a class only when the look must differ from the tag (`<h2 class="sb-h3">`). Buttons: `sb-body-strong uppercase`; nav: `sb-label uppercase`; captions: `sb-small italic`. Running text (`p`, `li`, `blockquote`) is justified site-wide with `hyphens: auto` (min 3 letters each side, never inside `strong`) and `text-wrap: pretty` (base layer in `typography.css`); centered copy opts out with `text-center`, `text-left`/`text-center` also turn hyphenation off. Families: `font-display`, `font-body`; weights: `font-normal`, `font-bold`. In a component `<style>`: `@reference "~/assets/css/main.css";` then `@apply sb-<role>;`.
 
-### Proportions audit
-When asked to audit or refactor a file's typography/spacing/padding against the design system
-(dead `ty-sb-*`/`u-sb-*` classes, wrong heading tags, margins/padding not proportioned to the
-`--fs-sb-*` scale), use the `design-system-proportions-audit` skill. It re-reads the 5 CSS files
-fresh every time, covers the target file element by element (no sampling), always shows the full
-report before applying any fix, and never touches color tokens.
+### Motion and focus (`animation.css`)
+Always add `sb-transition` to interactive elements (colour, background, border, shadow, opacity, transform, plus Tailwind 4's separate `translate`/`scale`/`rotate` — not width/height); `sb-transition-slow` for panels. Focus: `sb-focus`, `sb-focus-within`, `sb-no-focus`. Durations `--sb-duration-feedback|state|layout|entrance`; easings `ease-out|in|in-out`; animations `animate-fade-in|fade-out|rise-in|slide-in-right|spin|drift-in|float|mask-up`; `sb-delay-<ms>` sequences an entrance, `sb-paused` stops one. Motion language: one authored moment (home hero weightless arrival), avatars float via `BaseFloat` (paused offscreen), first entrance in the viewport via the `v-reveal` directive (`app/plugins/reveal.ts`; `v-reveal="index"` staggers lists; hides only what is below the fold on mount, server HTML stays visible); everything else is feedback/state only; spatial hover nudges go behind `motion-safe:`. Vue `<Transition>` names: `fade`, `slide-down`, `scale-fade`, `page`. Reduced motion zeroes `--sb-motion-distance` and `--sb-float-tilt`.
 
 ### Icons
 - Always `<Icon>` from `@nuxt/icon`, collection prefix mandatory
 - Collections: `solar` (bold duotone UI), `mdi` (general UI), `logos` (brand/tech), `flagpack` (flags)
 - Size via Tailwind: `size-4` to `size-7`
-- Colour via token: `text-sb-contrast`, `text-sb-muted`, `text-sb-accent`
+- Colour via token: `text-ink`, `text-ink-muted`, `text-primary-ink`
 - Always `aria-label` on icon-only interactive elements
 - **Do not use `lucide`** — not installed
 
@@ -170,10 +168,10 @@ All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` |
 
-Creating a new page: see the `add-page` skill.
+Creating a new page: file in `app/pages/`, `useSeoMeta()` with `t()` values, `definePageMeta({ sitemap })`, i18n keys in both locales, `prerender: true` route rules for `/route` and `/it/route` in `nuxt.config.ts`, row in this table.
 
 ### Layout
-Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-6 md:px-10`, `max-w-350` container) + `TheFooter` + notifications.
+Default layout (`app/layouts/default.vue`): `TheHeader` (sticky, `h-16`) + `<main>` (`pt-16 px-4 sm:px-6 md:px-10`, `max-w-350` container; header, mobile menu and footer use the same gutter — 16px on phones keeps the justified measure usable) + `TheFooter` + contact form + notifications.
 
 ---
 
@@ -198,28 +196,49 @@ Client-side only.
 ```ts
 const { milestones } = useMilestones()
 ```
-No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change.
+No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Each entry carries `period` (labels + duration) and `typeLabel`, used by `CustomMilestone`. `type: 'upcoming'` (future start) is the About "coming soon" step, never shown on home; a future `endDate` is displayed but durations stop at today.
 
 ### `useProjects()`
 ```ts
 const { projects } = useProjects()
 ```
-Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`.
+Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`. `coverImageSrc` optional (archived projects have none); `coverImageFit: 'contain'` for transparent logos (shown on `bg-ink`). `skills` (ids) only link skills to projects on the Skills page; `meta` stays the authored line.
+
+### `useSkillReferences()`
+```ts
+const { references, referencesByArea, referenceBySkill } = useSkillReferences()
+```
+Where each skill is used: work and study milestones (one entry per organization, links to its About milestone), projects (Projects anchor), SB Templates (one entry) — never this site's repo. `referencesByArea` feeds the Skills page "Seen in" line (plain text). `referenceBySkill` = chip link (only proof link): first reference, or `PREFERRED_REFERENCE` (Vue, Vite, npm → sb-floating-panel-vue). Exports `SkillReference`.
 
 ### `useSkills()`
 ```ts
-const { filters, skills, pagination } = useSkills()
-filters.value.name = 'vue'
-filters.value.types = ['feFramework']
-filters.value.page = 1
+const { areas, featuredStack } = useSkills()
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. `skills` and `pagination` are `computed` from `filters`; mutate `filters.value` directly to refilter/paginate, nothing to `await`.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`core` = every day, gold; `solid` = used across many projects; `familiar` = studied or used rarely). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, core-tier ids only.
+
+### `useGithubStats()`
+```ts
+const { stats } = await useGithubStats()
+```
+The one async content source — `useFetch('/api/github-stats.json')`, prerendered once per build (see Server API). `stats` is `GithubStats | null`; `null` when GitHub was unreachable, hide the UI then.
+
+### `useSelectedWork()`
+```ts
+const { selectedWork } = useSelectedWork()
+```
+Romano + SB Templates + sb-floating-panel-vue with meta line, `outcome` (`pages.about.alongside.outcomes`, home "Selected work" and the Projects SB Templates teaser), `angle` (`pages.about.alongside.angles`, first person, About "Alongside") and Projects anchor link.
 
 ### `useTemplates()`
 ```ts
 const { templates } = useTemplates()
 ```
 Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`.
+
+### `useLegalDocument(key)`
+```ts
+const { legalDocument } = useLegalDocument('privacy') // or 'terms'
+```
+Same pattern — reads `pages.privacy` / `pages.terms` (`title`, `lead`, `summary` Markdown list, `sections: [{ id, title, content }]`), rendered by `CustomLegalDocument` (hero, "At a glance", TOC, numbered sections). Section ids are identical in both locales; write `@` as `{'@'}` in locale strings. When the legal text changes, bump `updated-iso` and the sitemap `lastmod` of that page together.
 
 ### `useTypedText(input, options?)`
 ```ts
@@ -228,18 +247,30 @@ const { el, elStyle, isRunning } = useTypedText(['Frontend Dev', 'UI Craftsman']
 ```
 Client-side only. Respects `prefers-reduced-motion`.
 
-### `useFloatingUi(config?)`
+### `useCloudinary()`
 ```ts
-const { reference, floating, floatingStyles, open, toggleFloating } = useFloatingUi({
-  placement: 'bottom-start', offset: 8, strategy: 'absolute',
-})
+const { cloudinaryUrl, resolveImageSrc } = useCloudinary()
+cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
 ```
+Full delivery URL from `runtimeConfig.public.cloudinaryCloudName`. `resolveImageSrc` is for locale values: `/…` stays in `public/`, anything else is a Cloudinary path. Pass it to `<NuxtImg>` with the default provider, never `provider="none"` — Netlify caches it on the edge, so Cloudinary is hit only on a cache miss. Keep the version segment in the path.
+
+### `useContact()`
+```ts
+const { isFormOpen, cvItems } = useContact()
+```
+Shared `useState` for the one `CustomContactForm` mounted in `default.vue` — page CTAs and the mobile menu set `isFormOpen`, never mount their own form. `cvItems` = `MenuItem[]` for the CV download `BaseMenu` (EN + IT, active locale first, `download` filename).
 
 ### `useLockScroll()`
 ```ts
 const { lock, unlock, isLocked } = useLockScroll()
 ```
 SSR-safe, multiple concurrent owners safe.
+
+### `useFocusTrap(container)`
+```ts
+const { activate, deactivate } = useFocusTrap(panelRef)
+```
+Traps Tab inside `panelRef` while active, restores focus on deactivate. Use for every modal surface (dialog, drawer). Client-side only.
 
 ### `useSanitize()`
 ```ts
@@ -249,9 +280,10 @@ const clean = sanitizeHtml(dirtyHtml)
 Use with `v-html` only via `BaseRichText` — never write `v-html` directly with unsanitised content.
 
 ### Writing new composables
-- File: `app/composables/useSomething.ts` — content-source composables (backed by i18n or a local data array, like `useMilestones`/`useProjects`/`useSkills`/`useTemplates`) go in `app/composables/data/useSomething.ts` instead
+- File: `app/composables/useSomething.ts` — content-source composables (backed by i18n or a local data array, like `useMilestones`/`useProjects`/`useSkills`/`useTemplates`/`useLegalDocument`) go in `app/composables/data/useSomething.ts` instead
 - Export default function `useSomething`
 - Always type return values explicitly
+- Export the types the composable exposes from the same file
 - `useState` for global/shared state, `ref`/`computed` for local
 - Guard DOM access: `if (!import.meta.client) return`
 - Private helpers: `_` prefix
@@ -261,15 +293,14 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 ## Utils
 
 - `generateUuid(): string` — random UUID v4
-- `blocksToHtml(blocks: RichBlock[]): string` — RichBlock[] → HTML; always pair with `useSanitize()`
-- `downloadFile(publicUrl: string, filename: string): void` — browser download, client-side only
-- `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files) → RichBlock[]
+- `blocksToHtml(blocks: RichBlock[], newTabLabel?: string): string` — RichBlock[] → HTML; always pair with `useSanitize()`; `newTabLabel` adds an `sr-only` note to new-tab links (`BaseRichText` passes `a11y.newTab`)
+- `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files: headings, lists, bold, italic, `[label](url)`) → RichBlock[]; `blocksToHtml` opens only `http(s)` links in a new tab
 
 ---
 
-## Global TypeScript types (`app/types/global.d.ts`)
+## TypeScript types
 
-Add new shared interfaces to `global.d.ts` inside `declare global {}` — never inline in components.
+Types exposed by a composable live in, and are exported from, that composable (e.g. `Skill` from `useSkills`, `Milestone` from `useMilestones`, `NotificationItem` from `useNotification`). `app/types/global.d.ts` (`declare global {}`) keeps only cross-cutting types (`MenuItem`, `RouteItem`, `RichBlock*`) and the GitHub types shared with `server/`.
 
 ---
 
@@ -277,7 +308,8 @@ Add new shared interfaces to `global.d.ts` inside `declare global {}` — never 
 
 No backend/CMS — `useMilestones`/`useProjects`/`useTemplates`/`useSkills` read from i18n translation files or local data, not from a server. The only `server/` code is small Nitro routes for things that must vary per Netlify deploy context or can't be a static file:
 
-- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy` (via `process.env.CONTEXT`), `Allow: /` + sitemap link on `production`. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — it must run per-request to read `CONTEXT`.
+- `server/api/github-stats.json.ts` — GitHub profile stats, prerendered to a static JSON (`routeRules['/api/github-stats.json'] = { prerender: true }`); contributions need `NUXT_GITHUB_TOKEN`. Token is `runtimeConfig.githubToken: ''`, filled from env at runtime — never assign `process.env` to it in `nuxt.config.ts` (it gets inlined into the function bundle). The fetch is cached 10 min in dev only (`shouldBypassCache: () => !import.meta.dev`), so dev navigations don't wait on GitHub
+- `server/routes/robots.txt.ts` — `Disallow: /` on `deploy-preview`/`branch-deploy`, `Allow: /` + `sitemap_index.xml` link on `production`. Netlify's `CONTEXT` exists only at build time, so `nuxt.config.ts` resolves it into `runtimeConfig.public.isProduction` and the route reads that via `useRuntimeConfig(event)` — never `process.env.CONTEXT` in the route. Never prerender this route (`routeRules['/robots.txt'] = { prerender: false }` in `nuxt.config.ts`) — each deploy must serve its own rules.
 
 New server code goes in `server/routes/<name>.ts` (served at `/<name>`) or `server/api/<name>.ts` (served at `/api/<name>`), depending on whether the path needs the `/api` prefix.
 
@@ -314,7 +346,7 @@ Fully delegated to auto-generated `.nuxt/tsconfig.app.json` / `.nuxt/tsconfig.se
 
 ## Maintenance workflows
 
-On request, run these checks (`dependency-check`, `lint-check`, `build-check`, `seo-check`, `full-checkup`, `update-documentation`, `design-system-proportions-audit` skills). Report results in the same language the user asked in.
+Handled by the sb-context-fe plugins (project state in `.sb-context/`): `/sb-health:deps`, `/sb-health:lint`, `/sb-health:build`, `/sb-health:seo`, `/sb-health:checkup` (full pass), `/sb-health:docs` (README sync); `/sb-design:check` (style still aligned?), `/sb-design:migrate` (templates using classes the theme no longer generates). Report results in the same language the user asked in.
 
 ---
 

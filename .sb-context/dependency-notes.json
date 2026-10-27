@@ -1,0 +1,121 @@
+{
+  "version": 1,
+  "notes": [
+    {
+      "id": "node-forge@>1.4.0",
+      "package": "node-forge",
+      "current": "1.4.0",
+      "target": ">1.4.0",
+      "status": "resolved",
+      "summary": "GHSA-86w9-cpqp-85rv (high): node-forge <=1.4.0 RSA PKCS#1 v1.5 signature verification flaw; no patched release exists. Reaches the project only via nuxt > @nuxt/nitro-server > nitropack > listhen (dev server self-signed HTTPS), not the prerendered output. npm audit's suggested fix is a downgrade of nuxt to 4.1.3, which is refused.",
+      "blockedBy": [
+        {
+          "package": "node-forge",
+          "range": "1.4.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "has node-forge released a version after 1.4.0? (npm view node-forge version) — then npm audit fix should pick it up via listhen ^1.4.0 range",
+      "links": [
+        "https://github.com/advisories/GHSA-86w9-cpqp-85rv",
+        "https://github.com/digitalbazaar/forge/issues/1149"
+      ],
+      "firstSeen": "2026-10-24",
+      "lastChecked": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "text": "node-forge 1.4.1 released; fresh lockfile resolves listhen > node-forge@1.4.1, npm audit reports 0 vulnerabilities (2026-10-27)"
+        }
+      ],
+      "resolvedAt": "2026-10-27",
+      "resolution": "node-forge 1.4.1 released; fresh lockfile resolves listhen > node-forge@1.4.1, npm audit reports 0 vulnerabilities (2026-10-27)"
+    },
+    {
+      "id": "typescript@7.0.2",
+      "package": "typescript",
+      "current": "6.0.3",
+      "target": "7.0.2",
+      "status": "deferred",
+      "summary": "TS 7 is the native Go compiler and exports no classic JS compiler API (only version + unstable/*); vue-tsc/@volar/typescript (nuxt typecheck) depend on that API, Vue support is planned with TS 7.1. @typescript-eslint 8.72 peers typescript >=4.8.4 <6.1.0. User decision: stay on ^6 (comment _comment_typescript in package.json).",
+      "blockedBy": [
+        {
+          "package": "vue-tsc",
+          "range": "3.3.13",
+          "owner": "upstream"
+        },
+        {
+          "package": "@typescript-eslint/parser",
+          "range": "8.72.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "does vue-tsc@latest support TS 7 (vuejs/language-tools#6167 resolved) AND does @typescript-eslint/parser@latest peerDependencies accept typescript@7? (npm view @typescript-eslint/parser peerDependencies)",
+      "links": [
+        "https://github.com/vuejs/language-tools/issues/6167",
+        "https://github.com/typescript-eslint/typescript-eslint/issues/10940"
+      ],
+      "firstSeen": "2026-10-24",
+      "lastChecked": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "text": "2026-10-27: still blocked — @typescript-eslint/parser@8.72.1 peers typescript >=4.8.4 <6.1.0; vuejs/language-tools#6167 and typescript-eslint#10940 still open"
+        },
+        {
+          "date": "2026-10-27",
+          "text": "2026-10-27 (deps run): still blocked — @typescript-eslint/parser@8.72.1 peers typescript <6.1.0; vue-tsc still 3.3.13, language-tools#6167 open; typescript 7.1.0-beta out, not stable. _comment_typescript stays."
+        }
+      ]
+    },
+    {
+      "id": "vue-i18n@11",
+      "package": "vue-i18n",
+      "current": "10.0.8",
+      "target": "11",
+      "status": "watching",
+      "summary": "Deprecation warning on install: transitive vue-i18n@10.0.8 (unsupported) comes from @intlify/vue-i18n-extensions@8 (hard dependency), required as ^8.0.0 by @intlify/unplugin-vue-i18n@11.2.7 under @nuxtjs/i18n. Build-time tooling only; runtime uses vue-i18n@11.4.16. extensions@9 drops the dependency, waiting for unplugin-vue-i18n to adopt it.",
+      "blockedBy": [
+        {
+          "package": "@intlify/unplugin-vue-i18n",
+          "range": "11.2.7",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "does @intlify/unplugin-vue-i18n@latest depend on @intlify/vue-i18n-extensions ^9? (npm view @intlify/unplugin-vue-i18n dependencies)",
+      "links": [
+        "https://github.com/intlify/bundle-tools"
+      ],
+      "firstSeen": "2026-10-27",
+      "lastChecked": "2026-10-27",
+      "history": [
+        {
+          "date": "2026-10-27",
+          "text": "2026-10-27: @intlify/unplugin-vue-i18n@11.2.7 still latest, still extensions ^8.0.0"
+        }
+      ]
+    },
+    {
+      "id": "esbuild@drop override",
+      "package": "esbuild",
+      "current": "0.28.2",
+      "target": "drop override",
+      "status": "watching",
+      "summary": "package.json overrides esbuild ^0.28.0 only to dedupe: @intlify/bundle-utils@11.2.7 (via @nuxtjs/i18n > @intlify/unplugin-vue-i18n) still depends on esbuild ^0.25.4, which doesn't overlap ^0.28. Every other consumer accepts 0.28. Not a security pin (GHSA-67mh fixed in both ranges).",
+      "blockedBy": [
+        {
+          "package": "@intlify/bundle-utils",
+          "range": "11.2.7",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "does @intlify/bundle-utils@latest depend on esbuild ^0.28? (npm view @intlify/bundle-utils version dependencies.esbuild) — then remove overrides + _comment_overrides and check npm ls esbuild shows one copy",
+      "links": [
+        "https://github.com/intlify/bundle-tools"
+      ],
+      "firstSeen": "2026-10-27",
+      "lastChecked": "2026-10-27",
+      "history": []
+    }
+  ]
+}

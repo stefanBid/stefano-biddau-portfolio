@@ -15,39 +15,41 @@
     "si": "bash scripts/safe-install.sh"
   },
   "dependencies": {
-    "@emailjs/browser": "^4.4.1",
-    "@floating-ui/vue": "^2.0.1",
+    "@emailjs/browser": "^5.0.3",
     "@nuxt/eslint": "^1.17.0",
-    "@nuxt/fonts": "^0.14.0",
-    "@nuxt/icon": "^2.5.1",
-    "@nuxt/image": "^2.1.0",
+    "@nuxt/fonts": "^1.2.0",
+    "@nuxt/icon": "^2.6.1",
+    "@nuxt/image": "^2.2.0",
     "@nuxtjs/color-mode": "^4.0.1",
     "@nuxtjs/i18n": "^10.6.0",
+    "@nuxtjs/sitemap": "^9.1.0",
     "@tailwindcss/vite": "^4.3.3",
-    "@vueuse/core": "^14.4.0",
-    "@vueuse/nuxt": "^14.4.0",
-    "eslint": "^10.10.0",
-    "isomorphic-dompurify": "^4.2.0",
-    "nuxt": "4.5.2",
+    "@vueuse/core": "^15.0.0",
+    "@vueuse/nuxt": "^15.0.0",
+    "eslint": "^10.13.0",
+    "isomorphic-dompurify": "^4.6.0",
+    "nuxt": "4.6.3",
+    "sb-floating-panel-vue": "^5.3.1",
     "tailwindcss": "^4.3.3",
     "typed.js": "^3.0.0",
-    "vue": "^3.5.42",
-    "vue-router": "^5.3.1",
-    "zod": "^4.6.1"
+    "vue": "^3.5.44",
+    "vue-router": "^5.4.0",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.8",
-    "@iconify-json/logos": "^1.2.14",
+    "@iconify-json/logos": "^1.2.18",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/solar": "^1.2.10",
-    "@types/node": "^26.5.1",
+    "@iconify-json/solar": "^1.2.13",
+    "@types/node": "^26.6.5",
     "typescript": "^6.0.3",
-    "vue-tsc": "^3.3.11"
+    "vue-tsc": "^3.3.13"
   },
   "engines": {
     "node": ">=24.19.0"
   },
-  "_comment_overrides": "esbuild pinned to ^0.28.0 for dedup only — GHSA-67mh is fixed upstream by all consumers now (@nuxt/fonts ^0.27.0, @nuxtjs/i18n's @intlify/bundle-utils ^0.25.4, nuxt's nitropack ^0.28.0); without this override npm would install two esbuild copies since the ^0.25.4 range doesn't overlap ^0.28.0",
+  "_comment_typescript": "typescript stays on ^6 for now — TS 7 (native Go compiler) ships no classic JS compiler API, which vue-tsc/@volar (nuxt typecheck) needs, and @typescript-eslint peers typescript <6.1.0; revisit when vue-tsc supports TS 7.1 and typescript-eslint widens its peer range (see .sb-context/dependency-notes.json)",
+  "_comment_overrides": "esbuild pinned to ^0.28.0 for dedup only — GHSA-67mh is fixed upstream by all consumers now (nuxt's nitropack ^0.28.2, vite ^0.27 || ^0.28, @nuxt/fonts' unplugin and @unhead/bundler as open peers); only @nuxtjs/i18n's @intlify/bundle-utils@11.2.7 still asks ^0.25.4, and without this override npm would install two esbuild copies since ^0.25.4 doesn't overlap ^0.28.0 — drop it once bundle-utils moves to ^0.28 (see .sb-context/dependency-notes.json)",
   "overrides": {
     "esbuild": "^0.28.0"
   }

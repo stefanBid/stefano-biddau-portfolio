@@ -2,6 +2,10 @@
 interface TheHeaderMenuToggleProps {
   open: boolean
 }
+// Dependencies
+const { t } = useI18n()
+
+// Input / Output
 const props = defineProps<TheHeaderMenuToggleProps>()
 const emit = defineEmits<{
 
@@ -16,8 +20,9 @@ const onToggle = () => emit('toggle', !props.open)
   <button
     aria-controls="mobile-drawer"
     :aria-expanded="open ? 'true' : 'false'"
-    :aria-label="open ? 'Close menu' : 'Open menu'"
-    class="inline-flex group items-center rounded-xl p-1 u-sb-focus cursor-pointer"
+    :aria-label="open ? t('a11y.closeMenu') : t('a11y.openMenu')"
+    class="inline-flex items-center justify-center size-11 -mr-2 rounded-lg text-ink cursor-pointer sb-transition sb-focus"
+    type="button"
     @click="onToggle()"
   >
     <svg
@@ -58,18 +63,16 @@ const onToggle = () => emit('toggle', !props.open)
 </template>
 
 <style scoped>
-svg { transition: transform .25s ease; }
+svg { transition: transform var(--sb-duration-state) var(--ease-in-out); }
 line {
-  transition: transform .25s ease, opacity .2s ease;
-  transform-origin: 12px 12px; /* centro dell'icona */
+  transition: transform var(--sb-duration-state) var(--ease-in-out), opacity var(--sb-duration-state) var(--ease-in-out);
+  transform-origin: 12px 12px;
 }
 
-/* stato CHIUSO (hamburger): posiziona le barre sopra/sotto */
 svg.is-burger .top    { transform: translateY(-5px); }
 svg.is-burger .middle { opacity: 1; }
 svg.is-burger .bottom { transform: translateY( 5px); }
 
-/* stato APERTO (X): ruota le barre sul centro */
 svg.is-x .top    { transform: rotate(45deg); }
 svg.is-x .middle { opacity: 0; }
 svg.is-x .bottom { transform: rotate(-45deg); }

@@ -1,9 +1,13 @@
 export default defineNuxtPlugin(() => {
   const router = useRouter()
   const getRouteBaseName = useRouteBaseName()
-  const { pageSkipTransition, subPageSkipTransition } = usePageTransition()
+  const { pageSkipTransition, subPageSkipTransition, navigatingFromMenu, menuSkipTransition } = usePageTransition()
 
   router.beforeEach((to, from) => {
+    // Leaving the full-screen mobile menu is already a visual change: no page fade on top of it
+    menuSkipTransition.value = navigatingFromMenu.value
+    navigatingFromMenu.value = false
+
     // Top-level matched route (parent): equal for a locale-only change AND
     // for a tab switch inside my-projects.vue (index.vue / sb-templates.vue
     // share the same parent). Drives the outer NuxtPage fade (app.vue) and

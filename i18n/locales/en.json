@@ -17,65 +17,145 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "I'm Stefano Biddau, a web designer and front-end developer. I create modern, user-focused digital experiences. Explore my portfolio and get in touch for a collaboration."
+      "description": "Stefano Biddau, full-stack developer and web designer for consulting and freelance work: available to join your team or take on your project, from interface to database."
     },
     "about": {
       "title": "About Me {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "I'm Stefano Biddau, a freelance web designer and front-end developer. Learn more about my background, values, and approach to digital design."
+      "description": "My path from a Computer Science degree to full-stack development, plus the client and open-source work I design, build and maintain."
     },
     "skills": {
       "title": "Skills & Technologies {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Skills and tools I use to build intuitive, high-performing interfaces: HTML, CSS, JavaScript, TypeScript, React, Vue, Angular, Flutter, UI/UX."
+      "description": "The stack I build with every day: Vue, Angular, TypeScript and Tailwind CSS on the front end, Java, Spring and PostgreSQL on the back end. Plus Nuxt and Flutter in shipped work."
     },
     "projects": {
       "title": "Web Projects {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Explore a selection of my web projects: modern, responsive, and user-focused solutions. Each project reflects my approach to design and development."
+      "description": "Client work, an open-source Vue library and personal projects by Stefano Biddau, with live links and source code where available."
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Open-source, ready-to-use project templates for web and mobile — clean architecture, modern tooling, zero setup. Start building today."
+      "description": "Open-source starter templates for Nuxt, Astro and Flutter by Stefano Biddau: a project structure that follows each framework's best practices, free for any developer to use."
     },
     "privacy": {
       "title": "Privacy Policy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
+      "description": "No cookies, no analytics: stefanobiddau.com only processes what you send through the contact form, plus the host's technical logs. Why, for how long, who handles it and your rights."
     },
     "terms": {
       "title": "Terms and Conditions {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Terms and conditions for using stefanobiddau.com - Rules and guidelines for website visitors."
+      "description": "The rules for using stefanobiddau.com: acceptable use, who owns the work shown, how the contact form works, liability and governing law."
     }
   },
+  "a11y": {
+    "closeDialog": "Close",
+    "dismissNotification": "Dismiss notification",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu",
+    "changeLanguage": "Change language",
+    "previousPage": "Previous page",
+    "nextPage": "Next page",
+    "timelineSection": "Work and education",
+    "newTab": "opens in a new tab",
+    "skipToContent": "Skip to content",
+    "skillTiersLegend": "How to read the skill tiers"
+  },
+  "errorPage": {
+    "notFoundTitle": "Page not found",
+    "genericTitle": "Something went wrong",
+    "notFoundMessage": "The page you're looking for doesn't exist or has moved.",
+    "genericMessage": "An unexpected error occurred. Try again in a moment.",
+    "hint": "Check the address for typos, or go back to the homepage.",
+    "backHome": "Back to home",
+    "technicalDetails": "Technical details"
+  },
   "header": {
-    "routeSection": "Menu",
-    "settingsSection": "Settings"
+    "routeSection": "Menu"
   },
   "pages": {
     "home": {
-      "hero": "Welcome Back",
-      "title": "Hello, I'm Stefano Biddau",
+      "title": "Stefano Biddau",
       "subtitle": {
-        "costant": "And I'm a",
-        "typed": [
-          "Front End Developer",
-          "Back End Developer",
-          "Web Designer",
-          "UI/ UX Enthusiast"
-        ]
+        "costant": "I'm a",
+        "role": "Full-Stack Developer & Web Designer"
       },
+      "lead": "Full-stack consulting and freelance work: I build complete web products, from interface to database.",
       "cvCard": {
-        "title": "Download My CV",
-        "subtitle": "Discover my professional journey",
-        "paragraph": "A comprehensive overview of my skills, work experiences, and key projects. The document is updated and optimized for quick consultation.",
-        "buttonText": "Download CV"
+        "buttonText": "Download CV",
+        "versions": {
+          "en": {
+            "label": "English",
+            "description": "PDF in English"
+          },
+          "it": {
+            "label": "Italiano",
+            "description": "PDF in Italian"
+          }
+        }
       },
       "contactCard": {
-        "title": "Contact Me",
-        "subtitle": "Let's talk about your projects",
-        "paragraph": "If you need technical support or wish to discuss a collaboration, I would be happy to hear your ideas and find the best solution together.",
         "buttonText": "Get in Touch"
+      },
+      "selectedWork": {
+        "title": "Selected work",
+        "viewAll": "All projects",
+        "meta": {
+          "romano": "Client · since 2025 · ongoing",
+          "sbTemplates": "Open-source templates · since 2025 · Nuxt, Astro, Flutter",
+          "floatingPanel": "Open-source library · 2025 · Vue 3"
+        }
+      },
+      "topSkills": {
+        "title": "Core stack",
+        "lead": "Front end, back end and database: the stack I build complete products with.",
+        "groups": {
+          "frontend": "Frontend",
+          "backend": "Backend",
+          "database": "Database"
+        },
+        "viewAll": "All skills"
+      },
+      "github": {
+        "title": "On GitHub",
+        "viewProfile": "GitHub profile",
+        "statsTitle": "In numbers",
+        "reposTitle": "Most starred",
+        "starsCount": "{count} star | {count} stars",
+        "stats": {
+          "contributions": "Contributions in the last year",
+          "publicRepos": "Public repositories",
+          "stars": "Stars received",
+          "years": "Years on GitHub"
+        }
+      },
+      "experience": {
+        "title": "Experience",
+        "lead": "Computer Science at the University of Salerno, then an internship at SI2001 that turned into a full-stack role.",
+        "viewAll": "My journey",
+        "present": "Present",
+        "years": "{count} yr | {count} yrs",
+        "months": "{count} mo | {count} mos",
+        "types": {
+          "education": "Education",
+          "internship": "Internship",
+          "fullTime": "Full-time",
+          "upcoming": "Upcoming"
+        }
+      },
+      "clients": {
+        "title": "Who I've worked for",
+        "groups": {
+          "si2001": "With SI2001",
+          "freelance": "Freelance"
+        }
+      },
+      "closingCta": {
+        "title": "Have a project or a role in mind?",
+        "text": "Write to me about it, or take my CV with you. I reply by email.",
+        "emailPrefix": "Prefer email?",
+        "projectsLink": "Or see my projects first"
       },
       "contactForm": {
         "title": "Contact Me",
-        "subtitle": "Fill out the form to send me a message. I’ll get back to you as soon as possible.",
+        "subtitle": "Write to me about a project or a role. I'll reply by email.",
+        "errorSummary": "One field needs attention | {count} fields need attention",
         "fields": {
           "name": {
             "label": "Name",
@@ -86,17 +166,19 @@
           "email": {
             "label": "Email",
             "placeholder": "Enter your email",
-            "errorInvalid": "Invalid email address"
+            "errorInvalid": "Invalid email address",
+            "errorRequired": "Email is required"
           },
           "message": {
             "label": "Message",
             "placeholder": "Write your message here...",
             "errorRequired": "Message is required",
             "errorMinlength": "Message is too short",
+            "hint": "At least 10 characters.",
             "errorMaxlength": "Message is too long"
           },
           "consentGiven": {
-            "label": "I agree to the processing of the data provided exclusively for contact purposes. The data will not be stored or shared with third parties.",
+            "label": "I agree to the processing of my data solely to reply to this message. It is delivered through EmailJS and deleted once no longer needed. You'll receive a copy of your message by email.",
             "extra": "Read",
             "errorRequired": "You must agree to the processing of your data"
           },
@@ -105,7 +187,7 @@
             "loadingText": "Sending"
           },
           "resetButton": {
-            "text": "Reset"
+            "text": "Clear form"
           }
         },
         "notifications": {
@@ -115,142 +197,197 @@
           },
           "error": {
             "title": "Sending Error",
-            "message": "An error occurred while sending your message. Please try again later."
+            "message": "Your message couldn't be sent. Everything you wrote is still here: try again in a moment."
           }
         }
       }
     },
     "about": {
-      "hero": "Who am I?",
-      "milestoneCta": "Read More",
+      "overline": "About me",
+      "hero": "I design it, then I build it",
+      "milestoneCta": "Read more",
+      "milestoneCtaLess": "Show less",
+      "upcomingFrom": "From {date}",
+      "clientsLabel": "Projects for clients including",
+      "lead": "Full-stack developer and web designer. At SI2001 since 2022; alongside it, I design and build sites for freelance clients and maintain my own open-source work.",
+      "alongside": {
+        "title": "Alongside the day job",
+        "lead": "Client work and open source I design, build and maintain myself.",
+        "outcomes": {
+          "romano": "Designed and built the firm's website. Now a redesign, the PraticaSicura refund portal and the Domus/Cardo case system.",
+          "sbTemplates": "Starter templates for Nuxt, Astro and Flutter with architecture, build, linting and formatting already set up.",
+          "floatingPanel": "A Vue 3 floating panel system built on {'@'}floating-ui/vue, with composables, arrows and resizing."
+        },
+        "angles": {
+          "romano": "Where I work with the client directly. I maintain the firm's website and the ecosystem behind PraticaSicura.com, its service for flight refunds and road accident claims: I own the back-end architecture (Cardo), the management front end (Domus) and the PraticaSicura.com website.",
+          "sbTemplates": "Templates I start my own projects from, free for any developer to use: I only provide the starting structure, following the framework's best practices, and everyone builds what they need from there.",
+          "floatingPanel": "A library on npm that any developer can install in their Vue and Nuxt projects, with components for floating panels. I design and maintain it; the menus on this site use it too."
+        }
+      },
+      "closingCta": {
+        "title": "Let's write the next chapter together",
+        "text": "Freelance projects stay open. Tell me what you have in mind, or take my CV for the whole story."
+      },
       "milestones": [
         {
           "id": "1",
           "title": "My Academic Journey",
           "subtitle": "UNISA - Computer Science (Fisciano)",
           "date": "09/09/2018",
-          "imageSrc": "/images/milestones/unisa.webp",
+          "endDate": "12/01/2022",
+          "role": "Bachelor's Degree in Computer Science",
+          "organization": "University of Salerno",
+          "type": "education",
+          "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "MySQL", "Python"],
+          "skills": ["java", "html", "css", "javascript", "mysql", "python"],
+          "imageSrc": "v1793013189/unisa_cz1oxe.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
-          "content": "My academic journey at UNISA was much more than a traditional course of study: it was the place where I truly learned what it means to build solutions, tackle complexity, grow through challenges, and mature both as a developer and as a person.\n\nI began in 2018 with curiosity and only a few certainties, and over the years I built a solid foundation based on theory, practice, and a clearer understanding of what I wanted to become.\n\nI developed strong skills in **object-oriented programming with Java**, explored **distributed programming through Java EE**, and strengthened my abilities in **web development using HTML, CSS, and JavaScript**. Alongside these technical areas, I studied **mathematics and statistics** and applied them directly through **Python** for data analysis and experimentation.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, was one of the most significant challenges of my university years. Working with the **Fashion-MNIST** dataset, I compared different classification models and discovered the depth, rigor, and potential of machine learning when applied to real-world problems.\n\nBeyond theory, I completed several practical projects, including an e-commerce platform for automotive products. This experience taught me what it truly means to design and implement a fully functional application—from concept to execution—integrating both front-end and back-end logic.\n\nYet the most valuable part of those years was not only the technical knowledge I gained: it was the experience of working in teams, developing leadership when needed, and becoming a reliable reference point for other students. These soft skills shaped my collaborative mindset and the way I approach complex challenges today.\n\nWhen I graduated in December 2022, I felt that I was closing an important chapter—while carrying with me all the tools, knowledge, and self-awareness needed to begin a new one."
+          "content": "From 2018 to December 2022 I studied **Computer Science** at UNISA, with a focus on object-oriented programming in Java, distributed programming with Java EE, web development with HTML, CSS and JavaScript, and mathematics and statistics applied with Python.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the Fashion-MNIST dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
         },
         {
           "id": "2",
           "title": "Internship at SI2001",
-          "subtitle": "Full Stack Developer (internship)",
+          "subtitle": "Full-Stack Developer Intern",
           "date": "11/20/2022",
-          "content": "My internship at **SI2001** was my first real step into the world of professional software development. During those months, I trained as a **full-stack developer**, contributing to the development of web applications built with **Spring Boot** and **Angular**. I developed front-end components, integrated REST APIs, implemented back-end business logic, and managed databases, gaining a comprehensive understanding of application architecture and the end-to-end development workflow.\n\nThis experience allowed me to transform academic knowledge into practical skills, applying them to real-world projects within a structured team environment. By the end of the internship, I was no longer just an intern—I was a young developer ready to continue growing and taking on new challenges."
+          "endDate": "02/01/2023",
+          "role": "Full-Stack Developer Intern",
+          "organization": "SI2001",
+          "type": "internship",
+          "stack": ["Spring Boot", "Angular", "REST API"],
+          "skills": ["spring", "angular"],
+          "content": "I did a full-stack internship at **SI2001**, working on web applications with Spring Boot and Angular.\n\nI built front-end components, integrated REST APIs, wrote back-end business logic and managed databases, on real projects inside a structured team. In March 2023 I joined SI2001 permanently."
         },
         {
           "id": "3",
           "title": "Permanent Position at SI2001",
-          "subtitle": "Full Stack Developer",
+          "subtitle": "Full-Stack Developer",
           "date": "03/01/2023",
-          "imageSrc": "/images/milestones/workstation.webp",
+          "endDate": "01/10/2027",
+          "clients": ["ABB", "Kleecks", "Intesa Sanpaolo"],
+          "role": "Full-Stack Developer",
+          "organization": "SI2001",
+          "type": "fullTime",
+          "stack": ["Java", "Spring Boot", "Spring Batch", "PostgreSQL", "Vue.js", "Angular", "Flutter", "Git", "Headless UI", "GraphQL", "Strapi", "Storybook", "Turborepo", "Figma", "Adobe XD", "Slack"],
+          "skills": ["java", "spring", "postgresql", "vue", "angular", "flutter", "git", "headless-ui", "graphql", "strapi", "figma", "slack", "adobe-xd", "storybook", "turborepo"],
+          "imageSrc": "v1793013189/workstation_mkagtf.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
-          "imageCaption": "Me at my remote workstation, surrounded by screens and code as I bring new features to life.",
-          "content": "My transition to a permanent position marked the most intense phase of my journey at **SI2001**. I contributed to more than five projects as a **front-end developer**, strengthening my expertise in **Vue.js**, **Angular**, and **Flutter**, while helping build modern, modular, and high-performance applications.\n\nDuring this period, I actively participated in all **Agile ceremonies**—sprint planning, daily stand-ups, and retrospectives—growing both as a developer and as a professional capable of proposing solutions, collaborating effectively, and supporting the team during critical moments. Over time, I became a reliable presence within projects, contributing not only through code but also through methodology, technical vision, and a strong awareness of software development best practices."
+          "imageCaption": "Me at my remote workstation, surrounded by screens and code.",
+          "content": "Today I work on the back end of the European core banking systems of **Intesa Sanpaolo**, with Java, Spring Boot, Spring Batch and PostgreSQL.\n\nBefore that, I worked on the front end of **more than five projects** with Vue.js, Angular and Flutter.\n\nI work in Agile teams, taking part in sprint planning, daily stand-ups and retrospectives."
+        },
+        {
+          "id": "4",
+          "title": "What's next",
+          "role": "What's next",
+          "date": "01/11/2027",
+          "type": "upcoming",
+          "content": "A step up in role and responsibility. Details when it starts.\n\nFreelance projects stay open."
         }
       ],
-      "milestoneError": {
-        "title": "Error Loading Milestones",
-        "message": "An error occurred while loading the milestones. Please try again later."
-      },
       "noMilestones": {
         "title": "No Milestones Yet",
         "message": "There are no milestones to display at the moment. Check back soon!"
       }
     },
     "skills": {
-      "hero": "Get to know me!",
-      "frontendCard": {
-        "title": "Frontend That Dominates the Stage",
-        "paragraph": "This is where I thrive: crafting interfaces that feel sharp, alive, and impossible to ignore. I bring ideas to life with clarity, speed, and a level of polish that makes users feel like everything is exactly where it should be. Smooth interactions, bold visuals, and experiences that hit hard from the very first click — that’s the standard I work with. If you’re looking for someone who can turn a simple concept into a front-end experience that actually sticks with people, you’re in the right place.",
-        "buttonText": "See My Frontend Power"
+      "hero": "Skills & Technologies",
+      "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS on the front end, Java, Spring and PostgreSQL on the back end. Below, the full stack by area and by how often I use it.",
+      "orbitCaption": "Closer to the sun means I use it more often.",
+      "seenIn": "Seen in:",
+      "chipSeenIn": "where I used it: {place}",
+      "tiers": {
+        "core": {
+          "label": "Core",
+          "description": "What I work with every day. Shown as gold chips.",
+          "short": "every day"
+        },
+        "solid": {
+          "label": "Solid",
+          "description": "Used across many projects; I can pick it up and deliver.",
+          "short": "many projects"
+        },
+        "familiar": {
+          "label": "Familiar",
+          "description": "Studied or used occasionally, not part of my main toolkit.",
+          "short": "now and then"
+        }
       },
-      "backendCard": {
-        "title": "The Backbone You Can Actually Trust",
-        "paragraph": "A great product isn’t just a pretty interface — it needs a backend that can take the pressure, keep things moving, and never crack under real traffic. I focus on building foundations that are clean, predictable, and ready to scale without drama. Solid architecture, stable processes, and integrations that don’t fight you every step of the way. When the engine behind your product is reliable and consistent, the whole team moves faster and everything just works.",
-        "buttonText": "Discover My Backend Approach"
-      },
-      "designCard": {
-        "title": "Design That Feels Right Instantly",
-        "paragraph": "Good design isn’t about decoration — it’s about guiding people effortlessly through an experience. I bring structure, clarity, and intention to every layout I touch, working closely with designers to amplify their vision and turn it into something users immediately understand. It’s not about flashy visuals, it’s about experiences that flow naturally, look great, and make people feel confident in where they’re going next.",
-        "buttonText": "Explore My Creative Side"
-      },
-      "skillsDialog": {
-        "title": "My Development Toolkit",
-        "subtitle": "The technologies that power my work.",
-        "filters": {
-          "searchPlaceholder": "Search skills by name",
-          "typePlaceholder": "Filter skills by type"
+      "areas": {
+        "frontend": {
+          "title": "Frontend",
+          "paragraph": "My main focus. I build interfaces in Vue, Nuxt and Angular with TypeScript and Tailwind CSS, from component libraries to complete sites like this one: accessible, responsive and quick to load."
         },
-        "filterOptions": {
-          "feLang": "Frontend Languages",
-          "feFramework": "Frontend Frameworks",
-          "beLang": "Backend Languages",
-          "beFramework": "Backend Frameworks",
-          "database": "Databases",
-          "tool": "Tools & Platforms",
-          "other": "Other Skills"
+        "backend": {
+          "title": "Backend",
+          "paragraph": "Every day I work on the back end in Java with Spring and PostgreSQL. I have used Hibernate, MySQL and GraphQL across several projects, and also worked with Node.js, Python and Strapi. I keep APIs and data models readable as the product grows."
         },
-        "noResults": {
-          "title": "No Skills Found",
-          "message": "No skills match your search criteria. Please try different keywords or filters."
-        },
-        "total": "Total Skills: { tot }",
-        "noSkills": {
-          "title": "No Skills Yet",
-          "message": "There are no skills to display at the moment. Check back soon!"
-        },
-        "skillsError": {
-          "title": "Error Loading Skills",
-          "message": "An error occurred while loading the skills. Please try again later."
+        "tools": {
+          "title": "Design & tools",
+          "paragraph": "I work from Figma and Adobe XD designs and document components in Storybook, so what ships matches what was designed. Docker, Postman, Git, npm and Netlify cover the rest, from testing APIs to deploying."
         }
       }
     },
     "projects": {
-      "hero": "My Web Projects",
+      "hero": "Projects",
+      "lead": "Client work, an open-source Vue library, the SB Templates starters and personal experiments. Live links where available; client source code stays private.",
+      "links": {
+        "code": "Code",
+        "live": "Live site",
+        "package": "npm",
+        "menu": "Links"
+      },
       "personalProjects": {
-        "tabLabel": "Personal Projects",
-        "title": "Personal Projects & Selected Work",
-        "description": "This section showcases a collection of projects that highlight my growth as a developer. Some were built to experiment with new technologies and refine my skills; others are professional projects created for clients who entrusted me with the development of their platforms. Where possible, you can explore the final deployed product, while the source code remains private out of respect for client confidentiality. Each project reflects my approach to development: attention to detail, focus on user experience, and a desire to turn ideas into something tangible.",
-         "list": [
+        "tabLabel": "Projects",
+        "list": [
           {
-            "id": "c33faabb-84a8-4f40-8d20-d864162267d6",
-            "title": "Sfrigola Project",
+            "id": "85156f53-d423-4b49-9561-4e0d46e18976",
+            "meta": "Personal exercise · 2026 · Spring Boot",
+            "skills": ["spring", "java", "postgresql", "hibernate", "docker", "postman"],
+            "title": "Sfrigola Core",
             "codebaseUrls": [
-              { "code": "https://github.com/stefanBid/sfrigola-core", "label": "Sfrigola Core" },
-              { "code": "https://github.com/stefanBid/sfrigola-app", "label": "Sfrigola App" }
+              { "code": "https://github.com/stefanBid/sfrigola-core", "label": "GitHub" }
             ],
-            "coverImageSrc": "/images/projects/sfrigola-project-banner.webp",
-            "coverImageAlt": "Sfrigola Project cover",
-            "content": "**Sfrigola** is a personal project born to reimagine how home cooks discover, save, and follow recipes—an entirely digital recipe book built from the ground up as a small ecosystem of connected applications.\n\nAt its core sits **Sfrigola Core**, a REST API built with **Spring Boot** that orchestrates every domain of the platform: recipes, ingredients, categories and tags—all multi-language and searchable—plus ratings, favourites, and a full draft-to-publish content workflow with role-based access for users, contributors, and admins.\n\n**Sfrigola App** is the product itself: a **Flutter** mobile application for iOS and Android where home cooks browse curated recipe feeds, search by category, and grow their cooking skills through both quick everyday dishes and more elaborate recipes. It's built on a feature-based architecture with a custom design system and type-safe routing.\n\nTwo more pieces are still in the oven. **Sfrigola Manager**, a **React** admin dashboard, will let admins manage the recipes, ingredients, and categories that power the app's content. **Sfrigola AI** will add a chatbot able to search across the recipe database and, based on the ingredients and recipe books involved, suggest the right recipes straight from the platform's own data.\n\nSfrigola is where I explore building and connecting a full product ecosystem end to end—from API design and mobile UX to (soon) an admin panel and an AI-powered assistant."
+            "content": "**Sfrigola Core** is the REST API of Sfrigola, a digital recipe book I build as a personal exercise. Built with **Spring Boot**, it handles recipes, ingredients, categories and tags (multi-language and searchable), ratings, favourites and a draft-to-publish workflow with role-based access for users, contributors and admins."
+          },
+          {
+            "id": "e6eea13e-56a7-4150-ac8e-8a01410ca60d",
+            "meta": "Personal exercise · 2026 · Flutter",
+            "skills": ["flutter", "dart"],
+            "title": "Sfrigola App",
+            "codebaseUrls": [
+              { "code": "https://github.com/stefanBid/sfrigola-app", "label": "GitHub" }
+            ],
+            "content": "**Sfrigola App** is the **Flutter** mobile app of Sfrigola, for iOS and Android: curated recipe feeds, search by category and favourites, on a feature-based architecture with a custom design system and type-safe routing. It consumes the Sfrigola Core API."
           },
           {
             "id": "b5a5fa22-f5f0-4496-89ec-beebeb40d761",
-            "title": "Comparazione algoritmi di Machine Learning per la classificazione di immagini",
+            "meta": "Bachelor's thesis · 2022 · Python",
+            "skills": ["python"],
+            "title": "Comparing Machine Learning Algorithms for Image Classification",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Classificazione-Immagini", "label": "GitHub" }
             ],
-            "coverImageSrc": "/images/projects/image-classification-cover.webp",
-            "coverImageAlt": "Image Classification project cover",
             "content": "**Artificial Intelligence** is spreading across many fields and offers a wide range of application contexts.\n\nImage recognition and classification are among the areas that enable some of its most impressive results.\n\nThe purpose of this research is to analyze the most well-known classification algorithms, such as **K-Nearest Neighbors (KNN)**, **Decision Trees**, **Random Forest**, **Support Vector Machines (SVM)**, and **Artificial Neural Networks (ANNs)**.\n\nThe goal is to evaluate their efficiency in classifying the sample images contained in the **MNIST** and **Fashion-MNIST (F-MNIST)** datasets.\n\nThe study was carried out using **Python** libraries, particularly **Scikit-learn**.\n\nThese libraries provide implementations of the algorithms and allow fine-tuning of their parameters.\n\nThis makes it possible to identify which parameters most influence learning capability and to improve classification accuracy when the models are trained on the provided datasets.\n\nThe behavior of the algorithms helped clarify the reasons behind the transition from **MNIST**—now considered outdated and overused—to its successor, **Fashion-MNIST**.\n\nWith the same parameter settings, the examined algorithms show lower classification accuracy on **F-MNIST** compared to **MNIST**.\n\nThis highlights that **F-MNIST** is more challenging and therefore requires closer consideration of algorithm characteristics to achieve high accuracy.\n\nDespite this increased difficulty, these algorithms still achieve strong performance when trained on **F-MNIST**.\n\nThis confirms their ability to generalize and provide efficient results on other existing datasets as well."
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
-            "title": "Studio Legale Romano (Website)",
+            "meta": "Client · since 2025 · Nuxt",
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify", "npm"],
+            "title": "Studio Legale Romano",
+            "status": "ongoing",
             "deploymentUrls": [
               { "code": "https://studiodiavvocatiromano.com/", "label": "Live Demo" }
             ],
-            "coverImageSrc": "/images/projects/romano-law-firm-website.webp",
-            "coverImageAlt": "Romano Law Firm - Website project cover",
-            "content": "The **Studio Legale Romano** website is a project that was commissioned to me by the Romano law firm with the goal of creating a modern and professional digital showcase.\n\nThe website was designed to accurately represent the firm's identity while providing visitors with a clear, elegant, and trustworthy point of reference.\n\nI carefully crafted every aspect of the user interface, choosing a clean and contemporary design that reflects the standards and professionalism of the legal sector.\n\nThe browsing experience was designed to be intuitive and straightforward, guiding users through the most important content with ease.\n\nThe website includes a dedicated section presenting the firm's history, the professional backgrounds of its lawyers, and the values that guide their work.\n\nEach lawyer has a complete profile designed to highlight their expertise, experience, and areas of specialization.\n\nI also developed a dedicated services section where the firm's main legal services are presented in a clear and user-friendly manner.\n\nThis allows visitors to quickly identify their area of interest and understand how the firm can support their needs.\n\nContact information is always prominently displayed and easily accessible from every page of the website.\n\nAdditionally, I integrated a system that displays the firm's opening hours in real time, improving communication and accessibility for clients.\n\nThe result is a showcase website that combines visual refinement, functionality, and professionalism.\n\nA tailor-made project built for Studio Legale Romano, designed to strengthen its online presence and enhance the relationship between the firm and its visitors."
+            "coverImageSrc": "v1793011552/romano-logo_z2ert6.svg",
+            "coverImageFit": "contain",
+            "coverImageAlt": "Studio Legale Romano logo",
+            "content": "The firm commissioned the **Studio Legale Romano** website as a modern, professional showcase. I designed and built the whole interface: the firm's history and values, a full profile for each lawyer with their areas of practice, and a services section that helps visitors find the right area quickly.\n\nContact details are visible from every page, and the opening hours update in real time.\n\nSince the launch in 2025 I keep working with the firm: I'm redesigning the website and building new products for it.\n\n- **PraticaSicura**, a portal for requesting flight refunds\n- **Domus** (front-end) and **Cardo** (back-end), the internal system the firm uses to manage its cases"
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
+            "meta": "Course exercise · 2022 · JavaScript",
             "title": "Guess My Number",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Guess-My-Number", "label": "GitHub" }
@@ -258,12 +395,11 @@
             "deploymentUrls": [
               { "code": "https://stefanbid.github.io/Guess-My-Number/", "label": "Live Demo" }
             ],
-            "coverImageSrc": "/images/projects/guess-my-number.webp",
-            "coverImageAlt": "Guess My Number project cover",
             "content": "The game follows a level-based progression system: each match starts with **five lives**, and the objective is to guess a randomly generated number between **1 and 20** before running out of attempts.\n\nEvery game begins with five lives, and your goal is to find the correct number within that limit.\n\nEvery **five levels**, you unlock a **bonus stage** where you must identify the correct number from three possible choices.\n\n**Try to beat your best score!**"
           },
           {
             "id": "70fa96e9-9283-4a48-8ac6-e1576e2949ce",
+            "meta": "Course exercise · 2022 · JavaScript",
             "title": "Pig Game",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/Pig-Game", "label": "GitHub" }
@@ -271,12 +407,12 @@
             "deploymentUrls": [
               { "code": "https://stefanbid.github.io/Pig-Game/", "label": "Live Demo" }
             ],
-            "coverImageSrc": "/images/projects/pig-game.webp",
-            "coverImageAlt": "Pig Game project cover",
             "content": "The game is a **1 vs 1 challenge** between two players, configured at the beginning of each new match.\n\nThe active player starts their turn by rolling a die. The value obtained can either be saved and added to their total score, or they can choose to roll again in an attempt to accumulate more points.\n\nHowever, pushing your luck comes with a risk: if the die lands on **1**, the player loses all the points accumulated during that turn that have not yet been saved, and the turn immediately passes to the opponent.\n\nThe game ends when one of the two players is the first to reach **exactly 100 points**."
           },
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
+            "meta": "Open-source library · 2025 · Vue 3",
+            "skills": ["vue", "typescript", "vite", "npm"],
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -284,9 +420,10 @@
             "deploymentUrls": [
               { "code": "https://www.npmjs.com/package/sb-floating-panel-vue", "label": "NPM Package" }
             ],
-            "coverImageSrc": "/images/projects/sb-floating-panel-vue.webp",
-            "coverImageAlt": "sb-floating-panel-vue project cover",
-            "content": "A flexible and lightweight **Vue 3 floating panel system** powered by **{'@'}floating-ui/vue**.\n\nIt includes composable hooks and plug-and-play components with support for **arrows** and **resizing**."
+            "coverImageSrc": "e_trim/v1793013336/sb-floating-panel-vue-logo_hzlpmf.webp",
+            "coverImageFit": "contain",
+            "coverImageAlt": "sb-floating-panel-vue logo",
+            "content": "**sb-floating-panel-vue** is a headless **Vue 3** library for floating panels (dropdowns, menus, listboxes, popovers and tooltips), built on **{'@'}floating-ui/vue**.\n\nYou write three components, **SbContainer**, **SbReference** and **SbFloating**; the library handles placement, flipping, viewport collisions, open state, keyboard and accessibility. It ships no CSS: your styles read its data attributes and CSS variables, so it fits plain CSS, Tailwind or CSS modules.\n\n- **Accessible by default**: ARIA naming, the WAI-ARIA keyboard model of menus and listboxes, tooltips that meet WCAG 1.4.13, Tab order kept across the teleport, focus management, Escape and click outside\n- **Reactive**: every prop, **v-model:open**, nested panels and submenus\n- **Typed**: every prop, slot prop, event and option type is exported\n\nIt is published on npm, with CI and test coverage tracked on GitHub."
           }
         ],
         "noProjects": {
@@ -294,173 +431,161 @@
           "message": "There are no projects to display at the moment. Check back soon!"
         },
         "readMoreCta": "Read More",
-        "readLessCta": "Read Less"
+        "readLessCta": "Read Less",
+        "ongoing": "Ongoing",
+        "archiveTitle": "Studies and exercises",
+        "templatesTeaserCta": "See the templates"
       },
       "sbTemplatesProject": {
-        "tabLabel": "SB Templates Project",
-        "title": "A faster, smarter way to start your next project",
-        "description": "SB Templates was created with a clear goal in mind: remove the tedious setup phase of a new project and let developers jump straight into building. Across several public GitHub repositories, I’ve assembled a set of ready-to-use templates — for both web and mobile — designed to provide a solid structure complete with essential configurations: clean architecture, build tools, formatting rules, linting, and a well-prepared project environment. The idea is simple: offer a modern, reliable starting point while drastically reducing setup time. Everything is fully open source and entirely customizable, giving developers complete freedom to adapt each template to their own workflow and preferences. In short, SB Templates is meant to be a developer’s companion — a comfortable, flexible kickoff point that lets you focus on what truly matters: building.",
+        "tabLabel": "SB Templates",
+        "logoAlt": "SB Templates logo",
+        "title": "SB Templates",
+        "description": "Open-source starter templates for Nuxt, Astro and Flutter. I start my own projects from them, and any developer can use them: each one sets up the project structure following the framework's best practices, with build, linting and formatting already configured, and leaves the rest to you.",
         "list": [
           {
-            "id":"454b54e4-aaec-4b41-b03b-d39d5c0b7455",
+            "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
             "title": "SB-Template Nuxt",
-            "description": "A fast, ready-to-use Nuxt template designed to kickstart modern projects effortlessly.",
+            "description": "Nuxt starter with TypeScript and Tailwind CSS, a project structure that follows Nuxt conventions, and linting and formatting already configured.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
-            "logoSrc": "/images/sbt-logos/sb-template-nuxt-logo.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
-            "langIcons" : ["logos:nuxt-icon"]
+            "logoSrc": "v1793011185/sbt-nuxt-logo_rxp0hc.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
+            "langIcons": ["logos:nuxt-icon"],
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify"]
           },
           {
-            "id":"2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
+            "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
             "title": "SB-Template Flutter",
-            "description": "A clean Flutter template built exclusively for mobile—iOS and Android—to kickstart your native app projects with modern tooling and automation.",
+            "description": "Flutter starter for iOS and Android, with a design system, type-safe routing and reusable UI components.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
-            "logoSrc": "/images/sbt-logos/sb-template-flutter-logo.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
-            "langIcons" : ["logos:flutter", "logos:ios", "logos:android-icon"]
+            "logoSrc": "v1793011184/sbt-flutter-logo_pzhtj1.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
+            "langIcons": ["logos:flutter-icon", "logos:ios", "logos:android-icon"],
+            "skills": ["flutter", "dart"]
           },
           {
-            "id":"9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
             "title": "SB-Template Astro",
-            "description": "A lightweight, content-focused Astro template designed to kickstart fast, SEO-friendly static sites with minimal setup.",
+            "description": "Astro starter for static, content-focused sites, with TypeScript and Tailwind CSS.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
-            "logoSrc": "/images/sbt-logos/sb-template-astro.webp",
-            "logoWidth": 1280,
-            "logoHeight": 1496,
-            "langIcons" : ["logos:astro-icon"]
+            "logoSrc": "v1793011184/sbt-astro-logo_pg6io2.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
+            "langIcons": ["logos:astro-icon"],
+            "skills": ["astro", "typescript", "tailwind-css", "pnpm"]
           }
         ],
         "linkToCta": "Use this template",
-        "comingSoonCard": {
-          "title": "Coming Soon",
-          "paragraph": "I'm working on new templates for different frameworks and platforms. Stay tuned for updates!"
-        }
-      },
-      "projectError": {
-        "title": "Error Loading Projects",
-        "message": "An error occurred while loading the projects. Please try again later."
-      },
-      "templatesError": {
-        "title": "Error Loading Templates",
-        "message": "An error occurred while loading the templates. Please try again later."
+        "templateLogoAlt": "{title} logo",
+        "inProgress": "More templates for other frameworks are in progress."
       }
+    },
+    "legal": {
+      "updated": "Last updated",
+      "toc": "On this page",
+      "summary": "At a glance",
+      "questions": "Questions about this page? Write to me, I reply personally.",
+      "backToTop": "Back to top"
     },
     "privacy": {
       "title": "Privacy Policy",
-      "subtitle": "Your privacy is important to me",
-      "lastUpdate": "Last updated",
-      "backHome": "Back to Home",
-      "intro": {
-        "title": "Introduction",
-        "content": "This Privacy Policy describes how Stefano Biddau collects, uses, and protects your personal information when you use the contact form on this website (www.stefanobiddau.com). I am committed to protecting your privacy and complying with applicable data protection laws, including the General Data Protection Regulation (GDPR)."
-      },
-      "dataController": {
-        "title": "1. Data Controller",
-        "name": "Name",
-        "email": "Email"
-      },
-      "dataCollected": {
-        "title": "2. Data I Collect",
-        "intro": "When you use the contact form on my website, I collect the following personal information:",
-        "name": "Name",
-        "nameDesc": "To identify you and personalize my response.",
-        "email": "Email Address",
-        "emailDesc": "To communicate with you and respond to your inquiry.",
-        "message": "Message Content",
-        "messageDesc": "The information you choose to share with me."
-      },
-      "purpose": {
-        "title": "3. Purpose of Data Processing",
-        "content": "I collect and process your personal data solely for the purpose of responding to your inquiries submitted through the contact form. I will not use your data for marketing purposes unless you explicitly consent to receive such communications."
-      },
-      "legalBasis": {
-        "title": "4. Legal Basis for Processing",
-        "content": "The legal basis for processing your personal data is your explicit consent, which you provide by submitting the contact form and agreeing to my Privacy Policy. You have the right to withdraw your consent at any time by contacting me."
-      },
-      "thirdParties": {
-        "title": "5. Third-Party Services",
-        "intro": "I use EmailJS, a third-party email service, to send and receive messages from the contact form. When you submit the form, your data is transmitted to EmailJS servers. EmailJS is a trusted service provider that complies with data protection regulations.",
-        "emailjs": "Used to process and deliver contact form submissions.",
-        "privacyPolicy": "EmailJS Privacy Policy"
-      },
-      "dataRetention": {
-        "title": "6. Data Retention",
-        "content": "I retain your personal data only for as long as necessary to fulfill the purposes outlined in this Privacy Policy or as required by law. Once your inquiry has been resolved and there is no further need to retain your data, it will be securely deleted."
-      },
-      "yourRights": {
-        "title": "7. Your Rights",
-        "intro": "Under the GDPR, you have the following rights regarding your personal data:",
-        "access": "Access: Request a copy of the personal data I hold about you.",
-        "rectification": "Rectification: Request corrections to any inaccurate or incomplete data.",
-        "erasure": "Erasure: Request the deletion of your personal data.",
-        "restriction": "Restriction of Processing: Request that I limit the processing of your data.",
-        "portability": "Data Portability: Request a copy of your data in a structured, machine-readable format.",
-        "objection": "Objection: Object to the processing of your data under certain circumstances.",
-        "contact": "To exercise any of these rights, please contact me at"
-      },
-      "changes": {
-        "title": "8. Changes to This Privacy Policy",
-        "content": "I may update this Privacy Policy from time to time to reflect changes in my practices or legal requirements. Any updates will be posted on this page with a revised \"Last Updated\" date. I encourage you to review this policy periodically."
-      }
+      "lead": "How the contact form handles your data, in plain words. Short version: this site does not track you.",
+      "summary": "- **No cookies, no analytics, no trackers.** Fonts and images load from this site's own domain.\n- **Only the contact form collects personal data.** Your name, email, message and when you agreed. The host keeps standard technical logs.\n- **EmailJS delivers your message.** It reaches my inbox and you get a copy.\n- **I use it only to reply to you.** No newsletter, no marketing, no selling or sharing.\n- **You can have it deleted at any time.** Write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
+      "sections": [
+        {
+          "id": "controller",
+          "title": "Data controller",
+          "content": "**Stefano Biddau**, who runs this site, is responsible for your data.\n\nEmail: [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "data",
+          "title": "Data I collect",
+          "content": "When you send the contact form I receive:\n- **Name** To know who I am talking to.\n- **Email address** To reply to you.\n- **Message** Whatever you choose to tell me.\n- **Date and time of your consent** Proof that you agreed to this policy.\n\nNothing else. The site sets no cookies and runs no analytics. It only saves the dark theme setting in your browser (local storage), which never leaves your device."
+        },
+        {
+          "id": "purpose",
+          "title": "Why I use it",
+          "content": "Only to read your message and reply, including any conversation that follows. I do not use your data for marketing, I do not add you to any list and I do not pass it on to anyone except the services below, which deliver the message."
+        },
+        {
+          "id": "legal-basis",
+          "title": "Legal basis",
+          "content": "- **Contact form** Your consent (article 6(1)(a) of the GDPR), which you give by ticking the box before sending the form. You can withdraw it at any time by writing to me; this does not affect what happened before.\n- **Technical logs** My legitimate interest in keeping the site secure and running (article 6(1)(f) of the GDPR), for the data the host records on every visit."
+        },
+        {
+          "id": "processors",
+          "title": "Services that handle your data",
+          "content": "- **EmailJS** Sends the form: it delivers your message to my inbox and emails you a copy at the address you entered. [EmailJS privacy policy](https://www.emailjs.com/legal/privacy-policy/)\n- **Google (Gmail)** Hosts the inbox where your message arrives. [Google privacy policy](https://policies.google.com/privacy)\n- **Netlify** Hosts this site. Like every web server, it may record technical data about each visit, such as IP address and browser, to keep the site secure and running. [Netlify privacy policy](https://www.netlify.com/privacy/)\n\nThese providers may process data outside the European Union, under the safeguards described in their own policies."
+        },
+        {
+          "id": "retention",
+          "title": "How long I keep it",
+          "content": "Only as long as our conversation needs it, or as long as the law requires. After that I delete it."
+        },
+        {
+          "id": "rights",
+          "title": "Your rights",
+          "content": "Under the GDPR you have these rights over your data:\n- **Access** Get a copy of the data I hold about you.\n- **Rectification** Correct it if it is wrong or incomplete.\n- **Erasure** Have it deleted.\n- **Restriction** Limit how I use it.\n- **Portability** Receive it in a structured, machine-readable format.\n- **Objection** Ask me to stop using it.\n\nI reply within one month, as the GDPR requires. You can also complain to the Italian data protection authority, the [Garante per la protezione dei dati personali](https://www.garanteprivacy.it).\n\nTo exercise a right, write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)"
+        },
+        {
+          "id": "changes",
+          "title": "Changes to this policy",
+          "content": "If something changes, I update this page and the date at the top."
+        }
+      ]
     },
     "terms": {
       "title": "Terms and Conditions",
-      "subtitle": "Please read these terms carefully before using my website",
-      "lastUpdate": "Last updated",
-      "backHome": "Back to Home",
-      "intro": {
-        "title": "Introduction",
-        "content": "Welcome to stefanobiddau.com (the \"Website\"). These Terms and Conditions (\"Terms\") govern your use of this Website. By accessing or using the Website, you agree to comply with and be bound by these Terms. If you do not agree with these Terms, please do not use the Website."
-      },
-      "acceptance": {
-        "title": "1. Acceptance of Terms",
-        "content": "By accessing and using this Website, you accept and agree to be bound by these Terms and my Privacy Policy. These Terms apply to all visitors, users, and others who access or use the Website."
-      },
-      "useOfWebsite": {
-        "title": "2. Use of the Website",
-        "intro": "You may use this Website for lawful purposes only. You agree not to:",
-        "point1": "Use the Website in any way that violates any applicable local, national, or international law or regulation.",
-        "point2": "Transmit, or procure the sending of, any unsolicited or unauthorized advertising or promotional material.",
-        "point3": "Attempt to gain unauthorized access to, interfere with, damage, or disrupt any parts of the Website, the server on which the Website is stored, or any server, computer, or database connected to the Website.",
-        "point4": "Use the Website in any manner that could disable, overburden, damage, or impair the Website or interfere with any other party's use of the Website."
-      },
-      "intellectualProperty": {
-        "title": "3. Intellectual Property Rights",
-        "content": "All content on this Website, including but not limited to text, graphics, logos, images, and software, is the property of Stefano Biddau or its content suppliers and is protected by Italian and international copyright laws. You may not reproduce, distribute, modify, or create derivative works from any content on this Website without prior written permission."
-      },
-      "contactForm": {
-        "title": "4. Contact Form and User Submissions",
-        "intro": "When you submit information through the contact form on this Website, you agree that:",
-        "point1": "The information you provide is accurate, complete, and truthful.",
-        "point2": "You will not submit any content that is unlawful, harmful, threatening, abusive, harassing, defamatory, vulgar, obscene, or otherwise objectionable.",
-        "point3": "I may use the information you provide to respond to your inquiry and as described in my Privacy Policy."
-      },
-      "thirdPartyLinks": {
-        "title": "5. Third-Party Links",
-        "content": "This Website may contain links to third-party websites or services that are not owned or controlled by me. I have no control over, and assume no responsibility for, the content, privacy policies, or practices of any third-party websites or services. You acknowledge and agree that I shall not be responsible or liable for any damage or loss caused by your use of any third-party content, goods, or services."
-      },
-      "disclaimer": {
-        "title": "6. Disclaimer of Warranties",
-        "content": "This Website is provided on an \"as is\" and \"as available\" basis. I make no representations or warranties of any kind, express or implied, as to the operation of the Website or the information, content, or materials included on the Website. To the fullest extent permissible by law, I disclaim all warranties, express or implied, including but not limited to implied warranties of merchantability and fitness for a particular purpose."
-      },
-      "liability": {
-        "title": "7. Limitation of Liability",
-        "content": "To the fullest extent permitted by law, Stefano Biddau shall not be liable for any direct, indirect, incidental, special, consequential, or punitive damages arising out of or in connection with your use of, or inability to use, the Website. This includes, but is not limited to, damages for loss of profits, data, or other intangible losses."
-      },
-      "changes": {
-        "title": "8. Changes to These Terms",
-        "content": "I reserve the right to modify or replace these Terms at any time. Any changes will be effective immediately upon posting on this page with a revised \"Last Updated\" date. Your continued use of the Website after any changes to these Terms constitutes your acceptance of the new Terms."
-      },
-      "governingLaw": {
-        "title": "9. Governing Law",
-        "content": "These Terms shall be governed and construed in accordance with the laws of Italy, without regard to its conflict of law provisions. Any disputes arising out of or relating to these Terms or your use of the Website shall be subject to the exclusive jurisdiction of the courts of Italy."
-      },
-      "contact": {
-        "title": "10. Contact Me",
-        "content": "If you have any questions about these Terms, please contact me at"
-      }
+      "lead": "The few rules for using this site. It is a personal portfolio: nothing to buy, no account to create.",
+      "summary": "- **Free to browse.** No account needed.\n- **My work stays mine.** Link to it freely, ask before reusing it.\n- **Use the contact form honestly.** Your real details, no spam.\n- **Italian law applies.** Your rights as a consumer where you live still stand.",
+      "sections": [
+        {
+          "id": "acceptance",
+          "title": "Accepting these terms",
+          "content": "By using stefanobiddau.com you accept these terms and the [Privacy Policy](/privacy-policy). If you do not agree, please do not use the site."
+        },
+        {
+          "id": "acceptable-use",
+          "title": "Acceptable use",
+          "content": "Use the site only for lawful purposes. Do not:\n- use it to break any law;\n- send spam or unsolicited advertising through the contact form;\n- try to access, disrupt or damage the site, its server or any connected system;\n- overload it or get in the way of other visitors."
+        },
+        {
+          "id": "content",
+          "title": "My work and its content",
+          "content": "The texts, illustrations, photos and design of this site belong to me, unless stated otherwise. You can link to any page and quote short extracts with a link back; to reuse anything else, ask me first at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com).\n\nOpen-source projects shown here follow their own license on GitHub. Client names and logos belong to their owners and appear only to describe the work I did for them."
+        },
+        {
+          "id": "contact-form",
+          "title": "The contact form",
+          "content": "When you write to me, use your real name and an email address you can read, and do not send unlawful, offensive or harassing content. I use what you send only to reply, as described in the [Privacy Policy](/privacy-policy)."
+        },
+        {
+          "id": "external-links",
+          "title": "Links to other sites",
+          "content": "Some pages link to sites I do not control, such as GitHub, LinkedIn, Instagram and the sites of projects I worked on. I am not responsible for their content or how they handle your data."
+        },
+        {
+          "id": "warranties",
+          "title": "No warranties",
+          "content": "The site is provided as is. I do my best to keep it accurate and online, but I cannot guarantee it is always available or free of errors."
+        },
+        {
+          "id": "liability",
+          "title": "Limitation of liability",
+          "content": "As far as the law allows, I am not liable for damage resulting from using the site or from being unable to use it."
+        },
+        {
+          "id": "changes",
+          "title": "Changes to these terms",
+          "content": "I may update these terms. The new version applies from the date shown at the top of this page."
+        },
+        {
+          "id": "law",
+          "title": "Governing law",
+          "content": "These terms are governed by Italian law. Disputes go to the competent Italian courts, without affecting the rights you have as a consumer where you live."
+        }
+      ]
     }
   },
   "footer": {
@@ -468,7 +593,6 @@
     "routeSection": "Quick Links",
     "routeFallback": "Navigation coming soon",
     "contactSection": "Contacts & Social",
-    "creditSection": "© { year } Stefano Biddau - All rights reserved.",
-    "madeWith": "Designed and developed with ❤ by Stefano Biddau"
+    "creditSection": "© { year } Stefano Biddau - All rights reserved."
   }
 }

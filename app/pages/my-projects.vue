@@ -4,14 +4,15 @@ const { t } = useI18n()
 const localePath = useLocalePath()
 const { pageTransition } = usePageTransition(true)
 const route = useRoute()
+const { isFormOpen: isContactFormOpen } = useContact()
 
 // Data
 type TabType = 'personalProjects' | 'templateProject'
 
-const tabs: { id: TabType, icon: string, label: string }[] = [
-  { id: 'personalProjects', icon: 'solar:archive-bold-duotone', label: t('pages.projects.personalProjects.tabLabel') },
-  { id: 'templateProject', icon: 'solar:monitor-smartphone-bold-duotone', label: t('pages.projects.sbTemplatesProject.tabLabel') },
-]
+const tabs = computed<{ id: TabType, label: string }[]>(() => [
+  { id: 'personalProjects', label: t('pages.projects.personalProjects.tabLabel') },
+  { id: 'templateProject', label: t('pages.projects.sbTemplatesProject.tabLabel') },
+])
 
 const currentTabId = computed<TabType>(() => route.path.includes('/sb-templates') ? 'templateProject' : 'personalProjects')
 
@@ -25,17 +26,27 @@ const onSelectTab = (tabId: string | number) => {
   <div>
     <ThePageHero
       id="my-projects"
+      image-src="/images/3d-avatar/avatar-pose-6.webp"
+      :lead="t('pages.projects.lead')"
       :text="t('pages.projects.hero')"
     />
     <BaseTabs
-      class="mt-20"
+      class="mt-8 md:mt-12"
+      panel-id="projects-panel"
       :selected-tab-id="currentTabId"
       :tabs="tabs"
       @select="onSelectTab"
     />
 
-    <section class="pt-10 pb-20">
+    <section
+      id="projects-panel"
+      :aria-labelledby="`projects-panel-tab-${currentTabId}`"
+      class="pt-10 pb-20"
+      role="tabpanel"
+    >
       <NuxtPage :transition="pageTransition" />
     </section>
+
+    <CustomClosingCta @contact="isContactFormOpen = true" />
   </div>
 </template>

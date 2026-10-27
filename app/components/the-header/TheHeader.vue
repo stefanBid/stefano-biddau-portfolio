@@ -1,5 +1,3 @@
-<!-- app/components/the-header/TheHeader.vue -->
-
 <script setup lang="ts">
 interface TheHeaderProps {
   routes: Array<RouteItem>
@@ -10,6 +8,7 @@ interface TheHeaderProps {
 // Dependencies
 const { lock, unlock } = useLockScroll()
 const { t } = useI18n()
+const { isFormOpen: isContactFormOpen, cvItems } = useContact()
 
 // Input / Output
 const props = withDefaults(defineProps<TheHeaderProps>(), {
@@ -21,6 +20,13 @@ const emit = defineEmits<{ (e: 'change-lang', langCode: string): void }>()
 // Dependencies
 const open = useState('header-drawer-open', () => false)
 const isMdUp = ref(false) // Always start with false to avoid hydration mismatch
+const rootRef = ref<HTMLElement | null>(null)
+// Menu links arrive one after another, as a list; closing is immediate
+const MENU_STAGGER_MS = 50
+const drawerRef = ref<HTMLElement | null>(null)
+// The trap spans header + panel so the close toggle stays reachable with Tab
+const { activate, deactivate } = useFocusTrap(rootRef)
+const { navigatingFromMenu } = usePageTransition()
 const currentRoute = useRoute()
 const getRouteBaseName = useRouteBaseName()
 
@@ -40,7 +46,7 @@ const isActiveRoute = (r: RouteItem) => {
 // Events
 /** Only client: attach/detach listeners */
 const onKeydown = (e: KeyboardEvent) => {
-  if (e.key === 'Escape') {
+  if (e.key === 'Escape' && open.value && !e.defaultPrevented) {
     e.preventDefault()
     onClose()
   }
@@ -50,19 +56,46 @@ const onToggle = (newOpenValue: boolean) => {
   open.value = newOpenValue
   if (open.value) {
     lock()
+    activate()
+    // Focus the panel itself: moving it onto the first link would flash a focus ring on open
+    nextTick(() => drawerRef.value?.focus())
   }
   else {
     unlock()
+    deactivate()
   }
 }
 
-const onClose = () => {
+const onClose = (restoreFocus = true) => {
+  if (!open.value) {
+    return
+  }
   open.value = false
   unlock()
+  deactivate(false)
+  if (restoreFocus) {
+    nextTick(() => rootRef.value?.querySelector<HTMLElement>('[aria-controls="mobile-drawer"]')?.focus())
+  }
 }
 
-const onSelectLang = (langCode: string) => {
-  // Emit lang change
+const onNavigateFromMenu = (r: RouteItem) => {
+  if (!isActiveRoute(r)) {
+    navigatingFromMenu.value = true
+  }
+  // Focus goes to the new page (route announcer / main), not back to the toggle
+  onClose(false)
+}
+
+// The form traps focus itself: the drawer lets go of it first
+const onContactFromMenu = () => {
+  onClose(false)
+  isContactFormOpen.value = true
+}
+
+const onSelectLang = (langCode: string | null) => {
+  if (!langCode) {
+    return
+  }
   emit('change-lang', langCode)
 }
 
@@ -98,131 +131,158 @@ watch(isMdUp, (newVal) => {
 </script>
 
 <template>
-  <div class="relative z-50">
+  <div ref="rootRef" class="relative z-50">
     <!-- HEADER FIXED -->
     <header
-      class="fixed top-0 inset-x-0 h-16 border-b border-sb-border backdrop-blur  px-6 md:px-10 u-sb-soft-transition"
+      class="fixed top-0 inset-x-0 h-16 border-b border-border backdrop-blur px-4 sm:px-6 md:px-10 sb-transition"
       :class="{
-        'bg-sb-main': open,
-        'supports-backdrop-filter:bg-sb-main/60 bg-sb-main/80': !open,
+        'bg-bg': open,
+        'supports-backdrop-filter:bg-bg/60 bg-bg/80': !open,
       }"
     >
-      <div class="h-full flex items-center max-w-350 mx-auto justify-between">
+      <div class="h-full flex items-center gap-4 max-w-350 mx-auto">
         <NuxtLink
-          class="inline-flex items-center gap-2 ty-sb-h3 tracking-tight hover:opacity-90 u-sb-focus u-sb-soft-transition rounded cursor-pointer"
+          class="inline-flex items-center min-h-11 gap-2 sb-h3 tracking-tight hover:opacity-90 sb-focus sb-transition rounded-sm cursor-pointer"
           :to="props.routes[0]?.path || '/'"
-          @click="onClose"
+          @click="onClose(false)"
         >
           <NuxtImg
-            alt="Logo"
+            alt=""
             class="object-contain size-8 sm:size-10 md:size-12"
             fetchpriority="high"
             loading="eager"
-            src="/images/logo.webp"
+            src="/sb-logo.svg"
           />
           Stefano Biddau
         </NuxtLink>
 
-        <!-- Desktop nav -->
-        <div class="flex items-center">
-          <nav class="hidden md:flex items-center gap-6 bg-sb-surface-2 rounded-xl px-4 py-2">
-            <template v-for="r in routes" :key="r.path">
-              <NuxtLink
-                v-if="!r.disabled"
-                class="ty-sb-nav-label normal-case! cursor-pointer u-sb-soft-transition u-sb-focus rounded"
-                :class="{
-                  'text-sb-contrast/80 hover:text-sb-contrast font-normal!': !isActiveRoute(r),
-                  'text-sb-accent font-bold!': isActiveRoute(r),
-                }"
-                :to="r.path"
-              >
-                {{ r.name }}
-              </NuxtLink>
-              <span
-                v-else
-                aria-disabled="true"
-                class="ty-sb-btn-label normal-case! font-normal! cursor-not-allowed opacity-50 text-sb-contrast/80 rounded-md"
-              >
-                {{ r.name }}
-              </span>
-            </template>
-          </nav>
-          <div class="ml-0 md:ml-4 hidden! md:inline-block!">
-            <BaseIconMenu
-              icon="solar:globus-bold-duotone"
-              :items="props.langs"
-              :selected-item-id="props.selectedLangId"
-              @select="itemId => onSelectLang(itemId)"
-            />
-          </div>
-        </div>
-        <!-- Mobile: hamburger -->
-        <TheHeaderMenuToggle
-          class="md:hidden"
-          :open="open"
-          @toggle="newOpenValue => onToggle(newOpenValue)"
-        />
-      </div>
-    </header>
-    <!-- OVERLAY + DRAWER -->
-    <div class="md:hidden">
-      <!-- overlay -->
-      <div
-        aria-hidden="true"
-        class="fixed inset-0 top-16 bg-sb-main/80 backdrop-blur-sm u-sb-soft-transition"
-        :class="open ? 'opacity-100 pointer-events-auto' :'opacity-0 pointer-events-none'"
-        @click="onClose"
-      ></div>
-
-      <!-- drawer -->
-      <aside
-        id="mobile-drawer"
-        :aria-labelledby="open ? 'mobile-drawer-title' : undefined"
-        :aria-modal="open ? 'true' : undefined"
-        class="fixed left-0 top-16 h-[calc(100vh-4rem)] w-72 max-w-[85vw] bg-sb-surface border-r border-sb-border shadow-[0_20px_60px_var(--color-sb-shadow)] u-sb-hard-transition will-change-transform"
-        :class="open ? 'translate-x-0' : '-translate-x-full'"
-        :inert="!open"
-        :role="open ? 'dialog' : undefined"
-      >
-        <div class="flex items-center justify-between px-6 py-3 border-b border-sb-border">
-          <span id="mobile-drawer-title" class="ty-sb-label text-sb-muted font-semibold!">{{ t('header.routeSection') }}</span>
-        </div>
-
-        <nav class="flex flex-col gap-2 p-6">
+        <!-- Desktop nav: fixed width (fits the longest locale) with labels spread evenly, so it never resizes on a language switch -->
+        <nav class="hidden md:flex md:ml-auto w-100 items-center justify-between bg-surface-2 rounded-lg px-6 py-2">
           <template v-for="r in routes" :key="r.path">
             <NuxtLink
               v-if="!r.disabled"
-              class="rounded-xl p-3 ty-sb-p cursor-pointer u-sb-soft-transition u-sb-focus"
+              :aria-current="isActiveRoute(r) ? 'page' : undefined"
+              class="sb-label uppercase relative py-1 before:absolute before:inset-x-0 before:-inset-y-2 cursor-pointer sb-transition sb-focus rounded-sm after:absolute after:inset-x-0 after:-bottom-0.5 after:h-0.5 after:rounded-full after:bg-primary after:sb-transition"
               :class="{
-                'hover:bg-sb-surface-2': !isActiveRoute(r),
-                'bg-sb-accent font-bold!': isActiveRoute(r),
+                'text-ink-muted hover:text-ink after:scale-x-0': !isActiveRoute(r),
+                'text-ink font-bold after:scale-x-100': isActiveRoute(r),
               }"
               :to="r.path"
-              @click="onClose"
             >
               {{ r.name }}
             </NuxtLink>
             <span
               v-else
               aria-disabled="true"
-              class="rounded-lg p-3 ty-sb-p cursor-not-allowed opacity-50 text-sb-contrast/80"
+              class="py-1 sb-label uppercase cursor-not-allowed opacity-50 text-ink-muted rounded-md"
             >
               {{ r.name }}
             </span>
           </template>
         </nav>
-        <div class="flex items-center justify-between px-6 py-3 border-y border-sb-border">
-          <span class="ty-sb-label text-sb-muted font-semibold">{{ t('header.settingsSection') }}</span>
-        </div>
-        <div class="p-6">
-          <BaseIconMenu
+
+        <div class="hidden md:flex">
+          <BaseMenu
             icon="solar:globus-bold-duotone"
             :items="props.langs"
-            :selected-item-id="props.selectedLangId"
-            @select="itemId => onSelectLang(itemId)"
+            kind="select"
+            :label="t('a11y.changeLanguage')"
+            placement="bottom-start"
+            :selected="props.selectedLangId"
+            size="sm"
+            variant="ghost"
+            @update:selected="onSelectLang"
           />
         </div>
-      </aside>
+
+        <!-- Mobile: hamburger -->
+        <TheHeaderMenuToggle
+          class="ml-auto md:hidden"
+          :open="open"
+          @toggle="newOpenValue => onToggle(newOpenValue)"
+        />
+      </div>
+    </header>
+    <!-- Mobile full-screen menu -->
+    <div
+      id="mobile-drawer"
+      ref="drawerRef"
+      :aria-label="t('header.routeSection')"
+      :aria-modal="open ? 'true' : undefined"
+      class="md:hidden fixed inset-x-0 top-16 h-[calc(100dvh-4rem)] overflow-y-auto overscroll-contain bg-bg outline-none sb-transition-slow"
+      :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2 motion-reduce:translate-y-0 pointer-events-none'"
+      :inert="!open"
+      :role="open ? 'dialog' : undefined"
+      tabindex="-1"
+    >
+      <div class="min-h-full flex flex-col justify-end gap-10 px-4 sm:px-6 pt-10 pb-10">
+        <nav class="flex flex-col">
+          <template v-for="(r, index) in routes" :key="r.path">
+            <NuxtLink
+              v-if="!r.disabled"
+              :aria-current="isActiveRoute(r) ? 'page' : undefined"
+              class="relative flex items-center min-h-14 sb-h2 uppercase cursor-pointer rounded-sm sb-transition-slow sb-focus"
+              :class="[
+                isActiveRoute(r) ? 'text-ink' : 'text-ink-muted hover:text-ink',
+                open ? 'opacity-100' : 'opacity-0 motion-safe:translate-y-3',
+              ]"
+              :style="{ transitionDelay: open ? `${index * MENU_STAGGER_MS}ms` : '0ms' }"
+              :to="r.path"
+              @click="onNavigateFromMenu(r)"
+            >
+              <span
+                aria-hidden="true"
+                class="absolute left-0 top-1/2 -translate-y-1/2 w-6 h-0.5 rounded-full bg-primary origin-left sb-transition"
+                :class="isActiveRoute(r) ? 'scale-x-100' : 'scale-x-0'"
+              ></span>
+              <span class="sb-transition" :class="{ 'translate-x-9': isActiveRoute(r) }">{{ r.name }}</span>
+            </NuxtLink>
+            <span
+              v-else
+              aria-disabled="true"
+              class="flex items-center min-h-14 sb-h2 uppercase cursor-not-allowed opacity-50 text-ink-muted"
+            >
+              {{ r.name }}
+            </span>
+          </template>
+        </nav>
+
+        <div
+          class="grid gap-3 sb-transition-slow"
+          :class="open ? 'opacity-100' : 'opacity-0 motion-safe:translate-y-3'"
+          :style="{ transitionDelay: open ? `${routes.length * MENU_STAGGER_MS}ms` : '0ms' }"
+        >
+          <BaseButton variant="primary" @click="onContactFromMenu">
+            {{ t('pages.home.contactCard.buttonText') }}
+          </BaseButton>
+          <BaseMenu
+            icon="solar:download-minimalistic-bold-duotone"
+            :items="cvItems"
+            :label="t('pages.home.cvCard.buttonText')"
+            placement="top-start"
+          />
+        </div>
+
+        <div
+          :aria-label="t('a11y.changeLanguage')"
+          class="flex gap-2 pt-6 border-t border-border"
+          role="group"
+        >
+          <BaseButton
+            v-for="lang in props.langs"
+            :key="lang.code"
+            :aria-label="lang.label"
+            :aria-pressed="lang.code === props.selectedLangId ? 'true' : 'false'"
+            class="border-border"
+            :is-active="lang.code === props.selectedLangId"
+            size="sm"
+            variant="ghost"
+            @click="onSelectLang(lang.code)"
+          >
+            {{ lang.code }}
+          </BaseButton>
+        </div>
+      </div>
     </div>
   </div>
 </template>

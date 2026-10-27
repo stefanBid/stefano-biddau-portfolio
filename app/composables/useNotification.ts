@@ -1,3 +1,14 @@
+export interface NotificationItem {
+  id: string
+  type: 'success' | 'warning' | 'error' | 'info'
+  icon?: string
+  title?: string
+  message: string
+  dismissible?: boolean
+  autoClose?: boolean
+  duration?: number
+}
+
 interface NotificationState {
   notifications: NotificationItem[]
 }

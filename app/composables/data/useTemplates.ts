@@ -1,3 +1,6 @@
+import { resolveSkills } from '~/composables/data/useSkills'
+import type { Skill } from '~/composables/data/useSkills'
+
 export interface SbTemplate {
   id: string
   title: string
@@ -7,10 +10,12 @@ export interface SbTemplate {
   logoWidth?: number
   logoHeight?: number
   langIcons?: string[]
+  skills: Skill[]
 }
 
 export default function useTemplates() {
   const { tm: _tm, rt: _rt } = useI18n()
+  const { resolveImageSrc } = useCloudinary()
 
   // State
   const templates = computed<SbTemplate[]>(() => {
@@ -26,10 +31,11 @@ export default function useTemplates() {
       title: _rt(item.title || ''),
       description: _rt(item.description || ''),
       codebaseUrl: item.codebaseUrl ? _rt(item.codebaseUrl) : '',
-      logoSrc: item.logoSrc ? _rt(item.logoSrc) : undefined,
+      logoSrc: item.logoSrc ? resolveImageSrc(_rt(item.logoSrc)) : undefined,
       logoWidth: item.logoWidth,
       logoHeight: item.logoHeight,
       langIcons: Array.isArray(item.langIcons) ? item.langIcons.map((icon: string) => _rt(icon)) : undefined,
+      skills: Array.isArray(item.skills) ? resolveSkills(item.skills.map((id: Parameters<typeof _rt>[0]) => _rt(id))) : [],
     } as SbTemplate))
   })
 
