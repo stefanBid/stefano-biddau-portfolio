@@ -17,15 +17,15 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "Sono Stefano Biddau, sviluppatore full-stack e web designer. Progetto esperienze digitali moderne e funzionali, curate nei dettagli. Scopri il mio portfolio e contattami per collaborare."
+      "description": "Stefano Biddau, sviluppatore full-stack freelance e web designer, disponibile a collaborare nel tuo team o a seguire il tuo progetto, dall'interfaccia al database."
     },
     "about": {
       "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Il mio percorso dalla laurea in Informatica al ruolo attuale in SI2001, più i progetti per clienti e open source che porto avanti in parallelo."
+      "description": "Il mio percorso dalla laurea in Informatica allo sviluppo full-stack, più i progetti per clienti e open source che progetto, sviluppo e mantengo."
     },
     "skills": {
       "title": "Competenze & Tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Lo stack con cui lavoro: Vue, Angular, TypeScript e Tailwind CSS ogni giorno, Nuxt e Flutter in lavori consegnati, più Java, Spring e Node.js lato backend."
+      "description": "Lo stack con cui lavoro ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end, Java, Spring e PostgreSQL lato back end. In più Nuxt e Flutter in lavori consegnati."
     },
     "projects": {
       "title": "Progetti Web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -33,15 +33,15 @@
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Template di progetto open source e pronti all'uso, per web e mobile: architettura pulita, tooling moderno, zero setup. Inizia subito a costruire."
+      "description": "Template open source per Nuxt, Astro e Flutter di Stefano Biddau: una struttura di progetto che segue le best practice di ogni framework, libera per ogni sviluppatore."
     },
     "privacy": {
       "title": "Informativa sulla privacy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Informativa sulla privacy di stefanobiddau.com - Scopri come raccolgo, utilizzo e proteggo i tuoi dati personali."
+      "description": "Niente cookie, niente analytics: stefanobiddau.com tratta solo ciò che invii dal modulo di contatto, più i log tecnici dell'hosting. Perché, per quanto tempo, chi li tratta e i tuoi diritti."
     },
     "terms": {
       "title": "Termini e Condizioni {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Termini e condizioni per l'utilizzo di stefanobiddau.com - Regole e linee guida per i visitatori del sito."
+      "description": "Le regole per usare stefanobiddau.com: uso consentito, a chi appartiene il lavoro mostrato, come funziona il modulo di contatto, responsabilità e legge applicabile."
     }
   },
   "a11y": {
@@ -71,12 +71,12 @@
   },
   "pages": {
     "home": {
-      "title": "Ciao, sono Stefano Biddau",
+      "title": "Stefano Biddau",
       "subtitle": {
-        "costant": "E sono uno",
+        "costant": "Sono uno",
         "role": "Sviluppatore Full-Stack & Web Designer"
       },
-      "lead": "In SI2001 dal 2023 e disponibile per progetti freelance. Costruisco prodotti web completi, dall'interfaccia al database.",
+      "lead": "In SI2001 dal 2022 e disponibile per progetti freelance. Costruisco prodotti web completi, dall'interfaccia al database.",
       "cvCard": {
         "buttonText": "Scarica CV",
         "versions": {
@@ -127,7 +127,7 @@
       },
       "experience": {
         "title": "Esperienza",
-        "lead": "Dall'università al team con cui lavoro oggi.",
+        "lead": "Laurea in Informatica all'Università di Salerno, poi uno stage in SI2001 diventato un ruolo full-stack.",
         "viewAll": "Il mio percorso",
         "present": "Oggi",
         "years": "{count} anno | {count} anni",
@@ -203,7 +203,8 @@
       }
     },
     "about": {
-      "hero": "Chi sono",
+      "overline": "Chi sono",
+      "hero": "Lo progetto, poi lo sviluppo",
       "milestoneCta": "Leggi di più",
       "milestoneCtaLess": "Mostra meno",
       "upcomingFrom": "Da {date}",
@@ -216,7 +217,16 @@
           "romano": "Ho progettato e sviluppato il sito dello studio. Ora un nuovo design, il portale rimborsi PraticaSicura e il gestionale Domus/Cardo.",
           "sbTemplates": "Template di partenza per Nuxt, Astro e Flutter con architettura, build, linting e formattazione già configurati.",
           "floatingPanel": "Un sistema di pannelli flottanti per Vue 3 basato su {'@'}floating-ui/vue, con composable, frecce e ridimensionamento."
+        },
+        "angles": {
+          "romano": "Dove lavoro direttamente con il cliente. Mantengo il sito vetrina dello studio e l'ecosistema di PraticaSicura.com, il servizio dello studio per rimborsi aerei e sinistri stradali: curo l'architettura back-end (Cardo), il gestionale front-end (Domus) e il sito vetrina PraticaSicura.com.",
+          "sbTemplates": "Template da cui parto per i miei progetti e che ogni sviluppatore può usare liberamente: fornisco solo la struttura di partenza, secondo le best practice del framework, e da lì ognuno sviluppa ciò che gli serve.",
+          "floatingPanel": "Libreria su npm che ogni sviluppatore può installare nei propri progetti Vue e Nuxt, con componenti per pannelli flottanti. La progetto e la mantengo; anche i menu di questo sito la usano."
         }
+      },
+      "closingCta": {
+        "title": "Scriviamo insieme il prossimo capitolo",
+        "text": "I progetti freelance restano aperti. Raccontami cosa hai in mente, oppure porta con te il mio CV per la storia completa."
       },
       "milestones": [
         {
@@ -234,7 +244,7 @@
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Io durante la presentazione della mia tesi di laurea, mentre illustro il progetto dedicato alla comparazione di algoritmi di Machine Learning per la classificazione di immagini.",
-          "content": "Dal 2018 al dicembre 2022 ho studiato Informatica all’UNISA: **programmazione orientata agli oggetti in Java**, **programmazione distribuita con Java EE**, **sviluppo web con HTML, CSS e JavaScript**, e **matematica e statistica** applicate con **Python**.\n\nLa mia tesi, *“Confronto di Algoritmi di Machine Learning per la Classificazione di Immagini”*, ha messo a confronto modelli di classificazione sul dataset **Fashion-MNIST**.\n\nHo realizzato anche progetti pratici completi, tra cui una piattaforma e-commerce per prodotti automobilistici, dal front-end al back-end. Lavorando in team con altri studenti ho imparato a coordinare il lavoro e a essere un punto di riferimento affidabile."
+          "content": "Dal 2018 al dicembre 2022 ho studiato **Informatica** all’UNISA: programmazione orientata agli oggetti in Java, programmazione distribuita con Java EE, sviluppo web con HTML, CSS e JavaScript, e matematica e statistica applicate con Python.\n\nLa mia tesi, *“Confronto di Algoritmi di Machine Learning per la Classificazione di Immagini”*, ha messo a confronto modelli di classificazione sul dataset Fashion-MNIST.\n\nHo realizzato anche progetti pratici completi, tra cui una piattaforma e-commerce per prodotti automobilistici, dal front-end al back-end. Lavorando in team con altri studenti ho imparato a coordinare il lavoro e a essere un punto di riferimento affidabile."
         },
         {
           "id": "2",
@@ -265,7 +275,7 @@
           "imageWidth": 2316,
           "imageHeight": 3088,
           "imageCaption": "Io dalla mia postazione remota, tra monitor e codice.",
-          "content": "Oggi lavoro sul **back-end** dei sistemi di core banking europei di **Intesa Sanpaolo**, con Java, Spring Boot, Spring Batch e PostgreSQL.\n\nPrima ho lavorato sul **front-end** di **più di cinque progetti** con Vue.js, Angular e Flutter.\n\nLavoro in team Agile e partecipo a sprint planning, daily stand-up e retrospettive."
+          "content": "Oggi lavoro sul back-end dei sistemi di core banking europei di **Intesa Sanpaolo**, con Java, Spring Boot, Spring Batch e PostgreSQL.\n\nPrima ho lavorato sul front-end di **più di cinque progetti** con Vue.js, Angular e Flutter.\n\nLavoro in team Agile e partecipo a sprint planning, daily stand-up e retrospettive."
         },
         {
           "id": "4",
@@ -273,7 +283,7 @@
           "role": "Il prossimo passo",
           "date": "01/11/2027",
           "type": "upcoming",
-          "content": "Un passo avanti in ruolo e responsabilità. Dettagli quando inizia."
+          "content": "Un passo avanti in ruolo e responsabilità. Dettagli quando inizia.\n\nI progetti freelance restano aperti."
         }
       ],
       "noMilestones": {
@@ -283,22 +293,26 @@
     },
     "skills": {
       "hero": "Competenze e tecnologie",
-      "lead": "Ogni giorno: Vue, Angular, TypeScript e Tailwind CSS. Qui sotto lo stack completo, per area e per quanto spesso lo uso.",
+      "lead": "Ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end, Java, Spring e PostgreSQL lato back end. Qui sotto lo stack completo, per area e per quanto spesso lo uso.",
       "orbitCaption": "Più è vicino al sole, più spesso lo uso.",
       "seenIn": "Lo trovi in:",
+      "thisSite": "Questo sito",
       "chipSeenIn": "dove l'ho usato: {place}",
       "tiers": {
         "core": {
           "label": "Quotidiano",
-          "description": "Ciò con cui lavoro tutti i giorni. Evidenziato in oro."
+          "description": "Ciò con cui lavoro tutti i giorni. Evidenziato in oro.",
+          "short": "ogni giorno"
         },
         "solid": {
           "label": "Solido",
-          "description": "Usato in molti progetti: posso riprenderlo e consegnare."
+          "description": "Usato in molti progetti: posso riprenderlo e consegnare.",
+          "short": "molti progetti"
         },
         "familiar": {
           "label": "Conosciuto",
-          "description": "Studiato o usato di rado, non fa parte dei miei strumenti principali."
+          "description": "Studiato o usato di rado, non fa parte dei miei strumenti principali.",
+          "short": "ogni tanto"
         }
       },
       "areas": {
@@ -312,7 +326,7 @@
         },
         "tools": {
           "title": "Design e strumenti",
-          "paragraph": "Lavoro su design in Figma e Adobe XD, documento i componenti in Storybook e li verifico con Chromatic, così ciò che va online corrisponde al progetto. Postman, Git, npm e Netlify coprono il resto, dal test delle API al rilascio."
+          "paragraph": "Lavoro su design in Figma e Adobe XD e documento i componenti in Storybook, così ciò che va online corrisponde al progetto. Docker, Postman, Git, npm e Netlify coprono il resto, dal test delle API al rilascio."
         }
       }
     },
@@ -331,7 +345,7 @@
           {
             "id": "85156f53-d423-4b49-9561-4e0d46e18976",
             "meta": "Esercizio personale · 2026 · Spring Boot",
-            "skills": ["spring"],
+            "skills": ["spring", "java", "postgresql", "hibernate", "docker", "postman"],
             "title": "Sfrigola Core",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-core", "label": "GitHub" }
@@ -341,7 +355,7 @@
           {
             "id": "e6eea13e-56a7-4150-ac8e-8a01410ca60d",
             "meta": "Esercizio personale · 2026 · Flutter",
-            "skills": ["flutter"],
+            "skills": ["flutter", "dart"],
             "title": "Sfrigola App",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-app", "label": "GitHub" }
@@ -361,7 +375,7 @@
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
             "meta": "Cliente · dal 2025 · Nuxt",
-            "skills": ["nuxt"],
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify", "npm"],
             "title": "Studio Legale Romano",
             "status": "ongoing",
             "deploymentUrls": [
@@ -370,7 +384,7 @@
             "coverImageSrc": "v1793011552/romano-logo_z2ert6.svg",
             "coverImageFit": "contain",
             "coverImageAlt": "Logo dello Studio Legale Romano",
-            "content": "Dopo il lancio del sito nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti.\n\n- **PraticaSicura**, un portale per richiedere i rimborsi dei voli\n- **Domus** (front-end) e **Cardo** (back-end), il gestionale interno con cui lo studio segue le sue pratiche\n\nLo studio mi ha commissionato il sito dello **Studio Legale Romano** come vetrina digitale moderna e professionale. Ho progettato e sviluppato l’intera interfaccia: la storia e i valori dello studio, un profilo completo per ogni avvocato con le sue specializzazioni e una sezione servizi che aiuta i visitatori a trovare subito l’ambito di interesse.\n\nI contatti sono visibili da ogni pagina e gli orari di apertura si aggiornano in tempo reale."
+            "content": "Lo studio mi ha commissionato il sito dello **Studio Legale Romano** come vetrina digitale moderna e professionale. Ho progettato e sviluppato l’intera interfaccia: la storia e i valori dello studio, un profilo completo per ogni avvocato con le sue specializzazioni e una sezione servizi che aiuta i visitatori a trovare subito l’ambito di interesse.\n\nI contatti sono visibili da ogni pagina e gli orari di apertura si aggiornano in tempo reale.\n\nDal lancio nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti.\n\n- **PraticaSicura**, un portale per richiedere i rimborsi dei voli\n- **Domus** (front-end) e **Cardo** (back-end), il gestionale interno con cui lo studio segue le sue pratiche"
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -399,7 +413,7 @@
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
             "meta": "Libreria open source · 2025 · Vue 3",
-            "skills": ["vue"],
+            "skills": ["vue", "typescript", "vite", "npm"],
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -420,46 +434,47 @@
         "readMoreCta": "Leggi di più",
         "readLessCta": "Leggi meno",
         "ongoing": "In corso",
-        "archiveTitle": "Studi ed esercizi"
+        "archiveTitle": "Studi ed esercizi",
+        "templatesTeaserCta": "Vedi i template"
       },
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",
         "logoAlt": "Logo SB Templates",
         "title": "SB Templates",
-        "description": "Un modo più rapido per avviare un nuovo progetto: template open source per Nuxt, Astro e Flutter, con architettura, build, linting e formattazione già configurati: un nuovo progetto parte da codice funzionante.",
+        "description": "Template open source per Nuxt, Astro e Flutter. Ci parto per i miei progetti e ogni sviluppatore può usarli: ognuno imposta la struttura del progetto secondo le best practice del framework, con build, linting e formattazione già configurati, e lascia a te il resto.",
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
             "title": "SB-Template Nuxt",
-            "description": "Template Nuxt rapido e pronto all’uso, progettato per lanciare progetti moderni senza complicazioni.",
+            "description": "Template Nuxt con TypeScript e Tailwind CSS, una struttura di progetto che segue le convenzioni di Nuxt, linting e formattazione già configurati.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
             "logoSrc": "v1793011185/sbt-nuxt-logo_rxp0hc.svg",
             "logoWidth": 680,
             "logoHeight": 796,
             "langIcons": ["logos:nuxt-icon"],
-            "skills": ["nuxt"]
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify"]
           },
           {
             "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
             "title": "SB-Template Flutter",
-            "description": "Un template Flutter pulito e pronto all'uso, progettato esclusivamente per mobile iOS e Android per avviare rapidamente i tuoi progetti di app native con strumenti moderni e automazione.",
+            "description": "Template Flutter per iOS e Android, con design system, routing type-safe e componenti UI riutilizzabili.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
             "logoSrc": "v1793011184/sbt-flutter-logo_pzhtj1.svg",
             "logoWidth": 680,
             "logoHeight": 796,
-            "langIcons": ["logos:flutter", "logos:ios", "logos:android-icon"],
+            "langIcons": ["logos:flutter-icon", "logos:ios", "logos:android-icon"],
             "skills": ["flutter", "dart"]
           },
           {
             "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
             "title": "SB-Template Astro",
-            "description": "Un template Astro leggero e orientato ai contenuti, pensato per avviare rapidamente siti statici veloci e ottimizzati per la SEO.",
+            "description": "Template Astro per siti statici orientati ai contenuti, con TypeScript e Tailwind CSS.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
             "logoSrc": "v1793011184/sbt-astro-logo_pg6io2.svg",
             "logoWidth": 680,
             "logoHeight": 796,
             "langIcons": ["logos:astro-icon"],
-            "skills": ["astro"]
+            "skills": ["astro", "typescript", "tailwind-css", "pnpm"]
           }
         ],
         "linkToCta": "Usa questo template",
@@ -477,7 +492,7 @@
     "privacy": {
       "title": "Informativa sulla privacy",
       "lead": "Come il modulo di contatto tratta i tuoi dati, in parole semplici. In breve: questo sito non ti traccia.",
-      "summary": "- **Niente cookie, analytics o tracker.** Font e immagini arrivano dal dominio di questo sito.\n- **Solo il modulo di contatto raccoglie dati.** Nome, email e messaggio, nient'altro.\n- **EmailJS consegna il messaggio.** Arriva nella mia casella e tu ne ricevi una copia.\n- **Li uso solo per risponderti.** Niente newsletter, niente marketing, nessuna cessione a terzi.\n- **Puoi chiederne la cancellazione quando vuoi.** Scrivimi a [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
+      "summary": "- **Niente cookie, analytics o tracker.** Font e immagini arrivano dal dominio di questo sito.\n- **Solo il modulo di contatto raccoglie dati personali.** Nome, email, messaggio e quando hai dato il consenso. L'hosting conserva i normali log tecnici.\n- **EmailJS consegna il messaggio.** Arriva nella mia casella e tu ne ricevi una copia.\n- **Li uso solo per risponderti.** Niente newsletter, niente marketing, nessuna cessione a terzi.\n- **Puoi chiederne la cancellazione quando vuoi.** Scrivimi a [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
       "sections": [
         {
           "id": "controller",
@@ -497,7 +512,7 @@
         {
           "id": "legal-basis",
           "title": "Base giuridica",
-          "content": "Il tuo consenso (articolo 6, paragrafo 1, lettera a del GDPR), che dai spuntando la casella prima di inviare il modulo. Puoi revocarlo quando vuoi scrivendomi; la revoca non tocca quanto avvenuto prima."
+          "content": "- **Modulo di contatto** Il tuo consenso (articolo 6, paragrafo 1, lettera a del GDPR), che dai spuntando la casella prima di inviare il modulo. Puoi revocarlo quando vuoi scrivendomi; la revoca non tocca quanto avvenuto prima.\n- **Log tecnici** Il mio legittimo interesse a mantenere il sito sicuro e funzionante (articolo 6, paragrafo 1, lettera f del GDPR), per i dati che l'hosting registra a ogni visita."
         },
         {
           "id": "processors",
@@ -524,7 +539,7 @@
     "terms": {
       "title": "Termini e condizioni",
       "lead": "Le poche regole per usare questo sito. È un portfolio personale: niente da comprare, nessun account da creare.",
-      "summary": "- **Navigazione libera.** Nessun account richiesto.\n- **Il mio lavoro resta mio.** Puoi linkarlo liberamente, chiedimi prima di riutilizzarlo.\n- **Usa il modulo di contatto in modo onesto.** Dati veri, niente spam.\n- **Vale la legge italiana.**",
+      "summary": "- **Navigazione libera.** Nessun account richiesto.\n- **Il mio lavoro resta mio.** Puoi linkarlo liberamente, chiedimi prima di riutilizzarlo.\n- **Usa il modulo di contatto in modo onesto.** Dati veri, niente spam.\n- **Vale la legge italiana.** I tuoi diritti di consumatore nel paese in cui vivi restano validi.",
       "sections": [
         {
           "id": "acceptance",
@@ -539,7 +554,7 @@
         {
           "id": "content",
           "title": "Il mio lavoro e i contenuti",
-          "content": "Testi, illustrazioni, foto e design di questo sito sono miei, salvo dove indicato diversamente. Puoi linkare qualsiasi pagina e citarne brevi estratti con un link alla fonte; per riutilizzare altro, chiedimelo prima.\n\nI progetti open source mostrati qui seguono la propria licenza su GitHub. I nomi e i loghi dei clienti appartengono ai rispettivi titolari e compaiono solo per descrivere il lavoro che ho svolto per loro."
+          "content": "Testi, illustrazioni, foto e design di questo sito sono miei, salvo dove indicato diversamente. Puoi linkare qualsiasi pagina e citarne brevi estratti con un link alla fonte; per riutilizzare altro, chiedimelo prima a [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com).\n\nI progetti open source mostrati qui seguono la propria licenza su GitHub. I nomi e i loghi dei clienti appartengono ai rispettivi titolari e compaiono solo per descrivere il lavoro che ho svolto per loro."
         },
         {
           "id": "contact-form",
@@ -549,7 +564,7 @@
         {
           "id": "external-links",
           "title": "Link ad altri siti",
-          "content": "Alcune pagine rimandano a siti che non controllo, come GitHub, LinkedIn e i siti dei progetti a cui ho lavorato. Non sono responsabile dei loro contenuti né di come trattano i tuoi dati."
+          "content": "Alcune pagine rimandano a siti che non controllo, come GitHub, LinkedIn, Instagram e i siti dei progetti a cui ho lavorato. Non sono responsabile dei loro contenuti né di come trattano i tuoi dati."
         },
         {
           "id": "warranties",

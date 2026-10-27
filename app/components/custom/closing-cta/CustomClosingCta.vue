@@ -1,6 +1,9 @@
 <script setup lang="ts">
 interface CustomClosingCtaProps {
   showProjectsLink?: boolean
+  title?: string
+  text?: string
+  imageSrc?: string
 }
 
 // Dependencies
@@ -11,6 +14,9 @@ const { cvItems } = useContact()
 // Input / Output
 const props = withDefaults(defineProps<CustomClosingCtaProps>(), {
   showProjectsLink: false,
+  title: undefined,
+  text: undefined,
+  imageSrc: '/images/3d-avatar/avatar-pose-2.webp',
 })
 
 const emit = defineEmits<{
@@ -27,10 +33,10 @@ const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
     <div v-reveal class="grid items-center overflow-hidden rounded-xl border border-border bg-surface md:grid-cols-[1.6fr_1fr]">
       <div class="flex flex-col items-start p-6 md:p-12">
         <h2 id="closing-cta-title" class="mb-0 text-balance">
-          {{ t('pages.home.closingCta.title') }}
+          {{ props.title ?? t('pages.home.closingCta.title') }}
         </h2>
         <p class="sb-lead text-ink-muted text-left mt-4 mb-0 max-w-xl">
-          {{ t('pages.home.closingCta.text') }}
+          {{ props.text ?? t('pages.home.closingCta.text') }}
         </p>
         <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex">
           <BaseButton variant="primary" @click="emit('contact')">
@@ -46,7 +52,7 @@ const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
         <p class="sb-body text-ink-muted text-left mt-6 mb-0">
           {{ t('pages.home.closingCta.emailPrefix') }}
           <a
-            class="block w-fit hyphens-none text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus sm:inline"
+            class="flex w-fit min-h-11 items-center hyphens-none text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus sm:inline-flex"
             :href="`mailto:${CONTACT_EMAIL}`"
           >{{ CONTACT_EMAIL.split('@')[0] }}<wbr />@{{ CONTACT_EMAIL.split('@')[1] }}</a>
         </p>
@@ -66,7 +72,7 @@ const CONTACT_EMAIL = 'biddau.stefano99@gmail.com'
           :height="1536"
           loading="lazy"
           provider="none"
-          src="/images/3d-avatar/avatar-pose-2.webp"
+          :src="props.imageSrc"
           :width="1024"
         />
       </div>

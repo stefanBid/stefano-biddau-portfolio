@@ -5,7 +5,7 @@ import useSkills from '~/composables/data/useSkills'
 import type { SkillTier } from '~/composables/data/useSkills'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 0.9 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 0.9 },
 })
 
 // Dependencies
@@ -33,7 +33,7 @@ const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
 const activeSkillId = ref<string | null>(null)
 
-// Each chip links to the first place the skill shows up (work, then projects); the area line lists them all
+// Each chip links to the first place the skill shows up (work, then projects); the area line only names them all
 const firstReferenceBySkill = computed<Record<string, SkillReference>>(() => {
   const map: Record<string, SkillReference> = {}
   references.value.forEach((reference) => {
@@ -59,20 +59,21 @@ const onHighlightSkill = (id: string | null) => {
       :text="t('pages.skills.hero')"
     />
 
-    <div :aria-label="t('a11y.skillTiersLegend')" class="py-8 border-b border-border" role="group">
-      <dl class="grid gap-4 m-0 md:grid-cols-3 md:gap-10">
+    <div :aria-label="t('a11y.skillTiersLegend')" class="py-6 border-b border-border md:py-8" role="group">
+      <dl class="flex flex-wrap gap-x-6 gap-y-3 m-0 md:grid md:grid-cols-3 md:gap-10">
         <div
           v-for="tier in TIERS"
           :key="tier"
-          class="flex items-start gap-3"
+          class="flex items-center gap-2 md:items-start md:gap-3"
         >
-          <CustomSkillsTierIcon class="mt-0.5" :tier="tier" />
-          <div>
+          <CustomSkillsTierIcon class="md:mt-0.5" :tier="tier" />
+          <div class="flex items-baseline gap-2 md:block">
             <dt class="sb-label uppercase text-ink">
               {{ t(`pages.skills.tiers.${tier}.label`) }}
             </dt>
-            <dd class="sb-small text-ink-muted text-left m-0 mt-1">
-              {{ t(`pages.skills.tiers.${tier}.description`) }}
+            <dd class="sb-small text-ink-muted text-left m-0 md:mt-1">
+              <span class="md:hidden">{{ t(`pages.skills.tiers.${tier}.short`) }}</span>
+              <span class="hidden md:inline">{{ t(`pages.skills.tiers.${tier}.description`) }}</span>
             </dd>
           </div>
         </div>
@@ -95,15 +96,7 @@ const onHighlightSkill = (id: string | null) => {
           {{ t(`pages.skills.areas.${area.key}.paragraph`) }}
         </p>
         <p v-if="referencesByArea[area.key].length" class="sb-small text-ink-muted text-left hyphens-none mt-4 mb-0">
-          {{ t('pages.skills.seenIn') }}
-          <template v-for="(item, itemIndex) in referencesByArea[area.key]" :key="item.key">
-            <NuxtLink
-              class="text-primary-ink underline underline-offset-4 rounded-sm hover:text-primary-ink-hover sb-transition sb-focus"
-              :to="item.to"
-            >
-              {{ item.title }}
-            </NuxtLink><span v-if="itemIndex < referencesByArea[area.key].length - 1">, </span>
-          </template>
+          {{ t('pages.skills.seenIn') }} {{ referencesByArea[area.key].map(item => item.title).join(', ') }}
         </p>
 
         <div class="flex flex-col gap-8 mt-10">

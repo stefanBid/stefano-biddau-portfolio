@@ -2,7 +2,7 @@
 import useLegalDocument from '~/composables/data/useLegalDocument'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-10-26', changefreq: 'yearly', priority: 0.5 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'yearly', priority: 0.5 },
 })
 
 // Dependencies
@@ -29,6 +29,6 @@ useSeoMeta({
     id="terms"
     :legal-document="legalDocument"
     related="privacy-policy"
-    updated-iso="2026-10-26"
+    updated-iso="2026-10-27"
   />
 </template>

@@ -106,7 +106,7 @@ const techLabel = computed(() => (props.icons ?? [])
         </div>
 
         <!-- Description -->
-        <p class="sb-body text-center text-ink-muted text-pretty hyphens-none mt-3 sb-transition">
+        <p class="sb-body text-ink-muted mt-3 sb-transition">
           {{ props.description }}
         </p>
       </template>

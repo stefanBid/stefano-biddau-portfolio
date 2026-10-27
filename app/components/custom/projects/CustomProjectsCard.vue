@@ -12,6 +12,7 @@ interface CustomProjectsCardProps {
   initiallyExpanded?: boolean
   isOngoing?: boolean
   featured?: boolean
+  isHighlighted?: boolean
 }
 
 // Input / Output
@@ -25,13 +26,9 @@ const props = withDefaults(
     initiallyExpanded: false,
     isOngoing: false,
     featured: false,
+    isHighlighted: false,
   },
 )
-
-const emits = defineEmits<{
-  // eslint-disable-next-line no-unused-vars
-  (e: 'toggleDescription', value: boolean): void
-}>()
 
 // Dependencies
 const { t } = useI18n()
@@ -51,30 +48,24 @@ watch(() => props.initiallyExpanded, (value) => {
 const hasImage = computed(() => Boolean(props.imageSrc))
 const isSplitLayout = computed(() => props.featured && hasImage.value)
 
-const needsExpansion = computed(() => !props.featured && props.content.length > MAX_BLOCKS_WITHOUT_TOGGLE)
+const needsExpansion = computed(() => props.content.length > MAX_BLOCKS_WITHOUT_TOGGLE)
 
-const getContentPreview = computed(() => {
-  if (!props.content || !Array.isArray(props.content)) {
-    return []
-  }
-  if (needsExpansion.value && !isDescriptionExpanded.value) {
-    return props.content.slice(0, PREVIEW_BLOCKS)
-  }
-  return props.content
-})
+// Featured cards collapse only below lg, where their full text runs past a screen; CSS picks the version so SSR and client agree
+const isShowingPreview = computed(() => needsExpansion.value && !isDescriptionExpanded.value)
+
+const contentPreview = computed(() => props.content.slice(0, PREVIEW_BLOCKS))
 
 // Events
 const onTriggerDescription = () => {
   isDescriptionExpanded.value = !isDescriptionExpanded.value
-  emits('toggleDescription', isDescriptionExpanded.value)
 }
 </script>
 
 <template>
   <article
     :id="`project-${props.id}`"
-    class="scroll-mt-24"
-    :class="{ 'lg:col-span-2': props.featured }"
+    class="scroll-mt-24 rounded-lg ring-2 ring-offset-4 ring-offset-bg sb-transition-slow"
+    :class="[props.isHighlighted ? 'ring-primary' : 'ring-transparent', { 'lg:col-span-2': props.featured }]"
     :data-project-id="props.id"
   >
     <BaseCard
@@ -133,12 +124,24 @@ const onTriggerDescription = () => {
             {{ props.meta }}
           </p>
 
-          <BaseRichText
+          <div
             v-if="props.content.length > 0"
             :id="`project-body-${props.id}`"
-            :blocks="getContentPreview"
-            class="mt-4 text-ink-muted"
-          />
+            class="mt-4"
+          >
+            <BaseRichText
+              v-if="isShowingPreview"
+              :blocks="contentPreview"
+              class="text-ink-muted"
+              :class="{ 'lg:hidden': props.featured }"
+            />
+            <BaseRichText
+              v-if="!isShowingPreview || props.featured"
+              :blocks="props.content"
+              class="text-ink-muted"
+              :class="{ 'max-lg:hidden': isShowingPreview }"
+            />
+          </div>
 
           <BaseButton
             v-if="needsExpansion"
@@ -146,6 +149,7 @@ const onTriggerDescription = () => {
             :aria-describedby="`project-title-${props.id}`"
             :aria-expanded="isDescriptionExpanded ? 'true' : 'false'"
             class="-ml-6 self-start"
+            :class="{ 'lg:hidden': props.featured }"
             tone="accent"
             variant="ghost"
             @click="onTriggerDescription"

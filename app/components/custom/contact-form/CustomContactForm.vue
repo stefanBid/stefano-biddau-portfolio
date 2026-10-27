@@ -111,7 +111,7 @@ const onSendMessage = async () => {
     from_name: nameController.value,
     from_email: emailController.value,
     message: completeMessage,
-    agree_time: new Date().toLocaleTimeString(),
+    agree_time: new Date().toISOString(),
     year: new Date().getFullYear().toString(),
   })
 

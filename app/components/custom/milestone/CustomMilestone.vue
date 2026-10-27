@@ -57,6 +57,9 @@ const isExpandable = computed(() => props.content.length > MAX_CONTENT_BLOCKS ||
 
 const hiddenStackCount = computed(() => props.isOpen ? 0 : Math.max(props.stack.length - COLLAPSED_STACK_ITEMS, 0))
 
+// Right column on lg: clients, stack and (when open) the photo, so the text never sits beside empty space
+const hasAside = computed(() => props.clients.length > 0 || props.stack.length > 0 || (props.isOpen && Boolean(props.imageSrc)))
+
 const visibleContent = computed(() => props.isOpen ? props.content : props.content.slice(0, MAX_CONTENT_BLOCKS))
 
 const subline = computed(() => [props.organization, props.typeLabel].filter(Boolean).join(' · '))
@@ -132,86 +135,91 @@ const onToggle = () => {
         </template>
       </p>
 
-      <p v-if="props.clients.length" class="sb-body text-ink-muted text-left hyphens-none mt-3 mb-0">
-        {{ t('pages.about.clientsLabel') }}
-        <strong class="font-bold text-ink">{{ props.clients.join(' · ') }}</strong>
-      </p>
-
-      <ul v-if="props.stack.length" class="flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none">
-        <li
-          v-for="(item, index) in props.stack"
-          :key="item.name"
-          :class="{ 'max-md:sr-only': !props.isOpen && index >= COLLAPSED_STACK_ITEMS }"
-        >
-          <BaseChip
-            :accent-color="item.color"
-            :icon="item.icon"
-            :text="item.name"
-            variant="ghost"
-          />
-        </li>
-        <li
-          v-if="hiddenStackCount"
-          aria-hidden="true"
-          class="md:hidden"
-        >
-          <BaseChip :text="`+${hiddenStackCount}`" variant="ghost" />
-        </li>
-      </ul>
-
       <div
         :id="`milestone-body-${props.id}`"
-        class="mt-5 md:mt-6"
-        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:grid-rows-[auto_1fr] lg:gap-x-12 lg:items-start': props.isOpen && props.imageSrc }"
+        class="flex flex-col"
+        :class="{ 'lg:grid lg:grid-cols-[minmax(0,1fr)_22rem] lg:items-start lg:gap-x-12 lg:mt-5': hasAside }"
       >
-        <BaseRichText
-          v-if="visibleContent.length"
-          :blocks="visibleContent"
-          class="max-w-prose"
-        />
+        <!-- display: contents below lg lets both columns interleave through order: clients and stack first, then text, photo, toggle -->
+        <div class="contents" :class="{ 'lg:block lg:col-start-1 lg:row-start-1': hasAside }">
+          <BaseRichText
+            v-if="visibleContent.length"
+            :blocks="visibleContent"
+            class="order-2 mt-5 max-w-prose md:mt-6 lg:mt-0"
+          />
 
-        <!-- CSS entrance, not <Transition>: Vue keeps a leaving node for two frames even without leave classes, and with the grid already gone the photo would flash under the text -->
-        <figure
-          v-if="props.isOpen && props.imageSrc"
-          class="mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md animate-rise-in md:mt-8 md:p-4 lg:sticky lg:top-24 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mx-0 lg:mt-0"
-        >
-          <div class="w-full h-62 sm:h-80 md:h-96 overflow-hidden">
-            <NuxtImg
-              :alt="props.imageCaption ? '' : props.role"
-              class="w-full h-full object-cover"
-              :height="imageHeight"
-              loading="lazy"
-              sizes="320px sm:352px"
-              :src="props.imageSrc"
-              :width="imageWidth"
-            />
+          <div v-if="isExpandable" class="order-4 flex">
+            <BaseButton
+              :aria-controls="`milestone-body-${props.id}`"
+              :aria-expanded="props.isOpen ? 'true' : 'false'"
+              class="mt-2 -ml-4 md:-ml-6"
+              tone="accent"
+              variant="ghost"
+              @click="onToggle"
+            >
+              {{ props.isOpen ? t('pages.about.milestoneCtaLess') : t('pages.about.milestoneCta') }}
+              <span class="sr-only">: {{ [props.role, srSubline].filter(Boolean).join(', ') }}</span>
+              <Icon
+                aria-hidden="true"
+                class="size-5 sb-transition"
+                :class="{ 'rotate-180': props.isOpen }"
+                name="solar:alt-arrow-down-bold-duotone"
+              />
+            </BaseButton>
           </div>
-          <figcaption
-            v-if="props.imageCaption"
-            class="sb-small italic text-center text-balance text-bg mt-3"
-          >
-            {{ props.imageCaption }}
-          </figcaption>
-        </figure>
+        </div>
 
-        <div v-if="isExpandable" class="flex lg:col-start-1 lg:row-start-2">
-          <BaseButton
-            :aria-controls="`milestone-body-${props.id}`"
-            :aria-expanded="props.isOpen ? 'true' : 'false'"
-            class="mt-2 -ml-4 md:-ml-6"
-            tone="accent"
-            variant="ghost"
-            @click="onToggle"
-          >
-            {{ props.isOpen ? t('pages.about.milestoneCtaLess') : t('pages.about.milestoneCta') }}
-            <span class="sr-only">: {{ [props.role, srSubline].filter(Boolean).join(', ') }}</span>
-            <Icon
+        <div v-if="hasAside" class="contents lg:col-start-2 lg:row-start-1 lg:flex lg:flex-col lg:gap-4 lg:self-stretch">
+          <p v-if="props.clients.length" class="order-1 sb-body text-ink-muted text-left hyphens-none mt-3 mb-0 lg:mt-0">
+            {{ t('pages.about.clientsLabel') }}
+            <strong class="font-bold text-ink">{{ props.clients.join(' · ') }}</strong>
+          </p>
+
+          <ul v-if="props.stack.length" class="order-1 flex flex-wrap gap-2 mt-4 mb-0 p-0 list-none lg:mt-0">
+            <li
+              v-for="(item, index) in props.stack"
+              :key="item.name"
+              :class="{ 'max-md:sr-only': !props.isOpen && index >= COLLAPSED_STACK_ITEMS }"
+            >
+              <BaseChip
+                :accent-color="item.color"
+                :icon="item.icon"
+                :text="item.name"
+                variant="ghost"
+              />
+            </li>
+            <li
+              v-if="hiddenStackCount"
               aria-hidden="true"
-              class="size-5 sb-transition"
-              :class="{ 'rotate-180': props.isOpen }"
-              name="solar:alt-arrow-down-bold-duotone"
-            />
-          </BaseButton>
+              class="md:hidden"
+            >
+              <BaseChip :text="`+${hiddenStackCount}`" variant="ghost" />
+            </li>
+          </ul>
+
+          <!-- CSS entrance, not <Transition>: Vue keeps a leaving node for two frames even without leave classes, and the photo would flash after the layout changed -->
+          <figure
+            v-if="props.isOpen && props.imageSrc"
+            class="order-3 mx-auto mt-6 mb-0 w-full max-w-sm bg-ink p-3 shadow-md animate-rise-in md:mt-8 md:p-4 lg:sticky lg:top-24 lg:mx-0 lg:mt-2"
+          >
+            <div class="w-full h-62 sm:h-80 md:h-96 lg:h-72 overflow-hidden">
+              <NuxtImg
+                :alt="props.imageCaption ? '' : props.role"
+                class="w-full h-full object-cover"
+                :height="imageHeight"
+                loading="lazy"
+                sizes="320px sm:352px"
+                :src="props.imageSrc"
+                :width="imageWidth"
+              />
+            </div>
+            <figcaption
+              v-if="props.imageCaption"
+              class="sb-small italic text-center text-balance text-bg mt-3"
+            >
+              {{ props.imageCaption }}
+            </figcaption>
+          </figure>
         </div>
       </div>
     </BaseCard>

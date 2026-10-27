@@ -3,7 +3,7 @@ import useMilestones from '~/composables/data/useMilestones'
 import useSelectedWork from '~/composables/data/useSelectedWork'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 0.9 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 0.9 },
 })
 
 // Dependencies
@@ -48,6 +48,7 @@ const onToggleMilestone = (id: string | number) => {
       id="about-me"
       image-src="/images/3d-avatar/avatar-pose-3.webp"
       :lead="t('pages.about.lead')"
+      :overline="t('pages.about.overline')"
       :text="t('pages.about.hero')"
     />
 
@@ -154,7 +155,7 @@ const onToggleMilestone = (id: string | number) => {
             <span class="flex flex-1 flex-col gap-1">
               <span class="sb-h4 text-ink group-hover:text-primary-ink sb-transition">{{ item.title }}</span>
               <span class="sb-small text-ink-muted">{{ item.meta }}</span>
-              <span class="sb-body text-ink-muted text-pretty hyphens-none">{{ t(`pages.about.alongside.outcomes.${item.slug}`) }}</span>
+              <span class="sb-body text-ink-muted text-pretty hyphens-none">{{ item.angle }}</span>
             </span>
             <Icon
               aria-hidden="true"
@@ -166,6 +167,12 @@ const onToggleMilestone = (id: string | number) => {
       </ul>
     </section>
 
-    <CustomClosingCta show-projects-link @contact="isContactFormOpen = true" />
+    <CustomClosingCta
+      image-src="/images/3d-avatar/avatar-pose-5.webp"
+      show-projects-link
+      :text="t('pages.about.closingCta.text')"
+      :title="t('pages.about.closingCta.title')"
+      @contact="isContactFormOpen = true"
+    />
   </div>
 </template>

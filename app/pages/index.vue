@@ -4,7 +4,7 @@ import useSelectedWork from '~/composables/data/useSelectedWork'
 import useSkills from '~/composables/data/useSkills'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 1 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 1 },
 })
 
 // Dependencies
@@ -161,6 +161,9 @@ const STACK_GROUP_LAYOUT = {
               <p class="sb-small text-ink-muted text-left mb-0">
                 {{ item.meta }}
               </p>
+              <p class="sb-body text-ink mt-3 mb-0">
+                {{ item.outcome }}
+              </p>
             </div>
           </NuxtLink>
         </li>
@@ -262,23 +265,22 @@ const STACK_GROUP_LAYOUT = {
       <CustomGithubStats :stats="githubStats" />
     </section>
 
-    <section v-reveal aria-labelledby="experience-title" class="pb-24 grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-16">
-      <div class="flex flex-col items-start gap-4">
-        <h2 id="experience-title" class="mb-0 scroll-mt-24">
+    <section v-reveal aria-labelledby="experience-title" class="pb-24">
+      <div class="flex flex-col items-start gap-3 py-6 border-y border-border md:flex-row md:items-center md:gap-10">
+        <h2 id="experience-title" class="sb-h3 mb-0 shrink-0">
           {{ t('pages.home.experience.title') }}
         </h2>
-        <p class="sb-body text-ink-muted text-left mb-0">
+        <p class="sb-body text-ink text-left text-pretty hyphens-none mb-0 md:flex-1">
           {{ t('pages.home.experience.lead') }}
         </p>
         <NuxtLink
-          class="group inline-flex items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
+          class="group inline-flex shrink-0 items-center min-h-11 gap-2 sb-label uppercase text-ink-muted hover:text-ink underline-offset-4 hover:underline sb-transition sb-focus rounded-sm"
           :to="localePath('about-me')"
         >
           {{ t('pages.home.experience.viewAll') }}
           <Icon aria-hidden="true" class="size-4 sb-transition motion-safe:group-hover:translate-x-0.5" name="solar:arrow-right-linear" />
         </NuxtLink>
       </div>
-      <CustomExperienceList />
     </section>
 
     <CustomClosingCta @contact="isContactFormOpen = true" />

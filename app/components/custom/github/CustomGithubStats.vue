@@ -33,7 +33,7 @@ const statRows = computed(() => [
           <dt class="sb-body text-ink">
             {{ t(`pages.home.github.stats.${row.key}`) }}
           </dt>
-          <dd class="sb-h1 m-0 text-primary-ink">
+          <dd class="sb-h3 m-0" :class="row.key === 'contributions' ? 'text-primary-ink' : 'text-ink'">
             <BaseCountUp :value="row.value" />
           </dd>
         </div>

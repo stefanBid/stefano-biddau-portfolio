@@ -26,7 +26,7 @@ const onSelectTab = (tabId: string | number) => {
   <div>
     <ThePageHero
       id="my-projects"
-      image-src="/images/3d-avatar/avatar-pose-5.webp"
+      image-src="/images/3d-avatar/avatar-pose-6.webp"
       :lead="t('pages.projects.lead')"
       :text="t('pages.projects.hero')"
     />

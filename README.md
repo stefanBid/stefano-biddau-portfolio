@@ -278,7 +278,7 @@ Always add `sb-transition` to interactive elements. It does not animate width/he
 
 **Motion language.** The site's world is the astronaut, so its one authored moment is a weightless arrival on the home hero: the avatar drifts up and settles (`animate-drift-in`), the name rises out of its line (`animate-mask-up`, clip-path + transform), the typed role starts at 700ms, lead and CTAs follow (`animate-rise-in` with `sb-delay-*`), all within about 1s. Afterwards every hero avatar floats slowly (`animate-float` via `BaseFloat`, paused offscreen). Supporting motion only explains state: mobile menu links arrive in sequence (50ms apart) and close at once, the open milestone photo enters with the `fade` transition (enter only: on close the two-column grid goes at once, a leaving photo would drop under the text), buttons press (`motion-safe:active:scale-98`), arrows on text links and skill chips nudge on hover (`motion-safe:group-hover:translate-*`), the Skills orbits pause offscreen.
 
-**First entrance in the viewport — `v-reveal`** (`app/plugins/reveal.ts`, CSS in `animation.css` §5). Put `v-reveal` on a section or card; `v-reveal="index"` staggers a list (80ms per index, max 320ms). On mount the directive hides only elements still below the fold (`.sb-reveal`: opacity 0, `--sb-motion-distance` × 3 down), reveals each one once when it scrolls in (`.sb-reveal--in`, `--sb-duration-entrance`, ease-out) and removes both classes at the end so the element's own hover transitions come back. Server HTML never carries the classes: without JS everything is visible, and nothing above the fold flashes. Under reduced motion it is a plain fade. Used on the home sections and Selected work cards, About milestones and "Alongside", Skills areas, project and template cards, the closing CTA and the legal sections.
+**First entrance in the viewport — `v-reveal`** (`app/plugins/reveal.ts`, CSS in `animation.css` §5). Put `v-reveal` on a section or card; `v-reveal="index"` staggers a list (80ms per index, max 320ms). On mount the directive hides only elements still below the fold (`.sb-reveal`: opacity 0, `--sb-motion-distance` × 3 down), reveals each one once when it scrolls in (`.sb-reveal--in`, `--sb-duration-entrance`, ease-out) and removes both classes at the end so the element's own hover transitions come back. Server HTML never carries the classes: without JS everything is visible, and nothing above the fold flashes. Under reduced motion it is a plain fade. Used on the home sections and Selected work cards, About milestones and "Alongside", Skills areas, project and template cards and the closing CTA. Never on anchor targets such as the legal sections: an element still offset by `.sb-reveal` makes an in-page jump land under the sticky header.
 
 Durations: `--sb-duration-feedback` 150ms · `-state` 200ms · `-layout` 400ms · `-entrance` 800ms. Easings: `ease-out` (arrival), `ease-in` (exit), `ease-in-out` (state). Animations: `animate-fade-in`, `animate-fade-out`, `animate-rise-in`, `animate-slide-in-right`, `animate-spin`, `animate-drift-in` (avatar arrival), `animate-float` (weightless loop), `animate-mask-up` (hero name reveal). Under `prefers-reduced-motion`, `--sb-motion-distance` and `--sb-float-tilt` drop to 0, removing all movement while keeping opacity and colour changes.
 
@@ -349,7 +349,7 @@ Every **action** (submit, download, open, "Read more", links styled as buttons, 
 | `variant` | `'primary' \| 'secondary' \| 'outline' \| 'ghost'` | `'primary'` | `ghost` = text only |
 | `size` | `'sm' \| 'md' \| 'lg'` | `'md'` | The **only** prop that changes dimensions (see table below) |
 | `tone` | `'neutral' \| 'accent'` | `'neutral'` | `ghost` only: `accent` uses `text-primary-ink` |
-| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `<a>`; external URLs open in a new tab, show an ↗ icon and announce it |
+| `type` | `'button' \| 'submit' \| 'reset' \| 'link'` | `'button'` | `'link'` renders `NuxtLink` (client-side navigation for internal paths); external URLs open in a new tab, show an ↗ icon and announce it |
 | `to` | `string` | `undefined` | Required when `type='link'` |
 | `ariaLabel` | `string` | `undefined` | Required with `iconOnly` |
 | `isDisabled` | `boolean` | `false` | |
@@ -527,7 +527,7 @@ Counts from 0 to `value` the first time it is 60% in view. SSR and no-JS render 
 |---|---|---|
 | `blocks` | `RichBlock[]` | Required |
 
-Converts `RichBlock[]` to sanitised HTML via `blocksToHtml` + `useSanitize`. Never write `v-html` directly — always use this component.
+Converts `RichBlock[]` to sanitised HTML via `blocksToHtml` + `useSanitize`. Plain left clicks on internal links (`/…`) go through `navigateTo`, so they don't reload the app. Never write `v-html` directly — always use this component.
 
 ---
 
@@ -553,7 +553,7 @@ Vertical tile (icon above name) for the home "Core stack" grid.
 
 ### `CustomSkillsChip`
 
-Inline skill chip (icon + name) for the Skills page tier lists.
+Inline skill chip (icon + name) for the Skills page tier lists. A linked gold chip gets its own gold hover border (scoped CSS sits outside the Tailwind layers and would hide `hover:border-ink-muted`).
 
 | Prop | Type | Default | Notes |
 |---|---|---|---|
@@ -564,7 +564,7 @@ Inline skill chip (icon + name) for the Skills page tier lists.
 | `to` | `RouteLocationRaw` | `undefined` | When set, the chip is a `NuxtLink` with a trailing arrow (orange on hover) to where the skill is used |
 | `seenIn` | `string` | `undefined` | Name of that place, read by screen readers after the skill name (`pages.skills.chipSeenIn`) |
 
-The Skills page passes each skill's first `useSkillReferences()` entry (work first, then projects, then SB Templates); skills with no reference stay plain chips.
+The Skills page passes each skill's first `useSkillReferences()` entry (work first, then projects, then SB Templates, then this site); skills with no reference stay plain chips.
 
 ### `CustomSkillsTierIcon`
 
@@ -589,13 +589,14 @@ Three concentric rings with the given tier's ring highlighted (inner = `core`, m
 | `deploymentUrls` | `MenuItem[]` | Optional live links ("Live site"); npmjs.com links are labelled "npm" |
 | `initiallyExpanded` | `boolean` | `false`. Set by `my-projects/index.vue` for the project named in the URL hash |
 | `isOngoing` | `boolean` | `false`. Shows an "Ongoing" chip on the cover (above the title when there is no cover); `my-projects/index.vue` sorts ongoing projects first |
-| `featured` | `boolean` | `false`. Spans both grid columns with cover and full text side by side (`lg`: cover 2/5 at a fixed `h-72`, top-aligned and sticky under the header (`top-24`) while the text scrolls, text 3/5), no "Read more". `my-projects/index.vue` sets it for ongoing projects and for a regular card left alone in the last grid row |
+| `featured` | `boolean` | `false`. Spans both grid columns with cover and full text side by side (`lg`: cover 2/5 at a fixed `h-72`, top-aligned and sticky under the header (`top-24`) while the text scrolls, text 3/5), no "Read more". `my-projects/index.vue` sets it for ongoing projects |
+| `isHighlighted` | `boolean` | `false`. Orange ring (offset 4px) set by `my-projects/index.vue` for 2.4s on the project a deep link landed on; archive rows get an orange tint instead |
 
 Links render through `CustomProjectsLinks` (see below).
 
-Emits: `toggleDescription(value: boolean)`. Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
+Deep links such as `/my-projects#project-<id>` (used by the home "Selected work" cards) open and scroll to that project; the scroll is handled in `app/router.options.ts` after the page transition.
 
-Each card keeps its own height in the grid (`items-start`), so expanding one never stretches its neighbour. The cover shows only the image (and the "Ongoing" chip); title, meta, text and the `secondary` link buttons sit below it, always with visible labels. The thesis, personal exercises (Sfrigola Core, Sfrigola App) and course exercises (`ARCHIVED_PROJECT_IDS` in `my-projects/index.vue`) are not cards: they are listed after the grid as compact rows (title, meta, `CustomProjectsLinks` at `size="sm"`) under `pages.projects.personalProjects.archiveTitle`, keeping their `#project-<id>` anchors.
+Each card keeps its own height in the grid (`items-start`), so expanding one never stretches its neighbour. The grid ends with an SB Templates teaser card (logo, meta and outcome from `useSelectedWork`, `secondary` link button "See the templates" to the SB Templates tab); it spans both columns only when it would be alone in the last row. The cover shows only the image (and the "Ongoing" chip); title, meta, text and the `secondary` link buttons sit below it, always with visible labels. The thesis, personal exercises (Sfrigola Core, Sfrigola App) and course exercises (`ARCHIVED_PROJECT_IDS` in `my-projects/index.vue`) are not cards: they are listed after the grid as compact rows (title, meta, `CustomProjectsLinks` at `size="sm"`) under `pages.projects.personalProjects.archiveTitle`, keeping their `#project-<id>` anchors.
 
 ### `CustomProjectsLinks`
 
@@ -605,7 +606,7 @@ Each card keeps its own height in the grid (`items-start`), so expanding one nev
 | `deploymentUrls` | `MenuItem[]` | `[]` | Live links ("Live site"); all-npmjs.com links are labelled "npm" with the `mdi:npm` icon |
 | `size` | `'sm' \| 'md'` | `'md'` | `md` in `CustomProjectsCard`, `sm` in the studies rows of `my-projects/index.vue` |
 
-Code and live links form one list: a single link is a `secondary` `BaseButton` link, two or more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), with the link's own label as `description` when a kind has more than one link. Renders nothing without links; the caller owns the wrapper and its spacing.
+Code and live links form one list: up to three links are separate `secondary` `BaseButton` links ("Code", "Live site", "npm", plus the link's own label when a kind repeats), more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), with the link's own label as `description` when a kind has more than one link. Renders nothing without links; the caller owns the wrapper and its spacing.
 
 ### `CustomSbTemplatesCard`
 
@@ -616,6 +617,8 @@ Code and live links form one list: a single link is a `secondary` `BaseButton` l
 | `codebaseUrl` | `string` | Required |
 | `logoSrc` | `string` | Optional |
 | `langIcons` | `string[]` | Optional Iconify names for tech stack |
+
+Logo, centred title and tech icons; the description is running text, justified like the rest of the site.
 
 ### `CustomMilestone`
 
@@ -631,15 +634,18 @@ Code and live links form one list: a single link is a `secondary` `BaseButton` l
 | `imageSrc` / `imageWidth` / `imageHeight` | | Optional — polaroid `figure`, shown only when open |
 | `imageCaption` | `string` | Optional — `figcaption` (image `alt` is then empty) |
 
-Emits `toggle(id)`. Each milestone opens and closes on its own (Read more ↔ Show less, `aria-expanded`); the timeline dot is decorative. Closing a milestone whose top is above the viewport scrolls it back into view, instantly under reduced motion.
+Emits `toggle(id)`. Each milestone opens and closes on its own (Read more ↔ Show less, `aria-expanded`); the timeline dot is decorative. From `lg`, a milestone with clients, stack or an open photo splits in two columns: text and Read more on the left, a 22rem column on the right with clients, stack chips and, when open, the photo (`h-72`, sticky under the header) — the card never shows text beside empty space. Below `lg` the two columns are `display: contents` and `order` keeps the stacked order: clients, stack, text, photo, Read more. Closing a milestone whose top is above the viewport scrolls it back into view, instantly under reduced motion.
 
 ### `CustomClosingCta`
 
 | Prop | Type | Notes |
 |---|---|---|
 | `showProjectsLink` | `boolean` | Optional — adds a link to My Projects |
+| `title` | `string` | Optional — replaces `pages.home.closingCta.title` |
+| `text` | `string` | Optional — replaces `pages.home.closingCta.text` |
+| `imageSrc` | `string` | Optional — avatar pose, default `avatar-pose-2.webp` |
 
-Closing call to action shared by Home and About Me: contact (emits `contact`; pages set `useContact().isFormOpen`, the layout owns the single `CustomContactForm`), CV download menu (EN/IT, active locale first), mailto fallback.
+Closing call to action at the end of every main page: contact (emits `contact`; pages set `useContact().isFormOpen`, the layout owns the single `CustomContactForm`), CV download menu (EN/IT, active locale first), mailto fallback. About Me passes its own copy (`pages.about.closingCta`, the "next chapter" after the timeline) and pose (`avatar-pose-5.webp`, hand held out).
 
 ### `CustomGithubStats`
 
@@ -647,7 +653,7 @@ Closing call to action shared by Home and About Me: contact (emits `contact`; pa
 |---|---|---|
 | `stats` | `GithubStats` | Required |
 
-Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — contributions in the last year (only when the build had a token), public repositories, stars received, years on GitHub — next to the three most-starred own repositories. The page hides the whole section when `useGithubStats()` returns `null`.
+Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — contributions in the last year (only when the build had a token), public repositories, stars received, years on GitHub, values in `sb-h3` `text-ink` with only contributions in `text-primary-ink` — next to the three most-starred own repositories. The page hides the whole section when `useGithubStats()` returns `null`.
 
 ### `CustomLegalDocument`
 
@@ -658,11 +664,7 @@ Home page GitHub section: a ledger of animated counters (`BaseCountUp`) — cont
 | `updatedIso` | `string` | Required. `YYYY-MM-DD` of the last content change, shown as "Last updated" (UTC, locale format); keep it equal to the page's sitemap `lastmod` |
 | `related` | `'privacy-policy' \| 'terms-and-conditions'` | Required. The other legal page, linked at the end |
 
-Shared layout of Privacy Policy and Terms and Conditions: `ThePageHero` (title + plain-language lead), "Last updated", an "At a glance" summary, then numbered sections (`<section id>` with `scroll-mt-24`, linkable as `#rights`, `#processors`…) rendered with `BaseRichText` at `max-w-prose`. Table of contents: a sticky left rail from `lg` (active section in `text-primary-ink`, `aria-current="location"`, computed from the scroll position), a collapsible `<details>` under the summary below `lg`. List items that start with a bold label (`**Access** Get a copy…`) show the label on its own line, and `mailto:` links sit on their own line so the justified line before them does not stretch. Ends with the contact `BaseButton` (opens the shared form via `useContact`), a link to the related page and "Back to top".
-
-### `CustomExperienceList`
-
-No props. LinkedIn-style list of `useMilestones()` entries, newest first: role, `organization · type`, then `start – end · duration` (months counted inclusively, as LinkedIn does; no `endDate` means "Present"). The "Present" duration is refreshed on mount so a stale prerender corrects itself.
+Shared layout of Privacy Policy and Terms and Conditions: `ThePageHero` (title + plain-language lead), "Last updated", an "At a glance" summary, then numbered sections (`<section id>` with `scroll-mt-24`, linkable as `#rights`, `#processors`…) rendered with `BaseRichText` at `max-w-prose`. Table of contents: a sticky left rail from `lg` (20rem; numbers hang, titles `text-balance`) (active section in `text-primary-ink`, `aria-current="location"`, computed from the scroll position), a collapsible `<details>` above the summary below `lg`, which folds again when a section is picked. List items that start with a bold label (`**Access** Get a copy…`) show the label on its own line, and `mailto:` links sit on their own line so the justified line before them does not stretch. Ends with the contact `BaseButton` (opens the shared form via `useContact`), a link to the related page and "Back to top" (scrolls to the top and moves focus to the hero `h1`, which is `tabindex="-1"`).
 
 ### `CustomSolarSystem`
 
@@ -693,7 +695,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`, `lead?` (one `sb-lead` paragraph under the title; About uses the home lead). On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (name, role, CTAs, avatar): exactly one viewport tall (`min-h-svh`, pulled under the sticky header), with a link down to Selected work; below it, a clients band (SI2001 clients and freelance clients, names only).
+Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`, `lead?` (one `sb-lead` paragraph under the title), `overline?` (orange `sb-overline` above the `h1`: About names the page there, "About me", and keeps the `h1` for a first-person line). On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (`h1` = the name alone, then "I'm a" + typed role, CTAs, avatar): exactly one viewport tall (`min-h-svh`, pulled under the sticky header), with a link down to Selected work; below it, a clients band (SI2001 clients and freelance clients, names only).
 
 ---
 
@@ -724,9 +726,9 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 
 | File | Route (EN) | Route (IT) | Content |
 |---|---|---|---|
-| `index.vue` | `/` | `/it` | Hero + skills preview + contact form |
-| `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline + "Alongside the day job" proof list |
-| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Tier legend, one section per area (tier lists + `CustomSolarSystem`), `CustomClosingCta` |
+| `index.vue` | `/` | `/it` | Hero, Selected work, clients band, core stack, GitHub stats, one-line Experience strip, `CustomClosingCta` |
+| `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline + "Alongside the day job" proof list + `CustomClosingCta` with its own copy and pose |
+| `my-skills.vue` | `/my-skills` | `/it/my-skills` | Tier legend (short labels on one line below `md`, full descriptions from `md`), one section per area (tier lists + `CustomSolarSystem`), `CustomClosingCta` |
 | `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Featured project, projects grid, studies/exercises list, `CustomClosingCta` (both tabs) |
 | `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates showcase grid |
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
@@ -924,7 +926,7 @@ No backend/CMS — these read from i18n translation files or a local hardcoded l
 const { milestones } = useMilestones()
 ```
 
-Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` (free keywords) and `clients` (string lists), and `skills` (skill ids, resolved to `Skill` objects). The composable maps each `stack` name to a `MilestoneStackItem` (logo and `--sb-tech-*` brand colour from its `STACK_BRANDS` table, none for unknown names) and adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), shared by `CustomExperienceList` and `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step and is left out of the home list.
+Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` — content authored as Markdown, converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Besides `date` (start, `MM/DD/YYYY`), each entry may carry `endDate` (same format; omitted = still ongoing), `role`, `organization`, `type` (`MilestoneType`), `stack` (free keywords) and `clients` (string lists), and `skills` (skill ids, resolved to `Skill` objects). The composable maps each `stack` name to a `MilestoneStackItem` (logo and `--sb-tech-*` brand colour from its `STACK_BRANDS` table, none for unknown names) and adds `typeLabel` and `period` (`MilestonePeriod`: month labels, ISO values, LinkedIn-style duration; "Present" refreshed on mount), used by `CustomMilestone`. A planned `endDate` in the future is shown as is, but the duration only counts up to today; an `upcoming` entry (future `date`, no duration) is the About Me "coming soon" step. The home page shows no milestone list: its Experience strip is one sentence (`pages.home.experience.lead`) linking to About Me.
 
 ### `useSelectedWork()`
 
@@ -932,7 +934,7 @@ Reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()` —
 const { selectedWork } = useSelectedWork()
 ```
 
-The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title, cover, meta line, a `slug` (`romano` · `floatingPanel` · `sbTemplates`) and a link to their Projects anchor. Used by the home "Selected work" grid and the About Me "Alongside the day job" list (which adds an outcome line per `slug` from `pages.about.alongside.outcomes`).
+The three proof pieces (Romano, SB Templates, sb-floating-panel-vue) with title, cover, meta line, an `outcome` line (what it is, from `pages.about.alongside.outcomes`), an `angle` line (what it means to me, first person, from `pages.about.alongside.angles`) and a link to their Projects anchor. The home "Selected work" grid and the Projects SB Templates teaser show the outcome, the About Me "Alongside the day job" list shows the angle.
 
 ### `useProjects()`
 
@@ -964,7 +966,7 @@ Reads `pages.<key>` from the active locale: `title`, `lead`, `summary` (Markdown
 const { references, referencesByArea } = useSkillReferences()
 ```
 
-Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor) and SB Templates (one entry). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line; the page also maps each skill to its first reference to link the chip (`CustomSkillsChip` `to`).
+Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor), SB Templates (one entry) and this site (`THIS_SITE`: the public portfolio repo, for the skills it proves such as HTML, CSS, Git). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line (plain text, names only); the page maps each skill to its first reference to link the chip (`CustomSkillsChip` `to`), the only proof link on the page.
 
 ### `useSkills()`
 
@@ -972,7 +974,7 @@ Where each skill is used, built from the `skills` ids of the other content sourc
 const { areas, featuredStack } = useSkills()
 ```
 
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a readable slug `id` (`vue`, `spring`, `tailwind-css`), referenced by the `skills` arrays of projects, templates and milestones in the locale files, an `area` (`frontend`, `backend`, `tools`) and a `tier` (`core`: used every day, gold; `solid`: used across many projects; `familiar`: studied or used rarely). `areas` is the Skills page data: one `SkillAreaGroup` per area with its non-empty tiers in order, skills alphabetical. `resolveSkills(ids)` (named export) maps ids to skills and drops unknown ones. `featuredStack` is the home page "Core stack": `FEATURED_STACK` ids grouped by area (`frontend`, `backend`, `database`), in authored order, independent from tiers.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a readable slug `id` (`vue`, `spring`, `tailwind-css`), referenced by the `skills` arrays of projects, templates and milestones in the locale files, an `area` (`frontend`, `backend`, `tools`) and a `tier` (`core`: used every day, gold; `solid`: used across many projects; `familiar`: studied or used rarely). `areas` is the Skills page data: one `SkillAreaGroup` per area with its non-empty tiers in order, skills alphabetical. `resolveSkills(ids)` (named export) maps ids to skills and drops unknown ones. `featuredStack` is the home page "Core stack": `FEATURED_STACK` ids grouped by area (`frontend`, `backend`, `database`), in authored order, core-tier ids only (so "Core stack" never contradicts the gold tier).
 
 ### `useGithubStats()`
 
@@ -989,7 +991,7 @@ The one async content source: `useFetch('/api/github-stats.json')`, which is pre
 | Function | Signature | Description |
 |---|---|---|
 | `generateUuid` | `(): string` | Returns a random UUID v4 string |
-| `blocksToHtml` | `(blocks: RichBlock[]): string` | Converts `RichBlock[]` to HTML. Always pair with `useSanitize()` or use `BaseRichText` |
+| `blocksToHtml` | `(blocks: RichBlock[], newTabLabel?: string): string` | Converts `RichBlock[]` to HTML. `newTabLabel` adds an `sr-only` note to `http(s)` links, which open in a new tab (`BaseRichText` passes `a11y.newTab`). Always pair with `useSanitize()` or use `BaseRichText` |
 | `markdownToRichBlocks` | `(markdown: string): RichBlock[]` | Converts Markdown text (`##`/`###`, `- ` lists, `**bold**`, `*italic*`, `[label](url)`) to `RichBlock[]`. `blocksToHtml` opens only `http(s)` links in a new tab; `mailto:` and site paths stay in the tab |
 
 ---

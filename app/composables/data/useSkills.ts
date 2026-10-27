@@ -37,9 +37,9 @@ interface UseSkillsReturn {
 const AREAS: SkillArea[] = ['frontend', 'backend', 'tools']
 const TIERS: SkillTier[] = ['core', 'solid', 'familiar']
 
-// Home page "Core stack": a curated full-stack profile, independent from tiers
+// Home page "Core stack": a curated full-stack profile, core-tier ids only
 const FEATURED_STACK: Record<StackArea, string[]> = {
-  frontend: ['angular', 'vue', 'vite', 'nuxt', 'flutter'],
+  frontend: ['angular', 'vue', 'nuxt', 'typescript', 'tailwind-css'],
   backend: ['spring', 'java'],
   database: ['postgresql'],
 }

@@ -4,12 +4,14 @@ interface ThePageHeroProps {
   text: string
   imageSrc?: string
   lead?: string
+  overline?: string
 }
 
 // Input / Output
 const props = withDefaults(defineProps<ThePageHeroProps>(), {
   imageSrc: undefined,
   lead: undefined,
+  overline: undefined,
 })
 </script>
 
@@ -20,7 +22,10 @@ const props = withDefaults(defineProps<ThePageHeroProps>(), {
     :class="props.imageSrc ? 'pb-0' : 'pb-8 md:pb-12'"
   >
     <div class="order-2 md:order-1 animate-rise-in" :class="{ 'pb-8 md:pb-12': props.imageSrc }">
-      <h1 class="sb-hero mb-0 text-balance">
+      <p v-if="props.overline" class="sb-overline text-primary-ink text-left mb-3">
+        {{ props.overline }}
+      </p>
+      <h1 class="sb-hero mb-0 text-balance outline-none" tabindex="-1">
         {{ props.text }}
       </h1>
       <p v-if="props.lead" class="sb-lead text-ink-muted text-left text-pretty hyphens-none mt-4 mb-0 max-w-2xl">

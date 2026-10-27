@@ -2,12 +2,13 @@ import useProjects from '~/composables/data/useProjects'
 
 interface SelectedWorkItem {
   key: string
-  slug: 'romano' | 'floatingPanel' | 'sbTemplates'
   title: string
   imageSrc?: string
   imageAlt: string
   imageFit: 'cover' | 'contain'
   meta: string
+  outcome: string
+  angle: string
   to: string | { path: string, hash?: string }
 }
 
@@ -32,12 +33,13 @@ export default function useSelectedWork() {
         }
         return {
           key: id,
-          slug: metaKey,
           title: project.title,
           imageSrc: project.coverImageSrc,
           imageAlt: project.coverImageAlt || '',
           imageFit: project.coverImageFit,
           meta: t(`pages.home.selectedWork.meta.${metaKey}`),
+          outcome: t(`pages.about.alongside.outcomes.${metaKey}`),
+          angle: t(`pages.about.alongside.angles.${metaKey}`),
           to: { path: localePath('my-projects'), hash: `#project-${id}` },
         }
       })
@@ -45,12 +47,13 @@ export default function useSelectedWork() {
 
     const sbTemplates = {
       key: 'sb-templates',
-      slug: 'sbTemplates' as const,
       title: t('nav.sb-templates'),
       imageSrc: cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg'),
       imageAlt: t('pages.projects.sbTemplatesProject.logoAlt'),
       imageFit: 'contain' as const,
       meta: t('pages.home.selectedWork.meta.sbTemplates'),
+      outcome: t('pages.about.alongside.outcomes.sbTemplates'),
+      angle: t('pages.about.alongside.angles.sbTemplates'),
       to: { path: localePath('/my-projects/sb-templates') },
     }
 

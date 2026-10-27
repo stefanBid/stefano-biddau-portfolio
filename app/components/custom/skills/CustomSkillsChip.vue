@@ -63,6 +63,11 @@ const NuxtLink = resolveComponent('NuxtLink')
   background: linear-gradient(135deg, var(--sb-gold-800) 0%, var(--sb-gold-900) 70%);
 }
 
+/* Unlayered scoped CSS beats the hover:border utility, so linked gold chips get their own hover rim */
+a.gold-chip:hover {
+  border-color: var(--sb-gold-300);
+}
+
 /* Gold rim around the tile, not behind the logo: brand colours keep their contrast */
 .gold-icon {
   box-shadow:

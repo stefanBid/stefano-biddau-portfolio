@@ -2,7 +2,7 @@
 import useTemplates from '~/composables/data/useTemplates'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-09-03', changefreq: 'monthly', priority: 0.8 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 0.8 },
 })
 
 // Dependencies

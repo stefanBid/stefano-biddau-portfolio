@@ -4,6 +4,7 @@ interface Props {
 }
 
 // Dependencies
+const { t } = useI18n()
 const { sanitizeHtml } = useSanitize()
 
 // Input / Output
@@ -11,14 +12,30 @@ const props = defineProps<Props>()
 
 // State
 const htmlContent = computed(() => {
-  const html = blocksToHtml(props.blocks)
+  const html = blocksToHtml(props.blocks, t('a11y.newTab'))
   return sanitizeHtml(html)
 })
+
+// Events
+// v-html links are plain anchors: route internal paths through the router instead of reloading the app
+const onClick = (event: MouseEvent) => {
+  if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) {
+    return
+  }
+  const link = (event.target as HTMLElement | null)?.closest('a')
+  const href = link?.getAttribute('href')
+  if (!href || !href.startsWith('/') || href.startsWith('//') || link?.target === '_blank') {
+    return
+  }
+  event.preventDefault()
+  navigateTo(href)
+}
 </script>
 
 <template>
   <div
     class="rich-text sb-transition"
+    @click="onClick"
     v-html="htmlContent"
   ></div>
 </template>

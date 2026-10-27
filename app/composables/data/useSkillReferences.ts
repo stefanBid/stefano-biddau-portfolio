@@ -2,6 +2,7 @@ import type { RouteLocationRaw } from 'vue-router'
 import useMilestones from '~/composables/data/useMilestones'
 import useProjects from '~/composables/data/useProjects'
 import useTemplates from '~/composables/data/useTemplates'
+import { resolveSkills } from '~/composables/data/useSkills'
 import type { Skill, SkillArea } from '~/composables/data/useSkills'
 
 export interface SkillReference {
@@ -16,6 +17,12 @@ interface UseSkillReferencesReturn {
   referencesByArea: ComputedRef<Record<SkillArea, SkillReference[]>>
 }
 
+// This portfolio is public: the one place HTML, CSS and Git show up as shipped work
+const THIS_SITE = {
+  repoUrl: 'https://github.com/stefanBid/stefano-biddau-portfolio',
+  skillIds: ['nuxt', 'vue', 'typescript', 'tailwind-css', 'html', 'css', 'vite', 'netlify', 'npm', 'git'],
+}
+
 export default function useSkillReferences(): UseSkillReferencesReturn {
   const { t } = useI18n()
   const localePath = useLocalePath()
@@ -23,7 +30,7 @@ export default function useSkillReferences(): UseSkillReferencesReturn {
   const { projects } = useProjects()
   const { templates } = useTemplates()
 
-  // Work first (one entry per organization, newest role), then projects, then the templates as a whole
+  // Work first (one entry per organization, newest role), then projects, the templates as a whole, then this site
   const references = computed<SkillReference[]>(() => {
     const work = [...milestones.value]
       .reverse()
@@ -57,7 +64,9 @@ export default function useSkillReferences(): UseSkillReferencesReturn {
       ? [{ key: 'sb-templates', title: t('nav.sb-templates'), skills: templateSkills, to: localePath('/my-projects/sb-templates') }]
       : []
 
-    return [...work, ...fromProjects, ...fromTemplates]
+    const fromThisSite = { key: 'this-site', title: t('pages.skills.thisSite'), skills: resolveSkills(THIS_SITE.skillIds), to: THIS_SITE.repoUrl }
+
+    return [...work, ...fromProjects, ...fromTemplates, fromThisSite]
   })
 
   const referencesByArea = computed<Record<SkillArea, SkillReference[]>>(() => {

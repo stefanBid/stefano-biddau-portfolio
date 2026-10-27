@@ -161,7 +161,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
     <!-- Bottom bar -->
     <div class="border-t border-border bg-bg/98">
       <div
-        class="max-w-350 mx-auto py-4 flex flex-col lg:flex-row items-center justify-between gap-2"
+        class="max-w-350 mx-auto py-6 flex flex-col lg:flex-row items-center justify-between gap-3 lg:py-4"
       >
         <!-- Left side: credit + made with -->
         <div class="flex flex-col flex-1 items-center lg:items-start gap-1 text-ink-muted text-center lg:text-left [&>p]:mb-0">
@@ -174,18 +174,18 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
         <div class="flex flex-1 items-center justify-center lg:justify-end gap-4 sb-small italic text-ink-muted/80 text-center lg:text-right">
           <!-- Privacy -->
           <NuxtLink
-            class="inline-flex items-center min-h-9 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="inline-flex items-center min-h-11 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('privacy-policy')"
           >
             {{ t('nav.privacy-policy') }}
           </NuxtLink>
 
           <!-- Separator -->
-          <span class="sb-small italic opacity-40 select-none">|</span>
+          <span aria-hidden="true" class="sb-small italic opacity-40 select-none">|</span>
 
           <!-- Terms -->
           <NuxtLink
-            class="inline-flex items-center min-h-9 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
+            class="inline-flex items-center min-h-11 hover:text-primary-ink underline underline-offset-4 sb-focus rounded-sm w-fit sb-transition"
             :to="localePath('terms-and-conditions')"
           >
             {{ t('nav.terms-and-conditions') }}

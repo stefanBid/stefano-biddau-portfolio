@@ -83,13 +83,13 @@ const classes = computed(() => {
 </script>
 
 <template>
-  <a
+  <NuxtLink
     v-if="props.type === 'link'"
     :aria-label="props.ariaLabel"
     :class="classes"
-    :href="props.to"
     :rel="isExternal ? 'noopener noreferrer' : undefined"
     :target="isExternal ? '_blank' : undefined"
+    :to="props.to"
   >
     <slot />
     <Icon
@@ -100,7 +100,7 @@ const classes = computed(() => {
       name="solar:arrow-right-up-linear"
     />
     <span v-if="isExternal" class="sr-only">({{ t('a11y.newTab') }})</span>
-  </a>
+  </NuxtLink>
   <button
     v-else
     :aria-label="props.ariaLabel"

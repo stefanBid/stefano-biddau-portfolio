@@ -1,13 +1,16 @@
 <script setup lang="ts">
 import useProjects from '~/composables/data/useProjects'
+import useSelectedWork from '~/composables/data/useSelectedWork'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-04-12', changefreq: 'monthly', priority: 0.9 },
+  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 0.9 },
 })
 
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
+const localePath = useLocalePath()
+const { selectedWork } = useSelectedWork()
 
 useSeoMeta({
   // LOCALIZED
@@ -55,25 +58,37 @@ const projects = computed(() => [...projectsData.value].sort((a, b) => {
 const mainProjects = computed(() => projects.value.filter(project => !ARCHIVED_PROJECT_IDS.includes(project.id)))
 const archivedProjects = computed(() => projects.value.filter(project => ARCHIVED_PROJECT_IDS.includes(project.id)))
 
-// Ongoing projects span the full row; a regular card left alone in the last row of the 2-column grid does too, instead of leaving half the row empty
+// The templates live in their own tab: a teaser closes the grid so visitors of this tab still find them
+const templatesTeaser = computed(() => selectedWork.value.find(item => item.key === 'sb-templates'))
+
+// Ongoing projects span the full row; so does whatever card would be left alone in the last row of the 2-column grid
+const regularCardCount = computed(() => mainProjects.value.filter(project => !project.isOngoing).length + (templatesTeaser.value ? 1 : 0))
 const fullWidthProjectIds = computed(() => {
   const ids = mainProjects.value.filter(project => project.isOngoing).map(project => project.id)
   const regular = mainProjects.value.filter(project => !project.isOngoing)
-  if (regular.length % 2 === 1) {
+  if (!templatesTeaser.value && regular.length % 2 === 1) {
     ids.push(regular.at(-1)!.id)
   }
   return ids
 })
+const isTeaserFullWidth = computed(() => regularCardCount.value % 2 === 1)
 
 // State
 // Set on the client only: prerendered HTML has no hash, so it cannot drive the first render
 const linkedProjectId = ref<string | null>(null)
+// The landing project glows briefly so a visitor coming from a link sees which one was meant
+const highlightedProjectId = ref<string | null>(null)
+const { start: startHighlightFade } = useTimeoutFn(() => {
+  highlightedProjectId.value = null
+}, 2400, { immediate: false })
 
 // Events
 onMounted(() => {
   watch(() => route.hash, (hash) => {
     linkedProjectId.value = hash.startsWith('#project-') ? decodeURIComponent(hash.slice('#project-'.length)) : null
     if (linkedProjectId.value) {
+      highlightedProjectId.value = linkedProjectId.value
+      startHighlightFade()
       // Keyboard and screen-reader users land on the linked project, not on <body>
       nextTick(() => document.getElementById(`project-title-${linkedProjectId.value}`)?.focus({ preventScroll: true }))
     }
@@ -104,10 +119,55 @@ onMounted(() => {
         :image-fit="project.coverImageFit"
         :image-src="project.coverImageSrc"
         :initially-expanded="project.id === linkedProjectId"
+        :is-highlighted="project.id === highlightedProjectId"
         :is-ongoing="project.isOngoing"
         :meta="project.meta"
         :title="project.title"
       />
+
+      <article
+        v-if="templatesTeaser"
+        v-reveal="mainProjects.length % 2"
+        aria-labelledby="projects-templates-teaser-title"
+        :class="{ 'lg:col-span-2': isTeaserFullWidth }"
+      >
+        <BaseCard
+          class="h-full"
+          full-custom-content
+          variant="dark"
+        >
+          <div class="flex h-full flex-col gap-5 md:gap-6">
+            <div class="flex h-48 shrink-0 items-center justify-center overflow-hidden rounded-md bg-ink p-8 md:h-60 md:p-12">
+              <NuxtImg
+                :alt="templatesTeaser.imageAlt"
+                class="size-full object-contain object-center"
+                :src="templatesTeaser.imageSrc"
+              />
+            </div>
+            <div class="flex flex-1 flex-col min-w-0">
+              <h2 id="projects-templates-teaser-title" class="sb-h3 mb-0 text-ink text-balance">
+                {{ templatesTeaser.title }}
+              </h2>
+              <p class="sb-small text-ink-muted text-left mt-1 mb-0">
+                {{ templatesTeaser.meta }}
+              </p>
+              <p class="text-ink-muted mt-4 mb-0">
+                {{ templatesTeaser.outcome }}
+              </p>
+              <div class="mt-auto pt-6">
+                <BaseButton
+                  :to="localePath('/my-projects/sb-templates')"
+                  type="link"
+                  variant="secondary"
+                >
+                  {{ t('pages.projects.personalProjects.templatesTeaserCta') }}
+                  <Icon aria-hidden="true" class="size-5" name="solar:arrow-right-linear" />
+                </BaseButton>
+              </div>
+            </div>
+          </div>
+        </BaseCard>
+      </article>
     </div>
 
     <section
@@ -124,7 +184,8 @@ onMounted(() => {
           v-for="project in archivedProjects"
           :id="`project-${project.id}`"
           :key="project.id"
-          class="scroll-mt-24 flex flex-col md:flex-row md:items-center gap-4 md:gap-8 py-5 border-b border-border text-left"
+          class="scroll-mt-24 -mx-3 flex flex-col gap-4 rounded-md border-b border-border px-3 py-5 text-left sb-transition-slow md:-mx-4 md:flex-row md:items-center md:gap-8 md:px-4"
+          :class="project.id === highlightedProjectId ? 'bg-primary/8' : 'bg-transparent'"
           :data-project-id="project.id"
         >
           <div class="flex-1 min-w-0">

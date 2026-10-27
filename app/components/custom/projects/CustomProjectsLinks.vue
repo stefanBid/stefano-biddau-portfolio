@@ -22,9 +22,11 @@ const props = withDefaults(defineProps<CustomProjectsLinksProps>(), {
 })
 
 // Data
+const MAX_BUTTONS = 3
+
 const _isNpmPackage = (urls: MenuItem[]) => urls.every(url => url.code.includes('npmjs.com'))
 
-// One flat list: a single link stays a button, two or more share one menu
+// One flat list: up to MAX_BUTTONS links stay visible buttons, more share one menu
 const links = computed<MenuItem[]>(() => {
   const groups: ProjectLinkGroup[] = []
 
@@ -56,22 +58,25 @@ const links = computed<MenuItem[]>(() => {
 </script>
 
 <template>
-  <BaseButton
-    v-if="links.length === 1"
-    :size="props.size"
-    :to="links[0]!.code"
-    type="link"
-    variant="secondary"
-  >
-    <Icon
-      aria-hidden="true"
-      :class="props.size === 'sm' ? 'size-4' : 'size-5'"
-      :name="links[0]!.icon!"
-    />
-    {{ links[0]!.label }}
-  </BaseButton>
+  <template v-if="links.length <= MAX_BUTTONS">
+    <BaseButton
+      v-for="link in links"
+      :key="link.code"
+      :size="props.size"
+      :to="link.code"
+      type="link"
+      variant="secondary"
+    >
+      <Icon
+        aria-hidden="true"
+        :class="props.size === 'sm' ? 'size-4' : 'size-5'"
+        :name="link.icon!"
+      />
+      {{ link.description ? `${link.label} · ${link.description}` : link.label }}
+    </BaseButton>
+  </template>
   <BaseMenu
-    v-else-if="links.length > 1"
+    v-else
     icon="solar:link-line-duotone"
     :items="links"
     :label="t('pages.projects.links.menu')"

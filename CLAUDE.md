@@ -196,7 +196,7 @@ Client-side only.
 ```ts
 const { milestones } = useMilestones()
 ```
-No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Each entry carries `period` (labels + duration) and `typeLabel`, shared by `CustomExperienceList` and `CustomMilestone`. `type: 'upcoming'` (future start) is the About "coming soon" step, never shown on home; a future `endDate` is displayed but durations stop at today.
+No backend — reads `pages.about.milestones` from the active i18n locale via `tm()`/`rt()`, content authored as Markdown and converted with `markdownToRichBlocks`. Purely reactive: no fetch, no loading/error state, updates automatically on language change. Each entry carries `period` (labels + duration) and `typeLabel`, used by `CustomMilestone`. `type: 'upcoming'` (future start) is the About "coming soon" step, never shown on home; a future `endDate` is displayed but durations stop at today.
 
 ### `useProjects()`
 ```ts
@@ -208,13 +208,13 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 ```ts
 const { references, referencesByArea } = useSkillReferences()
 ```
-Where each skill is used: work milestones (one entry per organization, links to its About milestone), projects (Projects anchor) and SB Templates (one entry). `referencesByArea` feeds the Skills page "Seen in" line. Exports `SkillReference`.
+Where each skill is used: work milestones (one entry per organization, links to its About milestone), projects (Projects anchor), SB Templates (one entry) and this site (`THIS_SITE`, public repo link). `referencesByArea` feeds the Skills page "Seen in" line (plain text; chips carry the only proof link). Exports `SkillReference`.
 
 ### `useSkills()`
 ```ts
 const { areas, featuredStack } = useSkills()
 ```
-Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`core` = every day, gold; `solid` = used across many projects; `familiar` = studied or used rarely). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, independent from tiers.
+Skills are a hardcoded local list (`SKILLS_DATA`, in the composable file, not i18n) — no backend. Each skill has a slug `id` (`vue`, `tailwind-css`…), `area` (`frontend`/`backend`/`tools`) and `tier` (`core` = every day, gold; `solid` = used across many projects; `familiar` = studied or used rarely). `areas`: Skills page groups, non-empty tiers in order. `resolveSkills(ids)` (named export) maps ids to skills, dropping unknown ids. **Skill links:** projects and SB Templates in the locale files carry `skills: [ids]`; milestones carry `skills: [ids]` plus `stack` (free keywords shown as chips, e.g. Java EE, REST API). `featuredStack`: home "Core stack", `FEATURED_STACK` ids grouped `frontend`/`backend`/`database`, core-tier ids only.
 
 ### `useGithubStats()`
 ```ts
@@ -226,7 +226,7 @@ The one async content source — `useFetch('/api/github-stats.json')`, prerender
 ```ts
 const { selectedWork } = useSelectedWork()
 ```
-Romano + SB Templates + sb-floating-panel-vue with meta line and Projects anchor link — home "Selected work".
+Romano + SB Templates + sb-floating-panel-vue with meta line, `outcome` (`pages.about.alongside.outcomes`, home "Selected work" and the Projects SB Templates teaser), `angle` (`pages.about.alongside.angles`, first person, About "Alongside") and Projects anchor link.
 
 ### `useTemplates()`
 ```ts
@@ -293,7 +293,7 @@ Use with `v-html` only via `BaseRichText` — never write `v-html` directly with
 ## Utils
 
 - `generateUuid(): string` — random UUID v4
-- `blocksToHtml(blocks: RichBlock[]): string` — RichBlock[] → HTML; always pair with `useSanitize()`
+- `blocksToHtml(blocks: RichBlock[], newTabLabel?: string): string` — RichBlock[] → HTML; always pair with `useSanitize()`; `newTabLabel` adds an `sr-only` note to new-tab links (`BaseRichText` passes `a11y.newTab`)
 - `markdownToRichBlocks(markdown: string): RichBlock[]` — Markdown (as authored in i18n locale files: headings, lists, bold, italic, `[label](url)`) → RichBlock[]; `blocksToHtml` opens only `http(s)` links in a new tab
 
 ---

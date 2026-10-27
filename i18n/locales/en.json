@@ -17,15 +17,15 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "I'm Stefano Biddau, a full-stack developer and web designer. I create modern, user-focused digital experiences. Explore my portfolio and get in touch for a collaboration."
+      "description": "Stefano Biddau, freelance full-stack developer and web designer, available to join your team or take on your project, from interface to database."
     },
     "about": {
       "title": "About Me {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "My path from a Computer Science degree to my current role at SI2001, plus the client and open-source work I do alongside it."
+      "description": "My path from a Computer Science degree to full-stack development, plus the client and open-source work I design, build and maintain."
     },
     "skills": {
       "title": "Skills & Technologies {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "The stack I build with: Vue, Angular, TypeScript and Tailwind CSS every day, Nuxt and Flutter in shipped work, plus Java, Spring and Node.js on the backend."
+      "description": "The stack I build with every day: Vue, Angular, TypeScript and Tailwind CSS on the front end, Java, Spring and PostgreSQL on the back end. Plus Nuxt and Flutter in shipped work."
     },
     "projects": {
       "title": "Web Projects {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -33,15 +33,15 @@
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Open-source, ready-to-use project templates for web and mobile — clean architecture, modern tooling, zero setup. Start building today."
+      "description": "Open-source starter templates for Nuxt, Astro and Flutter by Stefano Biddau: a project structure that follows each framework's best practices, free for any developer to use."
     },
     "privacy": {
       "title": "Privacy Policy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Privacy policy for stefanobiddau.com - Learn how I collect, use, and protect your personal data."
+      "description": "No cookies, no analytics: stefanobiddau.com only processes what you send through the contact form, plus the host's technical logs. Why, for how long, who handles it and your rights."
     },
     "terms": {
       "title": "Terms and Conditions {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Terms and conditions for using stefanobiddau.com - Rules and guidelines for website visitors."
+      "description": "The rules for using stefanobiddau.com: acceptable use, who owns the work shown, how the contact form works, liability and governing law."
     }
   },
   "a11y": {
@@ -71,12 +71,12 @@
   },
   "pages": {
     "home": {
-      "title": "Hello, I'm Stefano Biddau",
+      "title": "Stefano Biddau",
       "subtitle": {
-        "costant": "And I'm a",
+        "costant": "I'm a",
         "role": "Full-Stack Developer & Web Designer"
       },
-      "lead": "At SI2001 since 2023 and open to freelance projects. I build complete web products, from interface to database.",
+      "lead": "At SI2001 since 2022 and open to freelance projects. I build complete web products, from interface to database.",
       "cvCard": {
         "buttonText": "Download CV",
         "versions": {
@@ -127,7 +127,7 @@
       },
       "experience": {
         "title": "Experience",
-        "lead": "From university to the team I work with today.",
+        "lead": "Computer Science at the University of Salerno, then an internship at SI2001 that turned into a full-stack role.",
         "viewAll": "My journey",
         "present": "Present",
         "years": "{count} yr | {count} yrs",
@@ -203,7 +203,8 @@
       }
     },
     "about": {
-      "hero": "About me",
+      "overline": "About me",
+      "hero": "I design it, then I build it",
       "milestoneCta": "Read more",
       "milestoneCtaLess": "Show less",
       "upcomingFrom": "From {date}",
@@ -216,7 +217,16 @@
           "romano": "Designed and built the firm's website. Now a redesign, the PraticaSicura refund portal and the Domus/Cardo case system.",
           "sbTemplates": "Starter templates for Nuxt, Astro and Flutter with architecture, build, linting and formatting already set up.",
           "floatingPanel": "A Vue 3 floating panel system built on {'@'}floating-ui/vue, with composables, arrows and resizing."
+        },
+        "angles": {
+          "romano": "Where I work with the client directly. I maintain the firm's website and the ecosystem behind PraticaSicura.com, its service for flight refunds and road accident claims: I own the back-end architecture (Cardo), the management front end (Domus) and the PraticaSicura.com website.",
+          "sbTemplates": "Templates I start my own projects from, free for any developer to use: I only provide the starting structure, following the framework's best practices, and everyone builds what they need from there.",
+          "floatingPanel": "A library on npm that any developer can install in their Vue and Nuxt projects, with components for floating panels. I design and maintain it; the menus on this site use it too."
         }
+      },
+      "closingCta": {
+        "title": "Let's write the next chapter together",
+        "text": "Freelance projects stay open. Tell me what you have in mind, or take my CV for the whole story."
       },
       "milestones": [
         {
@@ -234,7 +244,7 @@
           "imageWidth": 2652,
           "imageHeight": 3976,
           "imageCaption": "Me presenting my thesis project, explaining the work on comparing different Machine Learning algorithms for image classification.",
-          "content": "From 2018 to December 2022 I studied Computer Science at UNISA, with a focus on **object-oriented programming in Java**, **distributed programming with Java EE**, **web development with HTML, CSS and JavaScript**, and **mathematics and statistics** applied with **Python**.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the **Fashion-MNIST** dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
+          "content": "From 2018 to December 2022 I studied **Computer Science** at UNISA, with a focus on object-oriented programming in Java, distributed programming with Java EE, web development with HTML, CSS and JavaScript, and mathematics and statistics applied with Python.\n\nMy thesis, *\"Comparison of Machine Learning Algorithms for Image Classification\"*, compared classification models on the Fashion-MNIST dataset.\n\nI also built practical projects end to end, including an e-commerce platform for automotive products, front end and back end. Working in student teams, I learned to coordinate the work and to be someone the others could rely on."
         },
         {
           "id": "2",
@@ -265,7 +275,7 @@
           "imageWidth": 2316,
           "imageHeight": 3088,
           "imageCaption": "Me at my remote workstation, surrounded by screens and code.",
-          "content": "Today I work on the **back end** of the European core banking systems of **Intesa Sanpaolo**, with Java, Spring Boot, Spring Batch and PostgreSQL.\n\nBefore that, I worked on the **front end** of **more than five projects** with Vue.js, Angular and Flutter.\n\nI work in Agile teams, taking part in sprint planning, daily stand-ups and retrospectives."
+          "content": "Today I work on the back end of the European core banking systems of **Intesa Sanpaolo**, with Java, Spring Boot, Spring Batch and PostgreSQL.\n\nBefore that, I worked on the front end of **more than five projects** with Vue.js, Angular and Flutter.\n\nI work in Agile teams, taking part in sprint planning, daily stand-ups and retrospectives."
         },
         {
           "id": "4",
@@ -273,7 +283,7 @@
           "role": "What's next",
           "date": "01/11/2027",
           "type": "upcoming",
-          "content": "A step up in role and responsibility. Details when it starts."
+          "content": "A step up in role and responsibility. Details when it starts.\n\nFreelance projects stay open."
         }
       ],
       "noMilestones": {
@@ -283,22 +293,26 @@
     },
     "skills": {
       "hero": "Skills & Technologies",
-      "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS. Below, the full stack by area and by how often I use it.",
+      "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS on the front end, Java, Spring and PostgreSQL on the back end. Below, the full stack by area and by how often I use it.",
       "orbitCaption": "Closer to the sun means I use it more often.",
       "seenIn": "Seen in:",
+      "thisSite": "This site",
       "chipSeenIn": "where I used it: {place}",
       "tiers": {
         "core": {
           "label": "Core",
-          "description": "What I work with every day. Shown as gold chips."
+          "description": "What I work with every day. Shown as gold chips.",
+          "short": "every day"
         },
         "solid": {
           "label": "Solid",
-          "description": "Used across many projects; I can pick it up and deliver."
+          "description": "Used across many projects; I can pick it up and deliver.",
+          "short": "many projects"
         },
         "familiar": {
           "label": "Familiar",
-          "description": "Studied or used occasionally, not part of my main toolkit."
+          "description": "Studied or used occasionally, not part of my main toolkit.",
+          "short": "now and then"
         }
       },
       "areas": {
@@ -312,7 +326,7 @@
         },
         "tools": {
           "title": "Design & tools",
-          "paragraph": "I work from Figma and Adobe XD designs, document components in Storybook and review them with Chromatic, so what ships matches what was designed. Postman, Git, npm and Netlify cover the rest, from testing APIs to deploying."
+          "paragraph": "I work from Figma and Adobe XD designs and document components in Storybook, so what ships matches what was designed. Docker, Postman, Git, npm and Netlify cover the rest, from testing APIs to deploying."
         }
       }
     },
@@ -331,7 +345,7 @@
           {
             "id": "85156f53-d423-4b49-9561-4e0d46e18976",
             "meta": "Personal exercise · 2026 · Spring Boot",
-            "skills": ["spring"],
+            "skills": ["spring", "java", "postgresql", "hibernate", "docker", "postman"],
             "title": "Sfrigola Core",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-core", "label": "GitHub" }
@@ -341,7 +355,7 @@
           {
             "id": "e6eea13e-56a7-4150-ac8e-8a01410ca60d",
             "meta": "Personal exercise · 2026 · Flutter",
-            "skills": ["flutter"],
+            "skills": ["flutter", "dart"],
             "title": "Sfrigola App",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sfrigola-app", "label": "GitHub" }
@@ -361,7 +375,7 @@
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
             "meta": "Client · since 2025 · Nuxt",
-            "skills": ["nuxt"],
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify", "npm"],
             "title": "Studio Legale Romano",
             "status": "ongoing",
             "deploymentUrls": [
@@ -370,7 +384,7 @@
             "coverImageSrc": "v1793011552/romano-logo_z2ert6.svg",
             "coverImageFit": "contain",
             "coverImageAlt": "Studio Legale Romano logo",
-            "content": "After launching the site in 2025, I keep working with the firm: I'm redesigning the website and building new products for it.\n\n- **PraticaSicura**, a portal for requesting flight refunds\n- **Domus** (front-end) and **Cardo** (back-end), the internal system the firm uses to manage its cases\n\nThe firm commissioned the **Studio Legale Romano** website as a modern, professional showcase. I designed and built the whole interface: the firm's history and values, a full profile for each lawyer with their areas of practice, and a services section that helps visitors find the right area quickly.\n\nContact details are visible from every page, and the opening hours update in real time."
+            "content": "The firm commissioned the **Studio Legale Romano** website as a modern, professional showcase. I designed and built the whole interface: the firm's history and values, a full profile for each lawyer with their areas of practice, and a services section that helps visitors find the right area quickly.\n\nContact details are visible from every page, and the opening hours update in real time.\n\nSince the launch in 2025 I keep working with the firm: I'm redesigning the website and building new products for it.\n\n- **PraticaSicura**, a portal for requesting flight refunds\n- **Domus** (front-end) and **Cardo** (back-end), the internal system the firm uses to manage its cases"
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -399,7 +413,7 @@
           {
             "id": "acb2196a-5974-40ba-81c5-fccb58611c0b",
             "meta": "Open-source library · 2025 · Vue 3",
-            "skills": ["vue"],
+            "skills": ["vue", "typescript", "vite", "npm"],
             "title": "sb-floating-panel-vue",
             "codebaseUrls": [
               { "code": "https://github.com/stefanBid/sb-floating-panel-vue", "label": "GitHub" }
@@ -420,46 +434,47 @@
         "readMoreCta": "Read More",
         "readLessCta": "Read Less",
         "ongoing": "Ongoing",
-        "archiveTitle": "Studies and exercises"
+        "archiveTitle": "Studies and exercises",
+        "templatesTeaserCta": "See the templates"
       },
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",
         "logoAlt": "SB Templates logo",
         "title": "SB Templates",
-        "description": "A faster way to start a new project: open-source starter templates for Nuxt, Astro and Flutter, with architecture, build tools, linting and formatting already configured, so a new project starts from working code.",
+        "description": "Open-source starter templates for Nuxt, Astro and Flutter. I start my own projects from them, and any developer can use them: each one sets up the project structure following the framework's best practices, with build, linting and formatting already configured, and leaves the rest to you.",
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
             "title": "SB-Template Nuxt",
-            "description": "A fast, ready-to-use Nuxt template designed to kickstart modern projects effortlessly.",
+            "description": "Nuxt starter with TypeScript and Tailwind CSS, a project structure that follows Nuxt conventions, and linting and formatting already configured.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
             "logoSrc": "v1793011185/sbt-nuxt-logo_rxp0hc.svg",
             "logoWidth": 680,
             "logoHeight": 796,
             "langIcons": ["logos:nuxt-icon"],
-            "skills": ["nuxt"]
+            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify"]
           },
           {
             "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
             "title": "SB-Template Flutter",
-            "description": "A clean Flutter template built exclusively for mobile—iOS and Android—to kickstart your native app projects with modern tooling and automation.",
+            "description": "Flutter starter for iOS and Android, with a design system, type-safe routing and reusable UI components.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
             "logoSrc": "v1793011184/sbt-flutter-logo_pzhtj1.svg",
             "logoWidth": 680,
             "logoHeight": 796,
-            "langIcons": ["logos:flutter", "logos:ios", "logos:android-icon"],
+            "langIcons": ["logos:flutter-icon", "logos:ios", "logos:android-icon"],
             "skills": ["flutter", "dart"]
           },
           {
             "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
             "title": "SB-Template Astro",
-            "description": "A lightweight, content-focused Astro template designed to kickstart fast, SEO-friendly static sites with minimal setup.",
+            "description": "Astro starter for static, content-focused sites, with TypeScript and Tailwind CSS.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
             "logoSrc": "v1793011184/sbt-astro-logo_pg6io2.svg",
             "logoWidth": 680,
             "logoHeight": 796,
             "langIcons": ["logos:astro-icon"],
-            "skills": ["astro"]
+            "skills": ["astro", "typescript", "tailwind-css", "pnpm"]
           }
         ],
         "linkToCta": "Use this template",
@@ -477,7 +492,7 @@
     "privacy": {
       "title": "Privacy Policy",
       "lead": "How the contact form handles your data, in plain words. Short version: this site does not track you.",
-      "summary": "- **No cookies, no analytics, no trackers.** Fonts and images load from this site's own domain.\n- **Only the contact form collects data.** Your name, email and message, nothing else.\n- **EmailJS delivers your message.** It reaches my inbox and you get a copy.\n- **I use it only to reply to you.** No newsletter, no marketing, no selling or sharing.\n- **You can have it deleted at any time.** Write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
+      "summary": "- **No cookies, no analytics, no trackers.** Fonts and images load from this site's own domain.\n- **Only the contact form collects personal data.** Your name, email, message and when you agreed. The host keeps standard technical logs.\n- **EmailJS delivers your message.** It reaches my inbox and you get a copy.\n- **I use it only to reply to you.** No newsletter, no marketing, no selling or sharing.\n- **You can have it deleted at any time.** Write to me at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com)",
       "sections": [
         {
           "id": "controller",
@@ -497,7 +512,7 @@
         {
           "id": "legal-basis",
           "title": "Legal basis",
-          "content": "Your consent (article 6(1)(a) of the GDPR), which you give by ticking the box before sending the form. You can withdraw it at any time by writing to me; this does not affect what happened before."
+          "content": "- **Contact form** Your consent (article 6(1)(a) of the GDPR), which you give by ticking the box before sending the form. You can withdraw it at any time by writing to me; this does not affect what happened before.\n- **Technical logs** My legitimate interest in keeping the site secure and running (article 6(1)(f) of the GDPR), for the data the host records on every visit."
         },
         {
           "id": "processors",
@@ -524,7 +539,7 @@
     "terms": {
       "title": "Terms and Conditions",
       "lead": "The few rules for using this site. It is a personal portfolio: nothing to buy, no account to create.",
-      "summary": "- **Free to browse.** No account needed.\n- **My work stays mine.** Link to it freely, ask before reusing it.\n- **Use the contact form honestly.** Your real details, no spam.\n- **Italian law applies.**",
+      "summary": "- **Free to browse.** No account needed.\n- **My work stays mine.** Link to it freely, ask before reusing it.\n- **Use the contact form honestly.** Your real details, no spam.\n- **Italian law applies.** Your rights as a consumer where you live still stand.",
       "sections": [
         {
           "id": "acceptance",
@@ -539,7 +554,7 @@
         {
           "id": "content",
           "title": "My work and its content",
-          "content": "The texts, illustrations, photos and design of this site belong to me, unless stated otherwise. You can link to any page and quote short extracts with a link back; to reuse anything else, ask me first.\n\nOpen-source projects shown here follow their own license on GitHub. Client names and logos belong to their owners and appear only to describe the work I did for them."
+          "content": "The texts, illustrations, photos and design of this site belong to me, unless stated otherwise. You can link to any page and quote short extracts with a link back; to reuse anything else, ask me first at [biddau.stefano99{'@'}gmail.com](mailto:biddau.stefano99{'@'}gmail.com).\n\nOpen-source projects shown here follow their own license on GitHub. Client names and logos belong to their owners and appear only to describe the work I did for them."
         },
         {
           "id": "contact-form",
@@ -549,7 +564,7 @@
         {
           "id": "external-links",
           "title": "Links to other sites",
-          "content": "Some pages link to sites I do not control, such as GitHub, LinkedIn and the sites of projects I worked on. I am not responsible for their content or how they handle your data."
+          "content": "Some pages link to sites I do not control, such as GitHub, LinkedIn, Instagram and the sites of projects I worked on. I am not responsible for their content or how they handle your data."
         },
         {
           "id": "warranties",
