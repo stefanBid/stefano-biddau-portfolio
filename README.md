@@ -564,7 +564,7 @@ Inline skill chip (icon + name) for the Skills page tier lists. A linked gold ch
 | `to` | `RouteLocationRaw` | `undefined` | When set, the chip is a `NuxtLink` with a trailing arrow (orange on hover) to where the skill is used |
 | `seenIn` | `string` | `undefined` | Name of that place, read by screen readers after the skill name (`pages.skills.chipSeenIn`) |
 
-The Skills page passes each skill's first `useSkillReferences()` entry (work first, then projects, then SB Templates, then this site); skills with no reference stay plain chips.
+The Skills page passes each skill's `referenceBySkill` entry from `useSkillReferences()`; skills with no reference stay plain chips.
 
 ### `CustomSkillsTierIcon`
 
@@ -963,10 +963,10 @@ Reads `pages.<key>` from the active locale: `title`, `lead`, `summary` (Markdown
 ### `useSkillReferences()`
 
 ```ts
-const { references, referencesByArea } = useSkillReferences()
+const { references, referencesByArea, referenceBySkill } = useSkillReferences()
 ```
 
-Where each skill is used, built from the `skills` ids of the other content sources: work milestones (`internship`/`fullTime`, one entry per organization, newest role, linking to its About Me milestone), projects (linking to their Projects anchor), SB Templates (one entry) and this site (`THIS_SITE`: the public portfolio repo, for the skills it proves such as HTML, CSS, Git). Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line (plain text, names only); the page maps each skill to its first reference to link the chip (`CustomSkillsChip` `to`), the only proof link on the page.
+Where each skill is used, built from the `skills` ids of the other content sources: work and study milestones (every type but `upcoming`, one entry per organization, newest role, linking to its About Me milestone — SI2001 for the work tools, University of Salerno for HTML, CSS, JavaScript, MySQL), projects (linking to their Projects anchor) and SB Templates (one entry). No reference points to this site's repo. Each `SkillReference` is `{ key, title, skills, to }`. `referencesByArea` groups them by skill area for the Skills page "Seen in" line (plain text, names only). `referenceBySkill` picks the chip link (`CustomSkillsChip` `to`, the only proof link on the page): the first reference, unless `PREFERRED_REFERENCE` names another (Vue, Vite and npm → sb-floating-panel-vue).
 
 ### `useSkills()`
 

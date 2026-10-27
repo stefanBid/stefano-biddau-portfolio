@@ -2,7 +2,6 @@ import type { RouteLocationRaw } from 'vue-router'
 import useMilestones from '~/composables/data/useMilestones'
 import useProjects from '~/composables/data/useProjects'
 import useTemplates from '~/composables/data/useTemplates'
-import { resolveSkills } from '~/composables/data/useSkills'
 import type { Skill, SkillArea } from '~/composables/data/useSkills'
 
 export interface SkillReference {
@@ -15,12 +14,14 @@ export interface SkillReference {
 interface UseSkillReferencesReturn {
   references: ComputedRef<SkillReference[]>
   referencesByArea: ComputedRef<Record<SkillArea, SkillReference[]>>
+  referenceBySkill: ComputedRef<Record<string, SkillReference>>
 }
 
-// This portfolio is public: the one place HTML, CSS and Git show up as shipped work
-const THIS_SITE = {
-  repoUrl: 'https://github.com/stefanBid/stefano-biddau-portfolio',
-  skillIds: ['nuxt', 'vue', 'typescript', 'tailwind-css', 'html', 'css', 'vite', 'netlify', 'npm', 'git'],
+// Skills whose best proof is not their first reference (work comes first): reference key by skill id
+const PREFERRED_REFERENCE: Record<string, string> = {
+  vue: 'acb2196a-5974-40ba-81c5-fccb58611c0b',
+  vite: 'acb2196a-5974-40ba-81c5-fccb58611c0b',
+  npm: 'acb2196a-5974-40ba-81c5-fccb58611c0b',
 }
 
 export default function useSkillReferences(): UseSkillReferencesReturn {
@@ -30,11 +31,11 @@ export default function useSkillReferences(): UseSkillReferencesReturn {
   const { projects } = useProjects()
   const { templates } = useTemplates()
 
-  // Work first (one entry per organization, newest role), then projects, the templates as a whole, then this site
+  // Work and study first (one entry per organization, newest role), then projects, then the templates as a whole
   const references = computed<SkillReference[]>(() => {
     const work = [...milestones.value]
       .reverse()
-      .filter(milestone => (milestone.type === 'internship' || milestone.type === 'fullTime') && milestone.skills.length > 0)
+      .filter(milestone => milestone.type !== 'upcoming' && milestone.skills.length > 0)
       .reduce<SkillReference[]>((items, milestone) => {
         const key = milestone.organization ?? milestone.id
         const existing = items.find(item => item.key === key)
@@ -64,9 +65,24 @@ export default function useSkillReferences(): UseSkillReferencesReturn {
       ? [{ key: 'sb-templates', title: t('nav.sb-templates'), skills: templateSkills, to: localePath('/my-projects/sb-templates') }]
       : []
 
-    const fromThisSite = { key: 'this-site', title: t('pages.skills.thisSite'), skills: resolveSkills(THIS_SITE.skillIds), to: THIS_SITE.repoUrl }
+    return [...work, ...fromProjects, ...fromTemplates]
+  })
 
-    return [...work, ...fromProjects, ...fromTemplates, fromThisSite]
+  // Where each skill chip links: its preferred reference when it has one, otherwise the first place it shows up
+  const referenceBySkill = computed<Record<string, SkillReference>>(() => {
+    const map: Record<string, SkillReference> = {}
+    references.value.forEach((reference) => {
+      reference.skills.forEach((skill) => {
+        map[skill.id] ??= reference
+      })
+    })
+    Object.entries(PREFERRED_REFERENCE).forEach(([skillId, key]) => {
+      const preferred = references.value.find(reference => reference.key === key && reference.skills.some(skill => skill.id === skillId))
+      if (preferred) {
+        map[skillId] = preferred
+      }
+    })
+    return map
   })
 
   const referencesByArea = computed<Record<SkillArea, SkillReference[]>>(() => {
@@ -81,5 +97,6 @@ export default function useSkillReferences(): UseSkillReferencesReturn {
   return {
     references,
     referencesByArea,
+    referenceBySkill,
   }
 }

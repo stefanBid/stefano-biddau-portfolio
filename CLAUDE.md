@@ -206,9 +206,9 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 
 ### `useSkillReferences()`
 ```ts
-const { references, referencesByArea } = useSkillReferences()
+const { references, referencesByArea, referenceBySkill } = useSkillReferences()
 ```
-Where each skill is used: work milestones (one entry per organization, links to its About milestone), projects (Projects anchor), SB Templates (one entry) and this site (`THIS_SITE`, public repo link). `referencesByArea` feeds the Skills page "Seen in" line (plain text; chips carry the only proof link). Exports `SkillReference`.
+Where each skill is used: work and study milestones (one entry per organization, links to its About milestone), projects (Projects anchor), SB Templates (one entry) — never this site's repo. `referencesByArea` feeds the Skills page "Seen in" line (plain text). `referenceBySkill` = chip link (only proof link): first reference, or `PREFERRED_REFERENCE` (Vue, Vite, npm → sb-floating-panel-vue). Exports `SkillReference`.
 
 ### `useSkills()`
 ```ts

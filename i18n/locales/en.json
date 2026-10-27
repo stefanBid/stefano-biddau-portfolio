@@ -17,7 +17,7 @@
   "meta": {
     "home": {
       "title": "Stefano Biddau {'|'} Full-Stack Developer & Web Designer",
-      "description": "Stefano Biddau, freelance full-stack developer and web designer, available to join your team or take on your project, from interface to database."
+      "description": "Stefano Biddau, full-stack developer and web designer for consulting and freelance work: available to join your team or take on your project, from interface to database."
     },
     "about": {
       "title": "About Me {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -76,7 +76,7 @@
         "costant": "I'm a",
         "role": "Full-Stack Developer & Web Designer"
       },
-      "lead": "At SI2001 since 2022 and open to freelance projects. I build complete web products, from interface to database.",
+      "lead": "Full-stack consulting and freelance work: I build complete web products, from interface to database.",
       "cvCard": {
         "buttonText": "Download CV",
         "versions": {
@@ -239,7 +239,7 @@
           "organization": "University of Salerno",
           "type": "education",
           "stack": ["Java", "Java EE", "HTML", "CSS", "JavaScript", "Python"],
-          "skills": ["java", "html", "css", "javascript", "python"],
+          "skills": ["java", "html", "css", "javascript", "mysql", "python"],
           "imageSrc": "v1793013189/unisa_cz1oxe.webp",
           "imageWidth": 2652,
           "imageHeight": 3976,
@@ -270,7 +270,7 @@
           "organization": "SI2001",
           "type": "fullTime",
           "stack": ["Java", "Spring Boot", "Spring Batch", "PostgreSQL", "Vue.js", "Angular", "Flutter"],
-          "skills": ["java", "spring", "postgresql", "vue", "angular", "flutter"],
+          "skills": ["java", "spring", "postgresql", "vue", "angular", "flutter", "git", "headless-ui", "graphql", "strapi", "figma", "slack", "adobe-xd", "storybook", "turborepo"],
           "imageSrc": "v1793013189/workstation_mkagtf.webp",
           "imageWidth": 2316,
           "imageHeight": 3088,
@@ -296,7 +296,6 @@
       "lead": "Every day: Vue, Angular, TypeScript and Tailwind CSS on the front end, Java, Spring and PostgreSQL on the back end. Below, the full stack by area and by how often I use it.",
       "orbitCaption": "Closer to the sun means I use it more often.",
       "seenIn": "Seen in:",
-      "thisSite": "This site",
       "chipSeenIn": "where I used it: {place}",
       "tiers": {
         "core": {
