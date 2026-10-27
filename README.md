@@ -220,7 +220,7 @@ Literal colours live only in `theme.css`, as raw `--sb-*` variables, mapped to T
 
 Tailwind opacity modifiers are allowed: `bg-bg/80`, `text-ink-muted/70`.
 
-`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`. `--sb-tech-*` (angular, css, flutter, html, java, javascript, postgresql, python, spring, vue) are raw-only brand accents for the milestone stack chips, lifted to ≥ 4:1 on `surface`.
+`primary` is for fills, borders and icons; orange text always uses `text-primary-ink` (`primary` itself is only 4.24:1 on `surface-2`). `--sb-gold-100` … `--sb-gold-900` are raw-only illustration colours for the gold skill cards (no Tailwind utilities). The solar system on the Skills page uses the same approach: `--sb-sun-*`, `--sb-planet-*`, `--sb-planet-atmo-*`, `--sb-orbit`, `--sb-planet-shadow`, `--sb-moon-100`. `--sb-tech-*` (adobe-xd, angular, css, figma, flutter, git, graphql, headless-ui, html, java, javascript, mysql, postgresql, python, slack, spring, storybook, strapi, turborepo, vue) are raw-only brand accents for the milestone stack chips, lifted to ≥ 4:1 on `surface`.
 
 ### Shapes and shadows
 

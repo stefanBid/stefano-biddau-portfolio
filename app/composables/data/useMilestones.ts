@@ -40,19 +40,29 @@ export interface Milestone {
 
 // Stack keywords as authored in the locale files; keywords without a brand render as neutral chips
 const STACK_BRANDS: Record<string, Omit<MilestoneStackItem, 'name'>> = {
+  'Adobe XD': { icon: 'logos:adobe-xd', color: 'var(--sb-tech-adobe-xd)' },
   'Angular': { icon: 'logos:angular-icon', color: 'var(--sb-tech-angular)' },
   'API REST': { icon: 'mdi:api' },
   'CSS': { icon: 'logos:css-3', color: 'var(--sb-tech-css)' },
+  'Figma': { icon: 'logos:figma', color: 'var(--sb-tech-figma)' },
   'Flutter': { icon: 'logos:flutter-icon', color: 'var(--sb-tech-flutter)' },
+  'Git': { icon: 'logos:git-icon', color: 'var(--sb-tech-git)' },
+  'GraphQL': { icon: 'logos:graphql', color: 'var(--sb-tech-graphql)' },
+  'Headless UI': { icon: 'logos:headlessui-icon', color: 'var(--sb-tech-headless-ui)' },
   'HTML': { icon: 'logos:html-5', color: 'var(--sb-tech-html)' },
   'Java': { icon: 'logos:java', color: 'var(--sb-tech-java)' },
   'Java EE': { icon: 'logos:java', color: 'var(--sb-tech-java)' },
   'JavaScript': { icon: 'logos:javascript', color: 'var(--sb-tech-javascript)' },
+  'MySQL': { icon: 'logos:mysql-icon', color: 'var(--sb-tech-mysql)' },
   'PostgreSQL': { icon: 'logos:postgresql', color: 'var(--sb-tech-postgresql)' },
   'Python': { icon: 'logos:python', color: 'var(--sb-tech-python)' },
   'REST API': { icon: 'mdi:api' },
+  'Slack': { icon: 'logos:slack-icon', color: 'var(--sb-tech-slack)' },
   'Spring Batch': { icon: 'logos:spring-icon', color: 'var(--sb-tech-spring)' },
   'Spring Boot': { icon: 'logos:spring-icon', color: 'var(--sb-tech-spring)' },
+  'Storybook': { icon: 'logos:storybook-icon', color: 'var(--sb-tech-storybook)' },
+  'Strapi': { icon: 'logos:strapi-icon', color: 'var(--sb-tech-strapi)' },
+  'Turborepo': { icon: 'logos:turborepo-icon', color: 'var(--sb-tech-turborepo)' },
   'Vue.js': { icon: 'logos:vue', color: 'var(--sb-tech-vue)' },
 }
 
