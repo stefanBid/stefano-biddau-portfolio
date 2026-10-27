@@ -32,13 +32,13 @@
   --animate-fade-in: fade-in var(--sb-duration-state) var(--ease-out) both;
   --animate-fade-out: fade-out var(--sb-duration-feedback) var(--ease-in) both;
   --animate-rise-in: rise-in var(--sb-duration-state) var(--ease-out) both;
+  /* Home hero copy and CTAs arriving as one block, alongside the avatar */
+  --animate-rise-in-slow: rise-in var(--sb-duration-layout) var(--ease-out) both;
   --animate-slide-in-right: slide-in-right var(--sb-duration-layout) var(--ease-out) both;
   --animate-spin: spin 0.8s linear infinite;    /* loading indicators only */
   /* The astronaut world: avatars arrive weightless, then drift (paused offscreen by BaseFloat) */
   --animate-drift-in: drift-in var(--sb-duration-entrance) var(--ease-out) both;
   --animate-float: float 8s var(--ease-in-out) infinite;
-  /* Hero name rising out of its own line */
-  --animate-mask-up: mask-up var(--sb-duration-entrance) var(--ease-out) both;
 
   @keyframes fade-in        { from { opacity: 0; } to { opacity: 1; } }
   @keyframes fade-out       { from { opacity: 1; } to { opacity: 0; } }
@@ -48,7 +48,6 @@
   @keyframes drift-in       { from { opacity: 0; transform: translateY(calc(var(--sb-motion-distance) * 6)) rotate(calc(var(--sb-float-tilt) * -4)); } to { opacity: 1; transform: none; } }
   /* Starts and ends at rest, where drift-in leaves the avatar: no jump when it takes over */
   @keyframes float          { 0%, 100% { transform: none; } 50% { transform: translateY(calc(var(--sb-motion-distance) * -1.5)) rotate(var(--sb-float-tilt)); } }
-  @keyframes mask-up        { from { clip-path: inset(0 0 100% 0); transform: translateY(calc(var(--sb-motion-distance) * 4)); } to { clip-path: inset(-25% -10% -25% -10%); transform: none; } }
 }
 
 /* --------------------------------------------------------------------------
