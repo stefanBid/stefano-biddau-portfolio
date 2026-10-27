@@ -6,7 +6,7 @@ import type Typed from 'typed.js'
 
 type InputStrings = string | string[]
 type InputOptions = Partial<TypedOptions> & {
-  // 'entrance': startDelay counts from the parent's CSS entrance animation, so a late hydration shortens the wait instead of adding to it
+  // 'entrance': startDelay counts from the nearest animated ancestor's CSS entrance, so a late hydration shortens the wait instead of adding to it
   startDelayFrom?: 'mount' | 'entrance'
 }
 type InputSource = InputStrings | Ref<InputStrings> | ComputedRef<InputStrings>
@@ -67,7 +67,11 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     if (options.startDelayFrom !== 'entrance') {
       return delay
     }
-    const entrance = target.parentElement?.getAnimations()[0]
+    let host = target.parentElement
+    while (host && !host.getAnimations().length) {
+      host = host.parentElement
+    }
+    const entrance = host?.getAnimations()[0]
     // A finished animation stops its clock at delay + duration: it says only that the entrance is over
     if (entrance?.playState === 'finished') {
       return 0
