@@ -18,6 +18,7 @@ const props = defineProps<CustomLegalDocumentProps>()
 
 // Data
 const activeId = ref<string | null>(null)
+const targetId = ref<string | null>(null)
 const tocRef = ref<HTMLDetailsElement | null>(null)
 
 const updatedLabel = computed(() => new Intl.DateTimeFormat(locale.value, {
@@ -29,9 +30,8 @@ const updatedLabel = computed(() => new Intl.DateTimeFormat(locale.value, {
 
 const ACTIVE_OFFSET = 160 // px from the top: below the sticky header, where a heading counts as reached
 
-// Events
 // The last section whose heading has passed the offset; at the bottom of the page the short last sections never reach it
-const onScroll = () => {
+const _updateActive = () => {
   const { sections } = props.legalDocument
   const isAtBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 2
   if (isAtBottom) {
@@ -40,6 +40,27 @@ const onScroll = () => {
   }
   const reached = sections.filter(section => (document.getElementById(section.id)?.getBoundingClientRect().top ?? Infinity) <= ACTIVE_OFFSET)
   activeId.value = reached.at(-1)?.id ?? null
+}
+
+const _releaseTarget = useDebounceFn(() => {
+  targetId.value = null
+  _updateActive()
+}, 150)
+
+// Events
+// While a smooth jump is running the picked section stays active, like the header underline, instead of lighting up every section on the way
+const onScroll = () => {
+  if (targetId.value) {
+    _releaseTarget()
+    return
+  }
+  _updateActive()
+}
+
+const onTocSelect = (id: string) => {
+  activeId.value = id
+  targetId.value = id
+  _releaseTarget()
 }
 
 // The mobile index sits above the text: once a section is picked it folds away instead of pushing the content down
@@ -57,7 +78,7 @@ const onBackToTop = (event: MouseEvent) => {
 }
 
 useEventListener('scroll', useThrottleFn(onScroll, 100, true), { passive: true })
-onMounted(onScroll)
+onMounted(_updateActive)
 </script>
 
 <template>
@@ -85,9 +106,10 @@ onMounted(onScroll)
           >
             <a
               :aria-current="activeId === section.id ? 'location' : undefined"
-              class="-ml-px flex min-h-11 items-baseline gap-3 border-l py-2.5 pl-4 sb-label text-left hyphens-none rounded-sm sb-transition sb-focus"
-              :class="activeId === section.id ? 'border-primary text-primary-ink' : 'border-transparent text-ink-muted hover:text-ink'"
+              class="relative flex min-h-11 items-baseline gap-3 py-2.5 pl-4 sb-label text-left hyphens-none rounded-sm sb-transition sb-focus after:absolute after:inset-y-0 after:-left-px after:w-px after:bg-primary after:sb-transition"
+              :class="activeId === section.id ? 'text-primary-ink after:scale-y-100' : 'text-ink-muted hover:text-ink after:scale-y-0'"
               :href="`#${section.id}`"
+              @click="onTocSelect(section.id)"
             >
               <span aria-hidden="true" class="shrink-0 tabular-nums">{{ index + 1 }}.</span>
               <span class="text-balance">{{ section.title }}</span>
