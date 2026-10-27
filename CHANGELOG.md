@@ -1,5 +1,16 @@
 # Changelog
 
+## [2.0.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.7.0...v2.0.0) (2026-10-27)
+
+
+### ⚠ BREAKING CHANGES
+
+* new website design ([#144](https://github.com/stefanBid/stefano-biddau-portfolio/issues/144))
+
+### Code Refactoring
+
+* new website design ([#144](https://github.com/stefanBid/stefano-biddau-portfolio/issues/144)) ([6f16ed4](https://github.com/stefanBid/stefano-biddau-portfolio/commit/6f16ed4f55fb20360447a0d4e26d14a7dbb72960))
+
 ## [1.7.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.6.4...v1.7.0) (2026-09-10)
 
 
