@@ -848,7 +848,7 @@ const { el, elStyle } = useTypedText(computed(() => [t('key.0'), t('key.1')]))
 | `start()` / `stop()` / `reset(hard?)` | — | Manual playback control |
 | `recreate()` / `setOptions()` / `setStrings()` / `update()` | — | Dynamic reconfiguration |
 
-Besides the `typed.js` options, `startDelayFrom: 'entrance'` counts `startDelay` from the parent's CSS entrance animation instead of from mount, so a slow hydration shortens the wait instead of adding to it (home hero).
+Besides the `typed.js` options, `startDelayFrom: 'entrance'` counts `startDelay` from the nearest animated ancestor's CSS entrance instead of from mount, so a slow hydration shortens the wait instead of adding to it (home hero).
 
 - Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace)
 - Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing)
