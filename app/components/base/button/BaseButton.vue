@@ -91,7 +91,7 @@ const classes = computed(() => {
     :rel="isExternal ? 'noopener noreferrer' : undefined"
     :target="isExternal ? '_blank' : undefined"
   >
-    <slot></slot>
+    <slot />
     <Icon
       v-if="isExternal && !props.iconOnly"
       aria-hidden="true"
@@ -108,7 +108,7 @@ const classes = computed(() => {
     :disabled="props.isDisabled || props.isLoading"
     :type="props.type"
   >
-    <slot></slot>
+    <slot />
     <Icon
       v-if="props.isLoading"
       aria-hidden="true"

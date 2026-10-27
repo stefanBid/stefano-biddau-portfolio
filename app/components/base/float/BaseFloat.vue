@@ -11,6 +11,6 @@ const isVisible = useElementVisibility(el)
     class="animate-float"
     :class="{ 'sb-paused': !isVisible }"
   >
-    <slot></slot>
+    <slot />
   </div>
 </template>

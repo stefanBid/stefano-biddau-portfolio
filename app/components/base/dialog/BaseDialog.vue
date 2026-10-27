@@ -143,14 +143,14 @@ watch(
             id="second-custom-header"
             class="p-4 md:p-6 sb-transition"
           >
-            <slot name="header"></slot>
+            <slot name="header" />
           </section>
 
           <!-- BODY -->
           <section
             class="flex-1 p-4 md:p-6 overflow-y-auto sb-body sb-transition"
           >
-            <slot></slot>
+            <slot />
           </section>
 
           <!-- FOOTER -->
@@ -158,7 +158,7 @@ watch(
             v-if="$slots.footer"
             class="flex justify-end gap-3 p-4 md:p-6 border-t border-border/70 sb-transition"
           >
-            <slot name="footer"></slot>
+            <slot name="footer" />
           </footer>
         </div>
       </div>

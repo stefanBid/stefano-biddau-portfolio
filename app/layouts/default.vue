@@ -85,7 +85,7 @@ const onCloseNotification = (id: string) => {
       tabindex="-1"
     >
       <div class="w-full max-w-350 mx-auto">
-        <slot></slot>
+        <slot />
       </div>
     </main>
     <TheFooter

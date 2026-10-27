@@ -30,7 +30,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
     }"
   >
     <template v-if="props.fullCustomContent">
-      <slot></slot>
+      <slot />
     </template>
     <template v-else>
       <!-- Header slot -->
@@ -43,7 +43,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           'justify-center md:justify-end': props.align === 'right',
         }"
       >
-        <slot name="card-header"></slot>
+        <slot name="card-header" />
       </div>
       <!-- Body content -->
       <div
@@ -56,7 +56,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
         }"
       >
         <div v-if="$slots['card-body']">
-          <slot name="card-body"></slot>
+          <slot name="card-body" />
         </div>
         <template v-else>
           <h2
@@ -99,7 +99,7 @@ const props = withDefaults(defineProps<BaseCardProps>(), {
           'justify-center md:justify-end': props.align === 'right',
         }"
       >
-        <slot name="card-footer"></slot>
+        <slot name="card-footer" />
       </div>
     </template>
   </div>
