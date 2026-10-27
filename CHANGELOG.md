@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.0...v2.0.1) (2026-10-27)
+
+
+### Bug Fixes
+
+* smooth home hero entrance animation ([#146](https://github.com/stefanBid/stefano-biddau-portfolio/issues/146)) ([d4ad7ff](https://github.com/stefanBid/stefano-biddau-portfolio/commit/d4ad7ff0f4d22104774dda783ab72b7a17216dba))
+
 ## [2.0.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v1.7.0...v2.0.0) (2026-10-27)
 
 
