@@ -151,7 +151,7 @@ watch(isMdUp, (newVal) => {
             class="object-contain size-8 sm:size-10 md:size-12"
             fetchpriority="high"
             loading="eager"
-            src="/images/logo.webp"
+            src="/sb-logo.svg"
           />
           Stefano Biddau
         </NuxtLink>

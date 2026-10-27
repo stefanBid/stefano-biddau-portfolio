@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<TheFooterProps>(), {
           <NuxtImg
             alt=""
             class="object-contain size-7 sm:size-8 md:size-9"
-            src="/images/logo.webp"
+            src="/sb-logo.svg"
           />
           <span class="sb-h3">
             Stefano Biddau

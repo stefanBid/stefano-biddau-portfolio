@@ -859,7 +859,7 @@ Builds a Cloudinary delivery URL from a path relative to `image/upload/` (versio
 const { cloudinaryUrl, resolveImageSrc } = useCloudinary()
 cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')
 // → https://res.cloudinary.com/dsmtyu2iw/image/upload/v1793011184/sbt-logo_wgjk4u.svg
-resolveImageSrc('/images/logo.webp') // → unchanged (file in public/)
+resolveImageSrc('/sb-logo.svg') // → unchanged (file in public/)
 ```
 
 ### `useContact()`
