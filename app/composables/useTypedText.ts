@@ -5,7 +5,10 @@ import type { TypedOptions } from 'typed.js'
 import type Typed from 'typed.js'
 
 type InputStrings = string | string[]
-type InputOptions = Partial<TypedOptions>
+type InputOptions = Partial<TypedOptions> & {
+  // 'entrance': startDelay counts from the parent's CSS entrance animation, so a late hydration shortens the wait instead of adding to it
+  startDelayFrom?: 'mount' | 'entrance'
+}
 type InputSource = InputStrings | Ref<InputStrings> | ComputedRef<InputStrings>
 
 // Default Configuraton
@@ -59,6 +62,19 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     }
   }
 
+  function _remainingDelay(target: HTMLElement, options: InputOptions): number {
+    const delay = options.startDelay ?? 0
+    if (options.startDelayFrom !== 'entrance') {
+      return delay
+    }
+    const entrance = target.parentElement?.getAnimations()[0]
+    // A finished animation stops its clock at delay + duration: it says only that the entrance is over
+    if (entrance?.playState === 'finished') {
+      return 0
+    }
+    return Math.max(0, delay - Number(entrance?.currentTime ?? 0))
+  }
+
   function _prefersReducedMotion(): boolean {
     return typeof window !== 'undefined' && !!window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   }
@@ -81,10 +97,11 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
       return
     }
 
-    const { default: Typed } = await import('typed.js') // Lazy load for SSR safety
+    const { default: Typed } = await (_typedModule ?? import('typed.js'))
 
     const finalTypedOptions: TypedOptions = {
       ..._normalizeOptions(_typedOptions.value), // for sync with reactive options
+      startDelay: _remainingDelay(target, _typedOptions.value),
       strings: _strings.value,
     }
 
@@ -97,6 +114,9 @@ export default function useTypedText(input: InputSource, options?: InputOptions)
     _instance = null
     isRunning.value = false
   }
+
+  // Requested at setup, not at mount: the download overlaps hydration instead of following it (client only, SSR safe)
+  const _typedModule = import.meta.client ? import('typed.js') : null
 
   // State
   /* --- Target DOM element reference --- */

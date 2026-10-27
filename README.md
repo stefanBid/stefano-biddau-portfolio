@@ -3,7 +3,7 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-2.0.0-blue)
+  ![Version](https://img.shields.io/badge/version-2.0.1-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.6.3-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -276,7 +276,7 @@ Running text (`p`, `li`, `blockquote`) is justified site-wide with automatic hyp
 
 Always add `sb-transition` to interactive elements. It does not animate width/height — avoid animating layout properties.
 
-**Motion language.** The site's world is the astronaut, so its one authored moment is a weightless arrival on the home hero: the avatar drifts up and settles (`animate-drift-in`), the name rises out of its line (`animate-mask-up`, clip-path + transform), the typed role starts at 700ms, lead and CTAs follow (`animate-rise-in` with `sb-delay-*`), all within about 1s. Afterwards every hero avatar floats slowly (`animate-float` via `BaseFloat`, paused offscreen). Supporting motion only explains state: mobile menu links arrive in sequence (50ms apart) and close at once, the open milestone photo enters with the `fade` transition (enter only: on close the two-column grid goes at once, a leaving photo would drop under the text), buttons press (`motion-safe:active:scale-98`), arrows on text links and skill chips nudge on hover (`motion-safe:group-hover:translate-*`), the Skills orbits pause offscreen.
+**Motion language.** The site's world is the astronaut, so its one authored moment is a weightless arrival on the home hero: the avatar drifts up and settles (`animate-drift-in`), the name rises out of its line (`animate-mask-up`: transform + opacity inside an `overflow-hidden` heading, compositor-only so hydration cannot stall it), "I'm a" fades in at 400ms, the role types from 550ms (about 35ms per character, on the CSS entrance clock) while lead and CTAs land (`animate-rise-in`, `sb-delay-900`/`-1000`), and the scroll cue appears when the typing ends (~1.9s). Afterwards every hero avatar floats slowly (`animate-float` via `BaseFloat`, paused offscreen). Supporting motion only explains state: mobile menu links arrive in sequence (50ms apart) and close at once, the open milestone photo enters with the `fade` transition (enter only: on close the two-column grid goes at once, a leaving photo would drop under the text), buttons press (`motion-safe:active:scale-98`), arrows on text links and skill chips nudge on hover (`motion-safe:group-hover:translate-*`), the Skills orbits pause offscreen.
 
 **First entrance in the viewport — `v-reveal`** (`app/plugins/reveal.ts`, CSS in `animation.css` §5). Put `v-reveal` on a section or card; `v-reveal="index"` staggers a list (80ms per index, max 320ms). On mount the directive hides only elements still below the fold (`.sb-reveal`: opacity 0, `--sb-motion-distance` × 3 down), reveals each one once when it scrolls in (`.sb-reveal--in`, `--sb-duration-entrance`, ease-out) and removes both classes at the end so the element's own hover transitions come back. Server HTML never carries the classes: without JS everything is visible, and nothing above the fold flashes. Under reduced motion it is a plain fade. Used on the home sections and Selected work cards, About milestones and "Alongside", Skills areas, project and template cards and the closing CTA. Never on anchor targets such as the legal sections: an element still offset by `.sb-reveal` makes an in-page jump land under the sticky header.
 
@@ -847,6 +847,8 @@ const { el, elStyle } = useTypedText(computed(() => [t('key.0'), t('key.1')]))
 | `isRunning` | `Ref<boolean>` | Whether animation is active |
 | `start()` / `stop()` / `reset(hard?)` | — | Manual playback control |
 | `recreate()` / `setOptions()` / `setStrings()` / `update()` | — | Dynamic reconfiguration |
+
+Besides the `typed.js` options, `startDelayFrom: 'entrance'` counts `startDelay` from the parent's CSS entrance animation instead of from mount, so a slow hydration shortens the wait instead of adding to it (home hero).
 
 - Single string → `LONG_TEXT_OPTIONS` (no loop, no backspace)
 - Array of strings → `GROUP_STRING_OPTIONS` (loops with smart back-typing)

@@ -36,8 +36,11 @@ const { el, elStyle } = useTypedText(
   typedRole,
   {
     contentType: 'null',
-    // Starts once the name has risen (animate-mask-up)
-    startDelay: 700,
+    // About 35ms per character with typed.js jitter: the role lands within the entrance, while lead and CTAs arrive
+    typeSpeed: 28,
+    // Right after "I'm a" fades in, on the CSS entrance clock: a slow hydration cannot open a gap
+    startDelay: 550,
+    startDelayFrom: 'entrance',
     onComplete: self => self.cursor?.remove(),
   },
 )
@@ -62,10 +65,11 @@ const STACK_GROUP_LAYOUT = {
     <!-- Pulled under the sticky header so the first screen is exactly one viewport; selected work starts below the fold -->
     <section class="relative -mt-16 grid min-h-svh items-center content-center gap-6 pt-20 pb-24 md:grid-cols-[1.2fr_1fr] md:gap-10 lg:pt-24 lg:pb-28 lg:gap-16">
       <div class="order-2 md:order-1 flex flex-col items-center text-center md:items-start md:text-left">
-        <h1 class="sb-display mb-0 text-balance animate-mask-up sb-delay-150">
-          {{ t('pages.home.title') }}
+        <!-- The clip box is padded so the glyphs are never cut; the name rises with transform only, which stays smooth while hydration holds the main thread -->
+        <h1 class="sb-display -my-2 py-2 mb-0 overflow-hidden text-balance">
+          <span class="block animate-mask-up sb-delay-100">{{ t('pages.home.title') }}</span>
         </h1>
-        <p class="sb-h3 mt-4 min-h-14 text-ink-muted animate-fade-in sb-delay-500">
+        <p class="sb-h3 mt-4 min-h-14 text-ink-muted animate-fade-in sb-delay-400">
           {{ t('pages.home.subtitle.costant') }}
           <span class="sr-only">{{ typedRole }}</span>
           <span
@@ -75,11 +79,11 @@ const STACK_GROUP_LAYOUT = {
             :style="elStyle"
           ></span>
         </p>
-        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none md:text-left animate-rise-in sb-delay-650">
+        <p class="sb-lead mt-4 mb-0 max-w-xl text-center text-pretty text-ink hyphens-none md:text-left animate-rise-in sb-delay-900">
           {{ t('pages.home.lead') }}
         </p>
         <!-- Stacked on mobile: a one-column grid as wide as the widest button keeps both the same width -->
-        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex md:grid lg:flex animate-rise-in sb-delay-750">
+        <div class="mt-8 grid w-fit grid-cols-1 gap-4 sm:flex md:grid lg:flex animate-rise-in sb-delay-1000">
           <BaseButton size="lg" variant="primary" @click="isContactFormOpen = true">
             {{ t('pages.home.contactCard.buttonText') }}
           </BaseButton>
@@ -107,7 +111,7 @@ const STACK_GROUP_LAYOUT = {
         </BaseFloat>
       </div>
       <a
-        class="group absolute bottom-6 left-1/2 -translate-x-1/2 animate-fade-in sb-delay-1000 inline-flex items-center min-h-11 gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
+        class="group absolute bottom-6 left-1/2 -translate-x-1/2 animate-fade-in sb-delay-1900 inline-flex items-center min-h-11 gap-2 whitespace-nowrap sb-label uppercase text-ink-muted hover:text-ink rounded-sm sb-transition sb-focus"
         href="#selected-work"
       >
         {{ t('pages.home.selectedWork.title') }}

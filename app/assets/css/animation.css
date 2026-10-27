@@ -17,6 +17,8 @@
   --sb-motion-distance: 8px;
   /* Avatar tilt while weightless; zeroed under reduced motion */
   --sb-float-tilt: 1deg;
+  /* Hero name rise inside its clip box; zeroed under reduced motion */
+  --sb-mask-distance: 110%;
 }
 
 /* --------------------------------------------------------------------------
@@ -48,7 +50,8 @@
   @keyframes drift-in       { from { opacity: 0; transform: translateY(calc(var(--sb-motion-distance) * 6)) rotate(calc(var(--sb-float-tilt) * -4)); } to { opacity: 1; transform: none; } }
   /* Starts and ends at rest, where drift-in leaves the avatar: no jump when it takes over */
   @keyframes float          { 0%, 100% { transform: none; } 50% { transform: translateY(calc(var(--sb-motion-distance) * -1.5)) rotate(var(--sb-float-tilt)); } }
-  @keyframes mask-up        { from { clip-path: inset(0 0 100% 0); transform: translateY(calc(var(--sb-motion-distance) * 4)); } to { clip-path: inset(-25% -10% -25% -10%); transform: none; } }
+  /* Transform + opacity only (compositor): the parent clips, so the name rises out of its own line */
+  @keyframes mask-up        { from { opacity: 0; transform: translateY(var(--sb-mask-distance)); } to { opacity: 1; transform: none; } }
 }
 
 /* --------------------------------------------------------------------------
@@ -167,6 +170,7 @@
   :root {
     --sb-motion-distance: 0px;
     --sb-float-tilt: 0deg;
+    --sb-mask-distance: 0%;
   }
   .scale-fade-enter-from,
   .scale-fade-leave-to {
