@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.2...v2.0.3) (2026-11-03)
+
+
+### Bug Fixes
+
+* **deps:** update nuxt to 4.6.4 (security) and minor/patch dependencies ([#151](https://github.com/stefanBid/stefano-biddau-portfolio/issues/151)) ([b464953](https://github.com/stefanBid/stefano-biddau-portfolio/commit/b464953d1f269fd85a1aa3c97a9e18d15599ee85))
+
 ## [2.0.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.1...v2.0.2) (2026-11-03)
 
 
