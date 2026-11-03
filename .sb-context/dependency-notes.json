@@ -56,7 +56,7 @@
         "https://github.com/typescript-eslint/typescript-eslint/issues/10940"
       ],
       "firstSeen": "2026-10-24",
-      "lastChecked": "2026-10-27",
+      "lastChecked": "2026-11-03",
       "history": [
         {
           "date": "2026-10-27",
@@ -65,6 +65,10 @@
         {
           "date": "2026-10-27",
           "text": "2026-10-27 (deps run): still blocked — @typescript-eslint/parser@8.72.1 peers typescript <6.1.0; vue-tsc still 3.3.13, language-tools#6167 open; typescript 7.1.0-beta out, not stable. _comment_typescript stays."
+        },
+        {
+          "date": "2026-11-03",
+          "text": "2026-11-03: @typescript-eslint 8.72.1 still peers typescript <6.1.0; @volar/typescript 2.4.30 still <7"
         }
       ]
     },
@@ -73,7 +77,7 @@
       "package": "vue-i18n",
       "current": "10.0.8",
       "target": "11",
-      "status": "watching",
+      "status": "resolved",
       "summary": "Deprecation warning on install: transitive vue-i18n@10.0.8 (unsupported) comes from @intlify/vue-i18n-extensions@8 (hard dependency), required as ^8.0.0 by @intlify/unplugin-vue-i18n@11.2.7 under @nuxtjs/i18n. Build-time tooling only; runtime uses vue-i18n@11.4.16. extensions@9 drops the dependency, waiting for unplugin-vue-i18n to adopt it.",
       "blockedBy": [
         {
@@ -87,13 +91,19 @@
         "https://github.com/intlify/bundle-tools"
       ],
       "firstSeen": "2026-10-27",
-      "lastChecked": "2026-10-27",
+      "lastChecked": "2026-11-03",
       "history": [
         {
           "date": "2026-10-27",
           "text": "2026-10-27: @intlify/unplugin-vue-i18n@11.2.7 still latest, still extensions ^8.0.0"
+        },
+        {
+          "date": "2026-11-03",
+          "text": "2026-11-03: @intlify/unplugin-vue-i18n 11.2.8 depends on @intlify/vue-i18n-extensions ^9; updated in range, vue-i18n@10.0.8 no longer installed"
         }
-      ]
+      ],
+      "resolvedAt": "2026-11-03",
+      "resolution": "2026-11-03: @intlify/unplugin-vue-i18n 11.2.8 depends on @intlify/vue-i18n-extensions ^9; updated in range, vue-i18n@10.0.8 no longer installed"
     },
     {
       "id": "esbuild@drop override",
@@ -114,7 +124,83 @@
         "https://github.com/intlify/bundle-tools"
       ],
       "firstSeen": "2026-10-27",
-      "lastChecked": "2026-10-27",
+      "lastChecked": "2026-11-03",
+      "history": [
+        {
+          "date": "2026-11-03",
+          "text": "2026-11-03: @intlify/bundle-utils latest 11.2.8 still asks esbuild ^0.25.4"
+        }
+      ]
+    },
+    {
+      "id": "deepmerge@>4.3.1",
+      "package": "deepmerge",
+      "current": "4.3.1",
+      "target": ">4.3.1",
+      "status": "watching",
+      "summary": "Low advisory GHSA-gcqx-w48m-w2h4 (prototype poisoning in mergeObject) affects deepmerge >=4.2.0; latest is 4.3.1, no patched release. Build-time only: nuxt -> nitropack -> @rollup/plugin-node-resolve. npm audit's only fix is downgrading nuxt, not allowed.",
+      "blockedBy": [
+        {
+          "package": "deepmerge",
+          "range": "4.3.1",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "has deepmerge published > 4.3.1, or has @rollup/plugin-node-resolve dropped it? (npm view deepmerge version; npm ls deepmerge)",
+      "links": [
+        "https://github.com/advisories/GHSA-gcqx-w48m-w2h4"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    },
+    {
+      "id": "minimatch@11.0.1",
+      "package": "minimatch",
+      "current": "10.2.6",
+      "target": "11.0.1",
+      "status": "watching",
+      "summary": "Moderate advisory GHSA-g3hv-75wg-m249 (DoS via globparts amplification) affects minimatch <11.0.1, patched only in the 11 major; eslint 10.14.0, @eslint/config-array 0.23.5, @typescript-eslint/typescript-estree 8.72.1, readdir-glob 3.0.0 and glob 13.0.6 still ask ^10 in their latest releases. Lint/build-time tooling only.",
+      "blockedBy": [
+        {
+          "package": "eslint",
+          "range": "10.14.0",
+          "owner": "upstream"
+        },
+        {
+          "package": "@typescript-eslint/typescript-estree",
+          "range": "8.72.1",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "do the latest eslint, @eslint/config-array, @typescript-eslint/typescript-estree and readdir-glob accept minimatch ^11? (npm view <pkg> dependencies.minimatch)",
+      "links": [
+        "https://github.com/advisories/GHSA-g3hv-75wg-m249"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
+      "history": []
+    },
+    {
+      "id": "glob@14.0.2",
+      "package": "glob",
+      "current": "13.0.6",
+      "target": "14.0.2",
+      "status": "watching",
+      "summary": "Moderate advisory GHSA-3g3m-2fjr-6pw4 affects glob >=9.0.0 <=14.0.1; pulled in at build time by nuxt -> nitropack -> @vercel/nft 1.11.0 (latest), which asks glob ^13. Fixed only in 14.0.2.",
+      "blockedBy": [
+        {
+          "package": "@vercel/nft",
+          "range": "1.11.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "does @vercel/nft@latest depend on glob ^14? (npm view @vercel/nft dependencies.glob)",
+      "links": [
+        "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4"
+      ],
+      "firstSeen": "2026-11-03",
+      "lastChecked": "2026-11-03",
       "history": []
     }
   ]
