@@ -3,9 +3,9 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-2.0.2-blue)
+  ![Version](https://img.shields.io/badge/version-2.0.3-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
-  [![Nuxt](https://img.shields.io/badge/nuxt-4.6.3-00DC82?logo=nuxt.js)](https://nuxt.com)
+  [![Nuxt](https://img.shields.io/badge/nuxt-4.6.4-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
   [![TypeScript](https://img.shields.io/badge/typescript-strict-3178C6?logo=typescript)](https://www.typescriptlang.org)
   [![Tailwind CSS](https://img.shields.io/badge/tailwind-v4-38B2AC?logo=tailwind-css)](https://tailwindcss.com)
@@ -23,13 +23,13 @@
 
 > Internal knowledge base for contributors: known issues, gotchas and version decisions that aren't obvious from the code alone. Not part of the numbered docs below — update this section whenever something like this is discovered or resolved.
 
-### ✅ Resolved — `nuxt` upgraded to `4.6.3` (exact, no caret)
+### ✅ Resolved — `nuxt` upgraded to `4.6.4` (exact, no caret)
 
-`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `4.6.x` (Nuxt CLI v4, opt-in `nuxt/server` imports) needs no migration — validated the same way (typecheck + build + prerender clean); CLI v4 requires Node 24.11+, met by the `24.19.0` pin. `4.6.3` is a security + fix patch (dev-server hardening advisories, route-rule fixes), validated with typecheck + build + prerender. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
+`4.5.0`'s bundled major upgrades (Vite 8, unhead v3 type-narrowing on `useHead`, unctx v3) were validated on a feature branch (`npx nuxt typecheck` + `npm run build` clean) and merged. `4.6.x` (Nuxt CLI v4, opt-in `nuxt/server` imports) needs no migration — validated the same way (typecheck + build + prerender clean); CLI v4 requires Node 24.11+, met by the `24.19.0` pin. `4.6.3` is a security + fix patch (dev-server hardening advisories, route-rule fixes), validated with typecheck + build + prerender. `4.6.4` is a security release (eight Nuxt + three Nitro advisories); its behaviour changes (production error details, ISR/SWR caching rules, dev-server `Host` checks) touch nothing used here. It needs `@nuxt/cli` ≥ 4.0.2: on 4.0.1, `nuxt dev` crashes with `options.hostname.toLowerCase is not a function` — the lockfile has 4.0.3. Validated with typecheck + build + prerender + `nuxt dev` on 2026-11-03. `nuxt` stays exact-pinned (no caret) rather than `^` — intentional for this core framework dependency; re-validate the same way before every future bump.
 
 ### ✅ Resolved — `NUXT_B2005` false positive on `check-if-page-unused.js`
 
-Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.6.2` (both `npm run build` and `nuxt dev`) and on `nuxt@4.6.3` (`npm run build`). If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
+Build/dev warning `Plugin .../check-if-page-unused.js has no default export and will be ignored at build time` is a known Nuxt false positive — the internal plugin does export a default, Nuxt's build-time check flags it incorrectly. Harmless, doesn't block build or dev server. Tracked upstream: [nuxt/nuxt#35664](https://github.com/nuxt/nuxt/issues/35664). Confirmed absent on `nuxt@4.6.2` (both `npm run build` and `nuxt dev`), on `nuxt@4.6.3` (`npm run build`) and on `nuxt@4.6.4` (`npm run build`). If it resurfaces after a version bump, treat it as a regression tied to that version rather than a project config issue.
 
 ### ✅ Resolved — `@nuxt/image` `ipx` provider 500s on Netlify
 
@@ -1169,16 +1169,16 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 
 | Package | Version | Purpose |
 |---|---|---|
-| `nuxt` | `4.6.3` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
+| `nuxt` | `4.6.4` | Core framework (exact pin, see [Developer Notes](#developer-notes)) |
 | `vue` | `^3.5.44` | UI framework |
 | `vue-router` | `^5.4.0` | Routing |
-| `tailwindcss` | `^4.3.3` | Utility-first CSS |
-| `@tailwindcss/vite` | `^4.3.3` | Tailwind v4 Vite plugin |
+| `tailwindcss` | `^4.3.4` | Utility-first CSS |
+| `@tailwindcss/vite` | `^4.3.4` | Tailwind v4 Vite plugin |
 | `@nuxt/eslint` | `^1.17.0` | ESLint + stylistic rules |
 | `@nuxt/fonts` | `^1.2.0` | Self-hosted Google Fonts (Bebas Neue, Space Mono) — served from `/_nuxt/fonts/` in production; a provider/download failure fails the build (`throwOnError` default) |
-| `@nuxt/icon` | `^2.6.1` | SVG icon system |
-| `@nuxt/image` | `^2.2.0` | Image optimisation |
-| `@nuxtjs/color-mode` | `^4.0.1` | Centralised colour-mode config, fixed to dark |
+| `@nuxt/icon` | `^2.6.2` | SVG icon system |
+| `@nuxt/image` | `^2.2.1` | Image optimisation |
+| `@nuxtjs/color-mode` | `^4.1.0` | Centralised colour-mode config, fixed to dark |
 | `@nuxtjs/i18n` | `^10.6.0` | Multi-language support (EN + IT) |
 | `@nuxtjs/sitemap` | `^9.1.0` | Sitemap generated from pages + i18n hreflang, prerendered (`zeroRuntime`) |
 | `@vueuse/core` | `^15.0.0` | Vue composition utilities |
@@ -1188,11 +1188,11 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | `@emailjs/browser` | `^5.0.3` | Contact form email sending |
 | `typed.js` | `^3.0.0` | Typewriter text animation |
 | `zod` | `^4.6.7` | Runtime form validation |
-| `eslint` | `^10.13.0` | Linter |
+| `eslint` | `^10.14.0` | Linter |
 
-`esbuild` is pinned via `overrides` (`^0.28.0`) for dedup only — the dev-server CORS advisory (GHSA-67mh) is now fixed upstream by every consumer; only `@intlify/bundle-utils@11.2.7` (under `@nuxtjs/i18n`) still asks `^0.25.4`, so without the override npm would install two esbuild copies. Drop it once bundle-utils moves to `^0.28`, see `package.json` and `.sb-context/dependency-notes.json`.
+`esbuild` is pinned via `overrides` (`^0.28.0`) for dedup only — the dev-server CORS advisory (GHSA-67mh) is now fixed upstream by every consumer; only `@intlify/bundle-utils@11.2.8` (under `@nuxtjs/i18n`) still asks `^0.25.4`, so without the override npm would install two esbuild copies. Drop it once bundle-utils moves to `^0.28`, see `package.json` and `.sb-context/dependency-notes.json`.
 
-`npm audit` is clean: the former `node-forge` ≤ 1.4.0 advisory (GHSA-86w9-cpqp-85rv, via `nuxt` → `nitropack` → `listhen`) is fixed by `node-forge@1.4.1`, picked up in range. The install still warns that a transitive `vue-i18n@10` is deprecated — build-time only (`@nuxtjs/i18n` → `@intlify/unplugin-vue-i18n` → `@intlify/vue-i18n-extensions@8`), the runtime uses `vue-i18n@11`; waits on upstream, tracked in `.sb-context/dependency-notes.json`.
+`npm audit` has no high or critical advisories. The remaining low/moderate ones are build- and lint-time only and wait on upstream releases (tracked in `.sb-context/dependency-notes.json`): `deepmerge` (no patched release), `minimatch` < 11.0.1 (eslint, typescript-eslint and nitropack's tooling still ask `^10`) and `glob` ≤ 14.0.1 (`@vercel/nft` under nitropack still asks `^13`). The former transitive `vue-i18n@10` deprecation is gone: `@intlify/unplugin-vue-i18n` 11.2.8 dropped `@intlify/vue-i18n-extensions@8`.
 
 ### Dev dependencies
 
@@ -1201,10 +1201,10 @@ Versioning is handled automatically by the [Release Please](https://github.com/g
 | `@iconify-json/solar` | `^1.2.13` | Solar icon set |
 | `@iconify-json/mdi` | `^1.2.3` | MDI icon set |
 | `@iconify-json/logos` | `^1.2.18` | Brand/tech logo icons |
-| `@iconify-json/flagpack` | `^1.2.8` | Flag icons |
-| `@types/node` | `^26.6.5` | Node.js type definitions |
+| `@iconify-json/flagpack` | `^1.2.10` | Flag icons |
+| `@types/node` | `^26.6.6` | Node.js type definitions |
 | `typescript` | `^6.0.3` | TypeScript compiler — held on 6.x, see below |
-| `vue-tsc` | `^3.3.13` | Vue TypeScript type checking |
+| `vue-tsc` | `^3.3.14` | Vue TypeScript type checking |
 
 `typescript` is intentionally held on `^6` (`_comment_typescript` in `package.json`): TS 7 is the native Go compiler and ships no classic JS compiler API, which `vue-tsc`/`@volar` (`nuxt typecheck`) relies on — Vue support is planned with TS 7.1 — and `@typescript-eslint` peers `typescript <6.1.0`. Tracked in `.sb-context/dependency-notes.json`.
 
