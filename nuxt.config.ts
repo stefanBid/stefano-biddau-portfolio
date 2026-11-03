@@ -124,6 +124,12 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
   nitro: {
     preset: 'netlify',
+    prerender: {
+      // Emit flat `/about-me.html` instead of `/about-me/index.html`: with Netlify's Pretty URLs a folder
+      // index forces a 301 `/x` → `/x/`, while canonical, hreflang, sitemap and NuxtLink all use the
+      // slash-less form (Nuxt default). A flat file is served at `/x` with a 200, and `/x/` → `/x`.
+      autoSubfolderIndex: false,
+    },
     // Exclude isomorphic-dompurify from server bundle to avoid jsdom issues
     externals: {
       external: ['isomorphic-dompurify'],

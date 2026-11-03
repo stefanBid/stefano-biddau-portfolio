@@ -157,7 +157,7 @@ Always add `sb-transition` to interactive elements (colour, background, border, 
 
 ## Pages
 
-All pages are pre-rendered (SSG). Never remove `prerender: true` entries.
+All pages are pre-rendered (SSG). Never remove `prerender: true` entries. URLs have no trailing slash: `nitro.prerender.autoSubfolderIndex: false` emits flat `dist/<page>.html` files, so Netlify's Pretty URLs serves `/<page>` with a 200 and redirects `/<page>/` → `/<page>`, matching canonical, hreflang, sitemap and `NuxtLink` (a folder `index.html` would force the opposite 301). Never switch to trailing slashes without realigning all of those.
 
 | File | Route EN | Route IT |
 |---|---|---|

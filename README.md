@@ -3,7 +3,7 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-2.0.1-blue)
+  ![Version](https://img.shields.io/badge/version-2.0.2-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.6.3-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -1131,8 +1131,10 @@ npm run build
 Connect the GitHub repository to Netlify with:
 
 - **Build command:** `npm run build`
-- **Publish directory:** `.output/public`
+- **Publish directory:** `dist` (as set in `netlify.toml`)
 - **Node version:** `24.19.0`
+
+**URLs have no trailing slash** (`/about-me`, matching canonical, hreflang, sitemap and `NuxtLink`). Prerendered pages are written as flat files (`dist/about-me.html`, via `nitro.prerender.autoSubfolderIndex: false`) so that Netlify's Pretty URLs serves `/about-me` with a 200 and redirects `/about-me/` → `/about-me`; a folder index (`about-me/index.html`) would force the opposite 301.
 
 ### Changing the deployment target
 
