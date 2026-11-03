@@ -20,27 +20,27 @@
       "description": "Stefano Biddau, sviluppatore full-stack e web designer per consulenze e progetti freelance: disponibile a entrare nel tuo team o a seguire il tuo progetto, dall'interfaccia al database."
     },
     "about": {
-      "title": "Chi Sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Il mio percorso dalla laurea in Informatica allo sviluppo full-stack, più i progetti per clienti e open source che progetto, sviluppo e mantengo."
+      "title": "Chi sono {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "description": "Il mio percorso dalla laurea in Informatica allo sviluppo full-stack, più i lavori per clienti e open source che progetto, sviluppo e mantengo."
     },
     "skills": {
-      "title": "Competenze & Tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Competenze e tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Lo stack con cui lavoro ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end, Java, Spring e PostgreSQL lato back end. In più Nuxt e Flutter in lavori consegnati."
     },
     "projects": {
-      "title": "Progetti Web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Progetti web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Lavori per clienti, una libreria Vue open source e progetti personali di Stefano Biddau, con link al sito online e al codice dove disponibili."
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Template open source per Nuxt, Astro e Flutter di Stefano Biddau: una struttura di progetto che segue le best practice di ogni framework, libera per ogni sviluppatore."
+      "description": "Template open source per Nuxt, Astro e Flutter di Stefano Biddau: una struttura di progetto che segue le best practice di ogni framework, libera da usare per qualsiasi sviluppatore."
     },
     "privacy": {
       "title": "Informativa sulla privacy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Niente cookie, niente analytics: stefanobiddau.com tratta solo ciò che invii dal modulo di contatto, più i log tecnici dell'hosting. Perché, per quanto tempo, chi li tratta e i tuoi diritti."
     },
     "terms": {
-      "title": "Termini e Condizioni {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
+      "title": "Termini e condizioni {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
       "description": "Le regole per usare stefanobiddau.com: uso consentito, a chi appartiene il lavoro mostrato, come funziona il modulo di contatto, responsabilità e legge applicabile."
     }
   },
