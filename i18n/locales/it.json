@@ -25,7 +25,7 @@
     },
     "skills": {
       "title": "Competenze e tecnologie {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Lo stack con cui lavoro ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end, Java, Spring e PostgreSQL lato back end. In più Nuxt e Flutter in lavori consegnati."
+      "description": "Lo stack con cui lavoro ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end; Java, Spring e PostgreSQL lato back end. In più Nuxt e Flutter in lavori consegnati."
     },
     "projects": {
       "title": "Progetti web {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -293,7 +293,7 @@
     },
     "skills": {
       "hero": "Competenze e tecnologie",
-      "lead": "Ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end, Java, Spring e PostgreSQL lato back end. Qui sotto lo stack completo, per area e per quanto spesso lo uso.",
+      "lead": "Ogni giorno: Vue, Angular, TypeScript e Tailwind CSS lato front end; Java, Spring e PostgreSQL lato back end. Qui sotto lo stack completo, per area e per quanto spesso lo uso.",
       "orbitCaption": "Più è vicino al sole, più spesso lo uso.",
       "seenIn": "Lo trovi in:",
       "chipSeenIn": "dove l'ho usato: {place}",
