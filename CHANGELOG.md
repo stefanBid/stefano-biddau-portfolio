@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.1...v2.0.2) (2026-11-03)
+
+
+### Bug Fixes
+
+* **seo:** serve prerendered pages without trailing slash ([#149](https://github.com/stefanBid/stefano-biddau-portfolio/issues/149)) ([5681ea6](https://github.com/stefanBid/stefano-biddau-portfolio/commit/5681ea6766669768f1dca10cc8d2b6ed6ef29883))
+
 ## [2.0.1](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.0...v2.0.1) (2026-10-27)
 
 
