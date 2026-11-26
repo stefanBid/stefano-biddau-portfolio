@@ -56,7 +56,7 @@
         "https://github.com/typescript-eslint/typescript-eslint/issues/10940"
       ],
       "firstSeen": "2026-10-24",
-      "lastChecked": "2026-11-03",
+      "lastChecked": "2026-11-26",
       "history": [
         {
           "date": "2026-10-27",
@@ -69,6 +69,10 @@
         {
           "date": "2026-11-03",
           "text": "2026-11-03: @typescript-eslint 8.72.1 still peers typescript <6.1.0; @volar/typescript 2.4.30 still <7"
+        },
+        {
+          "date": "2026-11-26",
+          "text": "2026-11-26: @typescript-eslint/parser 8.74.0 still peers typescript <6.1.0; vue-tsc 3.3.14; vuejs/language-tools#6167 still open."
         }
       ]
     },
@@ -124,11 +128,15 @@
         "https://github.com/intlify/bundle-tools"
       ],
       "firstSeen": "2026-10-27",
-      "lastChecked": "2026-11-03",
+      "lastChecked": "2026-11-26",
       "history": [
         {
           "date": "2026-11-03",
           "text": "2026-11-03: @intlify/bundle-utils latest 11.2.8 still asks esbuild ^0.25.4"
+        },
+        {
+          "date": "2026-11-26",
+          "text": "2026-11-26: @intlify/bundle-utils 11.2.8 still depends on esbuild ^0.25.4; override kept."
         }
       ]
     },
@@ -151,8 +159,13 @@
         "https://github.com/advisories/GHSA-gcqx-w48m-w2h4"
       ],
       "firstSeen": "2026-11-03",
-      "lastChecked": "2026-11-03",
-      "history": []
+      "lastChecked": "2026-11-26",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "text": "2026-11-26: deepmerge still 4.3.1, no newer release."
+        }
+      ]
     },
     {
       "id": "minimatch@11.0.1",
@@ -160,25 +173,20 @@
       "current": "10.2.6",
       "target": "11.0.1",
       "status": "watching",
-      "summary": "Moderate advisory GHSA-g3hv-75wg-m249 (DoS via globparts amplification) affects minimatch <11.0.1, patched only in the 11 major; eslint 10.14.0, @eslint/config-array 0.23.5, @typescript-eslint/typescript-estree 8.72.1, readdir-glob 3.0.0 and glob 13.0.6 still ask ^10 in their latest releases. Lint/build-time tooling only.",
+      "summary": "moderate advisory GHSA-g3hv-75wg-m249 (dev/build-time only): eslint, @eslint/config-array, typescript-estree 8.74 and eslint-plugin-import-x 4.18 now accept minimatch ^11, but archiver 8.0.0 (latest, used by nitropack 2.14) still requires readdir-glob ^3, which uses minimatch 10.x; the other copies stay on 10.x only through the lockfile. npm only offers a downgrade of nuxt to 4.6.3.",
       "blockedBy": [
         {
-          "package": "eslint",
-          "range": "10.14.0",
-          "owner": "upstream"
-        },
-        {
-          "package": "@typescript-eslint/typescript-estree",
-          "range": "8.72.1",
+          "package": "archiver",
+          "range": "8.0.0",
           "owner": "upstream"
         }
       ],
-      "recheck": "do the latest eslint, @eslint/config-array, @typescript-eslint/typescript-estree and readdir-glob accept minimatch ^11? (npm view <pkg> dependencies.minimatch)",
+      "recheck": "has archiver released a version after 8.0.0 depending on readdir-glob ^4 (npm view archiver version dependencies.readdir-glob), and does npm ls minimatch then show only 11.x?",
       "links": [
         "https://github.com/advisories/GHSA-g3hv-75wg-m249"
       ],
       "firstSeen": "2026-11-03",
-      "lastChecked": "2026-11-03",
+      "lastChecked": "2026-11-26",
       "history": []
     },
     {
@@ -186,7 +194,7 @@
       "package": "glob",
       "current": "13.0.6",
       "target": "14.0.2",
-      "status": "watching",
+      "status": "resolved",
       "summary": "Moderate advisory GHSA-3g3m-2fjr-6pw4 affects glob >=9.0.0 <=14.0.1; pulled in at build time by nuxt -> nitropack -> @vercel/nft 1.11.0 (latest), which asks glob ^13. Fixed only in 14.0.2.",
       "blockedBy": [
         {
@@ -200,8 +208,15 @@
         "https://github.com/advisories/GHSA-3g3m-2fjr-6pw4"
       ],
       "firstSeen": "2026-11-03",
-      "lastChecked": "2026-11-03",
-      "history": []
+      "lastChecked": "2026-11-26",
+      "history": [
+        {
+          "date": "2026-11-26",
+          "text": "2026-11-26: nuxt 4.7.0 brings @vercel/nft 1.11.15, which depends on glob ^14.0.6; glob 14.0.6 installed."
+        }
+      ],
+      "resolvedAt": "2026-11-26",
+      "resolution": "2026-11-26: nuxt 4.7.0 brings @vercel/nft 1.11.15, which depends on glob ^14.0.6; glob 14.0.6 installed."
     }
   ]
 }

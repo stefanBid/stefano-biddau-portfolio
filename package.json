@@ -18,40 +18,46 @@
   "dependencies": {
     "@emailjs/browser": "^5.0.3",
     "@nuxt/eslint": "^1.17.0",
-    "@nuxt/fonts": "^1.2.0",
-    "@nuxt/icon": "^2.6.2",
+    "@nuxt/fonts": "^1.2.1",
+    "@nuxt/icon": "^2.6.3",
     "@nuxt/image": "^2.2.1",
     "@nuxtjs/color-mode": "^4.1.0",
-    "@nuxtjs/i18n": "^10.6.0",
-    "@nuxtjs/sitemap": "^9.1.0",
-    "@tailwindcss/vite": "^4.3.4",
-    "@vueuse/core": "^15.0.0",
-    "@vueuse/nuxt": "^15.0.0",
-    "eslint": "^10.14.0",
-    "isomorphic-dompurify": "^4.6.0",
-    "nuxt": "4.6.4",
-    "sb-floating-panel-vue": "^5.3.1",
-    "tailwindcss": "^4.3.4",
+    "@nuxtjs/i18n": "^10.7.0",
+    "@nuxtjs/sitemap": "^9.2.0",
+    "@tailwindcss/vite": "^4.3.5",
+    "@vueuse/core": "^15.1.0",
+    "@vueuse/nuxt": "^15.1.0",
+    "eslint": "^10.15.0",
+    "isomorphic-dompurify": "^4.9.0",
+    "nuxt": "4.7.0",
+    "sb-floating-panel-vue": "^5.3.2",
+    "tailwindcss": "^4.3.5",
     "typed.js": "^3.0.0",
-    "vue": "^3.5.44",
-    "vue-router": "^5.4.0",
+    "vue": "^3.5.46",
+    "vue-router": "^5.5.3",
     "zod": "^4.6.7"
   },
   "devDependencies": {
     "@iconify-json/flagpack": "^1.2.10",
-    "@iconify-json/logos": "^1.2.18",
+    "@iconify-json/logos": "^1.2.21",
     "@iconify-json/mdi": "^1.2.3",
-    "@iconify-json/solar": "^1.2.13",
-    "@types/node": "^26.6.6",
+    "@iconify-json/solar": "^1.2.17",
+    "@types/node": "^26.6.11",
     "typescript": "^6.0.3",
     "vue-tsc": "^3.3.14"
   },
   "engines": {
     "node": ">=24.19.0"
   },
-  "_comment_typescript": "typescript stays on ^6 for now — TS 7 (native Go compiler) ships no classic JS compiler API, which vue-tsc/@volar (nuxt typecheck) needs, and @typescript-eslint peers typescript <6.1.0; revisit when vue-tsc supports TS 7.1 and typescript-eslint widens its peer range (see .sb-context/dependency-notes.json)",
   "_comment_overrides": "esbuild pinned to ^0.28.0 for dedup only — GHSA-67mh is fixed upstream by all consumers now (nuxt's nitropack ^0.28.2, vite ^0.27 || ^0.28, @nuxt/fonts' unplugin and @unhead/bundler as open peers); only @nuxtjs/i18n's @intlify/bundle-utils@11.2.8 still asks ^0.25.4, and without this override npm would install two esbuild copies since ^0.25.4 doesn't overlap ^0.28.0 — drop it once bundle-utils moves to ^0.28 (see .sb-context/dependency-notes.json)",
   "overrides": {
     "esbuild": "^0.28.0"
+  },
+  "_comment_dependencies": {
+    "nuxt": "exact pin on purpose (no caret): every Nuxt bump is re-validated with typecheck + build + prerender + nuxt dev before it lands",
+    "typescript": "held at 6.x: TypeScript 7 ships no classic JS compiler API, which vue-tsc/@volar (nuxt typecheck) needs, and @typescript-eslint peers typescript <6.1.0 (note typescript@7.0.2)",
+    "minimatch": "transitive, build/dev only: advisory GHSA-g3hv-75wg-m249 stays because archiver 8.0.0 (nitropack) still pulls readdir-glob ^3 with minimatch 10.x; npm only offers a downgrade of nuxt (note minimatch@11.0.1)",
+    "deepmerge": "transitive: waiting for a release after 4.3.1 (note deepmerge@>4.3.1)",
+    "esbuild": "override kept for dedup only, see _comment_overrides (note esbuild@drop override)"
   }
 }
