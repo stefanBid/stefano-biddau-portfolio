@@ -109,6 +109,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
 | `npm run preview` | Preview production build locally |
 | `npm run lint` | Check code quality with ESLint |
 | `npm run lint:fix` | Auto-fix ESLint issues |
+| `npm run typecheck` | Type check with `nuxt typecheck` (vue-tsc) |
 | `npm run si` | Safe install dependencies (auto-detects branch, and run `npm install` or `npm ci`) |
 
 ---
@@ -1160,6 +1161,14 @@ Add all variables under **Site settings → Environment variables** on Netlify. 
 ### Versioning
 
 Versioning is handled automatically by the [Release Please](https://github.com/googleapis/release-please) GitHub Action on every push to `main`. It bumps `package.json`, creates a GitHub Release and updates `CHANGELOG.md` following [Keep a Changelog](https://keepachangelog.com) conventions.
+
+### CI
+
+| Workflow | Runs on | What it does | Required check |
+|---|---|---|---|
+| `build-check.yml` | PR into `main`, push to `main` | lint, type check, build (same command as Netlify); skipped for drafts, bot PRs and docs-only changes | `build` |
+| `commitlint.yml` | PR into `main` (also on title edit) | the PR title follows Conventional Commits (it becomes the squash commit release-please reads) | `commitlint` |
+| `release-please.yml` | push to `main` | version, changelog, tag, GitHub Release (config in `release-please-config.json`, version in `.release-please-manifest.json`) | — |
 
 ---
 
