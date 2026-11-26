@@ -217,6 +217,26 @@
       ],
       "resolvedAt": "2026-11-26",
       "resolution": "2026-11-26: nuxt 4.7.0 brings @vercel/nft 1.11.15, which depends on glob ^14.0.6; glob 14.0.6 installed."
+    },
+    {
+      "id": "@devframes/agentic@1.4.0",
+      "package": "@devframes/agentic",
+      "current": "1.3.2",
+      "target": "1.4.0",
+      "status": "watching",
+      "summary": "dev tools only, warning only: @nuxt/fonts 1.2.1 brings devframe 1.4.0, whose optional peer is exactly @devframes/agentic 1.4.0; the lockfile keeps 1.3.2 from @eslint/config-inspector 3.5.0 (range ^1.0.0, would accept 1.4.0). npm ls reports it invalid; build, typecheck and dev are not affected. Reachable only through the lockfile, so it waits.",
+      "blockedBy": [
+        {
+          "package": "@eslint/config-inspector",
+          "range": "3.5.0",
+          "owner": "upstream"
+        }
+      ],
+      "recheck": "after the next install, does npm ls @devframes/agentic show 1.4.0 with no 'invalid'? (or has @eslint/config-inspector released a version after 3.5.0)",
+      "links": [],
+      "firstSeen": "2026-11-26",
+      "lastChecked": "2026-11-26",
+      "history": []
     }
   ]
 }
