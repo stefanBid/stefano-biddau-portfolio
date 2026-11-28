@@ -3,6 +3,7 @@ interface ThePageHeroProps {
   id: string
   text: string
   imageSrc?: string
+  imageKind?: 'avatar' | 'logo'
   lead?: string
   overline?: string
 }
@@ -10,6 +11,7 @@ interface ThePageHeroProps {
 // Input / Output
 const props = withDefaults(defineProps<ThePageHeroProps>(), {
   imageSrc: undefined,
+  imageKind: 'avatar',
   lead: undefined,
   overline: undefined,
 })
@@ -19,9 +21,9 @@ const props = withDefaults(defineProps<ThePageHeroProps>(), {
   <section
     :id="`${props.id}-hero`"
     class="grid items-end gap-6 pt-10 md:pt-16 border-b border-border md:grid-cols-[minmax(0,1fr)_auto] md:gap-10 lg:gap-12"
-    :class="props.imageSrc ? 'pb-0' : 'pb-8 md:pb-12'"
+    :class="props.imageSrc && props.imageKind === 'avatar' ? 'pb-0' : 'pb-8 md:pb-12'"
   >
-    <div class="order-2 md:order-1 animate-rise-in" :class="{ 'pb-8 md:pb-12': props.imageSrc }">
+    <div class="order-2 md:order-1 animate-rise-in" :class="{ 'pb-8 md:pb-12': props.imageSrc && props.imageKind === 'avatar' }">
       <p v-if="props.overline" class="sb-overline text-primary-ink text-left mb-3">
         {{ props.overline }}
       </p>
@@ -32,9 +34,23 @@ const props = withDefaults(defineProps<ThePageHeroProps>(), {
         {{ props.lead }}
       </p>
     </div>
+    <div
+      v-if="props.imageSrc && props.imageKind === 'logo'"
+      class="order-1 md:order-2 justify-self-start md:justify-self-end size-28 sm:size-32 md:size-40 lg:size-48 flex items-center justify-center rounded-xl bg-ink p-4 md:p-6 shadow-md animate-drift-in"
+    >
+      <NuxtImg
+        alt=""
+        class="size-full object-contain"
+        fetchpriority="high"
+        :height="796"
+        loading="eager"
+        :src="props.imageSrc"
+        :width="680"
+      />
+    </div>
     <!-- Decorative: the page title already names the page. provider="none" serves the full-resolution WebP (1024×1536, q92) untouched -->
     <div
-      v-if="props.imageSrc"
+      v-else-if="props.imageSrc"
       class="order-1 md:order-2 justify-self-start md:justify-self-end w-32 sm:w-40 md:w-48 lg:w-60 animate-drift-in"
     >
       <BaseFloat class="sb-delay-800">

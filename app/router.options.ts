@@ -3,14 +3,16 @@ import type { RouterConfig } from '@nuxt/schema'
 export default <RouterConfig>{
   scrollBehavior(to, from, savedPosition) {
     const nuxtApp = useNuxtApp()
-    const { pageSkipTransition, menuSkipTransition } = usePageTransition()
+    const { pageSkipTransition, subPageSkipTransition, menuSkipTransition, tabSwitch } = usePageTransition()
 
-    // Same top-level page — either only the locale prefix changed, or it's
-    // an in-page tab switch (my-projects.vue's index.vue / sb-templates.vue)
-    // triggered via `navigateTo`, not a real page-to-page navigation — keep
-    // the scroll position instead of jumping to top.
+    // Same top-level page: a locale-only change or a click on the my-projects
+    // tabs keeps the scroll position. A link into the other tab (the Projects
+    // "See the templates" teaser) is a real destination: start from its hero.
     if (pageSkipTransition.value) {
-      return false
+      if (subPageSkipTransition.value || tabSwitch.value || savedPosition) {
+        return false
+      }
+      return { top: 0, behavior: 'instant' }
     }
 
     // Navigation from the mobile menu has no page transition, so there is no

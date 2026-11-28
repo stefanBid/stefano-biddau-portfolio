@@ -21,7 +21,7 @@ Personal portfolio of Stefano Biddau, front-end developer and web designer. It e
 
 ## Positioning
 
-A front-end developer who also designs: the site itself is the portfolio piece (accessible, fast, bilingual, hand-built design system). Shipped work includes a client site (Romano), an open-source Vue library (sb-floating-panel-vue) and open-source starter templates (SB Templates: Nuxt, Astro, Flutter).
+A front-end developer who also designs: the site itself is the portfolio piece (accessible, fast, bilingual, hand-built design system). Shipped work includes client work for Studio Legale Romano (the firm's site, plus the PraticaSicura.com intake portal, the Domus case management app and the Cardo Spring Boot back end), an open-source Vue library (sb-floating-panel-vue) and open-source starter templates (SB Templates: Nuxt, Vue + Vite, Astro, Flutter), which many client projects start from.
 
 ## Operating Context
 

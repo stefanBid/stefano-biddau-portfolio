@@ -4,6 +4,9 @@ export default function usePageTransition(isSubPage: boolean = false) {
   // Set by the mobile menu link that starts a navigation; the plugin turns it into menuSkipTransition for that navigation only
   const navigatingFromMenu = useState<boolean>('navigating-from-menu', () => false)
   const menuSkipTransition = useState<boolean>('menu-page-transition-skip', () => false)
+  // Set by a tab click in my-projects.vue; the plugin turns it into tabSwitch for that navigation only
+  const navigatingFromTab = useState<boolean>('navigating-from-tab', () => false)
+  const tabSwitch = useState<boolean>('tab-switch', () => false)
 
   const pageTransition = computed(() => (
     (isSubPage ? subPageSkipTransition.value : pageSkipTransition.value) || menuSkipTransition.value
@@ -16,6 +19,8 @@ export default function usePageTransition(isSubPage: boolean = false) {
     subPageSkipTransition,
     navigatingFromMenu,
     menuSkipTransition,
+    navigatingFromTab,
+    tabSwitch,
     pageTransition,
   }
 }

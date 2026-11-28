@@ -1,8 +1,11 @@
 import { resolveSkills } from '~/composables/data/useSkills'
 import type { Skill } from '~/composables/data/useSkills'
 
+export type SbTemplateGroup = 'web' | 'mobile'
+
 export interface SbTemplate {
   id: string
+  group: SbTemplateGroup
   title: string
   description: string
   codebaseUrl: string
@@ -28,6 +31,7 @@ export default function useTemplates() {
 
     return rawTemplates.map(item => ({
       id: _rt(item.id || ''),
+      group: _rt(item.group || '') === 'mobile' ? 'mobile' : 'web',
       title: _rt(item.title || ''),
       description: _rt(item.description || ''),
       codebaseUrl: item.codebaseUrl ? _rt(item.codebaseUrl) : '',

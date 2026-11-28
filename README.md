@@ -3,7 +3,7 @@
   # Stefano Biddau — Portfolio
 
   [![Netlify Status](https://api.netlify.com/api/v1/badges/55a2b1a4-7d4b-4a3e-8edd-444dbf85092a/deploy-status)](https://app.netlify.com/projects/stefanobiddau/deploys)
-  ![Version](https://img.shields.io/badge/version-2.0.3-blue)
+  ![Version](https://img.shields.io/badge/version-2.1.0-blue)
   [![Node.js](https://img.shields.io/badge/node-%3E%3D24.19.0-brightgreen)](https://nodejs.org)
   [![Nuxt](https://img.shields.io/badge/nuxt-4.6.4-00DC82?logo=nuxt.js)](https://nuxt.com)
   [![Vue](https://img.shields.io/badge/vue-3.5.44-4FC08D?logo=vue.js)](https://vuejs.org)
@@ -170,7 +170,7 @@ NUXT_GITHUB_TOKEN=github_pat_your_fine_grained_token
        my-projects.vue      ← nested-route parent — hero + BaseTabs + <NuxtPage/> + CustomClosingCta
        my-projects/
          index.vue           ← /my-projects — featured project, projects grid, studies/exercises list
-         sb-templates.vue    ← /my-projects/sb-templates — SB Templates showcase
+         sb-templates.vue    ← /my-projects/sb-templates — SB Templates catalog (Web / Mobile)
        privacy-policy.vue   ← /privacy-policy (CustomLegalDocument)
        terms-and-conditions.vue ← /terms-and-conditions (CustomLegalDocument)
      plugins/
@@ -323,7 +323,7 @@ Always use `<Icon>` from `@nuxt/icon`. The collection prefix is mandatory.
 
 ### Cloudinary images
 
-Content images live on Cloudinary, not in `public/`: the SB Templates logos (`sbt-logo`, `sbt-nuxt-logo`, `sbt-flutter-logo`, `sbt-astro-logo` — optimised SVG, viewBox cropped to the artwork, 680×796), the Romano and sb-floating-panel-vue project logos, and the milestone photos (`unisa`, `workstation`). In the locale files `imageSrc` / `coverImageSrc` / `logoSrc` hold only the path after `image/upload/` (`v<version>/<public-id>.<ext>`); `useCloudinary().resolveImageSrc()` turns it into the full URL, while a value starting with `/` stays a file in `public/`. `sbt-logo` is the umbrella logo (SB Templates page header, home "Selected work").
+Content images live on Cloudinary, not in `public/`: the SB Templates logos (`sbt-logo`, `sbt-nuxt-logo`, `sbt-vue-logo`, `sbt-flutter-logo`, `sbt-astro-logo` — optimised SVG, viewBox cropped to the artwork, 680×796), the Romano and sb-floating-panel-vue project logos, and the milestone photos (`unisa`, `workstation`). In the locale files `imageSrc` / `coverImageSrc` / `logoSrc` hold only the path after `image/upload/` (`v<version>/<public-id>.<ext>`); `useCloudinary().resolveImageSrc()` turns it into the full URL, while a value starting with `/` stays a file in `public/`. `sbt-logo` is the umbrella logo (SB Templates page header, home "Selected work").
 
 The browser never fetches them from Cloudinary: `<NuxtImg>` uses the default provider (ipx in dev, Netlify Image CDN in production), allowed by `image.domains: ['res.cloudinary.com']` in `nuxt.config.ts` and `[images] remote_images` in `netlify.toml` (scoped to our cloud). Netlify pulls the original server-side, stores it on the edge and serves it from `/.netlify/images` (SVG passes through untouched); Cloudinary is only hit on an edge cache miss. Resizing is left to Netlify; the only Cloudinary transformation is `e_trim` on the sb-floating-panel-vue logo (cuts the transparent margin of the uploaded file — generated once, then cached as a derived asset). Keep the version segment in the path — re-uploading a file gives a new version, hence a new cache key.
 
@@ -609,17 +609,18 @@ Each card keeps its own height in the grid (`items-start`), so expanding one nev
 
 Code and live links form one list: up to three links are separate `secondary` `BaseButton` links ("Code", "Live site", "npm", plus the link's own label when a kind repeats), more go into one `BaseMenu` ("Links", `pages.projects.links.menu`). Each item is labelled after its kind ("Code", "Live site", "npm"), with the link's own label as `description` when a kind has more than one link. Renders nothing without links; the caller owns the wrapper and its spacing.
 
-### `CustomSbTemplatesCard`
+### `CustomSbTemplatesRow`
 
 | Prop | Type | Notes |
 |---|---|---|
+| `id` | `string \| number` | Required; anchor `#template-<id>` |
 | `title` | `string` | Required |
 | `description` | `string` | Required |
-| `codebaseUrl` | `string` | Required |
-| `logoSrc` | `string` | Optional |
-| `langIcons` | `string[]` | Optional Iconify names for tech stack |
+| `codebaseUrl` | `string` | Optional; without it the CTA is disabled |
+| `imageSrc` / `imageWidth` / `imageHeight` | `string` / `number` / `number` | Optional logo |
+| `icons` | `string[]` | Optional Iconify names for the tech stack (accessible name from `TECH_NAMES`) |
 
-Logo, centred title and tech icons; the description is running text, justified like the rest of the site.
+One catalog row, not a card, so the templates never read as more projects: small logo tile, `h3` title with the stack icons, description, and a `secondary` "Use this template" link. Desktop: logo | text | CTA on the right; mobile: logo and title on one line, description and CTA full width below (keeps the justified measure usable).
 
 ### `CustomMilestone`
 
@@ -696,7 +697,7 @@ Notification display layer. `TheNotificationBanner` shows toast-style banners at
 
 ### `ThePageHero`
 
-Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative 3D avatar (`alt=""`, fade-in) — on the right from `lg`, above the title (160px wide) on mobile, 240×360px on desktop. Closed by a bottom border. Props: `id`, `text`, `imageSrc?`, `lead?` (one `sb-lead` paragraph under the title), `overline?` (orange `sb-overline` above the `h1`: About names the page there, "About me", and keeps the `h1` for a first-person line). On Projects the hero comes before the tabs and each tab's heading is an `h2`. The home page has its own first screen (`h1` = the name alone, then "I'm a" + typed role, CTAs, avatar): exactly one viewport tall (`min-h-svh`, pulled under the sticky header), with a link down to Selected work; below it, a clients band (SI2001 clients and freelance clients, names only).
+Page opener for About, Skills and Projects: the page `h1` in `sb-hero` (fluid 56 → 120px, `rise-in`) and, with `imageSrc`, a decorative image (`alt=""`, drift-in) — on the right from `md`, above the title on mobile. `imageKind: 'avatar'` (default) is a floating 3D avatar from `public/` (240×360px on desktop, sits on the bottom border); `imageKind: 'logo'` is a 680×796 Cloudinary logo on a `bg-ink` tile (up to 192px). Closed by a bottom border. Props: `id`, `text`, `imageSrc?`, `imageKind?`, `lead?` (one `sb-lead` paragraph under the title), `overline?` (orange `sb-overline` above the `h1`: About names the page there, "About me", and keeps the `h1` for a first-person line). On Projects the hero comes before the tabs and follows the active tab: "Projects" with the avatar, or "SB Templates" with the SBT logo and its own lead (`pages.projects.sbTemplatesProject.hero` / `lead`), keyed by tab so it replays its entrance; headings inside each tab are `h2`. The home page has its own first screen (`h1` = the name alone, then "I'm a" + typed role, CTAs, avatar): exactly one viewport tall (`min-h-svh`, pulled under the sticky header), with a link down to Selected work; below it, a clients band (SI2001 clients and freelance clients, names only).
 
 ---
 
@@ -731,7 +732,7 @@ All pages live in `app/pages/` and follow Nuxt 4 file-based routing. Every publi
 | `about-me.vue` | `/about-me` | `/it/about-me` | Career milestones timeline + "Alongside the day job" proof list + `CustomClosingCta` with its own copy and pose |
 | `my-skills.vue` | `/my-skills` | `/it/my-skills` | Tier legend (short labels on one line below `md`, full descriptions from `md`), one section per area (tier lists + `CustomSolarSystem`), `CustomClosingCta` |
 | `my-projects.vue` (parent) + `my-projects/index.vue` | `/my-projects` | `/it/my-projects` | Featured project, projects grid, studies/exercises list, `CustomClosingCta` (both tabs) |
-| `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates showcase grid |
+| `my-projects/sb-templates.vue` | `/my-projects/sb-templates` | `/it/my-projects/sb-templates` | SB Templates catalog, grouped Web / Mobile |
 | `privacy-policy.vue` | `/privacy-policy` | `/it/privacy-policy` | Legal |
 | `terms-and-conditions.vue` | `/terms-and-conditions` | `/it/terms-and-conditions` | Legal |
 
@@ -904,7 +905,7 @@ const { pageTransition } = usePageTransition() // app.vue — outer NuxtPage
 const { pageTransition } = usePageTransition(true) // my-projects.vue — inner NuxtPage (tabs)
 ```
 
-Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). A third flag, `menuSkipTransition`, skips the transition for any navigation started from the full-screen mobile menu: `TheHeader` sets `navigatingFromMenu` on the link click and the plugin turns it into `menuSkipTransition` for that navigation only; `router.options.ts` then scrolls to the top immediately instead of waiting for the transition end. Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
+Returns `undefined` (default `page` transition applies) unless the relevant skip flag is set — `pageSkipTransition` when the top-level route is unchanged (locale-only change or a tab switch), `subPageSkipTransition` when the leaf route is unchanged (locale-only change). A third flag, `menuSkipTransition`, skips the transition for any navigation started from the full-screen mobile menu: `TheHeader` sets `navigatingFromMenu` on the link click and the plugin turns it into `menuSkipTransition` for that navigation only; `router.options.ts` then scrolls to the top immediately instead of waiting for the transition end. Likewise `my-projects.vue` sets `navigatingFromTab` on a tab click and the plugin turns it into `tabSwitch`: a tab click keeps the scroll position, while any other link into the other tab (the Projects "See the templates" teaser) scrolls to the top so its hero is seen. Bind the returned `pageTransition` to `<NuxtPage :transition="pageTransition">`.
 
 ### `useSanitize()`
 
@@ -953,7 +954,7 @@ Same pattern as `useMilestones` — reads `pages.projects.personalProjects.list`
 const { templates } = useTemplates()
 ```
 
-Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`. `skills` (skill ids) resolve to `Skill` objects; `langIcons` stay as platform icons.
+Same pattern as `useMilestones` — reads `pages.projects.sbTemplatesProject.list`. `skills` (skill ids) resolve to `Skill` objects; `langIcons` stay as platform icons. `group` (`'web' | 'mobile'`, exported as `SbTemplateGroup`) places each template in the Web or Mobile section of the catalog (`pages.projects.sbTemplatesProject.groups`).
 
 ### `useLegalDocument(key)`
 
@@ -1009,7 +1010,7 @@ Types a composable exposes are exported from that composable and imported with `
 | `composables/data/useSkillReferences` | `SkillReference` (`{ key, title, skills, to }`) |
 | `composables/data/useMilestones` | `Milestone`, `MilestoneType`, `MilestonePeriod` (`{ startIso?, startLabel?, endIso?, endLabel, duration? }`), `MilestoneStackItem` (`{ name, icon?, color? }`) |
 | `composables/data/useProjects` | `Project` |
-| `composables/data/useTemplates` | `SbTemplate` |
+| `composables/data/useTemplates` | `SbTemplate`, `SbTemplateGroup` |
 | `composables/useNotification` | `NotificationItem` (`{ id, type, icon?, title?, message, dismissible?, autoClose?, duration? }`) |
 
 `app/types/global.d.ts` declares the remaining types globally (no import needed): cross-cutting ones and those shared with `server/`.
