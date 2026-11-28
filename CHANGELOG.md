@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.3...v2.1.0) (2026-11-28)
+
+
+### Features
+
+* add the Vue + Vite template and give SB Templates its own catalog ([#156](https://github.com/stefanBid/stefano-biddau-portfolio/issues/156)) ([7ab0df9](https://github.com/stefanBid/stefano-biddau-portfolio/commit/7ab0df9b124bf6795ef3bd5082c939640ddc1c59))
+
 ## [2.0.3](https://github.com/stefanBid/stefano-biddau-portfolio/compare/v2.0.2...v2.0.3) (2026-11-03)
 
 
