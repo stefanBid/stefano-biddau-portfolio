@@ -220,7 +220,7 @@
         },
         "angles": {
           "romano": "Where I work with the client directly. I maintain the firm's website and build the ecosystem behind PraticaSicura.com, its service for flight refunds and road accident claims: the PraticaSicura.com intake portal, Domus, the case management app the lawyers work in, and Cardo, the back end whose architecture I own.",
-          "sbTemplates": "Templates I start my own projects from, free for any developer to use: I only provide the starting structure, following the framework's best practices, and everyone builds what they need from there.",
+          "sbTemplates": "Templates I start my own projects and many client projects from, free for any developer to use: I only provide the starting structure, following the framework's best practices, and everyone builds what they need from there.",
           "floatingPanel": "A library on npm that any developer can install in their Vue and Nuxt projects, with components for floating panels. I design and maintain it; the menus on this site use it too."
         }
       },
@@ -439,11 +439,16 @@
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",
         "logoAlt": "SB Templates logo",
-        "title": "SB Templates",
-        "description": "Open-source starter templates for Nuxt, Vue + Vite, Astro and Flutter, free for any developer to use: each one sets up the project structure following the framework's best practices, with build, linting and formatting already configured, and leaves the rest to you. I keep them maintained and up to date, which is why many of my client projects start from them: Domus and PraticaSicura.com, for Studio Legale Romano, were born here.",
+        "hero": "SB Templates",
+        "lead": "Open-source starters for Nuxt, Vue + Vite, Astro and Flutter, free for anyone to use. I keep them maintained and up to date, and many of my client projects start from them.",
+        "groups": {
+          "web": { "title": "Web", "description": "Sites and web apps, server-rendered, client-side or static." },
+          "mobile": { "title": "Mobile", "description": "Native apps for iOS and Android from one codebase." }
+        },
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
+            "group": "web",
             "title": "SB-Template Nuxt",
             "description": "Nuxt starter with TypeScript and Tailwind CSS, a project structure that follows Nuxt conventions, and linting and formatting already configured.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
@@ -455,6 +460,7 @@
           },
           {
             "id": "b4e2b7ef-4099-4ec5-91ed-dddea54274c2",
+            "group": "web",
             "title": "SB-Template Vue + Vite",
             "description": "Vue 3 + Vite starter for client-side web apps, with TypeScript, Tailwind CSS, i18n, light and dark theme, and the same design system and conventions as the Nuxt template.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-vue-vite",
@@ -476,6 +482,7 @@
           },
           {
             "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
+            "group": "mobile",
             "title": "SB-Template Flutter",
             "description": "Flutter starter for iOS and Android, with a design system, type-safe routing and reusable UI components.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
@@ -487,6 +494,7 @@
           },
           {
             "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "group": "web",
             "title": "SB-Template Astro",
             "description": "Astro starter for static, content-focused sites, with TypeScript and Tailwind CSS.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",

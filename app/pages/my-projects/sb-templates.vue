@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import useTemplates from '~/composables/data/useTemplates'
+import type { SbTemplateGroup } from '~/composables/data/useTemplates'
 
 definePageMeta({
   sitemap: { lastmod: '2026-11-28', changefreq: 'monthly', priority: 0.8 },
@@ -8,7 +9,6 @@ definePageMeta({
 // Dependencies
 const { t } = useI18n()
 const route = useRoute()
-const { cloudinaryUrl } = useCloudinary()
 
 useSeoMeta({
   // LOCALIZED
@@ -24,50 +24,45 @@ useSeoMeta({
 })
 
 const { templates } = useTemplates()
+
+const GROUPS: SbTemplateGroup[] = ['web', 'mobile']
+
+const groups = computed(() => GROUPS
+  .map(key => ({ key, templates: templates.value.filter(template => template.group === key) }))
+  .filter(group => group.templates.length > 0))
 </script>
 
 <template>
-  <div class="flex flex-col gap-10 md:gap-16">
-    <header class="flex flex-col sm:flex-row sm:items-center gap-5 md:gap-6">
-      <div class="shrink-0 w-20 md:w-24 bg-ink rounded-lg p-3 md:p-4 shadow-md">
-        <NuxtImg
-          :alt="t('pages.projects.sbTemplatesProject.logoAlt')"
-          class="w-full h-auto"
-          fetchpriority="high"
-          height="187"
-          loading="eager"
-          :src="cloudinaryUrl('v1793011184/sbt-logo_wgjk4u.svg')"
-          width="160"
+  <div class="flex flex-col gap-14 md:gap-20">
+    <section
+      v-for="group in groups"
+      :key="group.key"
+      :aria-labelledby="`templates-group-${group.key}`"
+    >
+      <header class="flex flex-col gap-1 border-b border-border pb-4">
+        <h2 :id="`templates-group-${group.key}`" class="sb-h2 mb-0">
+          {{ t(`pages.projects.sbTemplatesProject.groups.${group.key}.title`) }}
+        </h2>
+        <p class="text-ink-muted text-left mb-0">
+          {{ t(`pages.projects.sbTemplatesProject.groups.${group.key}.description`) }}
+        </p>
+      </header>
+      <div class="divide-y divide-border">
+        <CustomSbTemplatesRow
+          v-for="(template, index) in group.templates"
+          :id="template.id"
+          :key="template.id"
+          v-reveal="index"
+          :codebase-url="template.codebaseUrl"
+          :description="template.description"
+          :icons="template.langIcons"
+          :image-height="template.logoHeight"
+          :image-src="template.logoSrc"
+          :image-width="template.logoWidth"
+          :title="template.title"
         />
       </div>
-      <div class="flex flex-col gap-3">
-        <h2 class="sb-h1 mb-0 text-balance">
-          {{ t('pages.projects.sbTemplatesProject.title') }}
-        </h2>
-        <p class="sb-body text-ink-muted mb-0">
-          {{ t('pages.projects.sbTemplatesProject.description') }}
-        </p>
-      </div>
-    </header>
-
-    <div
-      v-if="templates && templates.length > 0"
-      class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-20"
-    >
-      <CustomSbTemplatesCard
-        v-for="(template, index) in templates"
-        :id="template.id"
-        :key="template.id"
-        v-reveal="index"
-        :codebase-url="template.codebaseUrl"
-        :description="template.description"
-        :icons="template.langIcons"
-        :image-height="template.logoHeight"
-        :image-src="template.logoSrc"
-        :image-width="template.logoWidth"
-        :title="template.title"
-      />
-    </div>
+    </section>
     <p class="sb-body text-ink-muted text-left mb-0">
       {{ t('pages.projects.sbTemplatesProject.inProgress') }}
     </p>

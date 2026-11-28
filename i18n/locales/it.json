@@ -220,7 +220,7 @@
         },
         "angles": {
           "romano": "Dove lavoro direttamente con il cliente. Mantengo il sito vetrina dello studio e costruisco l'ecosistema di PraticaSicura.com, il servizio dello studio per rimborsi aerei e sinistri stradali: il portale di intake PraticaSicura.com, Domus, il gestionale con cui lavorano gli avvocati, e Cardo, il back-end di cui curo l'architettura.",
-          "sbTemplates": "Template da cui parto per i miei progetti e che ogni sviluppatore può usare liberamente: fornisco solo la struttura di partenza, secondo le best practice del framework, e da lì ognuno sviluppa ciò che gli serve.",
+          "sbTemplates": "Template da cui parto per i miei progetti e per molti progetti dei clienti, e che ogni sviluppatore può usare liberamente: fornisco solo la struttura di partenza, secondo le best practice del framework, e da lì ognuno sviluppa ciò che gli serve.",
           "floatingPanel": "Libreria su npm che ogni sviluppatore può installare nei propri progetti Vue e Nuxt, con componenti per pannelli flottanti. La progetto e la mantengo; anche i menu di questo sito la usano."
         }
       },
@@ -439,11 +439,16 @@
       "sbTemplatesProject": {
         "tabLabel": "SB Templates",
         "logoAlt": "Logo SB Templates",
-        "title": "SB Templates",
-        "description": "Template open source per Nuxt, Vue + Vite, Astro e Flutter, che ogni sviluppatore può usare liberamente: ognuno imposta la struttura del progetto secondo le best practice del framework, con build, linting e formattazione già configurati, e lascia a te il resto. Li mantengo e li aggiorno con cura, per questo molti miei progetti per clienti partono da qui: Domus e PraticaSicura.com, per lo Studio Legale Romano, sono nati così.",
+        "hero": "SB Templates",
+        "lead": "Template open source per Nuxt, Vue + Vite, Astro e Flutter, liberi per chiunque. Li mantengo e li aggiorno con cura, e molti miei progetti per clienti partono da qui.",
+        "groups": {
+          "web": { "title": "Web", "description": "Siti e web app, con rendering lato server, client-side o statici." },
+          "mobile": { "title": "Mobile", "description": "App native per iOS e Android da un'unica codebase." }
+        },
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
+            "group": "web",
             "title": "SB-Template Nuxt",
             "description": "Template Nuxt con TypeScript e Tailwind CSS, una struttura di progetto che segue le convenzioni di Nuxt, linting e formattazione già configurati.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-nuxt",
@@ -455,6 +460,7 @@
           },
           {
             "id": "b4e2b7ef-4099-4ec5-91ed-dddea54274c2",
+            "group": "web",
             "title": "SB-Template Vue + Vite",
             "description": "Template Vue 3 + Vite per web app client-side, con TypeScript, Tailwind CSS, i18n, tema chiaro e scuro, e lo stesso design system e le stesse convenzioni del template Nuxt.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-vue-vite",
@@ -476,6 +482,7 @@
           },
           {
             "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
+            "group": "mobile",
             "title": "SB-Template Flutter",
             "description": "Template Flutter per iOS e Android, con design system, routing type-safe e componenti UI riutilizzabili.",
             "codebaseUrl": "https://github.com/stefanBid/sb_template_flutter",
@@ -487,6 +494,7 @@
           },
           {
             "id": "9fca248f-be83-4268-aafe-b5afcb91f7dd",
+            "group": "web",
             "title": "SB-Template Astro",
             "description": "Template Astro per siti statici orientati ai contenuti, con TypeScript e Tailwind CSS.",
             "codebaseUrl": "https://github.com/stefanBid/sb-template-astro",
