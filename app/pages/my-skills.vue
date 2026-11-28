@@ -4,7 +4,7 @@ import useSkills from '~/composables/data/useSkills'
 import type { SkillTier } from '~/composables/data/useSkills'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 0.9 },
+  sitemap: { lastmod: '2026-11-28', changefreq: 'monthly', priority: 0.9 },
 })
 
 // Dependencies

@@ -4,7 +4,7 @@ import useSelectedWork from '~/composables/data/useSelectedWork'
 import useSkills from '~/composables/data/useSkills'
 
 definePageMeta({
-  sitemap: { lastmod: '2026-10-27', changefreq: 'monthly', priority: 1 },
+  sitemap: { lastmod: '2026-11-28', changefreq: 'monthly', priority: 1 },
 })
 
 // Dependencies

@@ -33,7 +33,7 @@
     },
     "sbTemplates": {
       "title": "SB Templates {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
-      "description": "Template open source per Nuxt, Astro e Flutter di Stefano Biddau: una struttura di progetto che segue le best practice di ogni framework, libera da usare per qualsiasi sviluppatore."
+      "description": "Template open source per Nuxt, Vue + Vite, Astro e Flutter di Stefano Biddau: una struttura di progetto che segue le best practice di ogni framework, libera da usare per qualsiasi sviluppatore e punto di partenza di molti miei progetti per clienti."
     },
     "privacy": {
       "title": "Informativa sulla privacy {'|'} Stefano Biddau Full-Stack Developer & Web Designer",
@@ -98,7 +98,7 @@
         "viewAll": "Tutti i progetti",
         "meta": {
           "romano": "Cliente · dal 2025 · in corso",
-          "sbTemplates": "Template open source · dal 2025 · Nuxt, Astro, Flutter",
+          "sbTemplates": "Template open source · dal 2025 · Nuxt, Vue, Astro, Flutter",
           "floatingPanel": "Libreria open source · 2025 · Vue 3"
         }
       },
@@ -214,12 +214,12 @@
         "title": "In parallelo al lavoro",
         "lead": "Lavori per clienti e open source che progetto, sviluppo e mantengo in prima persona.",
         "outcomes": {
-          "romano": "Ho progettato e sviluppato il sito dello studio. Ora un nuovo design, il portale rimborsi PraticaSicura e il gestionale Domus/Cardo.",
-          "sbTemplates": "Template di partenza per Nuxt, Astro e Flutter con architettura, build, linting e formattazione già configurati.",
+          "romano": "Ho progettato e sviluppato il sito dello studio. Ora un nuovo design, il portale di intake PraticaSicura.com, il gestionale Domus e il back-end Cardo.",
+          "sbTemplates": "Template di partenza per Nuxt, Vue + Vite, Astro e Flutter con architettura, build, linting e formattazione già configurati. Molti miei progetti per clienti partono da qui.",
           "floatingPanel": "Un sistema di pannelli flottanti per Vue 3 basato su {'@'}floating-ui/vue, con composable, frecce e ridimensionamento."
         },
         "angles": {
-          "romano": "Dove lavoro direttamente con il cliente. Mantengo il sito vetrina dello studio e l'ecosistema di PraticaSicura.com, il servizio dello studio per rimborsi aerei e sinistri stradali: curo l'architettura back-end (Cardo), il gestionale front-end (Domus) e il sito vetrina PraticaSicura.com.",
+          "romano": "Dove lavoro direttamente con il cliente. Mantengo il sito vetrina dello studio e costruisco l'ecosistema di PraticaSicura.com, il servizio dello studio per rimborsi aerei e sinistri stradali: il portale di intake PraticaSicura.com, Domus, il gestionale con cui lavorano gli avvocati, e Cardo, il back-end di cui curo l'architettura.",
           "sbTemplates": "Template da cui parto per i miei progetti e che ogni sviluppatore può usare liberamente: fornisco solo la struttura di partenza, secondo le best practice del framework, e da lì ognuno sviluppa ciò che gli serve.",
           "floatingPanel": "Libreria su npm che ogni sviluppatore può installare nei propri progetti Vue e Nuxt, con componenti per pannelli flottanti. La progetto e la mantengo; anche i menu di questo sito la usano."
         }
@@ -373,8 +373,8 @@
           },
           {
             "id": "bd6a7d77-d3e5-48be-a83c-28d290f788ec",
-            "meta": "Cliente · dal 2025 · Nuxt",
-            "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify", "npm"],
+            "meta": "Cliente · dal 2025 · Nuxt, Vue, Spring Boot",
+            "skills": ["nuxt", "vue", "vite", "typescript", "tailwind-css", "java", "spring", "postgresql", "docker", "netlify", "npm"],
             "title": "Studio Legale Romano",
             "status": "ongoing",
             "deploymentUrls": [
@@ -383,7 +383,7 @@
             "coverImageSrc": "v1793011552/romano-logo_z2ert6.svg",
             "coverImageFit": "contain",
             "coverImageAlt": "Logo dello Studio Legale Romano",
-            "content": "Lo studio mi ha commissionato il sito dello **Studio Legale Romano** come vetrina digitale moderna e professionale. Ho progettato e sviluppato l’intera interfaccia: la storia e i valori dello studio, un profilo completo per ogni avvocato con le sue specializzazioni e una sezione servizi che aiuta i visitatori a trovare subito l’ambito di interesse.\n\nI contatti sono visibili da ogni pagina e gli orari di apertura si aggiornano in tempo reale.\n\nDal lancio nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e sviluppando nuovi prodotti.\n\n- **PraticaSicura**, un portale per richiedere i rimborsi dei voli\n- **Domus** (front-end) e **Cardo** (back-end), il gestionale interno con cui lo studio segue le sue pratiche"
+            "content": "Lo studio mi ha commissionato il sito dello **Studio Legale Romano** come vetrina digitale moderna e professionale. Ho progettato e sviluppato l’intera interfaccia: la storia e i valori dello studio, un profilo completo per ogni avvocato con le sue specializzazioni e una sezione servizi che aiuta i visitatori a trovare subito l’ambito di interesse.\n\nI contatti sono visibili da ogni pagina e gli orari di apertura si aggiornano in tempo reale.\n\nDal lancio nel 2025 continuo a lavorare con lo studio: sto rifacendo il design del sito e costruendo l'ecosistema del suo servizio per rimborsi aerei e sinistri stradali.\n\n- **PraticaSicura.com**, il portale di intake dove i clienti inviano la loro pratica (Nuxt, in arrivo)\n- **Domus**, il gestionale con cui gli avvocati seguono ogni pratica dall'apertura all'archivio (Vue + Vite)\n- **Cardo**, il back-end che riceve, valida e archivia ogni richiesta e avvisa lo studio: ne curo l'architettura (Spring Boot, PostgreSQL)"
           },
           {
             "id": "a3b5168c-315a-4627-a40b-7436130a5dc7",
@@ -440,7 +440,7 @@
         "tabLabel": "SB Templates",
         "logoAlt": "Logo SB Templates",
         "title": "SB Templates",
-        "description": "Template open source per Nuxt, Astro e Flutter. Ci parto per i miei progetti e ogni sviluppatore può usarli: ognuno imposta la struttura del progetto secondo le best practice del framework, con build, linting e formattazione già configurati, e lascia a te il resto.",
+        "description": "Template open source per Nuxt, Vue + Vite, Astro e Flutter, che ogni sviluppatore può usare liberamente: ognuno imposta la struttura del progetto secondo le best practice del framework, con build, linting e formattazione già configurati, e lascia a te il resto. Li mantengo e li aggiorno con cura, per questo molti miei progetti per clienti partono da qui: Domus e PraticaSicura.com, per lo Studio Legale Romano, sono nati così.",
         "list": [
           {
             "id": "454b54e4-aaec-4b41-b03b-d39d5c0b7455",
@@ -452,6 +452,27 @@
             "logoHeight": 796,
             "langIcons": ["logos:nuxt-icon"],
             "skills": ["nuxt", "vue", "typescript", "tailwind-css", "netlify"]
+          },
+          {
+            "id": "b4e2b7ef-4099-4ec5-91ed-dddea54274c2",
+            "title": "SB-Template Vue + Vite",
+            "description": "Template Vue 3 + Vite per web app client-side, con TypeScript, Tailwind CSS, i18n, tema chiaro e scuro, e lo stesso design system e le stesse convenzioni del template Nuxt.",
+            "codebaseUrl": "https://github.com/stefanBid/sb-template-vue-vite",
+            "logoSrc": "v1794415990/sbt-vue-logo_v1hldv.svg",
+            "logoWidth": 680,
+            "logoHeight": 796,
+            "langIcons": [
+              "logos:vue",
+              "logos:vitejs"
+            ],
+            "skills": [
+              "vue",
+              "vite",
+              "typescript",
+              "tailwind-css",
+              "netlify",
+              "npm"
+            ]
           },
           {
             "id": "2f7f7e2d-62b2-4fa4-90b0-47ebc62212f0",
